@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'BookingStatusTracking.dart'; // Import the second page
 
 class ApplicationStatusPage extends StatelessWidget {
   @override
@@ -54,13 +55,12 @@ class ApplicationStatusPage extends StatelessWidget {
     );
   }
 
-  Widget _buildApplicationCard(
-      BuildContext context, String text, Color bgColor) {
+  Widget _buildApplicationCard(BuildContext context, String text, Color bgColor) {
     return Container(
       margin: EdgeInsets.symmetric(vertical: 8),
       decoration: BoxDecoration(
         color: bgColor, // Set background color dynamically
-        border: Border.all(color: Color(0xff0A71CB), width: 2), // Blue border
+        border: Border.all(color:Color(0xff0A71CB), width: 2), // Blue border
         borderRadius: BorderRadius.circular(8),
       ),
       child: Card(
@@ -81,15 +81,14 @@ class ApplicationStatusPage extends StatelessWidget {
                 children: [
                   GestureDetector(
                     onTap: () {
-                      // Navigator.push(
-                      //   context,
-                      //   MaterialPageRoute(builder: (context) => BookingStatusTracking()),
-                      // );
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => BookingStatusTracking()),
+                      );
                     },
                     child: Text(
                       "View",
-                      style: TextStyle(
-                          color: Colors.blue, fontWeight: FontWeight.bold),
+                      style: TextStyle(color: Colors.blue, fontWeight: FontWeight.bold),
                     ),
                   ),
                   SizedBox(width: 16),
