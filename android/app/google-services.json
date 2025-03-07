@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "965264946682",
+    "project_id": "courseconnectai",
+    "storage_bucket": "courseconnectai.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:965264946682:android:83c792141a4a652d192043",
+        "android_client_info": {
+          "package_name": "com.example.course_connect"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDSHiGhPx1isbqwmfTeDfFfnnTRJ09Juis"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
