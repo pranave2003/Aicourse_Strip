@@ -1,3 +1,4 @@
+import 'package:course_connect/User/Ai_course_finder/ApplicationStatusPage.dart';
 import 'package:course_connect/User/Ai_course_finder/BachelorsDetailsOverall.dart';
 import 'package:course_connect/User/Ai_course_finder/BachelorsEducation.dart';
 import 'package:course_connect/User/Ai_course_finder/BachelorsCourse.dart';
@@ -8,6 +9,7 @@ import 'package:course_connect/User/Ai_course_finder/Bachelors_internship.dart';
 import 'package:course_connect/User/Ai_course_finder/Bachelors_organization.dart';
 import 'package:course_connect/User/Ai_course_finder/ChooseCountry.dart';
 import 'package:course_connect/User/Ai_course_finder/Degree.dart';
+import 'package:course_connect/User/Ai_course_finder/Document_upload.dart';
 import 'package:course_connect/User/Ai_course_finder/MBA_Companytype.dart';
 import 'package:course_connect/User/Ai_course_finder/MBA_DetailsOverall.dart';
 import 'package:course_connect/User/Ai_course_finder/MBA_courses.dart';
@@ -17,8 +19,13 @@ import 'package:course_connect/User/Ai_course_finder/Masters_education.dart';
 import 'package:course_connect/User/Ai_course_finder/Masters_work.dart';
 import 'package:course_connect/User/Ai_course_finder/MatersDetailsOverall.dart';
 import 'package:course_connect/User/Ai_course_finder/Maters_academic.dart';
+import 'package:course_connect/User/Ai_course_finder/Personal_details.dart';
+import 'package:course_connect/User/Ai_course_finder/Result_AICoursefInder.dart';
+import 'package:course_connect/User/Ai_course_finder/University.dart';
+import 'package:course_connect/User/Ai_course_finder/UniversityInfoScreen.dart';
 import 'package:course_connect/User/Sreens/BottomNavigation/Bottom_Nav.dart';
 import 'package:course_connect/User/Sreens/Home/Universities.dart';
+import 'package:course_connect/User/Sreens/auth/Signup.dart';
 import 'package:course_connect/User/Sreens/auth/Splash1.dart';
 import 'package:course_connect/auth/Signup.dart';
 import 'package:course_connect/auth/splash.dart';
@@ -46,7 +53,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: Homepage(),
+      home: ApplicationStatusPage(),
     );
   }
 }
