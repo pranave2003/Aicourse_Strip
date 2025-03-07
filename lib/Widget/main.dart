@@ -1,3 +1,5 @@
+import 'package:course_connect/User/Accomodation/BookingStatus.dart';
+import 'package:course_connect/User/Accomodation/PropertyDetailsPage.dart';
 import 'package:course_connect/User/Ai_course_finder/ApplicationStatusPage.dart';
 import 'package:flutter/material.dart';
 
@@ -19,7 +21,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: ApplicationStatusPage(),
+      home:PropertyDetailsPage(),
     );
   }
 }
