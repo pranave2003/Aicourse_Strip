@@ -177,68 +177,12 @@ class _University_mainState extends State<University_main> {
                             DataCell(Text(student.Established)),
                             DataCell(Row(
                               children: [
-                                Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: ElevatedButton(
-                                    style: ButtonStyle(
-                                      backgroundColor: MaterialStatePropertyAll(
-                                          Color(0xff0A71CB)),
-                                      foregroundColor: MaterialStatePropertyAll(
-                                          Colors.white),
-                                      textStyle: MaterialStatePropertyAll(
-                                          TextStyle(fontSize: 16)),
-                                      padding: MaterialStatePropertyAll(
-                                          EdgeInsets.symmetric(
-                                              horizontal: 16, vertical: 12)),
-                                      shape: MaterialStatePropertyAll(
-                                          RoundedRectangleBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(8))),
-                                    ),
-                                    onPressed: () {
-                                      // Your button's onPressed logic here
-                                      Navigator.push(context, MaterialPageRoute(
-                                        builder: (context) {
-                                          return EditUniversity();
-                                        },
-                                      ));
-                                      print("Button pressed!");
-                                    },
-                                    child: SizedBox(
-                                        width: 70,
-                                        child: Center(child: Text("Edite"))),
-                                  ),
-                                ),
-                                SizedBox(
-                                  width: 10,
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: ElevatedButton(
-                                    style: ButtonStyle(
-                                      backgroundColor:
-                                          MaterialStatePropertyAll(Colors.red),
-                                      foregroundColor: MaterialStatePropertyAll(
-                                          Colors.white),
-                                      textStyle: MaterialStatePropertyAll(
-                                          TextStyle(fontSize: 16)),
-                                      padding: MaterialStatePropertyAll(
-                                          EdgeInsets.symmetric(
-                                              horizontal: 16, vertical: 12)),
-                                      shape: MaterialStatePropertyAll(
-                                          RoundedRectangleBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(8))),
-                                    ),
-                                    onPressed: () {
-                                      // Your button's onPressed logic here
-                                      print("Button pressed!");
-                                    },
-                                    child: SizedBox(
-                                        width: 70,
-                                        child: Center(child: Text("Delete"))),
-                                  ),
-                                ),
+                        IconButton(
+                        icon: Icon(Icons.delete, color: Colors.red),
+                        iconSize: 40.0,
+                        onPressed: () {
+                        print('Delete button pressed');
+                        },),
                               ],
                             )),
                           ],

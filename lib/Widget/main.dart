@@ -1,3 +1,5 @@
+import 'package:course_connect/User/Accomodation/BookingConfirmationPage.dart';
+import 'package:course_connect/User/Accomodation/BookingFormPage.dart';
 import 'package:course_connect/User/Accomodation/BookingStatus.dart';
 import 'package:course_connect/User/Accomodation/PropertyDetailsPage.dart';
 import 'package:course_connect/User/Ai_course_finder/ApplicationStatusPage.dart';
@@ -20,7 +22,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home:PropertyDetailsPage(),
+      home:BookingConfirmationPage(),
     );
   }
 }

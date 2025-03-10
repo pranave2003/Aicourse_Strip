@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../View/Screens/University/AddUniversity.dart';
 import '../View/Screens/University/EditUniversity.dart';
 import '../View/Screens/University/Universitymain.dart';
 
@@ -99,8 +100,18 @@ class _AdminPageState extends State<AdminPage> {
                     icon: Icons.add,
                     children: [
                       SubListTile("View University", University_main()),
-                      SubListTile("Edit University", EditUniversity()),
+                      SubListTile("Add University", AddUniversity()),
                       SubListTile("Edit University", EditUniversity())
+                    ]),
+
+
+                _buildMainExpansionTile(
+                    title: 'Courses',
+                    icon: Icons.add,
+                    children: [
+                      SubListTile("View University", University_main()),
+                      // SubListTile("Add Course", AddCourse()),
+                      // SubListTile("Edit Course", EditCourse())
                     ]),
               ],
             ),
