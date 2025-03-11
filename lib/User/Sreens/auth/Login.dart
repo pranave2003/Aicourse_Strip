@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../../Widget/Constands/CustomTextfield.dart';
 import '../../../Widget/Constands/colors.dart';
-import '../../../Widget/Constands/custom_button.dart';
+import '../../../Widget/Constands/button.dart';
 import '../Constands/custom_widgets.dart';
 
 class Login extends StatefulWidget {
@@ -74,7 +74,7 @@ class _LoginState extends State<Login> {
                   SizedBox(
                     height: 20,
                   ),
-                  CustomButton(onPressed: () {}, label: "Login")
+                  CustomButton(onPressed: () {}, label: "Login", text: '', textColor:Colors.yellow, borderColor:Colors.blue,)
                 ],
               ),
             ),
@@ -101,4 +101,6 @@ class _LoginState extends State<Login> {
       ),
     );
   }
+
+  CustomButton({required Null Function() onPressed, required String label, required String text, required MaterialColor textColor, required MaterialColor borderColor}) {}
 }

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../Widget/Constands/CustomTextfield.dart';
-import '../../../Widget/Constands/custom_button.dart';
+import '../../../Widget/Constands/button.dart';
 
 class Signup extends StatefulWidget {
   const Signup({super.key});
@@ -55,7 +55,7 @@ class _SignupState extends State<Signup> {
                 SizedBox(
                   height: 15,
                 ),
-                CustomButton(onPressed: () {}, label: "Sign Up"),
+                CustomButton(onPressed: () {}, label: "Sign Up", text: 'hello', borderColor:Colors.cyan, textColor: Colors.blueGrey,),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -70,4 +70,6 @@ class _SignupState extends State<Signup> {
       ),
     ));
   }
+
+  CustomButton({required Null Function() onPressed, required String label, required String text, required MaterialColor borderColor, required MaterialColor textColor}) {}
 }
