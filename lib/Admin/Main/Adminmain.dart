@@ -1,3 +1,7 @@
+import 'package:course_connect/Admin/View/Screens/Courses/Addcourses.dart';
+import 'package:course_connect/Admin/View/Screens/Courses/Courses.dart';
+import 'package:course_connect/Admin/View/Screens/Courses/Editcourses.dart';
+import 'package:course_connect/Admin/View/Screens/Landlord/New_Landlords.dart';
 import 'package:flutter/material.dart';
 
 import '../View/Screens/University/AddUniversity.dart';
@@ -109,9 +113,17 @@ class _AdminPageState extends State<AdminPage> {
                     title: 'Courses',
                     icon: Icons.add,
                     children: [
-                      SubListTile("View University", University_main()),
-                      // SubListTile("Add Course", AddCourse()),
-                      // SubListTile("Edit Course", EditCourse())
+                      SubListTile("View Courses", Courses_main()),
+                      SubListTile("Add Course",Addcourses()),
+                      SubListTile("Edit Course", Editcourses()),
+                    ]),
+                _buildMainExpansionTile(
+                    title: 'Landlord',
+                    icon: Icons.add,
+                    children: [
+                      SubListTile("New Landlords", NewLandlords()),
+                      // SubListTile("Accepted Landlords",Addcourses()),
+                      // SubListTile("Rejected Landlords", Editcourses()),
                     ]),
               ],
             ),

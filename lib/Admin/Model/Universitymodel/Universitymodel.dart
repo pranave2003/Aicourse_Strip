@@ -6,13 +6,14 @@ class Universitymodel {
   final String Image;
   final String Id;
 
+
   Universitymodel({
     required this.University_name,
     required this.Country,
     required this.Type,
     required this.Established,
     required this.Image,
-    required this.Id,
+    required this.Id, required String English_test,
   });
 
   factory Universitymodel.fromJson(Map<String, String> json) {
@@ -22,7 +23,7 @@ class Universitymodel {
         Type: json["trade"] ?? "",
         Established: json["location"] ?? "",
         Image: json["linkedin"] ?? "",
-        Id: json["github"] ?? "");
+        Id: json["github"] ?? "", English_test: '');
   }
 }
 
@@ -33,26 +34,26 @@ List<Universitymodel> students = [
       Type: "Public",
       Established: "2003",
       Image: "png",
-      Id: "342342"),
+      Id: "342342", English_test: ''),
   Universitymodel(
       University_name: "Calicut University",
       Country: "India",
       Type: "Public",
       Established: "2003",
       Image: "png",
-      Id: "342342"),
+      Id: "342342", English_test: ''),
   Universitymodel(
       University_name: "Calicut University",
       Country: "India",
       Type: "Public",
       Established: "2003",
       Image: "png",
-      Id: "342342"),
+      Id: "342342", English_test: ''),
   Universitymodel(
       University_name: "Calicut University",
       Country: "India",
       Type: "Public",
       Established: "2003",
       Image: "png",
-      Id: "342342"),
+      Id: "342342", English_test: ''),
 ];

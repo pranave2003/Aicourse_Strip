@@ -8,7 +8,7 @@ class CustomButton extends StatelessWidget {
   Function() onPressed;
   String label;
   double radius;
-   CustomButton({super.key,required this.onPressed,required this.label,this.radius = 10});
+   CustomButton({super.key,required this.onPressed,required this.label,this.radius = 10, required String text, required MaterialColor textColor, required MaterialColor borderColor});
 
   @override
   Widget build(BuildContext context) {
