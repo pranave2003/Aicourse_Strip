@@ -3,6 +3,8 @@ import 'package:course_connect/Admin/View/Screens/Courses/Courses.dart';
 import 'package:course_connect/Admin/View/Screens/Courses/Editcourses.dart';
 import 'package:course_connect/Admin/View/Screens/House.dart/ViewHouses.dart';
 import 'package:course_connect/Admin/View/Screens/Landlord/New_Landlords.dart';
+import 'package:course_connect/Admin/View/Screens/Payment.dart/Payment_View.dart';
+import 'package:course_connect/Admin/View/Screens/Users.dart/UserView.dart';
 import 'package:flutter/material.dart';
 
 import '../View/Screens/University/AddUniversity.dart';
@@ -136,7 +138,13 @@ class _AdminPageState extends State<AdminPage> {
                     title: 'Payment',
                     icon: Icons.add,
                     children: [
-                      SubListTile("View Payment", ViewPayment()),
+                      SubListTile("View Payment", PaymentView()),
+                    ]),
+                _buildMainExpansionTile(
+                    title: 'Users',
+                    icon: Icons.add,
+                    children: [
+                      SubListTile("View users", Userview()),
                     ]),
               ],
             ),

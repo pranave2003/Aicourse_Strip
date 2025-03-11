@@ -23,7 +23,8 @@ class _PaymentViewState extends State<PaymentView> {
                   children: [
                     Text(
                       "Welcome ",
-                      style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                      style: TextStyle(
+                          fontSize: 24, fontWeight: FontWeight.bold),
                     ),
                     Text(
                       "Admin, ",
@@ -99,12 +100,13 @@ class _PaymentViewState extends State<PaymentView> {
 
                 child: DataTable(
                   // dividerThickness: 4.0,
-                  headingRowColor: MaterialStateColor.resolveWith((states) => Colors.grey.shade300),
-                  horizontalMargin:2.0,
+                  headingRowColor: MaterialStateColor.resolveWith((
+                      states) => Colors.grey.shade300),
+                  // horizontalMargin: 2.0,
 
-                  columnSpacing: 50,
+                  columnSpacing: 40,
                   // Adjust spacing
-                  dataRowMinHeight: 70,
+                  // dataRowMinHeight: 70,
                   // Minimum row height
                   dataRowMaxHeight: 180,
 
@@ -116,11 +118,14 @@ class _PaymentViewState extends State<PaymentView> {
                     _buildColumn('S/no'),
                     _buildColumn('Name'),
                     _buildColumn('Transaction id'),
-                    _buildColumn('House name'),
-                    _buildColumn('Token amount'),
-                    _buildColumn('Payment date&'),
-                    _buildColumn('Period'),
-                    _buildColumn('Property Information'),
+                    _buildColumn('House\n Details'),
+                    // _buildColumn('Token amount'),
+                    _buildColumn('Payment \ndate & time'),
+                    // _buildColumn('Landlord\n name'),
+                    _buildColumn('Payment\n method'),
+                    _buildColumn('Rent\n Period'),
+                    _buildColumn('Status'),
+
 
                   ],
 
@@ -135,7 +140,6 @@ class _PaymentViewState extends State<PaymentView> {
                 ),
 
               ),
-
 
 
             ),
@@ -163,40 +167,95 @@ class _PaymentViewState extends State<PaymentView> {
   DataRow _buildRow(String index) {
     return DataRow(
       cells: [
-        DataCell(Text(index)),
-        DataCell(Text("Portchester House")),
-        DataCell(Text("300 Pounds")),
-        DataCell(Text("img.jpg")),
-        DataCell(Text(
-            "25 Baker Street\nMarylebone\nLondon\nW1U 8EW\nUnited Kingdom")),
-        DataCell(Text(
-            "sqft: 1200\nRooms: 2\nBathrooms: 2\nFurnishing: Furnished\nKitchen: Yes")),
-        DataCell(Text("1 Month")),
-        DataCell(Text("Located near Boston University")),
-      ],
+        DataCell(Text(index)), // S/no
+        DataCell(Text("John Doe")), // Name
+        DataCell(Text("TXN123456789")), // Transaction id
+        DataCell(Text("Portchester House\n£300\n Mr. Smith")), // House name
+        // DataCell(Text("£300")), // Token amount
+        DataCell(Text("12 Mar 2024, 10:30 AM")), // Payment date & time
+        // DataCell(Text("Mr. Smith")), // Landlord name
+        DataCell(Text("Credit Card")), // Payment method
+        DataCell(Text("March 2024 - April 2024")), // Rent Period
+        // DataCell(Text("Completed")),
+    DataCell(Row(
+    children: [
+    OutlinedButton(
+    style: OutlinedButton.styleFrom(
+    side: BorderSide(color: Colors.green, width: 2), // Red border
+    padding: EdgeInsets.symmetric(vertical: 12, horizontal:14),
+    shape: RoundedRectangleBorder(
+    borderRadius: BorderRadius.circular(10), // Rounded corners
+    ),
+    ),
+    onPressed: () {
+    // Handle Reject Action
+    },
+    child: Row(
+    mainAxisSize: MainAxisSize.min,
+    children: [
+    Icon(Icons.verified, color: Colors.greenAccent, size: 18), // Rejection Icon
+    SizedBox(width: 8),
+    Text(
+    "Paid",
+    style: TextStyle(
+    color: Colors.green,
+    fontSize: 16,
+    fontWeight: FontWeight.bold,
+    ),
+    ),
+    ],
+    ),
+    ),
+    ],// Status
+    ))],
     );
-
   }
+
   DataRow _buildRow2(String index) {
     return DataRow(
       cells: [
-        DataCell(Text(index)),
-        DataCell(Text("Victoria house")),
-        DataCell(Text("300 Pounds")),
-        DataCell(Text("img.jpg")),
-        DataCell(Text(
-            "25 Baker Street\nMarylebone\nLondon\nW1U 8EW\nUnited Kingdom")),
-        DataCell(Text(
-            "sqft: 1200\nRooms: 2\nBathrooms: 2\nFurnishing: Furnished\nKitchen: Yes")),
-        DataCell(Text("1 Month")),
-        DataCell(Text("Located near Boston University")),
-      ],
+        DataCell(Text(index)), // S/no
+        DataCell(Text("Jane Doe")), // Name
+        DataCell(Text("TXN987654321")), // Transaction id
+        DataCell(Text("Victoria House\n£400\nMrs. Johnson")), // House name
+        // DataCell(Text("£400")), // Token amount
+        DataCell(Text("15 Mar 2024, 02:15 PM")), // Payment date & time
+        // DataCell(Text("Mrs. Johnson")), // Landlord name
+        DataCell(Text("Bank Transfer")), // Payment method
+        DataCell(Text("April 2024 - May 2024")), // Rent Period
+        DataCell(Row(
+          children: [
+            OutlinedButton(
+              style: OutlinedButton.styleFrom(
+                side: BorderSide(color: Colors.redAccent, width: 2), // Red border
+                padding: EdgeInsets.symmetric(vertical: 12, horizontal:14),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10), // Rounded corners
+                ),
+              ),
+              onPressed: () {
+                // Handle Reject Action
+              },
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Icon(Icons.verified, color: Colors.redAccent, size: 18), // Rejection Icon
+                  SizedBox(width: 8),
+                  Text(
+                    "Pending",
+                    style: TextStyle(
+                      color: Colors.redAccent,
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],// Status
+        ))],// Status,
     );
-
   }
+
+
 }
-
-
-
-
-

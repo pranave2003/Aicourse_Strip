@@ -40,6 +40,8 @@ class _SignupState extends State<Signup> {
                 SizedBox(height: 15),
                 CustomTextForm(
                     prefixIcon: Icon(Icons.place), hintText: "State"),
+                CustomTextForm(
+                    prefixIcon: Icon(Icons.place_outlined), hintText: "City"),
                 SizedBox(height: 15),
                 CustomTextForm(
                     prefixIcon: Icon(Icons.password), hintText: "Password"),
