@@ -42,34 +42,83 @@ class CourseFinderScreen extends StatelessWidget {
                               color: Color(0xff0A71CB))),
                     ],
                   ),
+              //     Row(
+              //       children: [
+              //         Container(
+              //           height: 40,
+              //           width: 300,
+              //           child: TextField(
+              //             decoration: InputDecoration(
+              //               filled: true,
+              //               fillColor: Colors.white,
+              //               hintText: "Search University or courses",
+              //               prefixIcon: Icon(Icons.search,
+              //                   color: Colors.grey, size: 21),
+              //               border: OutlineInputBorder(
+              //                   borderRadius: BorderRadius.circular(18)),
+              //             ),
+              //           ),
+              //         ),
+              //         SizedBox(width: 10),
+              //         CircleAvatar(
+              //             backgroundColor: Color(0xffD9D9D9),
+              //             child: Icon(Icons.person)),
+              //         SizedBox(width: 10),
+              //         CircleAvatar(
+              //             backgroundColor: Color(0xffD9D9D9),
+              //             child: Icon(Icons.notification_add)),
+              //       ],
+              //     ),
+              //   ],
+              // ),
                   Row(
                     children: [
+                      CircleAvatar(backgroundColor: Color(0xffD9D9D9), child: Icon(Icons.notification_add)),
+                      SizedBox(width: 10),
                       Container(
-                        height: 40,
-                        width: 300,
-                        child: TextField(
-                          decoration: InputDecoration(
-                            filled: true,
-                            fillColor: Colors.white,
-                            hintText: "Search University or courses",
-                            prefixIcon: Icon(Icons.search,
-                                color: Colors.grey, size: 21),
-                            border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(18)),
-                          ),
+                        padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 6),
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(20),
+                          border: Border.all(width: 0.5, color: Colors.grey),
+                        ),
+                        child: Row(
+                          children: [
+                            const CircleAvatar(
+                              radius: 20, // Ensure a proper radius is set
+                              backgroundColor: Colors.grey, // Fallback color
+                              backgroundImage: AssetImage('assets/Profile/img.png'), // Corrected Path
+                            ),
+                            const SizedBox(width: 10),
+                            const Text(
+                              "Admin",
+                              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                            ),
+                          ],
                         ),
                       ),
-                      SizedBox(width: 10),
-                      CircleAvatar(
-                          backgroundColor: Color(0xffD9D9D9),
-                          child: Icon(Icons.person)),
-                      SizedBox(width: 10),
-                      CircleAvatar(
-                          backgroundColor: Color(0xffD9D9D9),
-                          child: Icon(Icons.notification_add)),
                     ],
                   ),
                 ],
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              Padding(
+                padding: const EdgeInsets.only(left: 25),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      "AI Course Management",
+                      style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
+                    ),
+                    Divider(thickness: 23,height:10,color: Colors.red,),
+                    const SizedBox(
+                      width: 18,
+                    ),
+                  ],
+                ),
               ),
 
               SizedBox(height: 20),
@@ -278,310 +327,3 @@ class _DropdownFieldState extends State<DropdownField> {
 
 
 
-
-// import 'package:flutter/material.dart';
-//
-// void main() {
-//   runApp(Addcourses());
-// }
-//
-// class Addcourses extends StatelessWidget {
-//   @override
-//   Widget build(BuildContext context) {
-//     return MaterialApp(
-//       debugShowCheckedModeBanner: false,
-//       home: CourseFinderScreen(),
-//     );
-//   }
-// }
-//
-// class CourseFinderScreen extends StatelessWidget {
-//   @override
-//   Widget build(BuildContext context) {
-//     return DefaultTabController(
-//       length: 3,
-//       child: Scaffold(
-//         backgroundColor: Colors.white,
-//         body: SingleChildScrollView(
-//           padding: const EdgeInsets.all(20),
-//           child: Column(
-//             crossAxisAlignment: CrossAxisAlignment.start,
-//             children: [
-//               /// **Header Section**
-//               Row(
-//                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-//                 children: [
-//                   Row(
-//                     children: [
-//                       Text("Welcome ",
-//                           style: TextStyle(
-//                               fontSize: 24, fontWeight: FontWeight.bold)),
-//                       Text("Admin,",
-//                           style: TextStyle(
-//                               fontSize: 24,
-//                               fontWeight: FontWeight.bold,
-//                               color: Color(0xff0A71CB))),
-//                     ],
-//                   ),
-//                   Row(
-//                     children: [
-//                       Container(
-//                         height: 40,
-//                         width: 300,
-//                         child: TextField(
-//                           decoration: InputDecoration(
-//                             filled: true,
-//                             fillColor: Colors.white,
-//                             hintText: "Search University or courses",
-//                             prefixIcon: Icon(Icons.search,
-//                                 color: Colors.grey, size: 21),
-//                             border: OutlineInputBorder(
-//                                 borderRadius: BorderRadius.circular(18)),
-//                           ),
-//                         ),
-//                       ),
-//                       SizedBox(width: 10),
-//                       CircleAvatar(
-//                           backgroundColor: Color(0xffD9D9D9),
-//                           child: Icon(Icons.person)),
-//                       SizedBox(width: 10),
-//                       CircleAvatar(
-//                           backgroundColor: Color(0xffD9D9D9),
-//                           child: Icon(Icons.notification_add)),
-//                     ],
-//                   ),
-//                 ],
-//               ),
-//
-//               SizedBox(height: 20),
-//
-//               /// **Tab Bar**
-//               Container(
-//                 decoration: BoxDecoration(
-//                   color: Colors.white,
-//                   borderRadius: BorderRadius.circular(10),
-//                 ),
-//                 child: TabBar(
-//                   labelColor: Colors.black,
-//                   indicatorColor: Colors.blue,
-//                   tabs: [
-//                     Tab(
-//                         child: Text("Bachelors",
-//                             style: TextStyle(fontWeight: FontWeight.bold))),
-//                     Tab(
-//                         child: Text("Masters",
-//                             style: TextStyle(fontWeight: FontWeight.bold))),
-//                     Tab(
-//                         child: Text("MBA",
-//                             style: TextStyle(fontWeight: FontWeight.bold))),
-//                   ],
-//                 ),
-//               ),
-//
-//               /// **Tab Content**
-//               Container(
-//                 height: 600, // Adjust height to fit content
-//                 child: TabBarView(
-//                   children: [
-//                     CourseAdding1(),
-//                     CourseAdding2(),
-//                     CourseAdding3(),
-//                   ],
-//                 ),
-//               ),
-//             ],
-//           ),
-//         ),
-//       ),
-//     );
-//   }
-// }
-//
-// // **Page 1: Bachelors**
-// class CourseAdding1 extends StatelessWidget {
-//   @override
-//   Widget build(BuildContext context) {
-//     return Padding(
-//       padding: const EdgeInsets.all(16.0),
-//       child: ListView(
-//         children: [
-//           DropdownField(label: "Country Name"),
-//           DropdownField(label: "Course Name"),
-//           DropdownField(label: "Work Experience"),
-//           DropdownField(label: "Education Level"),
-//           DropdownField(label: "Board"),
-//           DropdownField(label: "Percentage"),
-//           DropdownField(label: "English Test"),
-//           DropdownField(label: "Score"),
-//           DropdownField(label: "Academic Test"),
-//           DropdownField(label: "Score"),
-//           DropdownField(label: "Company Type"),
-//           DropdownField(label: "Organization"),
-//           DropdownField(label: "Choose Duration"),
-//         ],
-//       ),
-//     );
-//   }
-// }
-//
-// // **Page 2: Masters**
-// class CourseAdding2 extends StatelessWidget {
-//   @override
-//   Widget build(BuildContext context) {
-//     return Padding(
-//       padding: const EdgeInsets.all(16.0),
-//       child: ListView(
-//         children: [
-//           DropdownField(label: "Country Name"),
-//           DropdownField(label: "Course Name"),
-//           DropdownField(label: "Work Experience"),
-//           DropdownField(label: "Education Level"),
-//           DropdownField(label: "Board/Institute"),
-//           DropdownField(label: "Percentage"),
-//           DropdownField(label: "English Test"),
-//           DropdownField(label: "Score"),
-//           DropdownField(label: "Academic Test"),
-//           DropdownField(label: "Score"),
-//           DropdownField(label: "Research Paper"),
-//         ],
-//       ),
-//     );
-//   }
-// }
-//
-// // **Page 3: MBA**
-// class CourseAdding3 extends StatelessWidget {
-//   @override
-//   Widget build(BuildContext context) {
-//     return Padding(
-//       padding: const EdgeInsets.all(16.0),
-//       child: Container(
-//         width: 200,
-//         child: ListView(
-//           children: [
-//             DropdownField(label: "Country Name"),
-//             DropdownField(label: "Course Name"),
-//             DropdownField(label: "Work Experience"),
-//             DropdownField(label: "Education Level"),
-//             DropdownField(label: "Board"),
-//             DropdownField(label: "Percentage"),
-//             DropdownField(label: "English Test"),
-//             DropdownField(label: "Score"),
-//             DropdownField(label: "Academic Test"),
-//             DropdownField(label: "Score"),
-//             DropdownField(label: "Company Type"),
-//             DropdownField(label: "Organization"),
-//             DropdownField(label: "Choose Duration"),
-//           ],
-//         ),
-//       ),
-//     );
-//   }
-// }
-//
-// // **Stateful Dropdown Widget**
-// class DropdownField extends StatefulWidget {
-//   final String label;
-//
-//   DropdownField({
-//     required this.label,
-//   });
-//
-//   @override
-//   _DropdownFieldState createState() => _DropdownFieldState();
-// }
-//
-// class _DropdownFieldState extends State<DropdownField> {
-//   String? selectedValue;
-//
-// //   @override
-// //   Widget build(BuildContext context) {
-// //     return Padding(
-// //       padding: const EdgeInsets.symmetric(vertical: 8.0),
-// //       child: Column(
-// //         crossAxisAlignment: CrossAxisAlignment.start,
-// //         children: [
-// //           Text(widget.label, style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
-// //           SizedBox(height: 5),
-// //           Row(
-// //             children: [
-// //               Container(
-// //                 width:300,
-// //                 padding: EdgeInsets.symmetric(horizontal: 10),
-// //                 decoration: BoxDecoration(
-// //                   border: Border.all(color: Colors.grey),
-// //                   borderRadius: BorderRadius.circular(5),
-// //                 ),
-// //                 child: DropdownButtonHideUnderline(
-// //                   child: DropdownButton<String>(
-// //                     isExpanded: true,
-// //                     value: selectedValue,
-// //                     items: ["Select ${widget.label}", "Option 1", "Option 2"]
-// //                         .map((e) => DropdownMenuItem(child: Text(e), value: e))
-// //                         .toList(),
-// //                     onChanged: (value) {
-// //                       setState(() {
-// //                         selectedValue = value;
-// //                       });
-// //                     },
-// //                     hint: Text("Select ${widget.label}"),
-// //                   ),
-// //                 ),
-// //               ),
-// //             ],
-// //           ),
-// //         ],
-// //       ),
-// //     );
-// //   }
-// // }
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     return Padding(
-//       padding: const EdgeInsets.symmetric(vertical: 8.0),
-//       child: Row(
-//         crossAxisAlignment: CrossAxisAlignment.center,
-//         children: [
-//           // Label Text with a fixed width
-//           SizedBox(
-//             width: 100, // Adjust width as needed
-//             child: Text(
-//               widget.label,
-//               style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-//             ),
-//           ),
-//           SizedBox(width: 10), // Spacing between label and dropdown
-//
-//           // Dropdown inside an Expanded widget
-//           Expanded(
-//             child: SizedBox(
-//               child: Container(
-//                 padding: EdgeInsets.symmetric(horizontal: 10),
-//                 decoration: BoxDecoration(
-//                   border: Border.all(color: Colors.grey),
-//                   borderRadius: BorderRadius.circular(5),
-//                 ),
-//                 child: DropdownButtonHideUnderline(
-//                   child: DropdownButton<String>(
-//                     isExpanded: true,
-//                     value: selectedValue,
-//                     items: ["Select ${widget.label}", "Option 1", "Option 2"]
-//                         .map((e) => DropdownMenuItem(child: Text(e), value: e))
-//                         .toList(),
-//                     onChanged: (value) {
-//                       setState(() {
-//                         selectedValue = value;
-//                       });
-//                     },
-//                     hint: Text("Select ${widget.label}"),
-//                   ),
-//                 ),
-//               ),
-//             ),
-//           ),
-//         ],
-//       ),
-//     );
-//   }
-// }

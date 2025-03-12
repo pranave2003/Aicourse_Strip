@@ -38,23 +38,32 @@ class _EditUniversityState extends State<EditUniversity> {
                 ),
                 Row(
                   children: [
-                    Container(
-                      height: 40,
-                      width: 300,
-                      child: TextField(
-                        decoration: InputDecoration(
-                          filled: true,
-                          fillColor: Colors.white,
-                          hintText: "Search University",
-                          prefixIcon: Icon(Icons.search, color: Colors.grey, size: 21),
-                          border: OutlineInputBorder(borderRadius: BorderRadius.circular(18)),
-                        ),
-                      ),
-                    ),
-                    SizedBox(width: 10),
-                    CircleAvatar(backgroundColor: Color(0xffD9D9D9), child: Icon(Icons.person)),
                     SizedBox(width: 10),
                     CircleAvatar(backgroundColor: Color(0xffD9D9D9), child: Icon(Icons.notification_add)),
+                    SizedBox(width: 10),
+                    Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 6),
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(20),
+                        border: Border.all(width: 0.5, color: Colors.grey),
+                      ),
+                      child: Row(
+                        children: [
+                          const CircleAvatar(
+                            radius: 20, // Ensure a proper radius is set
+                            backgroundColor: Colors.grey, // Fallback color
+                            backgroundImage: AssetImage('assets/Profile/img.png'),
+                          ),
+                          const SizedBox(width: 10),
+                          const Text(
+                            "Admin",
+                            style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                          ),
+                        ],
+                      ),
+                    ),
+
                   ],
                 ),
               ],

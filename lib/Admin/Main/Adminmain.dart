@@ -2,6 +2,7 @@ import 'package:course_connect/Admin/View/Screens/Courses/Addcourses.dart';
 import 'package:course_connect/Admin/View/Screens/Courses/Courses.dart';
 import 'package:course_connect/Admin/View/Screens/Courses/Editcourses.dart';
 import 'package:course_connect/Admin/View/Screens/House.dart/ViewHouses.dart';
+import 'package:course_connect/Admin/View/Screens/KnowledgeBank/CountryRules.dart';
 import 'package:course_connect/Admin/View/Screens/Landlord/New_Landlords.dart';
 import 'package:course_connect/Admin/View/Screens/Payment.dart/Payment_View.dart';
 import 'package:course_connect/Admin/View/Screens/Users.dart/UserView.dart';
@@ -97,24 +98,23 @@ class _AdminPageState extends State<AdminPage> {
                 SizedBox(
                   height: 50,
                 ),
-                // //////////////////////
                 _buildMainListTile('Dashboard', const Dashboard(), 16,
-                    icon: Icons.dashboard),
-                // /////////////////////////
+                    icon: Icons.dashboard), //
 
+// Wrap the following inside a valid widget like ExpansionTile or ListTile
                 _buildMainExpansionTile(
-                    title: 'University',
-                    icon: Icons.add,
+                    title: 'Universities',
+                    icon: Icons.school_outlined,
                     children: [
                       SubListTile("View University", University_main()),
-                      SubListTile("Add University", AddUniversity()),
-                      SubListTile("Edit University", EditUniversity())
+                      SubListTile("Add University",AddUniversity()),
+                      SubListTile("Edit University", EditUniversity()),
                     ]),
 
 
                 _buildMainExpansionTile(
                     title: 'Courses',
-                    icon: Icons.add,
+                    icon: Icons.book_outlined,
                     children: [
                       SubListTile("View Courses", Courses_main()),
                       SubListTile("Add Course",Addcourses()),
@@ -122,7 +122,7 @@ class _AdminPageState extends State<AdminPage> {
                     ]),
                 _buildMainExpansionTile(
                     title: 'Landlord',
-                    icon: Icons.add,
+                    icon: Icons.people_alt_outlined,
                     children: [
                       SubListTile("New Landlords", NewLandlords()),
                       // SubListTile("Accepted Landlords",Addcourses()),
@@ -130,21 +130,27 @@ class _AdminPageState extends State<AdminPage> {
                     ]),
                 _buildMainExpansionTile(
                     title: 'Houses',
-                    icon: Icons.add,
+                    icon: Icons.maps_home_work_outlined,
                     children: [
                       SubListTile("View Houses", ViewHouses()),
                     ]),
                 _buildMainExpansionTile(
                     title: 'Payment',
-                    icon: Icons.add,
+                    icon: Icons.payments_outlined,
                     children: [
                       SubListTile("View Payment", PaymentView()),
                     ]),
                 _buildMainExpansionTile(
                     title: 'Users',
-                    icon: Icons.add,
+                    icon: Icons.supervised_user_circle_sharp,
                     children: [
                       SubListTile("View users", Userview()),
+                    ]),
+                _buildMainExpansionTile(
+                    title: 'Knowledge Bank',
+                    icon: Icons.my_library_books_rounded,
+                    children: [
+                      SubListTile("Terms and Conditions", CountryRules()),
                     ]),
               ],
             ),

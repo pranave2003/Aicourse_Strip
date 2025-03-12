@@ -37,38 +37,29 @@ class _ViewHousesState extends State<ViewHouses> {
               ),
               Row(
                 children: [
+                  CircleAvatar(backgroundColor: Color(0xffD9D9D9), child: Icon(Icons.notification_add)),
+                  SizedBox(width: 10),
                   Container(
-                    height: 40,
-                    width: 400,
+                    padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 6),
                     decoration: BoxDecoration(
                       color: Colors.white,
-                      borderRadius: BorderRadius.circular(18),
-                      border: Border.all(color: Colors.grey),
+                      borderRadius: BorderRadius.circular(20),
+                      border: Border.all(width: 0.5, color: Colors.grey),
                     ),
-                    child: TextField(
-                      decoration: InputDecoration(
-                        contentPadding: const EdgeInsets.symmetric(vertical: 5),
-                        hintText: 'Search property',
-                        prefixIcon: const Icon(
-                          Icons.search,
-                          color: Colors.grey,
-                          size: 21,
+                    child: Row(
+                      children: [
+                        const CircleAvatar(
+                          radius: 20, // Ensure a proper radius is set
+                          backgroundColor: Colors.grey, // Fallback color
+                          backgroundImage: AssetImage('assets/Profile/img.png'), // Corrected Path
                         ),
-                        border: InputBorder.none,
-                      ),
+                        const SizedBox(width: 10),
+                        const Text(
+                          "Admin",
+                          style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                        ),
+                      ],
                     ),
-                  ),
-                  const SizedBox(width: 10),
-                  CircleAvatar(
-                    backgroundColor: Color(0xffD9D9D9),
-                    child: IconButton(
-                        onPressed: () {}, icon: Icon(Icons.person)),
-                  ),
-                  const SizedBox(width: 10),
-                  CircleAvatar(
-                    backgroundColor: Color(0xffD9D9D9),
-                    child: IconButton(
-                        onPressed: () {}, icon: Icon(Icons.notification_add)),
                   ),
                 ],
               ),

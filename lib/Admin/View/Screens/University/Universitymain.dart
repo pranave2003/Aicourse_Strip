@@ -40,61 +40,36 @@ class _University_mainState extends State<University_main> {
               ),
               Row(
                 children: [
+                  CircleAvatar(backgroundColor: Color(0xffD9D9D9), child: Icon(Icons.notification_add)),
+                  SizedBox(width: 10),
                   Container(
-                    height: 40,
-                    width: 400,
-                    decoration:
-                        BoxDecoration(borderRadius: BorderRadius.circular(18)),
-                    child: TextField(
-                      decoration: InputDecoration(
-                        filled: true,
-                        fillColor: Colors.white,
-                        enabledBorder: const OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.grey),
+                    padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 6),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(20),
+                      border: Border.all(width: 0.5, color: Colors.grey),
+                    ),
+                    child: Row(
+                      children: [
+                        const CircleAvatar(
+                          radius: 20, // Ensure a proper radius is set
+                          backgroundColor: Colors.grey, // Fallback color
+                          backgroundImage: AssetImage('assets/Profile/img.png'), // Corrected Path
                         ),
-                        border: OutlineInputBorder(
-                          borderSide: BorderSide(width: .5),
-                          borderRadius: BorderRadius.circular(18),
+                        const SizedBox(width: 10),
+                        const Text(
+                          "Admin",
+                          style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                         ),
-                        focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(18),
-                          borderSide:
-                              BorderSide(color: Theme.of(context).primaryColor),
-                        ),
-                        contentPadding: const EdgeInsets.symmetric(
-                          vertical: 5,
-                        ),
-                        hintText: 'Search University',
-                        prefixIcon: const Icon(
-                          Icons.search,
-                          color: Colors.grey,
-                          size: 21,
-                        ),
-                      ),
+                      ],
                     ),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: CircleAvatar(
-                      backgroundColor: Color(0xffD9D9D9),
-                      child: IconButton(
-                          onPressed: () {}, icon: Icon(Icons.person)),
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: CircleAvatar(
-                      backgroundColor: Color(0xffD9D9D9),
-                      child: IconButton(
-                          onPressed: () {}, icon: Icon(Icons.notification_add)),
-                    ),
-                  )
                 ],
               ),
             ],
           ),
           SizedBox(
-            height: 15,
+            height: 10,
           ),
           Padding(
             padding: const EdgeInsets.only(left: 25),
@@ -105,36 +80,14 @@ class _University_mainState extends State<University_main> {
                   "University Management",
                   style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
                 ),
+                Divider(thickness: 23,height:10,color: Colors.red,),
                 const SizedBox(
                   width: 18,
-                ),
-                InkWell(
-                  onTap: () {},
-                  child: Container(
-                    child: const Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          "ADD University",
-                          style: TextStyle(
-                              color: Colors.white, fontWeight: FontWeight.bold),
-                        ),
-                        Icon(
-                          Icons.add,
-                          color: Colors.white,
-                        ),
-                      ],
-                    ),
-                    height: 50,
-                    width: 280,
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(5),
-                        color: Color(0xff0A71CB)),
-                  ),
                 ),
               ],
             ),
           ),
+          SizedBox(height: 20,),
           Expanded(
             child: Container(
               // Background color
@@ -146,6 +99,8 @@ class _University_mainState extends State<University_main> {
                         MediaQuery.of(context).size.width, // Ensures full width
                   ),
                   child: DataTable(
+                    headingRowColor: MaterialStateColor.resolveWith((states) => Colors.grey.shade300),
+
                     // border: TableBorder(
                     //   verticalInside: BorderSide(
                     //       color: Colors.black,
@@ -159,7 +114,7 @@ class _University_mainState extends State<University_main> {
                       _buildColumn('country'),
                       _buildColumn('Type'),
                       _buildColumn('Established'),
-                      _buildColumn('Edit/Delete'),
+                      _buildColumn('Action'),
                     ],
 
                     rows: List.generate(
@@ -167,6 +122,7 @@ class _University_mainState extends State<University_main> {
                       (index) {
                         final student = students[index];
                         return DataRow(
+
                           cells: [
                             DataCell(Text(
                               student.University_name,
@@ -178,8 +134,13 @@ class _University_mainState extends State<University_main> {
                             DataCell(Row(
                               children: [
                         IconButton(
+                        icon: Icon(Icons.remove_red_eye, color: Colors.green),
+                        iconSize: 30.0,
+                        onPressed: () {
+                        print('View all  button pressed');
+                        },),IconButton(
                         icon: Icon(Icons.delete, color: Colors.red),
-                        iconSize: 40.0,
+                        iconSize: 30.0,
                         onPressed: () {
                         print('Delete button pressed');
                         },),

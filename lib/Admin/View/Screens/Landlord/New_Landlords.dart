@@ -44,29 +44,30 @@ class Landlord extends StatelessWidget {
                   ),
                   Row(
                     children: [
+                      CircleAvatar(backgroundColor: Color(0xffD9D9D9), child: Icon(Icons.notification_add)),
+                      SizedBox(width: 10),
                       Container(
-                        height: 40,
-                        width: 300,
-                        child: TextField(
-                          decoration: InputDecoration(
-                            filled: true,
-                            fillColor: Colors.white,
-                            hintText: "Search property",
-                            prefixIcon: Icon(Icons.search,
-                                color: Colors.grey, size: 21),
-                            border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(18)),
-                          ),
+                        padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 6),
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(20),
+                          border: Border.all(width: 0.5, color: Colors.grey),
+                        ),
+                        child: Row(
+                          children: [
+                            const CircleAvatar(
+                              radius: 20, // Ensure a proper radius is set
+                              backgroundColor: Colors.grey, // Fallback color
+                              backgroundImage: AssetImage('assets/Profile/img.png'), // Corrected Path
+                            ),
+                            const SizedBox(width: 10),
+                            const Text(
+                              "Admin",
+                              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                            ),
+                          ],
                         ),
                       ),
-                      SizedBox(width: 10),
-                      CircleAvatar(
-                          backgroundColor: Color(0xffD9D9D9),
-                          child: Icon(Icons.person)),
-                      SizedBox(width: 10),
-                      CircleAvatar(
-                          backgroundColor: Color(0xffD9D9D9),
-                          child: Icon(Icons.notification_add)),
                     ],
                   ),
                 ],
@@ -119,11 +120,15 @@ class Landlord extends StatelessWidget {
 
       scrollDirection: Axis.horizontal,
       child: DataTable(
-        columnSpacing: 20,
-        // Adjust spacing
-        dataRowMinHeight: 60,
-        // Minimum row height
+        headingRowColor: MaterialStateColor.resolveWith((states) => Colors.grey.shade300), // Grey color for the header
+
+        columnSpacing: 45,
         dataRowMaxHeight: 100,
+        // columnSpacing: 20,
+        // // Adjust spacing
+        // dataRowMinHeight: 60,
+        // // Minimum row height
+        // dataRowMaxHeight: 100,
 
         // Maximum row height
         decoration: BoxDecoration(color: Colors.white),
@@ -209,13 +214,11 @@ class Landlord extends StatelessWidget {
 Widget _buildLandlordTable2() => SingleChildScrollView(
   scrollDirection: Axis.horizontal,
   child: DataTable(
+    headingRowColor: MaterialStateColor.resolveWith((states) => Colors.grey.shade300), // Grey color for the header
     columnSpacing: 20,
-    // Adjust spacing
-    dataRowMinHeight: 60,
-    // Minimum row height
-    dataRowMaxHeight: 100,
-    // Maximum row height
-    decoration: BoxDecoration(color: Colors.white),
+    horizontalMargin: 2.0, // Adjust spacing
+    dataRowMinHeight: 60, // Minimum row height
+    dataRowMaxHeight: 100, // Maximum row height
     columns: [
       _buildColumn('S/NO'),
       _buildColumn('Name'),
@@ -276,6 +279,7 @@ Widget _buildLandlordTable2() => SingleChildScrollView(
 Widget _buildLandlordTable3() => SingleChildScrollView(
   scrollDirection: Axis.horizontal,
   child: DataTable(
+    headingRowColor: MaterialStateColor.resolveWith((states) => Colors.grey.shade300), // Grey color for the header
     columnSpacing: 20,
     // Adjust spacing
     dataRowMinHeight: 60,
@@ -352,21 +356,16 @@ Widget _buildLandlordTable3() => SingleChildScrollView(
 );
 
 
+// Helper function for styling the column headers
+DataColumn _buildColumn(String label) {
+  return DataColumn(
+    label: Text(
+      label,
+      style: TextStyle(fontWeight: FontWeight.bold), // Make header text bold
+    ),
+  );
+}
 
-
-
-  /// **Reusable Column Builder**
-  DataColumn _buildColumn(String title) {
-    return DataColumn(
-      label: Text(
-        title,
-        style: TextStyle(
-            color: Colors.grey.shade900,
-            fontWeight: FontWeight.bold,
-            fontSize: 18),
-      ),
-    );
-  }
 
 /// **Sample Data (Replace with actual data from API or DB)**
 List<LandlordModel> landlords = [
@@ -405,3 +404,27 @@ class LandlordModel {
 
 
 
+
+
+// Widget _buildLandlordTable2() => SingleChildScrollView(
+//   scrollDirection: Axis.horizontal,
+//   child: DataTable(
+//     headingRowColor: MaterialStateColor.resolveWith((states) => Colors.grey.shade300),
+//     columnSpacing: 20,
+//     horizontalMargin:2.0,
+//     // Adjust spacing
+//     dataRowMinHeight: 60,
+//     // Minimum row height
+//     dataRowMaxHeight: 100,
+//     // Maximum row height
+//     decoration: BoxDecoration(color: Colors.white),
+//     columns: [
+//       _buildColumn('S/NO'),
+//       _buildColumn('Name'),
+//       _buildColumn('Email'),
+//       _buildColumn('Phone number'),
+//       _buildColumn('Address'),
+//       _buildColumn('Gender'),
+//       _buildColumn('ID proof'),
+//       _buildColumn('Action'),
+//     ],

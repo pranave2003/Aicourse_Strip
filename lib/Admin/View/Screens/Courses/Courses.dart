@@ -77,56 +77,33 @@ class _Courses_mainState extends State<Courses_main> {
               ),
               Row(
                 children: [
+                  CircleAvatar(backgroundColor: Color(0xffD9D9D9), child: Icon(Icons.notification_add)),
+                  SizedBox(width: 10),
                   Container(
-                    height: 40,
-                    width: 400,
-                    decoration:
-                    BoxDecoration(borderRadius: BorderRadius.circular(18)),
-                    child: TextField(
-                      decoration: InputDecoration(
-                        filled: true,
-                        fillColor: Colors.white,
-                        enabledBorder: const OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.grey),
+                    padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 6),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(20),
+                      border: Border.all(width: 0.5, color: Colors.grey),
+                    ),
+                    child: Row(
+                      children: [
+                        const CircleAvatar(
+                          radius: 20, // Ensure a proper radius is set
+                          backgroundColor: Colors.grey, // Fallback color
+                          backgroundImage: AssetImage('assets/Profile/img.png'), // Corrected Path
                         ),
-                        border: OutlineInputBorder(
-                          borderSide: BorderSide(width: .5),
-                          borderRadius: BorderRadius.circular(18),
+                        const SizedBox(width: 10),
+                        const Text(
+                          "Admin",
+                          style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                         ),
-                        focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(18),
-                          borderSide:
-                          BorderSide(color: Theme.of(context).primaryColor),
-                        ),
-                        contentPadding:
-                        const EdgeInsets.symmetric(vertical: 6),
-                        hintText: 'Search university or courses',
-                        prefixIcon: const Icon(
-                          Icons.search,
-                          color: Colors.grey,
-                          size: 21,
-                        ),
-                      ),
+                      ],
                     ),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: CircleAvatar(
-                      backgroundColor: Color(0xffD9D9D9),
-                      child: IconButton(
-                          onPressed: () {}, icon: Icon(Icons.person)),
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: CircleAvatar(
-                      backgroundColor: Color(0xffD9D9D9),
-                      child: IconButton(
-                          onPressed: () {}, icon: Icon(Icons.notifications)),
-                    ),
-                  )
                 ],
               ),
+
             ],
           ),
           SizedBox(height: 15),
@@ -141,22 +118,6 @@ class _Courses_mainState extends State<Courses_main> {
                 ),
                 SizedBox(height: 5),
                 Divider(thickness: 2, color: Colors.grey),
-                // ElevatedButton.icon(
-                //   onPressed: () {
-                //     // Action to add a course
-                //   },
-                //   icon: const Icon(Icons.add),
-                //   label: const Text("Add"),
-                //   style: ElevatedButton.styleFrom(
-                //     backgroundColor: const Color(0xff0A71CB),
-                //     foregroundColor: Colors.white,
-                //     padding:
-                //     const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
-                //     shape: RoundedRectangleBorder(
-                //       borderRadius: BorderRadius.circular(5),
-                //     ),
-                //   ),
-                // ),
               ],
             ),
           ),
@@ -169,6 +130,17 @@ class _Courses_mainState extends State<Courses_main> {
                   minWidth: MediaQuery.of(context).size.width,
                 ),
                 child: DataTable(
+                  headingRowColor: MaterialStateColor.resolveWith((states) => Colors.grey.shade300),
+                  horizontalMargin:2.0,
+                  columnSpacing: 40,
+                  dataRowMaxHeight: 70,
+
+                  // columnSpacing: 50,
+                  // // Adjust spacing
+                  // dataRowMinHeight: 10,
+                  // Minimum row height
+                  // dataRowMaxHeight: 180,
+
                   decoration: BoxDecoration(color: Colors.white),
                   columns: [
                     _buildColumn('Country Name'),
@@ -196,7 +168,7 @@ class _Courses_mainState extends State<Courses_main> {
                             children: [
                               IconButton(
                                 icon: Icon(Icons.remove_red_eye,
-                                    color: Colors.black),
+                                    color: Colors.green),
                                 onPressed: () {
                                   print('View button pressed');
                                 },
