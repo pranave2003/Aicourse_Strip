@@ -114,7 +114,7 @@ class _PropertyAddState extends State<PropertyAdd> {
                           ),
                           SizedBox(width: 10),
                           Text(
-                            "Admin",
+                            "Landlord",
                             style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                           ),
                         ],

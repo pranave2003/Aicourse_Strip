@@ -72,7 +72,7 @@ class _PropertyState extends State<Property> {
                         ),
                         const SizedBox(width: 10),
                         const Text(
-                          "Admin",
+                          "Landlord",
                           style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                         ),
                       ],
