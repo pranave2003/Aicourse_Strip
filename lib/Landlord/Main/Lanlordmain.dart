@@ -1,5 +1,6 @@
 
 import 'package:course_connect/Landlord/Views/Screens/Property/Property.dart';
+import 'package:course_connect/Landlord/Views/Screens/Property/PropertyAdd.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -85,7 +86,7 @@ class _AdminPageState extends State<AdminPage> {
                   icon: Icons.apartment,
                   children: [
                     _buildSubListTile("View Property",Property()),
-                    _buildSubListTile("Add Property", const Placeholder()),
+                    _buildSubListTile("Add Property", PropertyAdd()),
                     _buildSubListTile("Edit Property", const Placeholder()),
                   ],
                 ),
