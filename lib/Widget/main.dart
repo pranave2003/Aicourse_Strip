@@ -1,8 +1,18 @@
+import 'package:course_connect/Landlord/Views/Screens/Auth/Login.dart';
+import 'package:course_connect/Landlord/Views/Screens/Auth/Signup.dart';
 import 'package:course_connect/User/Accomodation/BookingConfirmationPage.dart';
 import 'package:course_connect/User/Accomodation/BookingFormPage.dart';
 import 'package:course_connect/User/Accomodation/BookingStatus.dart';
 import 'package:course_connect/User/Accomodation/PropertyDetailsPage.dart';
 import 'package:course_connect/User/Ai_course_finder/ApplicationStatusPage.dart';
+import 'package:course_connect/User/Ai_course_finder/Document_upload.dart';
+import 'package:course_connect/User/Sreens/BottomNavigation/Bottom_Nav.dart';
+import 'package:course_connect/User/Sreens/Home/homepage.dart';
+import 'package:course_connect/User/Sreens/auth/Splash1.dart';
+import 'package:course_connect/User/Sreens/auth/Splash2.dart';
+import 'package:course_connect/User/Sreens/auth/Splash3.dart';
+import 'package:course_connect/User/Sreens/auth/onboarding_screen.dart';
+import 'package:course_connect/User/Sreens/auth/splash.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -22,7 +32,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home:BookingConfirmationPage(),
+      home:Login(),
     );
   }
 }

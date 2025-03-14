@@ -1,113 +1,120 @@
+import 'package:course_connect/Widget/Constands/colors.dart';
 import 'package:flutter/material.dart';
-// import 'package:file_picker/file_picker.dart';
 
 void main() {
   runApp(MaterialApp(
     home: Document_upload(),
+    debugShowCheckedModeBanner: false,
   ));
 }
 
-class Document_upload extends StatefulWidget {
-  @override
-  _Document_uploadState createState() => _Document_uploadState();
-}
-
-class _Document_uploadState extends State<Document_upload> {
-  Map<String, String?> uploadedFiles = {};
-
-  // Future<void> _pickFile(String field) async {
-  //   FilePickerResult  result = await FilePicker.platform.pickFiles();
-  //   if (result != null) {
-  //     setState(() {
-  //       uploadedFiles[field] = result.files.single.name;
-  //     });
-  //   }
-  // }
-
+class Document_upload extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Document Upload", style: TextStyle(color: Colors.blue, fontWeight: FontWeight.bold)),
-        backgroundColor: Colors.white,
-        elevation: 0,
         leading: IconButton(
-          icon: Icon(Icons.arrow_back, color: Colors.black),
-          onPressed: () {},
+          icon: Icon(Icons.arrow_back),
+          onPressed: () {
+            Navigator.pop(context);
+          },
         ),
+        // title: Text('Document Upload', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+        // backgroundColor: Colors.white,
+        foregroundColor: Colors.black,
+        elevation: 0,
       ),
       body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              buildUploadField("Educational Certificates"),
-              buildUploadField("UG Provision (if applicable)"),
-              buildUploadField("Transcripts"),
-              buildUploadField("University Application Document (mandatory)"),
-              buildUploadField("English Test Result"),
-              SizedBox(height: 10),
-              Text("Statement and Recommendation", style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.blue)),
-              buildUploadField("Statement of Purpose"),
-              buildUploadField("Letter of Recommendation"),
-              SizedBox(height: 10),
-              Text("Travel Documents", style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.blue)),
-              buildUploadField("Travel and Emigration Documents"),
-              SizedBox(height: 20),
-              SizedBox(
-                width: double.infinity,
-                child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.blue,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                  ),
-                  onPressed: () {},
-                  child: Text("Next", style: TextStyle(color: Colors.white)),
-                ),
+        padding: EdgeInsets.all(16.0),
+        child: Column(
+          children: [
+            Expanded(
+              child: ListView(
+                children: [
+                  SectionHeader(title: 'Required Documents'),
+                  UploadTile(title: 'Transcripts (High School, Undergraduate)'),
+                  UploadTile(title: 'Statement of Purpose (SOP)'),
+                  UploadTile(title: 'Letter of Recommendation (LOR)'),
+                  UploadTile(title: 'English Test Result (IELTS, TOEFL, PTE)'),
+                ],
               ),
-            ],
-          ),
+            ),
+            SizedBox(height: 20),
+            ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                minimumSize: Size(double.infinity, 50),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                backgroundColor: blueColor,
+              ),
+              onPressed: () {},
+              child: Text(
+                'Next',
+                style: TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold),
+              ),
+            ),
+          ],
         ),
       ),
     );
   }
+}
 
-  Widget buildUploadField(String label) {
+class SectionHeader extends StatelessWidget {
+  final String title;
+  SectionHeader({required this.title});
+
+  @override
+  Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 8.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+      padding: const EdgeInsets.symmetric(vertical: 10.0),
+      child: Text(
+        title,
+        style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.blueAccent),
+      ),
+    );
+  }
+}
+
+class UploadTile extends StatelessWidget {
+  final String title;
+  UploadTile({required this.title});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: EdgeInsets.symmetric(vertical: 8.0),
+      padding: EdgeInsets.all(12.0),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(8),
+        border: Border.all(color: Colors.grey.shade300),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey.withOpacity(0.2),
+            spreadRadius: 1,
+            blurRadius: 5,
+            offset: Offset(0, 2),
+          ),
+        ],
+      ),
+      child: Row(
         children: [
-          Text(label, style: TextStyle(fontWeight: FontWeight.bold)),
-          SizedBox(height: 5),
-          GestureDetector(
-            // onTap: () => _pickFile(label),
-            child: Container(
-              padding: EdgeInsets.symmetric(vertical: 12, horizontal: 10),
-              decoration: BoxDecoration(
-                border: Border.all(color: Colors.grey),
-                borderRadius: BorderRadius.circular(8),
-              ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(uploadedFiles[label] ?? "Upload $label...", style: TextStyle(color: Colors.grey)),
-                  Icon(Icons.cloud_upload, color: Colors.blue),
-                ],
-              ),
+          Container(
+            padding: EdgeInsets.all(12),
+            decoration: BoxDecoration(
+              color: Colors.blue,
+              borderRadius: BorderRadius.circular(8),
             ),
+            child: Icon(Icons.upload, color: Colors.white),
+          ),
+          SizedBox(width: 12),
+          Expanded(
+            child: Text(title, style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500)),
           ),
         ],
       ),
     );
   }
-}
-
-class FilePicker {
-}
-
-class FilePickerResult {
 }
