@@ -1,3 +1,4 @@
+import 'package:course_connect/User/Ai_course_finder/BachelorsDetailsOverall.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -10,7 +11,7 @@ class Bachelors_organization extends StatefulWidget {
 
 class _Bachelors_organizationState extends State<Bachelors_organization> {
   int? selectedIndex; // Track selected container index
-  String? selectedTest; // Selected test name
+  String? selectedOrganization; // Selected test name
   int age = 10; // Initialize age variable
 
   // List of test options
@@ -79,8 +80,8 @@ class _Bachelors_organizationState extends State<Bachelors_organization> {
                     onTap: () {
                       setState(() {
                         selectedIndex = index;
-                        selectedTest = testOptions[index];
-                        print(selectedTest);
+                        selectedOrganization = testOptions[index];
+                        print(selectedOrganization);
                       });
                     },
                     child: Container(
@@ -144,9 +145,24 @@ class _Bachelors_organizationState extends State<Bachelors_organization> {
             // Continue Button
             InkWell(
               onTap: () {
-                print("Selected Test: $selectedTest");
-                print("Selected Age: $age");
+                if (selectedOrganization != null) {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => BachelorsDetailsOverall(),
+                    ),
+                  );
+                  print("Selected  Organization: $selectedOrganization");
+                }
+                else {
+                  print("Selected  Organization: $selectedOrganization");
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(content: Text("No Organization selected")),
+                  );
+                }
               },
+
+
               child: Container(
                 height: 51,
                 width: 231,

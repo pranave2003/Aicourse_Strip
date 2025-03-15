@@ -1,4 +1,5 @@
 
+import 'package:course_connect/User/Ai_course_finder/Personal_details.dart';
 import 'package:flutter/material.dart';
 
 import '../../Widget/Constands/colors.dart';
@@ -233,21 +234,33 @@ class _UniversityDetailScreenState extends State<UniversityDetailScreen> {
             SizedBox(height:30),
             InkWell(
               onTap: () {
-              },
-              child: Container(
-                height: 51,
-                width: 231,
-                decoration: BoxDecoration(
-                  color: const Color(0xff0A71CB),
-                  borderRadius: BorderRadius.circular(30),
-                ),
-                child: const Center(
-                  child: Text(
-                    "Continue",
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 22,
-                      fontWeight: FontWeight.bold,
+                // if (selectedOrganization != null) {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => Personal_details(),
+                    ),
+                  );
+                  print("tick terms and conditions");
+                }
+                ,
+              child: Center(
+                child: Container(
+
+                  height: 51,
+                  width: 231,
+                  decoration: BoxDecoration(
+                    color: const Color(0xff0A71CB),
+                    borderRadius: BorderRadius.circular(30),
+                  ),
+                  child: const Center(
+                    child: Text(
+                      "Apply Now",
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 22,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                   ),
                 ),

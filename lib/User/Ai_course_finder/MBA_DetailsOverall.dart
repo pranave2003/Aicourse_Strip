@@ -1,3 +1,4 @@
+import 'package:course_connect/User/Ai_course_finder/Result_AICoursefInder.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -71,8 +72,14 @@ class MBA_DetailsOverall extends StatelessWidget {
             SizedBox(height: 20),
             GestureDetector(
               onTap: () {
-                print("Generate button clicked");
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => ResultAicoursefinder(),
+                  ),
+                );
               },
+
               child: Container(
                 width: 200,
                 height: 50,

@@ -1,3 +1,4 @@
+import 'package:course_connect/User/Ai_course_finder/Bachelors_activities.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -10,7 +11,7 @@ class Bachelors_academictest extends StatefulWidget {
 
 class _Bachelors_academictestState extends State<Bachelors_academictest> {
   int? selectedIndex; // Track selected container index
-  String? selectedTest; // Selected test name
+  String? selectedacademicTest; // Selected test name
   final TextEditingController percentageController = TextEditingController(); // Controller for text input
 
   // List of English language tests
@@ -80,8 +81,8 @@ class _Bachelors_academictestState extends State<Bachelors_academictest> {
                     onTap: () {
                       setState(() {
                         selectedIndex = index;
-                        selectedTest = englishTests[index];
-                        print(selectedTest);
+                        selectedacademicTest = englishTests[index];
+                        print(selectedacademicTest);
                       });
                     },
                     child: Container(
@@ -136,9 +137,23 @@ class _Bachelors_academictestState extends State<Bachelors_academictest> {
             // Continue Button
             InkWell(
               onTap: () {
-                print("Selected Test: $selectedTest");
-                print("Percentage: ${percentageController.text}");
+                if (selectedacademicTest != null) {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => Bachelors_activities(),
+                    ),
+                  );
+                  print("Selected Internship: $selectedacademicTest");
+                }
+                else {
+                  print("Percentage: ${percentageController.text}");
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(content: Text("No internship selected")),
+                  );
+                }
               },
+
               child: Container(
                 height: 51,
                 width: 231,

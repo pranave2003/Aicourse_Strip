@@ -2,6 +2,9 @@
 import 'dart:async';
 
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:course_connect/User/Accomodation/AccomodationDetailScreen.dart';
+import 'package:course_connect/User/Ai_course_finder/ChooseCountry.dart';
+import 'package:course_connect/User/Sreens/BottomNavigation/Bottom_nav2.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -201,52 +204,27 @@ class _HomepageState extends State<Homepage> {
 
 
 
-              // SizedBox(height:10),
-              // Container(
-              //   height: 84,
-              //   width: double.infinity,
-              //   decoration: BoxDecoration(
-              //     // color: Color(0xB4B4B4),
-              //     // Background color
-              //     color: Colors.grey,
-              //     border: Border.all(
-              //       // Border settings
-              //       // color: Color(0xD8E9E8),
-              //       color: Color(0xFFD8E9E8),
-              //       // Border color
-              //       width: 2, // Border width
-              //     ),
-              //     borderRadius:
-              //     BorderRadius.circular(12), // Optional: Rounded corners
-              //   ),
-              //   child: Row(
-              //     mainAxisAlignment: MainAxisAlignment.center,
-              //     children: [
-              //       Icon(
-              //         Icons.school,
-              //         size: 32,
-              //         color: Colors.black,
-              //       ),
-              //       SizedBox(width: 8),
-              //       Text(
-              //         'Choose a suitable University',
-              //         style:
-              //         TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-              //       ),
-              //       SizedBox(height: 24),
-              //     ],
-              //   ),
-              // ),
               SizedBox(height: 20),
               Row(
                 children: [
                   SizedBox(
                     height: 40,
                   ),
-                  Container(
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => ChooseCountry(),
+                        ),
+                      );
+                    },
+                    child:
+                    Container(
                     height: 84,
                     width: 180,
                     decoration: BoxDecoration(
+
                       color: Colors.white, // Background color
                       border: Border.all(
                         // Border settings
@@ -274,8 +252,18 @@ class _HomepageState extends State<Homepage> {
                       ],
                     ),
                   ),
-                  SizedBox(width: 10),
-                  Container(
+                  ),
+SizedBox(width:10,),
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => Bottom_nav2(),
+                        ),
+                      );
+                    },
+                  child:Container(
                     height: 84,
                     width: 180,
                     decoration: BoxDecoration(
@@ -303,8 +291,10 @@ class _HomepageState extends State<Homepage> {
                       ],
                     ),
                   ),
+                  ),
                 ],
               ),
+
               SizedBox(height: 20),
               Row(
                 crossAxisAlignment: CrossAxisAlignment.start,

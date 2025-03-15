@@ -1,4 +1,4 @@
-import 'package:course_connect/User/Sreens/auth/Splash1.dart';
+import 'package:course_connect/User/Sreens/auth/LoginUser.dart';
 import 'package:flutter/material.dart';
 
 import 'onboarding_screen.dart';
@@ -17,7 +17,7 @@ class _SplashState extends State<Splash> {
     // TODO: implement initState
     super.initState();
     Future.delayed(Duration(milliseconds:1000, ),() {
-      Navigator.push(context, MaterialPageRoute(builder: (context)=>Splash1()));
+      Navigator.push(context, MaterialPageRoute(builder: (context)=>LoginUser()));
     },);
   }
   @override

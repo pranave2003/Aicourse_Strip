@@ -3,6 +3,7 @@
 
 
 import 'dart:async';
+import 'package:course_connect/User/Accomodation/BookingFormPage.dart';
 import 'package:flutter/material.dart';
 
 class PropertyDetailsPage extends StatefulWidget {
@@ -264,8 +265,14 @@ class _PropertyDetailsPageState extends State<PropertyDetailsPage> {
                     width: double.infinity,
                     child:InkWell(
                       onTap: () {
-
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => BookingFormPage(),
+                          ),
+                        );
                       },
+
                       child: Container(
                         height: 51,
                         width: 231,

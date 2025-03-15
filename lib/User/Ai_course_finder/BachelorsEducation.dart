@@ -1,3 +1,5 @@
+import 'package:course_connect/User/Ai_course_finder/BachelorsCourse.dart';
+import 'package:course_connect/Widget/Constands/colors.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -147,14 +149,32 @@ class _BachelorsEducationState extends State<BachelorsEducation> {
           ),
           SizedBox(height: 50),
           InkWell(
-            onTap: () {
-              print("object");
-            },
+          //   onTap: () {
+          //     print("object");
+          //   },
+    onTap: () {
+    if (seletedEducation != null) {
+    Navigator.push(
+    context,
+    MaterialPageRoute(
+    builder: (context) => BachelorsCourse(),
+    ),
+    );
+    print("Selected Degree: $seletedEducation");
+    }
+      else {
+      print("No educational qualification selected");
+      ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text("Please select a degree first")),
+      );
+      }
+    },
+
             child: Container(
               height: 51,
               width: 231,
               decoration: BoxDecoration(
-                  color: Color(0xff0A71CB),
+                  color: blueColor,
                   borderRadius: BorderRadius.circular(30)),
               child: Center(
                   child: Text(
@@ -168,37 +188,8 @@ class _BachelorsEducationState extends State<BachelorsEducation> {
           )
 
 
-          // TextFormField(
-          //   decoration: InputDecoration(
-          //     hintText: "Percentage  %",
-          //     hintStyle: TextStyle(color: Colors.black, fontSize: 18), // Adjust text style
-          //     enabledBorder: UnderlineInputBorder(
-          //       borderSide: BorderSide(color: Colors.black), // Bottom line color
-          //     ),
-          //     focusedBorder: UnderlineInputBorder(
-          //       borderSide: BorderSide(color: Colors.black, width: 1.5), // Focused bottom line
-          //     ),
-          //   ),
-          //   textAlign: TextAlign.center, // Centers the text
-          //   style: TextStyle(color: Colors.black, fontSize: 18), // Input text style
-          // )
 
 
-          // DropdownButton<String>(
-          //   value: _selectedValue,
-          //   hint: Text('Select Board'),
-          //   items: items.map((String item) {
-          //     return DropdownMenuItem<String>(
-          //       value: item,
-          //       child: Text(item),
-          //     );
-          //   }).toList(),
-          //   onChanged: (String? newValue) {
-          //     setState(() {
-          //       _selectedValue = newValue;
-          //     });
-          //   },
-          // ),
         ],
       ),
     ));

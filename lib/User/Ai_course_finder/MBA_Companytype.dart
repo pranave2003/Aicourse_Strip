@@ -1,3 +1,6 @@
+import 'package:course_connect/User/Ai_course_finder/MBA_DetailsOverall.dart';
+import 'package:course_connect/User/Ai_course_finder/MBA_work.dart';
+import 'package:course_connect/Widget/Constands/colors.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -100,13 +103,19 @@ class _MBA_companytypeState extends State<MBA_companytype> {
               ),
               InkWell(
                 onTap: () {
-                  print("object");
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => MBA_work(),
+                    ),
+                  );
                 },
+
                 child: Container(
                   height: 51,
                   width: 231,
                   decoration: BoxDecoration(
-                      color: Color(0xff0A71CB),
+                      color: blueColor,
                       borderRadius: BorderRadius.circular(30)),
                   child: Center(
                       child: Text(
@@ -120,37 +129,7 @@ class _MBA_companytypeState extends State<MBA_companytype> {
               )
 
 
-              // TextFormField(
-              //   decoration: InputDecoration(
-              //     hintText: "Percentage  %",
-              //     hintStyle: TextStyle(color: Colors.black, fontSize: 18), // Adjust text style
-              //     enabledBorder: UnderlineInputBorder(
-              //       borderSide: BorderSide(color: Colors.black), // Bottom line color
-              //     ),
-              //     focusedBorder: UnderlineInputBorder(
-              //       borderSide: BorderSide(color: Colors.black, width: 1.5), // Focused bottom line
-              //     ),
-              //   ),
-              //   textAlign: TextAlign.center, // Centers the text
-              //   style: TextStyle(color: Colors.black, fontSize: 18), // Input text style
-              // )
 
-
-              // DropdownButton<String>(
-              //   value: _selectedValue,
-              //   hint: Text('Select Board'),
-              //   items: items.map((String item) {
-              //     return DropdownMenuItem<String>(
-              //       value: item,
-              //       child: Text(item),
-              //     );
-              //   }).toList(),
-              //   onChanged: (String? newValue) {
-              //     setState(() {
-              //       _selectedValue = newValue;
-              //     });
-              //   },
-              // ),
             ],
           ),
         ));

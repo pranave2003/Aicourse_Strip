@@ -1,3 +1,4 @@
+import 'package:course_connect/User/Ai_course_finder/BachelorsEnglish.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -25,9 +26,9 @@ class _BachelorsCourseState extends State<BachelorsCourse> {
     "BBA in Supply Chain Management",
     "BSc in Computer Science",
     "BSc in Information Technology (IT)",
-    "BTech / BE (Bachelor of Technology / Engineering)",
+    "BTech / BE ",
     "BSc in Data Science",
-    "BSc in Artificial Intelligence & Machine Learning",
+    "BSc in AI & Machine Learning",
     "BSc in Biotechnology",
     "BSc in Environmental Science",
     "BA in Political Science",
@@ -166,12 +167,29 @@ class _BachelorsCourseState extends State<BachelorsCourse> {
             const SizedBox(height: 30),
             InkWell(
               onTap: () {
-                if (selectedCourses.isNotEmpty) {
-                  print("Final Selected Courses: $selectedCourses");
-                } else {
-                  print("Please choose courses");
+                if (selectedCourses != null) {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => BachelorsEnglish(),
+                    ),
+                  );
+                  print("Selected Courses: $selectedCourses");
+                }
+                else {
+                  print("No course selected");
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(content: Text("Please choose courses")),
+                  );
                 }
               },
+              // onTap: () {
+              //   if (selectedCourses.isNotEmpty) {
+              //     print("Final Selected Courses: $selectedCourses");
+              //   } else {
+              //     print("Please choose courses");
+              //   }
+              // },
               child: Container(
                 height: 51,
                 width: 231,

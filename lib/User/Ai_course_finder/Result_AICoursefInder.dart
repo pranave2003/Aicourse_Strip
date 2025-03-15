@@ -111,22 +111,29 @@ class ResultAicoursefinder extends StatelessWidget {
                     ),
                   ),
                 ),
+                SizedBox(
+                  width: 10,
+                ),
+                Expanded(
+                  flex: 1,
+                  child:
+                  Container(
+                    height: 50,
+                    width: 50,
+                    decoration: BoxDecoration(
+                      color: Colors.grey[100], // Soft pink background
+                      borderRadius: BorderRadius.circular(12),
+                    ),
 
-
-                const SizedBox(width: 10),
-                Container(
-                  width: 60,
-                  height: 50,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(15),
-                    color:Colors.grey,
-                  ),
-                  child: Image.asset(
-                    "assets/img_1.png",height:2,width:1,
-                    // fit: BoxFit.cover, // Ensure it displays correctly
+                    child:IconButton( icon: Icon(Icons.tune, color: Colors.brown),
+                      onPressed: () {
+                        // Filter button action
+                      },
+                    ),
                   ),
                 ),
-              ],
+],
+
             ),
             SizedBox(height: 20),
 
@@ -199,53 +206,3 @@ class ResultAicoursefinder extends StatelessWidget {
   }
 }
 
-// class UniversityDetailScreen extends StatelessWidget {
-//   final Map<String, String> university;
-//
-//   const UniversityDetailScreen({super.key, required this.university});
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       appBar: AppBar(
-//         title: Text(university['name']!),
-//       ),
-//       body: Padding(
-//         padding: const EdgeInsets.all(16.0),
-//         child: Column(
-//           crossAxisAlignment: CrossAxisAlignment.start,
-//           children: [
-//             ClipRRect(
-//               borderRadius: BorderRadius.circular(10),
-//               child: Image.network(
-//                 university['image']!,
-//                 width: double.infinity,
-//                 height: 200,
-//                 fit: BoxFit.cover,
-//               ),
-//             ),
-//             const SizedBox(height: 10),
-//             Text(
-//               university['name']!,
-//               style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
-//             ),
-//             const SizedBox(height: 5),
-//             Text('${university['location']}, ${university['campus']}'),
-//             const SizedBox(height: 5),
-//             Row(
-//               children: [
-//                 const Icon(Icons.star, color: Colors.amber),
-//                 Text(' ${university['rating']} • ${university['reviews']} Reviews'),
-//               ],
-//             ),
-//             const SizedBox(height: 10),
-//             const Text(
-//               'More details about the university can be shown here...',
-//               style: TextStyle(fontSize: 16),
-//             ),
-//           ],
-//         ),
-//       ),
-//     );
-//   }
-// }

@@ -1,3 +1,5 @@
+import 'package:course_connect/User/Ai_course_finder/MBA_Academic.dart';
+import 'package:course_connect/User/Ai_course_finder/MBA_Companytype.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -148,10 +150,20 @@ class _MBA_CoursesState extends State<MBA_Courses> {
             const SizedBox(height: 30),
             InkWell(
               onTap: () {
-                if (selectedCourses.isNotEmpty) {
+                if (selectedCourses != null) {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => MbaAcademic(),
+                    ),
+                  );
                   print("Final Selected Courses: $selectedCourses");
-                } else {
+                }
+                else {
                   print("Please choose courses");
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(content: Text("Please choose courses")),
+                  );
                 }
               },
               child: Container(

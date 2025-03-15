@@ -1,3 +1,4 @@
+import 'package:course_connect/User/Ai_course_finder/Document_upload.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -125,8 +126,16 @@ class _Personal_detailsState extends State<Personal_details> {
 
                   InkWell(
 
-                    onTap: () {
-                      print("object");
+    onTap: () {
+    // if (selectedOrganization != null) {
+    Navigator.push(
+    context,
+    MaterialPageRoute(
+    builder: (context) => Document_upload(),
+    ),
+    );
+    // print("fill all fields");
+
                     },
 
                     child:

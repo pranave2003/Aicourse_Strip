@@ -1,6 +1,11 @@
-
-
+import 'package:course_connect/User/Ai_course_finder/BachelorsEducation.dart';
+import 'package:course_connect/User/Ai_course_finder/MBA_education.dart';
+import 'package:course_connect/User/Ai_course_finder/Masters_education.dart';
 import 'package:flutter/material.dart';
+import 'package:course_connect/Widget/Constands/colors.dart';
+// import 'package:course_connect/User/Ai_course_finder/BachelorsPage.dart';
+// import 'package:course_connect/User/Ai_course_finder/MastersPage.dart';
+// import 'package:course_connect/User/Ai_course_finder/MBAPage.dart';
 
 class Degree extends StatefulWidget {
   const Degree({super.key});
@@ -13,16 +18,17 @@ class _DegreeState extends State<Degree> {
   int? selectedIndex; // Track selected grid item index
   String? selectedDegree;
 
-  final List<Map<String, String>> category = [
-    {"name": "Bachelors", "image": "assets/Country/img_7.png"},
-    {"name": "Masters", "image": "assets/Country/img_7.png"},
-    {"name": "MBA", "image": "assets/Country/img_7.png"},
+  final List<Map<String, dynamic>> category = [
+    {"name": "Bachelors", "image": "assets/Country/img_7.png", "page": BachelorsEducation()},
+    {"name": "Masters", "image": "assets/Country/img_7.png", "page": Masters_education()},
+    {"name": "MBA", "image": "assets/Country/img_7.png", "page": MbaEducation()},
   ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(leading: IconButton(
+      appBar: AppBar(
+        leading: IconButton(
           icon: Icon(Icons.arrow_back), // Back button icon
           onPressed: () {
             Navigator.pop(context); // Navigate back when tapped
@@ -41,7 +47,6 @@ class _DegreeState extends State<Degree> {
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              // const SizedBox(height: 30),
               Text(
                 "Which degree do you wish \n to pursue?",
                 textAlign: TextAlign.center,
@@ -53,7 +58,6 @@ class _DegreeState extends State<Degree> {
               ),
               const SizedBox(height: 30),
 
-              // Using Wrap for better alignment control
               Wrap(
                 alignment: WrapAlignment.center,
                 spacing: 20, // Horizontal spacing
@@ -65,8 +69,15 @@ class _DegreeState extends State<Degree> {
                       setState(() {
                         selectedIndex = index;
                         selectedDegree = category[index]["name"];
-                        print(selectedDegree);
                       });
+
+                      // Navigate to respective page
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => category[index]["page"],
+                        ),
+                      );
                     },
                     child: Container(
                       width: 160, // Fixed width for alignment

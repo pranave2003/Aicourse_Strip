@@ -1,3 +1,4 @@
+import 'package:course_connect/User/Ai_course_finder/Masters_courses.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -93,9 +94,16 @@ class _Masters_educationState extends State<Masters_education> {
               ),
               SizedBox(height: 180),
               InkWell(
-                onTap: () {
-                  print("object");
-                },
+    onTap: () {
+    Navigator.push(
+    context,
+    MaterialPageRoute(
+    builder: (context) => Masters_Courses(),
+    ),
+    );
+    },
+                // onTap: () {
+                //   print("object");
                 child: Container(
                   height: 51,
                   width: 231,
@@ -146,7 +154,6 @@ class _Masters_educationState extends State<Masters_education> {
     );
   }
 }
-
 
 
 

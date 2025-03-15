@@ -1,3 +1,4 @@
+import 'package:course_connect/User/Ai_course_finder/MastersReaserch.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -206,10 +207,19 @@ class _Maters_academicState extends State<Maters_academic> {
             // Continue Button
             InkWell(
               onTap: () {
-                print("Selected Test: $selectedTest");
-                print("Verbal Score: ${verbalScoreController.text}");
-                print("Quant Score: ${quantScoreController.text}");
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => MastersResearch(),
+                  ),
+                );
               },
+              // onTap: () {
+
+                // print("Selected Test: $selectedTest");
+                // print("Verbal Score: ${verbalScoreController.text}");
+              //   // print("Quant Score: ${quantScoreController.text}");
+              // },
               child: Container(
                 height: 51,
                 width: 231,

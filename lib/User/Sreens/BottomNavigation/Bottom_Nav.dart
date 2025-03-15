@@ -1,3 +1,5 @@
+import 'package:course_connect/User/Accomodation/BookingStatus.dart';
+import 'package:course_connect/User/Ai_course_finder/ApplicationStatusPage.dart';
 import 'package:course_connect/User/Sreens/Home/Universities.dart';
 import 'package:course_connect/User/Sreens/Home/homepage.dart';
 import 'package:flutter/material.dart';
@@ -23,8 +25,8 @@ class _Bottom_NavState extends State<Bottom_Nav> {
   final List<Widget> _pages = [
     Homepage(),
     Universities(),
-    PageTwo(),
-    PageTwo(),
+    ApplicationStatusPage()
+    // Profile(),
   ];
 
   @override
@@ -70,7 +72,7 @@ class _Bottom_NavState extends State<Bottom_Nav> {
         items: [
           BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home"),
           BottomNavigationBarItem(icon: Icon(Icons.school), label: "Colleges"),
-          BottomNavigationBarItem(icon: Icon(Icons.chat_outlined), label: "Chatbot"),
+          BottomNavigationBarItem(icon: Icon(Icons.calendar_today), label: "Applications"),
           BottomNavigationBarItem(icon: Icon(Icons.person), label: "Profile"),
         ],
       ),

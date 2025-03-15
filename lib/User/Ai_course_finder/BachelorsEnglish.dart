@@ -1,3 +1,5 @@
+import 'package:course_connect/User/Ai_course_finder/Bachelors_academictest.dart';
+import 'package:course_connect/Widget/Constands/colors.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -142,14 +144,31 @@ class _BachelorsEnglishState extends State<BachelorsEnglish> {
             // Continue Button
             InkWell(
               onTap: () {
-                print("Selected Test: $selectedTest");
-                print("Percentage: ${percentageController.text}");
+                if (selectedTest != null) {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => Bachelors_academictest(),
+                    ),
+                  );
+                  print("Selected test: $selectedTest");
+                }
+                else {
+                  print("Selected Test: $selectedTest");
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(content: Text("No Test selected")),
+                  );
+                }
               },
+              // onTap: () {
+              //   print("Selected Test: $selectedTest");
+              //   print("Percentage: ${percentageController.text}");
+              // },
               child: Container(
                 height: 51,
                 width: 231,
                 decoration: BoxDecoration(
-                  color: Color(0xff0A71CB),
+                  color: blueColor,
                   borderRadius: BorderRadius.circular(30),
                 ),
                 child: const Center(
