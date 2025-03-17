@@ -335,12 +335,13 @@ class _AccommodationDetailScreenState extends State<AccommodationDetailScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         toolbarHeight: 80,
         title: Text(
           "Finding Perfect Home for You",
           style: TextStyle(
             color: Colors.black,
-            fontSize: 20,
+            fontSize: 24,
             fontWeight: FontWeight.bold,
           ),
         ),
@@ -369,7 +370,7 @@ class _AccommodationDetailScreenState extends State<AccommodationDetailScreen> {
             SizedBox(height: 20),
             Text(
               "Student housing near Yale University",
-              style: TextStyle(color: Colors.black, fontSize: 24, fontWeight: FontWeight.bold),
+              style: TextStyle(color: Colors.black, fontSize: 20, fontWeight: FontWeight.bold),
             ),
             GridView.builder(
               physics: NeverScrollableScrollPhysics(),

@@ -104,6 +104,8 @@
 //
 //   CustomButton({required Null Function() onPressed, required String label, required String text, required MaterialColor textColor, required MaterialColor borderColor}) {}
 // }
+import 'package:course_connect/User/Sreens/BottomNavigation/Bottom_Nav.dart';
+import 'package:course_connect/User/Sreens/Home/homepage.dart';
 import 'package:course_connect/User/Sreens/auth/UserSignup.dart';
 import 'package:flutter/material.dart';
 import 'UserSignup.dart'; // Import the SignUp page
@@ -171,8 +173,14 @@ class _LoginUserState extends State<LoginUser> {
                   SizedBox(height: 20),
                   InkWell(
                     onTap: () {
-
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => Bottom_Nav(),
+                        ),
+                      );
                     },
+
                     child: Container(
                       height: 51,
                       width: 400,

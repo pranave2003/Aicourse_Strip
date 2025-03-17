@@ -1,30 +1,30 @@
-import 'package:course_connect/User/Ai_course_finder/Bachelors_activities.dart';
+import 'package:course_connect/User/Ai_course_finder/BachelorsDetailsOverall.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class Bachelors_academictest extends StatefulWidget {
-  const Bachelors_academictest({super.key});
+class Bachelors_Knowledge extends StatefulWidget {
+  const Bachelors_Knowledge({super.key});
 
   @override
-  State<Bachelors_academictest> createState() => _Bachelors_academictestState();
+  State<Bachelors_Knowledge> createState() => _Bachelors_KnowledgeState();
 }
 
-class _Bachelors_academictestState extends State<Bachelors_academictest> {
+class _Bachelors_KnowledgeState extends State<Bachelors_Knowledge> {
   int? selectedIndex; // Track selected container index
-  String? selectedacademicTest; // Selected test name
-  final TextEditingController percentageController = TextEditingController(); // Controller for text input
+  String? selectedOrganization; // Selected test name
+  int age = 10; // Initialize age variable
 
-  // List of English language tests
-  final List<String> englishTests = [
-    "ACT",
-    "SAT",
-    "TEST NOT TAKEN"
+  // List of test options
+  final List<String> testOptions = [
+    "Yes",
+    "No",
   ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Colors.white,
         leading: IconButton(
           icon: Icon(Icons.arrow_back), // Back button icon
           onPressed: () {
@@ -46,7 +46,7 @@ class _Bachelors_academictestState extends State<Bachelors_academictest> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
-                  "Which Academic test have you \n taken OR planning to take?",
+                  "Do you know the application deadlines for \n the universities you're interested in?",
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     color: Color(0xff0A1F52),
@@ -56,33 +56,33 @@ class _Bachelors_academictestState extends State<Bachelors_academictest> {
                 ),
               ],
             ),
-            SizedBox(height: 10),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Icon(Icons.light_mode_rounded, color: Colors.yellowAccent, size: 24),
-                SizedBox(width: 10),
-                Text(
-                  "Scoring high in language tests \nincreases your options multifold.",
-                  style: TextStyle(fontSize: 18),
-                ),
-              ],
-            ),
-            const SizedBox(height: 20),
+            const SizedBox(height: 30),
+            // Row(
+            //   mainAxisAlignment: MainAxisAlignment.center,
+            //   children: [
+            //     Icon(Icons.light_mode_rounded, color: Colors.yellowAccent, size: 24),
+            //     const SizedBox(width: 10),
+            //     const Text(
+            //       "Adds value to your profile.",
+            //       style: TextStyle(fontSize: 18),
+            //     ),
+            //   ],
+            // ),
+            const SizedBox(height: 30),
 
             // Dynamically generated list of test options
             Expanded(
               child: ListView.builder(
                 shrinkWrap: true,
-                itemCount: englishTests.length,
+                itemCount: testOptions.length,
                 itemBuilder: (context, index) {
                   bool isSelected = selectedIndex == index;
                   return GestureDetector(
                     onTap: () {
                       setState(() {
                         selectedIndex = index;
-                        selectedacademicTest = englishTests[index];
-                        print(selectedacademicTest);
+                        selectedOrganization = testOptions[index];
+                        print(selectedOrganization);
                       });
                     },
                     child: Container(
@@ -95,7 +95,7 @@ class _Bachelors_academictestState extends State<Bachelors_academictest> {
                       ),
                       child: Center(
                         child: Text(
-                          englishTests[index],
+                          testOptions[index],
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
                             color: isSelected ? Colors.white : Colors.black,
@@ -108,53 +108,58 @@ class _Bachelors_academictestState extends State<Bachelors_academictest> {
               ),
             ),
 
-            // Percentage Input Field (Placed directly below ListView)
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 10),
-              child: Container(
-                width: 200,
-                child: TextFormField(
-                  controller: percentageController,
-                  keyboardType: TextInputType.number,
-                  decoration: InputDecoration(
-                    hintText: "Percentage  %",
-                    hintStyle: TextStyle(color: Colors.black, fontSize: 18),
-                    enabledBorder: UnderlineInputBorder(
-                      borderSide: BorderSide(color: Colors.black),
-                    ),
-                    focusedBorder: UnderlineInputBorder(
-                      borderSide: BorderSide(color: Colors.black, width: 1.5),
-                    ),
-                  ),
-                  textAlign: TextAlign.center,
-                  style: TextStyle(color: Colors.black, fontSize: 18),
-                ),
-              ),
-            ),
-
-            SizedBox(height: 30),
-
-            // Continue Button
+            // const SizedBox(height: 30),
+            //
+            // // Age Slider
+            // Column(
+            //   children: [
+            //     const Text(
+            //       "How many months of experience?",
+            //       style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            //     ),
+            //     Slider(
+            //       value: age.toDouble(),
+            //       onChanged: (value) {
+            //         setState(() {
+            //           age = value.toInt();
+            //         });
+            //       },
+            //       min: 0,
+            //       max: 18,
+            //       divisions: 4,
+            //       label: "$age",
+            //     ),
+            //   ],
+            // ),
+            // // SizedBox(height: 10),
+            // Row(
+            //   children: [
+            //     SizedBox(width:20),
+            //     Text("0"),
+            //     SizedBox(width:285),
+            //     Text("18+ months"),
+            //   ],
+            // ),
+            //
+            // const SizedBox(height: 20),
+            //
+            // // Continue Button
             InkWell(
               onTap: () {
-                if (selectedacademicTest != null) {
+                if (selectedOrganization != null) {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => Bachelors_activities(),
+                      builder: (context) => BachelorsDetailsOverall(),
                     ),
                   );
-                  print("Selected academic test: $selectedacademicTest");
+
                 }
-                else {
-                  print("Percentage: ${percentageController.text}");
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(content: Text("No academic test selected")),
-                  );
-                }
+
               },
 
-              child: Container(
+
+               child:Container(
                 height: 51,
                 width: 231,
                 decoration: BoxDecoration(
@@ -174,7 +179,7 @@ class _Bachelors_academictestState extends State<Bachelors_academictest> {
               ),
             ),
 
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
           ],
         ),
       ),

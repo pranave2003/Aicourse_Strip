@@ -1,4 +1,5 @@
 import 'package:course_connect/User/Ai_course_finder/BachelorsDetailsOverall.dart';
+import 'package:course_connect/User/Ai_course_finder/Bachelors_Knowledge.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -149,7 +150,7 @@ class _Bachelors_organizationState extends State<Bachelors_organization> {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => BachelorsDetailsOverall(),
+                      builder: (context) => Bachelors_Knowledge(),
                     ),
                   );
                   print("Selected  Organization: $selectedOrganization");

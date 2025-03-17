@@ -9,30 +9,23 @@ class Universities extends StatefulWidget {
 
 class _UniversitiesState extends State<Universities> {
   List<Map<String, dynamic>> serviceList = [
-    {
-      "icon": "assets/img_2.png",
-      "name": "Harward \n University",
-      "surname": "Massachusetts,USA"
+
+      {
+        "icon": "assets/img_2.png",
+        "name": "Harvard \n University",
+        "surname": "Massachusetts,USA"
+      }, {
+      "icon": "assets/img_15.png",
+      "name": "Stanford \n University",
+      "surname": "Stanford, California"
     }, {
-      "icon": "assets/img_2.png",
-      "name": "Harward \n University",
+      "icon": "assets/img_16.png",
+      "name":" Chicago	\n University",
       "surname": "Massachusetts,USA"
-    }, {
-      "icon": "assets/img_2.png",
-      "name": "Harward \n University",
-      "surname": "Massachusetts,USA"
-    }, {
-      "icon": "assets/img_2.png",
-      "name": "Harward \n University",
-      "surname": "Massachusetts,USA"
-    }, {
-      "icon": "assets/img_2.png",
-      "name": "Harward \n University",
-      "surname": "Massachusetts,USA"
-    }, {
-      "icon": "assets/img_2.png",
-      "name": "Harward \n University",
-      "surname": "Massachusetts,USA"
+    },  {
+      "icon": "assets/img_19.png",
+      "name": "Yale \n University",
+      "surname": "United States"
     },
   ];
   List<Map<String, dynamic>> serviceList2 = [

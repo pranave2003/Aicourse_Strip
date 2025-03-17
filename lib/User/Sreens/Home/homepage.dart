@@ -45,28 +45,28 @@ class _HomepageState extends State<Homepage> {
   List<Map<String, dynamic>> serviceList = [
     {
       "icon": "assets/img_2.png",
-      "name": "Harward \n University",
+      "name": "Harvard \n University",
       "surname": "Massachusetts,USA"
     }, {
-      "icon": "assets/img_2.png",
-      "name": "Harward \n University",
+      "icon": "assets/img_15.png",
+      "name": "Stanford \n University",
+      "surname": "Stanford, California"
+    }, {
+      "icon": "assets/img_16.png",
+      "name":" Chicago	\n University",
       "surname": "Massachusetts,USA"
     }, {
-      "icon": "assets/img_2.png",
-      "name": "Harward \n University",
-      "surname": "Massachusetts,USA"
+      "icon": "assets/img_17.png",
+      "name": "Toronto \n University",
+      "surname": "Toronto,Canada"
     }, {
-      "icon": "assets/img_2.png",
-      "name": "Harward \n University",
-      "surname": "Massachusetts,USA"
+      "icon": "assets/img_19.png",
+      "name": "Yale \n University",
+      "surname": "United States"
     }, {
-      "icon": "assets/img_2.png",
-      "name": "Harward \n University",
-      "surname": "Massachusetts,USA"
-    }, {
-      "icon": "assets/img_2.png",
-      "name": "Harward \n University",
-      "surname": "Massachusetts,USA"
+      "icon": "assets/img_20.png",
+      "name": "Ota go\n University",
+      "surname": "Dunedin, New Zealand"
     },
   ];
 
@@ -74,6 +74,7 @@ class _HomepageState extends State<Homepage> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
+          automaticallyImplyLeading: false,
           // backgroundColor: Colors.yellowAccent,
           toolbarHeight: 120,
           title: Text(

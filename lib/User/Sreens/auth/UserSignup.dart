@@ -1,3 +1,6 @@
+import 'package:course_connect/User/Sreens/BottomNavigation/Bottom_Nav.dart';
+import 'package:course_connect/User/Sreens/Home/homepage.dart';
+import 'package:course_connect/User/Sreens/auth/LoginUser.dart';
 import 'package:course_connect/Widget/Constands/colors.dart';
 import 'package:flutter/material.dart';
 
@@ -61,9 +64,15 @@ class _UserSignupState extends State<UserSignup> {
                   height: 15,
                 ),
                 InkWell(
-                  onTap: () {
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) =>Bottom_Nav()
+                        ),
+                      );
+                    },
 
-                  },
                   child: Container(
                     height: 51,
                     width: 400,
@@ -83,11 +92,26 @@ class _UserSignupState extends State<UserSignup> {
                     ),
                   ),
                 ),
+                // Row(
+                //   mainAxisAlignment: MainAxisAlignment.center,
+                //   children: [
+                //     Text("New to Course Connect AI ?"),
+                //     TextButton(onPressed: () {}, child: Text("Sign In"))
+                //   ],
+                // )
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text("New to Course Connect AI ?"),
-                    TextButton(onPressed: () {}, child: Text("Sign In"))
+                    TextButton(
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => LoginUser()), // Navigate to SignUp page
+                        );
+                      },
+                      child: Text("Sign In"),
+                    ),
                   ],
                 )
               ],
