@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 import 'EditProfilePage.dart'; // Import the Edit Profile Page
+import 'AboutUs.dart';
+import 'ContactUs.dart';
+import 'PrivacyPolicy.dart';
+import 'TermsAndConditions.dart';
 
 class Profile extends StatelessWidget {
   @override
@@ -30,7 +34,7 @@ class Profile extends StatelessWidget {
               children: [
                 CircleAvatar(
                   radius: 50,
-                  backgroundImage: AssetImage("assets/profile/img_1.png.jpg"), // Profile image
+                  backgroundImage: AssetImage("assets/Profile/img_4.png"), // Profile image
                 ),
                 SizedBox(height: 10),
                 Text(
@@ -65,12 +69,24 @@ class Profile extends StatelessWidget {
           Expanded(
             child: ListView(
               children: [
-                profileOption(Icons.info, "About Us", Colors.blue, () {}),
-                profileOption(Icons.call, "Contact Us", Colors.blue, () {}),
-                profileOption(Icons.description, "Terms & Conditions", Colors.blue, () {}),
-                profileOption(Icons.lock, "Privacy Policies", Colors.blue, () {}),
-                profileOption(Icons.remove_circle, "Remove Account", Colors.red, () {}), // Red Icon
-                profileOption(Icons.exit_to_app, "Log Out", Colors.red, () {}), // Red Icon
+                profileOption(Icons.info, "About Us", Colors.blue, () {
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => AboutUs()));
+                }),
+                profileOption(Icons.call, "Contact Us", Colors.blue, () {
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => ContactUs()));
+                }),
+                profileOption(Icons.description, "Terms & Conditions", Colors.blue, () {
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => TermsAndConditions()));
+                }),
+                profileOption(Icons.lock, "Privacy Policies", Colors.blue, () {
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => PrivacyPolicy()));
+                }),
+                profileOption(Icons.remove_circle, "Remove Account", Colors.red, () {
+                  // Handle Remove Account action
+                }, hideArrow: true),
+                profileOption(Icons.exit_to_app, "Log Out", Colors.red, () {
+                  // Handle Log Out action
+                }, hideArrow: true),
               ],
             ),
           ),
@@ -80,7 +96,7 @@ class Profile extends StatelessWidget {
   }
 
   // Profile Option with Container
-  Widget profileOption(IconData icon, String title, Color iconColor, VoidCallback onTap) {
+  Widget profileOption(IconData icon, String title, Color iconColor, VoidCallback onTap, {bool hideArrow = false}) {
     return Container(
       margin: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       padding: EdgeInsets.all(12),
@@ -97,9 +113,9 @@ class Profile extends StatelessWidget {
         ],
       ),
       child: ListTile(
-        leading: Icon(icon, color: iconColor, size: 24), // Dynamic Icon Color
+        leading: Icon(icon, color: iconColor, size: 24),
         title: Text(title, style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500)),
-        trailing: Icon(Icons.arrow_forward_ios, size: 16, color: Colors.grey),
+        trailing: hideArrow ? null : Icon(Icons.arrow_forward_ios, size: 16, color: Colors.grey), // Hide arrow for specific options
         onTap: onTap,
       ),
     );

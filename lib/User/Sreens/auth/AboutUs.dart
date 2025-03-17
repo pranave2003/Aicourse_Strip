@@ -37,7 +37,7 @@ class AboutUs extends StatelessWidget {
   Widget iconSection(IconData icon, String title) {
     return Row(
       children: [
-        Icon(icon, size: 28, color: Colors.blueAccent),
+        Icon(icon, size: 28, color: Colors.black),
         SizedBox(width: 10),
         Text(
           title,
