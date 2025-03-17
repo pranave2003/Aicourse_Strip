@@ -26,7 +26,7 @@ class _Bottom_nav2State extends State<Bottom_nav2> {
   final List<Widget> _pages = [
     AccommodationDetailScreen(),
     BookingStatus(),
-    FeedbackScreen(),
+    // FeedbackScreen(),
     // Profile(),
   ];
 
@@ -73,7 +73,7 @@ class _Bottom_nav2State extends State<Bottom_nav2> {
         items: [
           BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home"),
           BottomNavigationBarItem(icon: Icon(Icons.calendar_month_sharp), label: "Bookings"),
-          BottomNavigationBarItem(icon: Icon(Icons.feedback_sharp), label: "Feedback"),
+          // BottomNavigationBarItem(icon: Icon(Icons.feedback_sharp), label: "Feedback"),
 
           BottomNavigationBarItem(icon: Icon(Icons.person), label: "Profile"),
         ],

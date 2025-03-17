@@ -106,6 +106,7 @@
 // }
 import 'package:course_connect/User/Sreens/BottomNavigation/Bottom_Nav.dart';
 import 'package:course_connect/User/Sreens/Home/homepage.dart';
+import 'package:course_connect/User/Sreens/auth/Forgotpswd.dart';
 import 'package:course_connect/User/Sreens/auth/UserSignup.dart';
 import 'package:flutter/material.dart';
 import 'UserSignup.dart'; // Import the SignUp page
@@ -207,11 +208,19 @@ class _LoginUserState extends State<LoginUser> {
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 TextButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => Forgotpswd(),
+                      ),
+                    );
+                  },
                   child: Text(
                     "Forgot Password?",
                     style: TextStyle(color: Colors.black),
                   ),
+
                 )
               ],
             ),

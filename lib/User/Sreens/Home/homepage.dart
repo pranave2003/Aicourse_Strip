@@ -5,6 +5,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:course_connect/User/Accomodation/AccomodationDetailScreen.dart';
 import 'package:course_connect/User/Ai_course_finder/ChooseCountry.dart';
 import 'package:course_connect/User/Sreens/BottomNavigation/Bottom_nav2.dart';
+import 'package:course_connect/User/Sreens/auth/Notifications.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -75,9 +76,8 @@ class _HomepageState extends State<Homepage> {
     return Scaffold(
         appBar: AppBar(
           automaticallyImplyLeading: false,
-          // backgroundColor: Colors.yellowAccent,
           toolbarHeight: 120,
-          title: Text(
+          title: const Text(
             "Find Your\nDream Degree",
             style: TextStyle(
               color: Color(0xFF048063),
@@ -89,14 +89,21 @@ class _HomepageState extends State<Homepage> {
             Padding(
               padding: const EdgeInsets.only(right: 18.0),
               child: GestureDetector(
-                onTap: () {},
+                onTap: () {
+                  // Navigate to Notifications Page
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => Notifications()),
+                  );
+                },
                 child: Container(
                   height: 52,
                   width: 52,
                   decoration: BoxDecoration(
-                      border: Border.all(),
-                      borderRadius: BorderRadius.circular(50)),
-                  child: Center(
+                    border: Border.all(),
+                    borderRadius: BorderRadius.circular(50),
+                  ),
+                  child: const Center(
                     child: Icon(Icons.notifications),
                   ),
                 ),
@@ -104,6 +111,7 @@ class _HomepageState extends State<Homepage> {
             ),
           ],
         ),
+
         body: Padding(
           padding: const EdgeInsets.all(10),
           child: ListView(

@@ -156,7 +156,7 @@ class _ChooseCountryState extends State<ChooseCountry> {
                   borderRadius: BorderRadius.circular(30)),
               child: Center(
                   child: Text(
-                    "Open To All",
+                    "Continue",
                     style: TextStyle(
                         color: Colors.white,
                         fontSize: 22,

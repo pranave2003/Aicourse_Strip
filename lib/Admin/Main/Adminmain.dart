@@ -372,6 +372,7 @@
 //     );
 //   }
 // }
+import 'package:course_connect/Admin/View/Screens/Feedback/FeedbackView.dart';
 import 'package:flutter/material.dart';
 // import 'package:course_connect/Admin/View/Screens/Dashboard.dart';
 import 'package:course_connect/Admin/View/Screens/Courses/Addcourses.dart';
@@ -510,7 +511,13 @@ class _AdminPageState extends State<AdminPage> {
                   title: 'Users',
                   icon: Icons.supervised_user_circle_sharp,
                   children: [
-                    SubListTile("View Users", const Userview()),
+                    SubListTile("View Users",  Userview()),
+                  ],
+                ),_buildMainExpansionTile(
+                  title: 'Feedback',
+                  icon: Icons.feedback,
+                  children: [
+                    SubListTile("View Feedback", FeedbackView()),
                   ],
                 ),
                 _buildMainExpansionTile(
@@ -518,6 +525,25 @@ class _AdminPageState extends State<AdminPage> {
                   icon: Icons.my_library_books_rounded,
                   children: [
                     SubListTile("Terms and Conditions",  CountryRules()),
+                  ],
+                ),
+                _buildMainExpansionTile(
+                  title: 'Account',
+                  icon: Icons.person,
+                  children: [
+                    // SubListTile("Account", FeedbackView()),
+                  ],
+                ),_buildMainExpansionTile(
+                  title: 'Settings',
+                  icon: Icons.settings,
+                  children: [
+                    // SubListTile("Account", FeedbackView()),
+                  ],
+                ),_buildMainExpansionTile(
+                  title: 'Log Out',
+                  icon: Icons.login_outlined,
+                  children: [
+                    // SubListTile("Account", FeedbackView()),
                   ],
                 ),
               ],

@@ -337,6 +337,25 @@ class _AdminPageState extends State<AdminPage> {
                     _buildSubListTile("View Payment",  ViewPayment()),
                   ],
                 ),
+                _buildMainExpansionTile(
+                  title: 'Account',
+                  icon: Icons.person,
+                  children: [
+                    // SubListTile("Account", FeedbackView()),
+                  ],
+                ),_buildMainExpansionTile(
+                  title: 'Settings',
+                  icon: Icons.settings,
+                  children: [
+                    // SubListTile("Account", FeedbackView()),
+                  ],
+                ),_buildMainExpansionTile(
+                  title: 'Log Out',
+                  icon: Icons.login_outlined,
+                  children: [
+                    // SubListTile("Account", FeedbackView()),
+                  ],
+                ),
               ],
             ),
           ),

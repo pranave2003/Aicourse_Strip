@@ -11,6 +11,9 @@ import 'package:course_connect/User/Ai_course_finder/ApplicationStatusPage.dart'
 import 'package:course_connect/User/Ai_course_finder/Document_upload.dart';
 import 'package:course_connect/User/Sreens/BottomNavigation/Bottom_Nav.dart';
 import 'package:course_connect/User/Sreens/Home/homepage.dart';
+import 'package:course_connect/User/Sreens/auth/Forgotpswd.dart';
+import 'package:course_connect/User/Sreens/auth/Notifications.dart';
+import 'package:course_connect/User/Sreens/auth/Profile.dart';
 import 'package:course_connect/User/Sreens/auth/Splash1.dart';
 import 'package:course_connect/User/Sreens/auth/Splash2.dart';
 import 'package:course_connect/User/Sreens/auth/Splash3.dart';
@@ -36,7 +39,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home:Splash(),
+      home:Profile(),
     );
   }
 }
