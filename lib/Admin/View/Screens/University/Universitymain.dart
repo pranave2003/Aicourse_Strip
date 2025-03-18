@@ -110,7 +110,7 @@ class _University_mainState extends State<University_main> {
                     // ),
                     decoration: BoxDecoration(color: Colors.white),
                     columns: [
-                      _buildColumn('University Name'),
+                      _buildColumn('University '),
                       _buildColumn('country'),
                       _buildColumn('Type'),
                       _buildColumn('Established'),

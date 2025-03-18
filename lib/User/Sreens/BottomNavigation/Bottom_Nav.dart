@@ -4,6 +4,8 @@ import 'package:course_connect/User/Sreens/Home/Universities.dart';
 import 'package:course_connect/User/Sreens/Home/homepage.dart';
 import 'package:flutter/material.dart';
 
+import '../Profile/Profile.dart';
+
 class BottomNav extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -25,7 +27,8 @@ class _Bottom_NavState extends State<Bottom_Nav> {
   final List<Widget> _pages = [
     Homepage(),
     Universities(),
-    ApplicationStatusPage()
+    ApplicationStatusPage(),
+    Profile()
     // Profile(),
   ];
 
@@ -61,7 +64,8 @@ class _Bottom_NavState extends State<Bottom_Nav> {
         showUnselectedLabels: true,
         selectedFontSize: 20,
         fixedColor: Colors.blue,
-        unselectedItemColor: Colors.black, // Set unselected label color to black
+        unselectedItemColor:
+            Colors.black, // Set unselected label color to black
         unselectedLabelStyle: TextStyle(color: Colors.black),
         currentIndex: _currentIndex,
         onTap: (index) {
@@ -72,11 +76,11 @@ class _Bottom_NavState extends State<Bottom_Nav> {
         items: [
           BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home"),
           BottomNavigationBarItem(icon: Icon(Icons.school), label: "Colleges"),
-          BottomNavigationBarItem(icon: Icon(Icons.calendar_today), label: "Applications"),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.calendar_today), label: "Applications"),
           BottomNavigationBarItem(icon: Icon(Icons.person), label: "Profile"),
         ],
       ),
-
     );
   }
 }
@@ -98,5 +102,3 @@ class PageTwo extends StatelessWidget {
     );
   }
 }
-
-
