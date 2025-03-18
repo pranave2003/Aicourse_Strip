@@ -1,5 +1,5 @@
-import 'package:course_connect/User/Ai_course_finder/MBA_DetailsOverall.dart';
-import 'package:course_connect/User/Ai_course_finder/MBA_work.dart';
+// import 'package:course_connect/User/Ai_course_finder/MBA_DetailsOverall.dart';
+import 'package:course_connect/User/Ai_course_finder/MBA.dart/MBA_work.dart';
 import 'package:course_connect/Widget/Constands/colors.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';

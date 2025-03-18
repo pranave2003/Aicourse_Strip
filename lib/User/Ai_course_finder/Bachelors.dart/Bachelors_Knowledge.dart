@@ -1,4 +1,5 @@
-import 'package:course_connect/User/Ai_course_finder/BachelorsDetailsOverall.dart';
+import 'package:course_connect/User/Ai_course_finder/Bachelors.dart/BachelorsDetailsOverall.dart';
+// import 'package:course_connect/User/Ai_course_finder/BachelorsDetailsOverall.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -159,7 +160,7 @@ class _Bachelors_KnowledgeState extends State<Bachelors_Knowledge> {
               },
 
 
-               child:Container(
+              child:Container(
                 height: 51,
                 width: 231,
                 decoration: BoxDecoration(
@@ -186,7 +187,6 @@ class _Bachelors_KnowledgeState extends State<Bachelors_Knowledge> {
     );
   }
 }
-
 
 
 

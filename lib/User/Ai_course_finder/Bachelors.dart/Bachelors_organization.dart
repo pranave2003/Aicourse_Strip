@@ -1,26 +1,25 @@
-import 'package:course_connect/User/Ai_course_finder/Bachelors_activities.dart';
-import 'package:course_connect/User/Ai_course_finder/MBAEnglish.dart';
-import 'package:course_connect/User/Ai_course_finder/MBA_Companytype.dart';
+import 'package:course_connect/User/Ai_course_finder/Bachelors.dart/Bachelors_Knowledge.dart';
+// import 'package:course_connect/User/Ai_course_finder/BachelorsDetailsOverall.dart';
+// import 'package:course_connect/User/Ai_course_finder/Bachelors_Knowledge.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class MbaAcademic extends StatefulWidget {
-  const MbaAcademic({super.key});
+class Bachelors_organization extends StatefulWidget {
+  const Bachelors_organization({super.key});
 
   @override
-  State<MbaAcademic> createState() => _MbaAcademicState();
+  State<Bachelors_organization> createState() => _Bachelors_organizationState();
 }
 
-class _MbaAcademicState extends State<MbaAcademic> {
+class _Bachelors_organizationState extends State<Bachelors_organization> {
   int? selectedIndex; // Track selected container index
-  String? selectedacademicTest; // Selected test name
-  final TextEditingController percentageController = TextEditingController(); // Controller for text input
+  String? selectedOrganization; // Selected test name
+  int age = 10; // Initialize age variable
 
-  // List of English language tests
-  final List<String> englishTests = [
-    "ACT",
-    "SAT",
-    "TEST NOT TAKEN"
+  // List of test options
+  final List<String> testOptions = [
+    "Yes",
+    "No",
   ];
 
   @override
@@ -48,7 +47,7 @@ class _MbaAcademicState extends State<MbaAcademic> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
-                  "Which Academic test have you \n taken OR planning to take?",
+                  "Do you have any experience working \n with an NGO or an equivalent \n organisation?",
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     color: Color(0xff0A1F52),
@@ -58,33 +57,33 @@ class _MbaAcademicState extends State<MbaAcademic> {
                 ),
               ],
             ),
-            SizedBox(height: 10),
+            const SizedBox(height: 30),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Icon(Icons.light_mode_rounded, color: Colors.yellowAccent, size: 24),
-                SizedBox(width: 10),
-                Text(
-                  "Scoring high in language tests \nincreases your options multifold.",
+                const SizedBox(width: 10),
+                const Text(
+                  "Adds value to your profile.",
                   style: TextStyle(fontSize: 18),
                 ),
               ],
             ),
-            const SizedBox(height: 20),
+            const SizedBox(height: 30),
 
             // Dynamically generated list of test options
             Expanded(
               child: ListView.builder(
                 shrinkWrap: true,
-                itemCount: englishTests.length,
+                itemCount: testOptions.length,
                 itemBuilder: (context, index) {
                   bool isSelected = selectedIndex == index;
                   return GestureDetector(
                     onTap: () {
                       setState(() {
                         selectedIndex = index;
-                        selectedacademicTest = englishTests[index];
-                        print(selectedacademicTest);
+                        selectedOrganization = testOptions[index];
+                        print(selectedOrganization);
                       });
                     },
                     child: Container(
@@ -97,7 +96,7 @@ class _MbaAcademicState extends State<MbaAcademic> {
                       ),
                       child: Center(
                         child: Text(
-                          englishTests[index],
+                          testOptions[index],
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
                             color: isSelected ? Colors.white : Colors.black,
@@ -110,51 +109,61 @@ class _MbaAcademicState extends State<MbaAcademic> {
               ),
             ),
 
-            // Percentage Input Field (Placed directly below ListView)
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 10),
-              child: Container(
-                width: 200,
-                child: TextFormField(
-                  controller: percentageController,
-                  keyboardType: TextInputType.number,
-                  decoration: InputDecoration(
-                    hintText: "Percentage  %",
-                    hintStyle: TextStyle(color: Colors.black, fontSize: 18),
-                    enabledBorder: UnderlineInputBorder(
-                      borderSide: BorderSide(color: Colors.black),
-                    ),
-                    focusedBorder: UnderlineInputBorder(
-                      borderSide: BorderSide(color: Colors.black, width: 1.5),
-                    ),
-                  ),
-                  textAlign: TextAlign.center,
-                  style: TextStyle(color: Colors.black, fontSize: 18),
+            const SizedBox(height: 30),
+
+            // Age Slider
+            Column(
+              children: [
+                const Text(
+                  "How many months of experience?",
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                 ),
-              ),
+                Slider(
+                  value: age.toDouble(),
+                  onChanged: (value) {
+                    setState(() {
+                      age = value.toInt();
+                    });
+                  },
+                  min: 0,
+                  max: 18,
+                  divisions: 4,
+                  label: "$age",
+                ),
+              ],
+            ),
+            // SizedBox(height: 10),
+            Row(
+              children: [
+                SizedBox(width:20),
+                Text("0"),
+                SizedBox(width:285),
+                Text("18+ months"),
+              ],
             ),
 
-            SizedBox(height: 30),
+            const SizedBox(height: 20),
 
             // Continue Button
             InkWell(
               onTap: () {
-                if (selectedacademicTest != null) {
+                if (selectedOrganization != null) {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => MBA_companytype(),
+                      builder: (context) => Bachelors_Knowledge(),
                     ),
                   );
-                  print("Selected Internship: $selectedacademicTest");
+                  print("Selected  Organization: $selectedOrganization");
                 }
                 else {
-                  print("Percentage: ${percentageController.text}");
+                  print("Selected  Organization: $selectedOrganization");
                   ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(content: Text("No internship selected")),
+                    SnackBar(content: Text("No Organization selected")),
                   );
                 }
               },
+
 
               child: Container(
                 height: 51,
@@ -176,14 +185,13 @@ class _MbaAcademicState extends State<MbaAcademic> {
               ),
             ),
 
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
           ],
         ),
       ),
     );
   }
 }
-
 
 
 

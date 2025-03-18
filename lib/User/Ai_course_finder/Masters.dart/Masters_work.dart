@@ -339,9 +339,9 @@
 // //     );
 // //   }
 // // }
-import 'package:course_connect/User/Ai_course_finder/Maters_academic.dart';
+import 'package:course_connect/User/Ai_course_finder/Masters.dart/Maters_academic.dart';
 import 'package:flutter/material.dart';
-import 'package:course_connect/User/Ai_course_finder/MastersEnglishtest.dart';
+import 'package:course_connect/User/Ai_course_finder/Masters.dart/MastersEnglishtest.dart';
 
 class MastersWork extends StatefulWidget {
   const MastersWork({super.key});

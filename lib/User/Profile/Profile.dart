@@ -1,9 +1,10 @@
+import 'package:course_connect/User/Profile/ContactUs.dart';
 import 'package:flutter/material.dart';
 import 'EditProfilePage.dart'; // Import the Edit Profile Page
 import 'AboutUs.dart';
-import 'ContactUs.dart';
+// import '../Sreens/auth/ContactUs.dart';
 import 'PrivacyPolicy.dart';
-import 'TermsAndConditions.dart';
+import '../Sreens/auth/TermsAndConditions.dart';
 
 class Profile extends StatelessWidget {
   @override

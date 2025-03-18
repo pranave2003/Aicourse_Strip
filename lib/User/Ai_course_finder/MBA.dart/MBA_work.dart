@@ -1,8 +1,9 @@
 
-import 'package:course_connect/User/Ai_course_finder/MBA_DetailsOverall.dart';
-import 'package:course_connect/User/Ai_course_finder/Maters_academic.dart';
+import 'package:course_connect/User/Ai_course_finder/MBA.dart/MBA_DetailsOverall.dart';
+// import 'package:course_connect/User/Ai_course_finder/MBA_DetailsOverall.dart';
+import 'package:course_connect/User/Ai_course_finder/Masters.dart/Maters_academic.dart';
 import 'package:flutter/material.dart';
-import 'package:course_connect/User/Ai_course_finder/MastersEnglishtest.dart';
+import 'package:course_connect/User/Ai_course_finder/Masters.dart/MastersEnglishtest.dart';
 
 class MBA_work extends StatefulWidget {
   const MBA_work({super.key});

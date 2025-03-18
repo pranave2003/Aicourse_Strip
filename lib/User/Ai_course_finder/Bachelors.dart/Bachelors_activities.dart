@@ -1,4 +1,4 @@
-import 'package:course_connect/User/Ai_course_finder/Bachelors_organization.dart';
+import 'package:course_connect/User/Ai_course_finder/Bachelors.dart/Bachelors_organization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 

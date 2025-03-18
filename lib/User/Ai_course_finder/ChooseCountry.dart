@@ -1,4 +1,4 @@
-import 'package:course_connect/User/Ai_course_finder/Degree.dart';
+import 'package:course_connect/User/Ai_course_finder/Bachelors.dart/Degree.dart';
 import 'package:course_connect/Widget/Constands/colors.dart';
 import 'package:flutter/material.dart';
 

@@ -11,15 +11,13 @@ import 'package:course_connect/User/Ai_course_finder/ApplicationStatusPage.dart'
 import 'package:course_connect/User/Ai_course_finder/Document_upload.dart';
 import 'package:course_connect/User/Sreens/BottomNavigation/Bottom_Nav.dart';
 import 'package:course_connect/User/Sreens/Home/homepage.dart';
-import 'package:course_connect/User/Sreens/auth/Forgotpswd.dart';
-import 'package:course_connect/User/Sreens/auth/Notifications.dart';
-import 'package:course_connect/User/Sreens/auth/Profile.dart';
-import 'package:course_connect/User/Sreens/auth/Splash1.dart';
-import 'package:course_connect/User/Sreens/auth/Splash2.dart';
-import 'package:course_connect/User/Sreens/auth/Splash3.dart';
+import 'package:course_connect/User/Profile/Forgotpswd.dart';
+import 'package:course_connect/User/Profile/Notifications.dart';
+import 'package:course_connect/User/Profile/Profile.dart';
+
 import 'package:course_connect/User/Sreens/auth/UserSignup.dart';
-import 'package:course_connect/User/Sreens/auth/onboarding_screen.dart';
-import 'package:course_connect/User/Sreens/auth/splash.dart';
+import 'package:course_connect/User/Profile/onboarding_screen.dart';
+import 'package:course_connect/User/Profile/splash.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -39,7 +37,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home:Profile(),
+      home:Splash(),
     );
   }
 }

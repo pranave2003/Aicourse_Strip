@@ -1,6 +1,6 @@
-import 'package:course_connect/User/Ai_course_finder/BachelorsEducation.dart';
-import 'package:course_connect/User/Ai_course_finder/MBA_education.dart';
-import 'package:course_connect/User/Ai_course_finder/Masters_education.dart';
+import 'package:course_connect/User/Ai_course_finder/Bachelors.dart/BachelorsEducation.dart';
+import 'package:course_connect/User/Ai_course_finder/MBA.dart/MBA_education.dart';
+import 'package:course_connect/User/Ai_course_finder/Masters.dart/Masters_education.dart';
 import 'package:flutter/material.dart';
 import 'package:course_connect/Widget/Constands/colors.dart';
 // import 'package:course_connect/User/Ai_course_finder/BachelorsPage.dart';

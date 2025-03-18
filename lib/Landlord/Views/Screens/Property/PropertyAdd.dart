@@ -193,7 +193,7 @@ Divider(thickness:2,color:Colors.black,),
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     // Property Details
-                    _buildSectionTitle("🏠 Property Details"),
+                    _buildSectionTitle("Property Details"),
                     SizedBox(height: 5),
 
                     Row(
@@ -220,7 +220,7 @@ Divider(thickness:2,color:Colors.black,),
                     SizedBox(height: 10),
 
                     // Room Details
-                    _buildSectionTitle("🛏️ Room Details"),
+                    _buildSectionTitle("Room Details"),
                     SizedBox(height: 5),
 
                     Row(
@@ -241,7 +241,7 @@ Divider(thickness:2,color:Colors.black,),
 
                     Divider(thickness: 2),
                     SizedBox(height: 10),
-                    Text("🖼️ Images:", style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+                    Text(" Images:", style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
 
                     SizedBox(height: 20),
                     _buildImageContainer(),
@@ -251,7 +251,7 @@ Divider(thickness:2,color:Colors.black,),
 
 Divider(thickness: 2,),
                     // Pricing Details
-                    _buildSectionTitle("💰 Pricing Details"),
+                    _buildSectionTitle(" Pricing Details"),
                     SizedBox(height: 5),
 
                     Row(
@@ -282,7 +282,7 @@ Divider(thickness: 2,),
                     SizedBox(height: 10),
 
                     // Features (Radio Buttons)
-                    _buildSectionTitle("⚙️ Features"),
+                    _buildSectionTitle("Features"),
                     SizedBox(height: 5),
 
 // First Row (Furnishing & Bedroom)
@@ -369,7 +369,7 @@ Divider(thickness: 2,),
                     SizedBox(height: 10),
 
                     // Owner Details
-                    _buildSectionTitle("👤 Owner Details"),
+                    _buildSectionTitle(" Owner Details"),
                     SizedBox(height: 5),
 
                     Row(
@@ -382,7 +382,7 @@ Divider(thickness: 2,),
 
                     SizedBox(height: 10),
 
-                    Text("📜 Upload Ownership Proof:", style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+                    Text(" Upload Ownership Proof:", style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
                     SizedBox(height: 20),
                     ElevatedButton(onPressed: () {}, child: Text("Upload Document")),
 

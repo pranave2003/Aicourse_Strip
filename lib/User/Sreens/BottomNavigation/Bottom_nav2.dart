@@ -3,6 +3,7 @@ import 'package:course_connect/User/Accomodation/BookingStatus.dart';
 import 'package:course_connect/User/Accomodation/Feedback.dart';
 import 'package:course_connect/User/Sreens/Home/Universities.dart';
 import 'package:course_connect/User/Sreens/Home/homepage.dart';
+import 'package:course_connect/User/Profile/Profile.dart';
 import 'package:flutter/material.dart';
 
 class BottomNav extends StatelessWidget {
@@ -27,7 +28,7 @@ class _Bottom_nav2State extends State<Bottom_nav2> {
     AccommodationDetailScreen(),
     BookingStatus(),
     // FeedbackScreen(),
-    // Profile(),
+    Profile(),
   ];
 
   @override

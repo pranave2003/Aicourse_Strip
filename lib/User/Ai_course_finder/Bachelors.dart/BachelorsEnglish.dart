@@ -1,24 +1,26 @@
-import 'package:course_connect/User/Ai_course_finder/BachelorsDetailsOverall.dart';
-import 'package:course_connect/User/Ai_course_finder/Bachelors_Knowledge.dart';
+import 'package:course_connect/User/Ai_course_finder/Bachelors.dart/Bachelors_academictest.dart';
+import 'package:course_connect/Widget/Constands/colors.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class Bachelors_organization extends StatefulWidget {
-  const Bachelors_organization({super.key});
+class BachelorsEnglish extends StatefulWidget {
+  const BachelorsEnglish({super.key});
 
   @override
-  State<Bachelors_organization> createState() => _Bachelors_organizationState();
+  State<BachelorsEnglish> createState() => _BachelorsEnglishState();
 }
 
-class _Bachelors_organizationState extends State<Bachelors_organization> {
+class _BachelorsEnglishState extends State<BachelorsEnglish> {
   int? selectedIndex; // Track selected container index
-  String? selectedOrganization; // Selected test name
-  int age = 10; // Initialize age variable
+  String? selectedTest; // Selected test name
+  final TextEditingController percentageController = TextEditingController(); // Controller for text input
 
-  // List of test options
-  final List<String> testOptions = [
-    "Yes",
-    "No",
+  // List of English language tests
+  final List<String> englishTests = [
+    "TOEFL",
+    "IELTS",
+    "PTE",
+    "Test Not Taken Yet"
   ];
 
   @override
@@ -46,7 +48,7 @@ class _Bachelors_organizationState extends State<Bachelors_organization> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
-                  "Do you have any experience working \n with an NGO or an equivalent \n organisation?",
+                  "What English language test have\n you taken OR planning to take?",
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     color: Color(0xff0A1F52),
@@ -56,33 +58,33 @@ class _Bachelors_organizationState extends State<Bachelors_organization> {
                 ),
               ],
             ),
-            const SizedBox(height: 30),
+            SizedBox(height: 10),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Icon(Icons.light_mode_rounded, color: Colors.yellowAccent, size: 24),
-                const SizedBox(width: 10),
-                const Text(
-                  "Adds value to your profile.",
+                SizedBox(width: 10),
+                Text(
+                  "Scoring high in language tests \nincreases your options multifold.",
                   style: TextStyle(fontSize: 18),
                 ),
               ],
             ),
-            const SizedBox(height: 30),
+            const SizedBox(height: 20),
 
             // Dynamically generated list of test options
             Expanded(
               child: ListView.builder(
                 shrinkWrap: true,
-                itemCount: testOptions.length,
+                itemCount: englishTests.length,
                 itemBuilder: (context, index) {
                   bool isSelected = selectedIndex == index;
                   return GestureDetector(
                     onTap: () {
                       setState(() {
                         selectedIndex = index;
-                        selectedOrganization = testOptions[index];
-                        print(selectedOrganization);
+                        selectedTest = englishTests[index];
+                        print(selectedTest);
                       });
                     },
                     child: Container(
@@ -95,80 +97,78 @@ class _Bachelors_organizationState extends State<Bachelors_organization> {
                       ),
                       child: Center(
                         child: Text(
-                          testOptions[index],
+                          englishTests[index],
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
                             color: isSelected ? Colors.white : Colors.black,
+
                           ),
                         ),
                       ),
                     ),
+
                   );
                 },
+
+              ),
+
+            ),
+            Text("Enter your score",style: TextStyle(color: Colors.blueAccent,fontSize:25,fontWeight: FontWeight.w600)),
+            //
+            // Percentage Input Field (Placed directly below ListView)
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 10),
+              child: Container(
+                width: 200,
+                child: TextFormField(
+                  controller: percentageController,
+                  keyboardType: TextInputType.number,
+                  decoration: InputDecoration(
+                    hintText: "Score",
+                    hintStyle: TextStyle(color: Colors.black, fontSize: 18),
+                    enabledBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(color: Colors.black),
+                    ),
+                    focusedBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(color: Colors.black, width: 1.5),
+                    ),
+                  ),
+                  textAlign: TextAlign.center,
+                  style: TextStyle(color: Colors.black, fontSize: 18),
+                ),
               ),
             ),
 
-            const SizedBox(height: 30),
-
-            // Age Slider
-            Column(
-              children: [
-                const Text(
-                  "How many months of experience?",
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                ),
-                Slider(
-                  value: age.toDouble(),
-                  onChanged: (value) {
-                    setState(() {
-                      age = value.toInt();
-                    });
-                  },
-                  min: 0,
-                  max: 18,
-                  divisions: 4,
-                  label: "$age",
-                ),
-              ],
-            ),
-            // SizedBox(height: 10),
-            Row(
-              children: [
-                SizedBox(width:20),
-                Text("0"),
-                SizedBox(width:285),
-                Text("18+ months"),
-              ],
-            ),
-
-            const SizedBox(height: 20),
+            SizedBox(height: 30),
 
             // Continue Button
             InkWell(
               onTap: () {
-                if (selectedOrganization != null) {
+                if (selectedTest != null) {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => Bachelors_Knowledge(),
+                      builder: (context) => Bachelors_academictest(),
                     ),
                   );
-                  print("Selected  Organization: $selectedOrganization");
+                  print("Selected test: $selectedTest");
                 }
                 else {
-                  print("Selected  Organization: $selectedOrganization");
+                  print("Selected Test: $selectedTest");
                   ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(content: Text("No Organization selected")),
+                    SnackBar(content: Text("No Test selected")),
                   );
                 }
               },
-
-
+              // onTap: () {
+              //   print("Selected Test: $selectedTest");
+              //   print("Percentage: ${percentageController.text}");
+              // },
               child: Container(
                 height: 51,
                 width: 231,
                 decoration: BoxDecoration(
-                  color: Color(0xff0A71CB),
+                  color: blueColor,
                   borderRadius: BorderRadius.circular(30),
                 ),
                 child: const Center(
@@ -184,7 +184,7 @@ class _Bachelors_organizationState extends State<Bachelors_organization> {
               ),
             ),
 
-            const SizedBox(height: 20),
+            SizedBox(height: 20),
           ],
         ),
       ),

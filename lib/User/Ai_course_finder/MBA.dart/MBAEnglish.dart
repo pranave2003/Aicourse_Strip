@@ -1,18 +1,17 @@
-import 'package:course_connect/User/Ai_course_finder/Bachelors_academictest.dart';
-import 'package:course_connect/User/Ai_course_finder/MastersReaserch.dart';
-import 'package:course_connect/User/Ai_course_finder/Masters_work.dart';
+import 'package:course_connect/User/Ai_course_finder/Bachelors.dart/Bachelors_academictest.dart';
+import 'package:course_connect/User/Ai_course_finder/MBA.dart/MBA_Academic.dart';
 import 'package:course_connect/Widget/Constands/colors.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class MastersEnglishtest extends StatefulWidget {
-  const MastersEnglishtest({super.key});
+class MBAEnglish extends StatefulWidget {
+  const MBAEnglish({super.key});
 
   @override
-  State<MastersEnglishtest> createState() => _MastersEnglishtestState();
+  State<MBAEnglish> createState() => _MBAEnglishState();
 }
 
-class _MastersEnglishtestState extends State<MastersEnglishtest> {
+class _MBAEnglishState extends State<MBAEnglish> {
   int? selectedIndex; // Track selected container index
   String? selectedTest; // Selected test name
   final TextEditingController percentageController = TextEditingController(); // Controller for text input
@@ -150,7 +149,7 @@ class _MastersEnglishtestState extends State<MastersEnglishtest> {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => MastersWork(),
+                      builder: (context) => MbaAcademic(),
                     ),
                   );
                   print("Selected test: $selectedTest");

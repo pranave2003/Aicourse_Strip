@@ -106,7 +106,7 @@
 // }
 import 'package:course_connect/User/Sreens/BottomNavigation/Bottom_Nav.dart';
 import 'package:course_connect/User/Sreens/Home/homepage.dart';
-import 'package:course_connect/User/Sreens/auth/Forgotpswd.dart';
+import 'package:course_connect/User/Profile/Forgotpswd.dart';
 import 'package:course_connect/User/Sreens/auth/UserSignup.dart';
 import 'package:flutter/material.dart';
 import 'UserSignup.dart'; // Import the SignUp page

@@ -1,27 +1,23 @@
-import 'package:course_connect/User/Ai_course_finder/Bachelors_academictest.dart';
-import 'package:course_connect/User/Ai_course_finder/MBA_Academic.dart';
-import 'package:course_connect/Widget/Constands/colors.dart';
+import 'package:course_connect/User/Ai_course_finder/Bachelors.dart/Bachelors_activities.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class MBAEnglish extends StatefulWidget {
-  const MBAEnglish({super.key});
+class Bachelors_internship extends StatefulWidget {
+  const Bachelors_internship({super.key});
 
   @override
-  State<MBAEnglish> createState() => _MBAEnglishState();
+  State<Bachelors_internship> createState() => _Bachelors_internshipState();
 }
 
-class _MBAEnglishState extends State<MBAEnglish> {
+class _Bachelors_internshipState extends State<Bachelors_internship> {
   int? selectedIndex; // Track selected container index
-  String? selectedTest; // Selected test name
-  final TextEditingController percentageController = TextEditingController(); // Controller for text input
+  String? selectedInternship; // Selected test name
+  int age = 10; // Initialize age variable
 
-  // List of English language tests
-  final List<String> englishTests = [
-    "TOEFL",
-    "IELTS",
-    "PTE",
-    "Test Not Taken Yet"
+  // List of test options
+  final List<String> internshipoptions = [
+    "Yes",
+    "No",
   ];
 
   @override
@@ -49,7 +45,7 @@ class _MBAEnglishState extends State<MBAEnglish> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
-                  "What English language test have\n you taken OR planning to take?",
+                  "Do you have any internship / \n fellowship / work experience in \n your area of interest?",
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     color: Color(0xff0A1F52),
@@ -59,33 +55,33 @@ class _MBAEnglishState extends State<MBAEnglish> {
                 ),
               ],
             ),
-            SizedBox(height: 10),
+            const SizedBox(height: 30),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Icon(Icons.light_mode_rounded, color: Colors.yellowAccent, size: 24),
-                SizedBox(width: 10),
-                Text(
-                  "Scoring high in language tests \nincreases your options multifold.",
+                const SizedBox(width: 10),
+                const Text(
+                  "Add value to your profile.",
                   style: TextStyle(fontSize: 18),
                 ),
               ],
             ),
-            const SizedBox(height: 20),
+            const SizedBox(height: 30),
 
             // Dynamically generated list of test options
             Expanded(
               child: ListView.builder(
                 shrinkWrap: true,
-                itemCount: englishTests.length,
+                itemCount: internshipoptions.length,
                 itemBuilder: (context, index) {
                   bool isSelected = selectedIndex == index;
                   return GestureDetector(
                     onTap: () {
                       setState(() {
                         selectedIndex = index;
-                        selectedTest = englishTests[index];
-                        print(selectedTest);
+                        selectedInternship = internshipoptions[index];
+                        print(selectedInternship);
                       });
                     },
                     child: Container(
@@ -98,78 +94,79 @@ class _MBAEnglishState extends State<MBAEnglish> {
                       ),
                       child: Center(
                         child: Text(
-                          englishTests[index],
+                          internshipoptions[index],
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
                             color: isSelected ? Colors.white : Colors.black,
-
                           ),
                         ),
                       ),
                     ),
-
                   );
                 },
-
               ),
-
             ),
-            Text("Enter your score",style: TextStyle(color: Colors.blueAccent,fontSize:25,fontWeight: FontWeight.w600)),
-            //
-            // Percentage Input Field (Placed directly below ListView)
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 10),
-              child: Container(
-                width: 200,
-                child: TextFormField(
-                  controller: percentageController,
-                  keyboardType: TextInputType.number,
-                  decoration: InputDecoration(
-                    hintText: "Score",
-                    hintStyle: TextStyle(color: Colors.black, fontSize: 18),
-                    enabledBorder: UnderlineInputBorder(
-                      borderSide: BorderSide(color: Colors.black),
-                    ),
-                    focusedBorder: UnderlineInputBorder(
-                      borderSide: BorderSide(color: Colors.black, width: 1.5),
-                    ),
-                  ),
-                  textAlign: TextAlign.center,
-                  style: TextStyle(color: Colors.black, fontSize: 18),
+
+            const SizedBox(height: 30),
+
+            // Age Slider
+            Column(
+              children: [
+                const Text(
+                  "How many months of experience?",
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                 ),
-              ),
+                Slider(
+                  value: age.toDouble(),
+                  onChanged: (value) {
+                    setState(() {
+                      age = value.toInt();
+                    });
+                  },
+                  min: 0,
+                  max: 18,
+                  divisions: 4,
+                  label: "$age",
+                ),
+              ],
+            ),
+            // SizedBox(height: 10),
+            Row(
+              children: [
+                SizedBox(width:20),
+                Text("0"),
+                SizedBox(width:285),
+                Text("18+ months"),
+              ],
             ),
 
-            SizedBox(height: 30),
+            const SizedBox(height: 20),
 
             // Continue Button
             InkWell(
               onTap: () {
-                if (selectedTest != null) {
+                if (selectedInternship != null) {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => MbaAcademic(),
+                      builder: (context) => Bachelors_activities(),
                     ),
                   );
-                  print("Selected test: $selectedTest");
+                  print("Selected Internship: $selectedInternship");
                 }
                 else {
-                  print("Selected Test: $selectedTest");
+                  print("Selected Internship: $selectedInternship");
                   ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(content: Text("No Test selected")),
+                    SnackBar(content: Text("No internship selected")),
                   );
                 }
               },
-              // onTap: () {
-              //   print("Selected Test: $selectedTest");
-              //   print("Percentage: ${percentageController.text}");
-              // },
+
               child: Container(
                 height: 51,
                 width: 231,
                 decoration: BoxDecoration(
-                  color: blueColor,
+                  color: Color(0xff0A71CB),
                   borderRadius: BorderRadius.circular(30),
                 ),
                 child: const Center(
@@ -185,7 +182,7 @@ class _MBAEnglishState extends State<MBAEnglish> {
               ),
             ),
 
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
           ],
         ),
       ),

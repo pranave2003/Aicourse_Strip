@@ -1,5 +1,5 @@
 
-import 'package:course_connect/User/Ai_course_finder/MatersDetailsOverall.dart';
+import 'package:course_connect/User/Ai_course_finder/Masters.dart/MatersDetailsOverall.dart';
 import 'package:flutter/material.dart';
 
 class MastersResearch extends StatefulWidget {

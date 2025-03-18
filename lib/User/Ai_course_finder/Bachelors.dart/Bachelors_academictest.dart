@@ -1,23 +1,24 @@
-import 'package:course_connect/User/Ai_course_finder/Bachelors_activities.dart';
+import 'package:course_connect/User/Ai_course_finder/Bachelors.dart/Bachelors_activities.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class Bachelors_internship extends StatefulWidget {
-  const Bachelors_internship({super.key});
+class Bachelors_academictest extends StatefulWidget {
+  const Bachelors_academictest({super.key});
 
   @override
-  State<Bachelors_internship> createState() => _Bachelors_internshipState();
+  State<Bachelors_academictest> createState() => _Bachelors_academictestState();
 }
 
-class _Bachelors_internshipState extends State<Bachelors_internship> {
+class _Bachelors_academictestState extends State<Bachelors_academictest> {
   int? selectedIndex; // Track selected container index
-  String? selectedInternship; // Selected test name
-  int age = 10; // Initialize age variable
+  String? selectedacademicTest; // Selected test name
+  final TextEditingController percentageController = TextEditingController(); // Controller for text input
 
-  // List of test options
-  final List<String> internshipoptions = [
-    "Yes",
-    "No",
+  // List of English language tests
+  final List<String> englishTests = [
+    "ACT",
+    "SAT",
+    "TEST NOT TAKEN"
   ];
 
   @override
@@ -45,7 +46,7 @@ class _Bachelors_internshipState extends State<Bachelors_internship> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
-                  "Do you have any internship / \n fellowship / work experience in \n your area of interest?",
+                  "Which Academic test have you \n taken OR planning to take?",
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     color: Color(0xff0A1F52),
@@ -55,33 +56,33 @@ class _Bachelors_internshipState extends State<Bachelors_internship> {
                 ),
               ],
             ),
-            const SizedBox(height: 30),
+            SizedBox(height: 10),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Icon(Icons.light_mode_rounded, color: Colors.yellowAccent, size: 24),
-                const SizedBox(width: 10),
-                const Text(
-                  "Add value to your profile.",
+                SizedBox(width: 10),
+                Text(
+                  "Scoring high in language tests \nincreases your options multifold.",
                   style: TextStyle(fontSize: 18),
                 ),
               ],
             ),
-            const SizedBox(height: 30),
+            const SizedBox(height: 20),
 
             // Dynamically generated list of test options
             Expanded(
               child: ListView.builder(
                 shrinkWrap: true,
-                itemCount: internshipoptions.length,
+                itemCount: englishTests.length,
                 itemBuilder: (context, index) {
                   bool isSelected = selectedIndex == index;
                   return GestureDetector(
                     onTap: () {
                       setState(() {
                         selectedIndex = index;
-                        selectedInternship = internshipoptions[index];
-                        print(selectedInternship);
+                        selectedacademicTest = englishTests[index];
+                        print(selectedacademicTest);
                       });
                     },
                     child: Container(
@@ -94,7 +95,7 @@ class _Bachelors_internshipState extends State<Bachelors_internship> {
                       ),
                       child: Center(
                         child: Text(
-                          internshipoptions[index],
+                          englishTests[index],
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
                             color: isSelected ? Colors.white : Colors.black,
@@ -107,57 +108,48 @@ class _Bachelors_internshipState extends State<Bachelors_internship> {
               ),
             ),
 
-            const SizedBox(height: 30),
-
-            // Age Slider
-            Column(
-              children: [
-                const Text(
-                  "How many months of experience?",
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            // Percentage Input Field (Placed directly below ListView)
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 10),
+              child: Container(
+                width: 200,
+                child: TextFormField(
+                  controller: percentageController,
+                  keyboardType: TextInputType.number,
+                  decoration: InputDecoration(
+                    hintText: "Percentage  %",
+                    hintStyle: TextStyle(color: Colors.black, fontSize: 18),
+                    enabledBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(color: Colors.black),
+                    ),
+                    focusedBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(color: Colors.black, width: 1.5),
+                    ),
+                  ),
+                  textAlign: TextAlign.center,
+                  style: TextStyle(color: Colors.black, fontSize: 18),
                 ),
-                Slider(
-                  value: age.toDouble(),
-                  onChanged: (value) {
-                    setState(() {
-                      age = value.toInt();
-                    });
-                  },
-                  min: 0,
-                  max: 18,
-                  divisions: 4,
-                  label: "$age",
-                ),
-              ],
-            ),
-            // SizedBox(height: 10),
-            Row(
-              children: [
-                SizedBox(width:20),
-                Text("0"),
-                SizedBox(width:285),
-                Text("18+ months"),
-              ],
+              ),
             ),
 
-            const SizedBox(height: 20),
+            SizedBox(height: 30),
 
             // Continue Button
             InkWell(
               onTap: () {
-                if (selectedInternship != null) {
+                if (selectedacademicTest != null) {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
                       builder: (context) => Bachelors_activities(),
                     ),
                   );
-                  print("Selected Internship: $selectedInternship");
+                  print("Selected academic test: $selectedacademicTest");
                 }
                 else {
-                  print("Selected Internship: $selectedInternship");
+                  print("Percentage: ${percentageController.text}");
                   ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(content: Text("No internship selected")),
+                    SnackBar(content: Text("No academic test selected")),
                   );
                 }
               },
@@ -182,7 +174,7 @@ class _Bachelors_internshipState extends State<Bachelors_internship> {
               ),
             ),
 
-            const SizedBox(height: 20),
+            SizedBox(height: 20),
           ],
         ),
       ),

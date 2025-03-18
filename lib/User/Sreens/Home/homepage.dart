@@ -5,7 +5,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:course_connect/User/Accomodation/AccomodationDetailScreen.dart';
 import 'package:course_connect/User/Ai_course_finder/ChooseCountry.dart';
 import 'package:course_connect/User/Sreens/BottomNavigation/Bottom_nav2.dart';
-import 'package:course_connect/User/Sreens/auth/Notifications.dart';
+import 'package:course_connect/User/Profile/Notifications.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 

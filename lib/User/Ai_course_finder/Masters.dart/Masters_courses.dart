@@ -1,62 +1,63 @@
-import 'package:course_connect/User/Ai_course_finder/BachelorsEnglish.dart';
+import 'package:course_connect/User/Ai_course_finder/Bachelors.dart/BachelorsEnglish.dart';
+import 'package:course_connect/User/Ai_course_finder/Masters.dart/MastersEnglishtest.dart';
+import 'package:course_connect/User/Ai_course_finder/Masters.dart/Maters_academic.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class BachelorsCourse extends StatefulWidget {
-  const BachelorsCourse({super.key});
+class Masters_Courses extends StatefulWidget {
+  const Masters_Courses({super.key});
 
   @override
-  State<BachelorsCourse> createState() => _BachelorsCourseState();
+  State<Masters_Courses> createState() => _Masters_CoursesState();
 }
 
-class _BachelorsCourseState extends State<BachelorsCourse> {
+class _Masters_CoursesState extends State<Masters_Courses> {
   Set<int> selectedIndices = {}; // Track selected course indices
   List<String> selectedCourses = []; // Store selected course names
 
   // List of available courses
   final List<String> courses = [
-    "BBA (Bachelor of Business Administration)",
-    "BCom (Bachelor of Commerce)",
-    "BA in Business Management",
-    "BSc in International Business",
-    "BBA in Marketing",
-    "BBA in Finance",
-    "BBA in Human Resource Management",
-    "BBA in Entrepreneurship",
-    "BBA in Supply Chain Management",
-    "BSc in Computer Science",
-    "BSc in Information Technology (IT)",
-    "BTech / BE ",
-    "BSc in Data Science",
-    "BSc in AI & Machine Learning",
-    "BSc in Biotechnology",
-    "BSc in Environmental Science",
-    "BA in Political Science",
-    "BA in Sociology",
-    "BA in History",
-    "BA in English Literature",
-    "BA in Journalism & Mass Communication",
-    "BA in Fine Arts",
-    "MBBS (Bachelor of Medicine & Surgery)",
-    "BDS (Bachelor of Dental Surgery)",
-    "BPharm (Bachelor of Pharmacy)",
-    "BPT (Bachelor of Physiotherapy)",
-    "BSc in Nursing",
-    "BSc in Nutrition & Dietetics",
-    "BSc in Medical Lab Technology",
-    "BTech in Computer Science",
-    "BTech in Mechanical Engineering",
-    "BTech in Electrical Engineering",
-    "BTech in Civil Engineering",
-    "BTech in Electronics & Communication",
-    "BTech in Aerospace Engineering",
-    "LLB (Bachelor of Laws)",
-    "BA in Criminology",
-    "BA in Public Administration",
-    "BA in Economics",
-    "BA in International Relations",
+    "MSc in Finance",
+    "MSc in Economics",
+    "MSc in Human Resource Management",
+    "MSc in Marketing",
+    "MSc in Digital Business",
+    "MSc in Project Management",
+    "MSc in Supply Chain & Logistics",
+    "MSc in Computer Science",
+    "MSc in Artificial Intelligence",
+    "MSc in Data Science",
+    "MSc in Cybersecurity",
+    "MSc in Information Technology",
+    "MTech in Civil /"
+        "MTech in Mechanical "
+  "MTech in Electrical Engineering",
+    "MSc in Biotechnology",
+    "MSc in Physics / Chemistry / Mathematics",
+    "MD (Doctor of Medicine)",
+    "MDS (Master of Dental Surgery)",
+    "MPharm (Master of Pharmacy)",
+    "MSc in Public Health",
+    "MSc in Nursing",
+    "MSc in Medical Lab Technology",
+    "MA in Psychology",
+    "MA in Sociology",
+    "MA in Journalism & Mass Communication",
+    "MA in English Literature",
+    "MA in History",
+    "MA in Political Science",
+    "MA in Fine Arts",
+    "LLM (Master of Laws)",
+    "Master in Criminology",
+    "MSc in International Relations",
+    "MSc in Public Policy",
+    "Master in Social Work (MSW)",
+    "MTech in Computer Science",
+    "MTech in Mechanical Engineering",
+    "MTech in Electrical Engineering",
+    "MTech in Robotics",
+    "MSc in Industrial Engineering"
   ];
-
 
   @override
   Widget build(BuildContext context) {
@@ -111,11 +112,16 @@ class _BachelorsCourseState extends State<BachelorsCourse> {
                 itemBuilder: (context, index) {
                   bool isSelected = selectedIndices.contains(index);
                   return GestureDetector(
+
                     onTap: () {
                       setState(() {
                         if (isSelected) {
                           selectedIndices.remove(index);
                           selectedCourses.remove(courses[index]);
+                          MaterialPageRoute(
+                            builder: (context) => Maters_academic(),
+
+                        );
                         } else {
                           selectedIndices.add(index);
                           selectedCourses.add(courses[index]);
@@ -171,25 +177,19 @@ class _BachelorsCourseState extends State<BachelorsCourse> {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => BachelorsEnglish(),
+                      builder: (context) => MastersEnglishtest(),
                     ),
                   );
-                  print("Selected Courses: $selectedCourses");
+                  print("Final Selected Courses: $selectedCourses");
                 }
                 else {
-                  print("No course selected");
+                  print("Please choose courses");
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(content: Text("Please choose courses")),
                   );
                 }
               },
-              // onTap: () {
-              //   if (selectedCourses.isNotEmpty) {
-              //     print("Final Selected Courses: $selectedCourses");
-              //   } else {
-              //     print("Please choose courses");
-              //   }
-              // },
+
               child: Container(
                 height: 51,
                 width: 231,
@@ -215,3 +215,9 @@ class _BachelorsCourseState extends State<BachelorsCourse> {
     );
   }
 }
+
+
+
+
+
+

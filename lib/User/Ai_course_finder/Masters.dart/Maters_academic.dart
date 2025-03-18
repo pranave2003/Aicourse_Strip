@@ -1,4 +1,4 @@
-import 'package:course_connect/User/Ai_course_finder/MastersReaserch.dart';
+import 'package:course_connect/User/Ai_course_finder/Masters.dart/MastersReaserch.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 

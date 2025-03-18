@@ -1,5 +1,6 @@
-import 'package:course_connect/User/Ai_course_finder/MBA_Academic.dart';
-import 'package:course_connect/User/Ai_course_finder/MBA_Companytype.dart';
+// import 'package:course_connect/User/Ai_course_finder/MBA_Academic.dart';
+// import 'package:course_connect/User/Ai_course_finder/MBA_Companytype.dart';
+import 'package:course_connect/User/Ai_course_finder/MBA.dart/MBA_Academic.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 

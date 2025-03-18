@@ -1,15 +1,18 @@
-import 'package:course_connect/User/Ai_course_finder/Bachelors_activities.dart';
+import 'package:course_connect/User/Ai_course_finder/Bachelors.dart/Bachelors_activities.dart';
+import 'package:course_connect/User/Ai_course_finder/MBA.dart/MBAEnglish.dart';
+import 'package:course_connect/User/Ai_course_finder/MBA.dart/MBA_Companytype.dart';
+// import 'package:course_connect/User/Ai_course_finder/MBA_Companytype.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class Bachelors_academictest extends StatefulWidget {
-  const Bachelors_academictest({super.key});
+class MbaAcademic extends StatefulWidget {
+  const MbaAcademic({super.key});
 
   @override
-  State<Bachelors_academictest> createState() => _Bachelors_academictestState();
+  State<MbaAcademic> createState() => _MbaAcademicState();
 }
 
-class _Bachelors_academictestState extends State<Bachelors_academictest> {
+class _MbaAcademicState extends State<MbaAcademic> {
   int? selectedIndex; // Track selected container index
   String? selectedacademicTest; // Selected test name
   final TextEditingController percentageController = TextEditingController(); // Controller for text input
@@ -141,15 +144,15 @@ class _Bachelors_academictestState extends State<Bachelors_academictest> {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => Bachelors_activities(),
+                      builder: (context) => MBA_companytype(),
                     ),
                   );
-                  print("Selected academic test: $selectedacademicTest");
+                  print("Selected Internship: $selectedacademicTest");
                 }
                 else {
                   print("Percentage: ${percentageController.text}");
                   ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(content: Text("No academic test selected")),
+                    SnackBar(content: Text("No internship selected")),
                   );
                 }
               },
