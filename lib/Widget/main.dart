@@ -1,3 +1,4 @@
+import 'package:course_connect/Admin/View/Screens/Payment.dart/Payment_View.dart';
 import 'package:course_connect/Landlord/Views/Screens/Auth/Login.dart';
 import 'package:course_connect/Landlord/Views/Screens/Auth/Signup.dart';
 import 'package:course_connect/User/Accomodation/AccomodationDetailScreen.dart';
@@ -37,7 +38,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home:Splash(),
+      home:PaymentView(),
     );
   }
 }

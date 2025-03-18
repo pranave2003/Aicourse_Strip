@@ -4,7 +4,7 @@ import 'EditProfilePage.dart'; // Import the Edit Profile Page
 import 'AboutUs.dart';
 // import '../Sreens/auth/ContactUs.dart';
 import 'PrivacyPolicy.dart';
-import '../Sreens/auth/TermsAndConditions.dart';
+import 'package:course_connect/User/Profile/TermsandConditions.dart';
 
 class Profile extends StatelessWidget {
   @override
