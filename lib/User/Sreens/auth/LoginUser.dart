@@ -104,12 +104,13 @@
 //
 //   CustomButton({required Null Function() onPressed, required String label, required String text, required MaterialColor textColor, required MaterialColor borderColor}) {}
 // }
+import 'package:course_connect/User/Sreens/Authentication/UserSignup.dart';
 import 'package:course_connect/User/Sreens/BottomNavigation/Bottom_Nav.dart';
 import 'package:course_connect/User/Sreens/Home/homepage.dart';
 import 'package:course_connect/User/Profile/Forgotpswd.dart';
-import 'package:course_connect/User/Sreens/auth/UserSignup.dart';
+// import 'package:course_connect/User/Sreens/auth/UserSignup.dart';
 import 'package:flutter/material.dart';
-import 'UserSignup.dart'; // Import the SignUp page
+// import 'UserSignup.dart'; // Import the SignUp page
 
 import '../../../Widget/Constands/CustomTextfield.dart';
 import '../../../Widget/Constands/colors.dart';

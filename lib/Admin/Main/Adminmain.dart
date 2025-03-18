@@ -387,7 +387,7 @@ import 'package:course_connect/Admin/View/Screens/University/AddUniversity.dart'
 import 'package:course_connect/Admin/View/Screens/University/EditUniversity.dart';
 import 'package:course_connect/Admin/View/Screens/University/Universitymain.dart';
 
-import '../../Landlord/Main/Lanlordmain.dart';
+import '../../Landlord/Lanlordmain.dart';
 import '../View/Screens/House.dart/ViewHouses.dart';
 import '../View/Screens/Payment.dart/Payment_View.dart';
 import '../View/Screens/Users.dart/UserView.dart';
@@ -427,7 +427,7 @@ class _AdminPageState extends State<AdminPage> {
 
   @override
   void initState() {
-    _selectedPage =  Dashboard();
+    _selectedPage = Dashboard();
     _selectedTile = "Dashboard";
     super.initState();
   }
@@ -446,7 +446,8 @@ class _AdminPageState extends State<AdminPage> {
           Container(
             width: 300,
             decoration: BoxDecoration(
-              borderRadius: const BorderRadius.only(topRight: Radius.circular(20)),
+              borderRadius:
+                  const BorderRadius.only(topRight: Radius.circular(20)),
               color: Colors.white,
               boxShadow: [
                 BoxShadow(
@@ -481,8 +482,8 @@ class _AdminPageState extends State<AdminPage> {
                   title: 'Courses',
                   icon: Icons.book_outlined,
                   children: [
-                    SubListTile("View Courses",  Courses_main()),
-                    SubListTile("Add Course",  Addcourses()),
+                    SubListTile("View Courses", Courses_main()),
+                    SubListTile("Add Course", Addcourses()),
                     SubListTile("Edit Course", Editcourses()),
                   ],
                 ),
@@ -490,7 +491,7 @@ class _AdminPageState extends State<AdminPage> {
                   title: 'Landlord',
                   icon: Icons.people_alt_outlined,
                   children: [
-                    SubListTile("New Landlords", NewLandlords()),
+                    SubListTile("New Landlords", Landlord()),
                   ],
                 ),
                 _buildMainExpansionTile(
@@ -504,16 +505,17 @@ class _AdminPageState extends State<AdminPage> {
                   title: 'Payment',
                   icon: Icons.payments_outlined,
                   children: [
-                    SubListTile("View Payment",  PaymentView()),
+                    SubListTile("View Payment", PaymentView()),
                   ],
                 ),
                 _buildMainExpansionTile(
                   title: 'Users',
                   icon: Icons.supervised_user_circle_sharp,
                   children: [
-                    SubListTile("View Users",  Userview()),
+                    SubListTile("View Users", Userview()),
                   ],
-                ),_buildMainExpansionTile(
+                ),
+                _buildMainExpansionTile(
                   title: 'Feedback',
                   icon: Icons.feedback,
                   children: [
@@ -524,7 +526,7 @@ class _AdminPageState extends State<AdminPage> {
                   title: 'Knowledge Bank',
                   icon: Icons.my_library_books_rounded,
                   children: [
-                    SubListTile("Terms and Conditions",  CountryRules()),
+                    SubListTile("Terms and Conditions", CountryRules()),
                   ],
                 ),
                 _buildMainExpansionTile(
@@ -533,13 +535,15 @@ class _AdminPageState extends State<AdminPage> {
                   children: [
                     // SubListTile("Account", FeedbackView()),
                   ],
-                ),_buildMainExpansionTile(
+                ),
+                _buildMainExpansionTile(
                   title: 'Settings',
                   icon: Icons.settings,
                   children: [
                     // SubListTile("Account", FeedbackView()),
                   ],
-                ),_buildMainExpansionTile(
+                ),
+                _buildMainExpansionTile(
                   title: 'Log Out',
                   icon: Icons.login_outlined,
                   children: [
@@ -590,7 +594,10 @@ class _AdminPageState extends State<AdminPage> {
   Widget SubListTile(String title, Widget page) {
     return ListTile(
       leading: const SizedBox(width: 40),
-      title: Text(title, style: TextStyle(fontSize: 14, color: _selectedTile == title ? Colors.blue[400] : Colors.black)),
+      title: Text(title,
+          style: TextStyle(
+              fontSize: 14,
+              color: _selectedTile == title ? Colors.blue[400] : Colors.black)),
       onTap: () {
         setState(() {
           _selectedPage = page;

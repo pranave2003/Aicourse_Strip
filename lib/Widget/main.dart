@@ -1,6 +1,6 @@
 import 'package:course_connect/Admin/View/Screens/Payment.dart/Payment_View.dart';
-import 'package:course_connect/Landlord/Views/Screens/Auth/Login.dart';
-import 'package:course_connect/Landlord/Views/Screens/Auth/Signup.dart';
+import 'package:course_connect/Landlord/Views/Screens/Auth/Landloard_Login.dart';
+import 'package:course_connect/Landlord/Views/Screens/Auth/Landloard_Signup.dart';
 import 'package:course_connect/User/Accomodation/AccomodationDetailScreen.dart';
 import 'package:course_connect/User/Accomodation/Accomodation_1.dart';
 import 'package:course_connect/User/Accomodation/BookingConfirmationPage.dart';
@@ -14,9 +14,9 @@ import 'package:course_connect/User/Sreens/BottomNavigation/Bottom_Nav.dart';
 import 'package:course_connect/User/Sreens/Home/homepage.dart';
 import 'package:course_connect/User/Profile/Forgotpswd.dart';
 import 'package:course_connect/User/Profile/Notifications.dart';
-import 'package:course_connect/User/Profile/Profile.dart';
-
-import 'package:course_connect/User/Sreens/auth/UserSignup.dart';
+// import 'package:course_connect/User/Profile/Profile.dart';
+//
+// import 'package:course_connect/User/Sreens/auth/UserSignup.dart';
 import 'package:course_connect/User/Profile/onboarding_screen.dart';
 import 'package:course_connect/User/Profile/splash.dart';
 import 'package:flutter/material.dart';
