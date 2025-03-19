@@ -125,20 +125,12 @@ class _LandlordPageState extends State<LandlordPage> {
                     _buildSubListTile("Edit Property", PropertyEdit()),
                   ],
                 ),
-                _buildMainExpansionTile(
-                  title: 'Bookings',
-                  icon: Icons.book_online,
-                  children: [
-                    _buildSubListTile("All Bookings", Allbookings()),
-                  ],
-                ),
-                _buildMainExpansionTile(
-                  title: 'Payment',
-                  icon: Icons.payments_outlined,
-                  children: [
-                    _buildSubListTile("View Payment", ViewPayment()),
-                  ],
-                ),
+
+
+                _buildMainListTile('Bookings',  Allbookings(),
+                    icon: Icons.book_online),
+                _buildMainListTile('Payment',  ViewPayment(),
+                    icon: Icons.payments_outlined),
                 // _buildMainExpansionTile(
                 //   title: 'Account',
                 //   icon: Icons.person,

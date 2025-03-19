@@ -424,7 +424,8 @@ class _AdminPageState extends State<AdminPage> {
   Widget? _selectedPage;
   String? _selectedTile;
   String? _expandedTile;
-
+  final Color mainExpansionSelectedColor = Colors.blue;
+  final Color subExpansionSelectedColor = Colors.pink;
   @override
   void initState() {
     _selectedPage = Dashboard();
@@ -432,9 +433,7 @@ class _AdminPageState extends State<AdminPage> {
     super.initState();
   }
 
-  final mainExpansionSelectedColor = Colors.blue;
-  final SubExpansionSelectedColor = Colors.pink;
-  final selectedBackground = const Color(0xff0A71CB);
+
 
   @override
   Widget build(BuildContext context) {
@@ -469,66 +468,55 @@ class _AdminPageState extends State<AdminPage> {
                     height: 122,
                   ),
                 ),
+                const SizedBox(height: 20),
+                _buildMainListTile('Dashboard', const Dashboard(),
+                    icon: Icons.dashboard),
                 _buildMainExpansionTile(
                   title: 'Universities',
                   icon: Icons.school_outlined,
                   children: [
-                    SubListTile("View University", University_main()),
-                    SubListTile("Add University", AddUniversity()),
-                    SubListTile("Edit University", EditUniversity()),
+                    _buildSubListTile("View University", University_main()),
+                    _buildSubListTile("Add University", AddUniversity()),
+                    _buildSubListTile("Edit University", EditUniversity()),
                   ],
                 ),
+
+
                 _buildMainExpansionTile(
                   title: 'Courses',
                   icon: Icons.book_outlined,
                   children: [
-                    SubListTile("View Courses", Courses_main()),
-                    SubListTile("Add Course", Addcourses()),
-                    SubListTile("Edit Course", Editcourses()),
+                    _buildSubListTile("View Courses", Courses_main()),
+                    _buildSubListTile("Add Course", Addcourses()),
+                    _buildSubListTile("Edit Course", Editcourses()),
                   ],
                 ),
-                _buildMainExpansionTile(
-                  title: 'Landlord',
-                  icon: Icons.people_alt_outlined,
-                  children: [
-                    SubListTile("New Landlords", Landlord()),
-                  ],
-                ),
-                _buildMainExpansionTile(
-                  title: 'Houses',
-                  icon: Icons.maps_home_work_outlined,
-                  children: [
-                    SubListTile("View Houses", ViewHouses()),
-                  ],
-                ),
-                _buildMainExpansionTile(
-                  title: 'Payment',
-                  icon: Icons.payments_outlined,
-                  children: [
-                    SubListTile("View Payment", PaymentView()),
-                  ],
-                ),
-                _buildMainExpansionTile(
-                  title: 'Users',
-                  icon: Icons.supervised_user_circle_sharp,
-                  children: [
-                    SubListTile("View Users", Userview()),
-                  ],
-                ),
-                _buildMainExpansionTile(
-                  title: 'Feedback',
-                  icon: Icons.feedback,
-                  children: [
-                    SubListTile("View Feedback", FeedbackView()),
-                  ],
-                ),
-                _buildMainExpansionTile(
-                  title: 'Knowledge Bank',
-                  icon: Icons.my_library_books_rounded,
-                  children: [
-                    SubListTile("Terms and Conditions", CountryRules()),
-                  ],
-                ),
+            _buildMainExpansionTile(
+                    title: 'Landlord',
+                    icon: Icons.people_alt_outlined,
+                    children: [
+                      _buildSubListTile("New Landlords", NewLandlords()),
+            ],
+            ),
+
+                 _buildMainListTile('Houses',  ViewHouses(),
+                    icon: Icons.maps_home_work_outlined),
+                 _buildMainListTile('Payment',  PaymentView(),
+                    icon: Icons.payments_outlined),
+                _buildMainListTile('Users',  Userview(),
+                    icon: Icons.supervised_user_circle_sharp),
+
+                _buildMainListTile('Feedback',  FeedbackView(),
+                    icon: Icons.feedback),
+
+               _buildMainListTile('Knowledge Bank',  CountryRules(),
+                    icon: Icons.my_library_books_rounded),
+
+
+
+
+
+
                 _buildMainExpansionTile(
                   title: 'Account',
                   icon: Icons.person,
@@ -569,41 +557,91 @@ class _AdminPageState extends State<AdminPage> {
     );
   }
 
-  Widget _buildMainExpansionTile({
-    required String title,
-    required IconData icon,
-    required List<Widget> children,
-  }) {
-    return ExpansionTile(
-      textColor: mainExpansionSelectedColor,
-      iconColor: mainExpansionSelectedColor,
-      leading: Icon(icon),
-      shape: const RoundedRectangleBorder(side: BorderSide.none),
-      title: Text(title, style: const TextStyle(fontSize: 17)),
-      childrenPadding: EdgeInsets.zero,
-      initiallyExpanded: _expandedTile == title,
-      onExpansionChanged: (isExpanded) {
-        setState(() {
-          _expandedTile = isExpanded ? title : null;
-        });
-      },
-      children: children,
-    );
-  }
 
-  Widget SubListTile(String title, Widget page) {
+Widget _buildMainExpansionTile({
+  required String title,
+  required IconData icon,
+  required List<Widget> children,
+}) {
+  var mainExpansionSelectedColor;
+  var _expandedTile;
+  return ExpansionTile(
+
+    textColor: mainExpansionSelectedColor,
+    iconColor: mainExpansionSelectedColor,
+    leading: Icon(icon),
+    shape: const RoundedRectangleBorder(side: BorderSide.none),
+    title: Text(
+      title,
+      style: const TextStyle(fontSize: 17),
+    ),
+    initiallyExpanded: _expandedTile == title,
+    onExpansionChanged: (isExpanded) {
+      setState(() {
+        _expandedTile = isExpanded ? title : null;
+      });
+    },
+    children: children,
+  );
+}
+
+Widget _buildMainListTile(String title, Widget page, {IconData? icon}) {
+  var mainExpansionSelectedColor;
+  return ListTile(
+    leading: icon != null
+        ? Icon(icon,
+        color: _selectedTile == title
+            ? mainExpansionSelectedColor
+            : Colors.black)
+        : null,
+    title: Text(
+      title,
+      style: TextStyle(
+        fontSize: 14,
+        color: _selectedTile == title
+            ? mainExpansionSelectedColor
+            : Colors.black,
+      ),
+    ),
+    onTap: () {
+      setState(() {
+        _selectedPage = page;
+        _selectedTile = title;
+      });
+    },
+  );
+}
+  Widget _buildSubListTile(String title, Widget page) {
+
     return ListTile(
       leading: const SizedBox(width: 40),
-      title: Text(title,
-          style: TextStyle(
-              fontSize: 14,
-              color: _selectedTile == title ? Colors.blue[400] : Colors.black)),
+      title: Text(
+        title,
+        style: TextStyle(
+          fontSize: 14,
+          color: _selectedTile == title ? Colors.blue[400] : Colors.black,
+        ),
+      ),
       onTap: () {
         setState(() {
           _selectedPage = page;
           _selectedTile = title;
         });
       },
+    );
+  }
+
+}
+
+
+class Dashboard extends StatelessWidget {
+  const Dashboard({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: Colors.grey,
+      body: const Center(child: Text("Dashboard")),
     );
   }
 }
