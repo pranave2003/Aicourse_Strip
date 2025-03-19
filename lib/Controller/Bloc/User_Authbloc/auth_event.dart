@@ -24,3 +24,5 @@ class SignupEvent extends AuthEvent {
 //signout
 
 class SigOutEvent extends AuthEvent {}
+// inorder to get full details of user
+class FetchUserDetailsById extends AuthEvent {}

@@ -259,16 +259,16 @@ class _UserSignupState extends State<UserSignup> {
                         ),
                       ),
                     ),
-                    const SizedBox(height: 20),
-                    SizedBox(
-                        height: 70,
-                        child: Column(
-                          children: [
-                            state is Authloading ? Loading_Widget() : Text(""),
-                          ],
-                        )),
-
-                    /// Navigate to Sign In
+                    // const SizedBox(height: 20),
+                    // SizedBox(
+                    //     height: 70,
+                    //     child: Column(
+                    //       children: [
+                    //         state is Authloading ? Loading_Widget() : Text(""),
+                    //       ],
+                    //     )),
+                    //
+                    // /// Navigate to Sign In
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [

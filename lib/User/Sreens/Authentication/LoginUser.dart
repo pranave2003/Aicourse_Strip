@@ -29,6 +29,7 @@ class _UserLogin_authState extends State<UserLogin_auth> {
     _passwordController.dispose();
     super.dispose();
   }
+  bool _isPasswordVisible = false;
 
   @override
   Widget build(BuildContext context) {
@@ -92,8 +93,22 @@ class _UserLogin_authState extends State<UserLogin_auth> {
                           controller: _passwordController,
                           prefixIcon: Icon(Icons.lock),
                           hintText: "Password",
-                          suffixIcon: Icon(Icons.visibility_off_outlined),
-                          obscureText: true,
+                          suffixIcon: IconButton(
+                            icon: Icon(
+                              _isPasswordVisible
+                                  ? Icons.visibility
+                                  : Icons.visibility_off_outlined,
+                            ),
+                            onPressed: () {
+                              setState(() {
+                                _isPasswordVisible = !_isPasswordVisible;
+                              });
+                            },
+                          ),
+                          obscureText: !_isPasswordVisible, // Toggle visibility
+
+                          // suffixIcon: Icon(Icons.visibility_off_outlined),
+                          // obscureText: true,
                           validator: (value) {
                             if (value == null || value.isEmpty) {
                               return "Please enter a password";

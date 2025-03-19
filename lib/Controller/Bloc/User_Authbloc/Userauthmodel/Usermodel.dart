@@ -23,4 +23,21 @@ class UserModel {
       this.Country,
       this.City,
       this.Onesignal_id});
+
+  factory UserModel.fromMap(Map<String, dynamic> data) {
+    return UserModel(
+      email: data['email'],
+      password: data['password'],
+      uid: data['userId'],
+      name: data['name'],
+      phone: data['phone_number'],
+      status: data['status'],
+      Ban: data['ban'],
+      Onesignal_id: data['image'],
+      Country: data['Country'],
+      state: data['State'],
+      City: data['city'],
+    );
+  }
 }
+

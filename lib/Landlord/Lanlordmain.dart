@@ -1,4 +1,5 @@
 import 'package:course_connect/Controller/Bloc/Landloard_auth/landloard_auth_bloc.dart';
+import 'package:course_connect/Landlord/Views/Screens/ProfileLandlord/LandlordProfile.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:course_connect/Landlord/Views/Screens/Bookings/AllBookings.dart';
@@ -36,22 +37,32 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(scaffoldBackgroundColor: Colors.white),
         routes: {
           '/': (context) => Landloard_Splashpagewrapper(),
-          '/home': (context) => AdminPage(),
+          '/home': (context) => LandlordPageWrapper(),
           '/login': (context) => Landloardlogin(),
         },
       ),
     );
   }
 }
-
-class AdminPage extends StatefulWidget {
-  const AdminPage({super.key});
+class LandlordPageWrapper extends StatelessWidget {
+  const LandlordPageWrapper({super.key});
 
   @override
-  State<AdminPage> createState() => _AdminPageState();
+  Widget build(BuildContext context) {
+    return BlocProvider(
+      create: (context) => LandloardAuthBloc()..add(FetchLandlordDetailsById()),
+      child: LandlordPage(),
+    );
+  }
+}
+class LandlordPage extends StatefulWidget {
+  const LandlordPage({super.key});
+
+  @override
+  State<LandlordPage> createState() => _LandlordPageState();
 }
 
-class _AdminPageState extends State<AdminPage> {
+class _LandlordPageState extends State<LandlordPage> {
   Widget? _selectedPage;
   String? _selectedTile;
   String? _expandedTile;
@@ -128,13 +139,16 @@ class _AdminPageState extends State<AdminPage> {
                     _buildSubListTile("View Payment", ViewPayment()),
                   ],
                 ),
-                _buildMainExpansionTile(
-                  title: 'Account',
-                  icon: Icons.person,
-                  children: [
-                    // SubListTile("Account", FeedbackView()),
-                  ],
-                ),
+                // _buildMainExpansionTile(
+                //   title: 'Account',
+                //   icon: Icons.person,
+                //   children: [
+                //     _buildSubListTile("View Profile", LandlordProfile()),
+                //
+                //   ],
+                // ),
+                _buildMainListTile('Account',  LandlordProfile(),
+                    icon: Icons.person),
                 _buildMainExpansionTile(
                   title: 'Settings',
                   icon: Icons.settings,

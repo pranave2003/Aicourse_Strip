@@ -19,3 +19,13 @@ class AuthenticatedError extends LandloardAuthState {
 
   AuthenticatedError({required this.message});
 }
+final class LandlordByidLoaded extends LandloardAuthState {
+  final Landloard_Model Userdata;
+  LandlordByidLoaded(this.Userdata);
+}
+class Landlordloading extends LandloardAuthState {}
+
+class LandloardError extends LandloardAuthState {
+  String error;
+  LandloardError({required this.error});
+}

@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../Controller/Bloc/User_Authbloc/auth_bloc.dart';
@@ -9,7 +10,6 @@ import '../../Profile/TermsandConditions.dart';
 import '../Authentication/LoginUser.dart';
 
 import 'PrivacyPolicy.dart';
-
 
 class Profile extends StatefulWidget {
   const Profile({super.key});
@@ -41,41 +41,59 @@ class _ProfileState extends State<Profile> {
       body: Column(
         children: [
           // Profile Header
-          Padding(
-            padding: EdgeInsets.all(16.0),
-            child: Column(
-              children: [
-                CircleAvatar(
-                  radius: 50,
-                  backgroundImage: AssetImage("assets/Profile/img_3.png"),
-                ),
-                SizedBox(height: 10),
-                Text(
-                  "Charlotte King",
-                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                ),
-                Text("@johnkinggraphics", style: TextStyle(color: Colors.grey)),
-                Text("9845384854", style: TextStyle(color: Colors.grey)),
-                SizedBox(height: 10),
-                ElevatedButton(
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => EditProfilePage()),
-                    );
-                  },
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.red,
-                    foregroundColor: Colors.white,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10),
-                    ),
+          BlocBuilder<AuthBloc, AuthState>(
+            builder: (context, state) {
+              if (state is Userloading) {
+                return const Center(child: CircularProgressIndicator());
+              } else if (state is UserByidLoaded) {
+                final user = state.Userdata;
+                return Padding(
+                  padding: EdgeInsets.all(16.0),
+                  child: Column(
+                    children: [
+                      Column(
+                        children: [
+                          CircleAvatar(
+                            radius: 50,
+                            backgroundImage:
+                                AssetImage("assets/Profile/img_3.png"),
+                          ),
+                        ],
+                      ),
+                      SizedBox(height: 10),
+                      Text(
+                        '${user.name ?? ''}',
+                        style: TextStyle(
+                            fontSize: 20, fontWeight: FontWeight.bold),
+                      ),
+                      Text(' ${user.email ?? ''}',
+                          style: TextStyle(color: Colors.grey)),
+                      Text(' ${user.phone ?? ''}',
+                          style: TextStyle(color: Colors.grey)),
+                      SizedBox(height: 10),
+                      ElevatedButton(
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => EditProfilePage()),
+                          );
+                        },
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.red,
+                          foregroundColor: Colors.white,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                        ),
+                        child: Text("Edit Profile"),
+                      ),
+                    ],
                   ),
-                  child: Text("Edit Profile"),
-                ),
-              ],
-            ),
+                );
+              }
+              return SizedBox();
+            },
           ),
 
           // Profile Options (Each Separately)

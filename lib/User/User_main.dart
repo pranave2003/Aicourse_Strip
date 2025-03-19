@@ -32,7 +32,7 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(scaffoldBackgroundColor: Colors.white),
         routes: {
           '/': (context) => Splashpagewrapper(),
-          '/home': (context) => BottomNav(),
+          '/home': (context) => BottomNavWrapper(),
           '/login': (context) => UserLogin_auth(),
         },
       ),

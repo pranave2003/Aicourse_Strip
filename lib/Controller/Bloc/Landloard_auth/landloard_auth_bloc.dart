@@ -1,5 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:course_connect/Admin/View/Screens/Landlord/New_Landlords.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:meta/meta.dart';
 import 'LandloardModel/LandloardModel.dart';
@@ -116,6 +117,33 @@ class LandloardAuthBloc extends Bloc<LandloardAuthEvent, LandloardAuthState> {
         }
       },
     );
+    on<FetchLandlordDetailsById>((event, emit) async {
+      emit(Landlordloading());
+      User? user = _auth.currentUser;
+
+      if (user != null) {
+        try {
+          final user = FirebaseAuth.instance.currentUser;
+          if (user != null) {
+            final doc = await FirebaseFirestore.instance
+                .collection('Landloard')
+                .doc(user.uid)
+                .get();
+
+            if (doc.exists) {
+              Landloard_Model userData = Landloard_Model.fromMap(doc.data()!);
+              emit(LandlordByidLoaded(userData));
+            } else {
+              emit(LandloardError(error: "User profile not found"));
+            }
+          } else {
+            emit(LandloardError(error: "User not authenticated"));
+          }
+        } catch (e) {
+          emit(LandloardError(error: e.toString()));
+        }
+      }
+    });
 
     on<Landloard_LoginEvent>(
       (event, emit) async {

@@ -24,3 +24,4 @@ class LandloardSignupEvent extends LandloardAuthEvent {
 //signout
 
 class LandloardSigOutEvent extends LandloardAuthEvent {}
+class FetchLandlordDetailsById extends LandloardAuthEvent {}

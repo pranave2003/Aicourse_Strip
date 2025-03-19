@@ -1,11 +1,25 @@
+import 'package:course_connect/Controller/Bloc/User_Authbloc/auth_bloc.dart';
 import 'package:course_connect/User/Accomodation/BookingStatus.dart';
 import 'package:course_connect/User/Ai_course_finder/ApplicationStatusPage.dart';
 import 'package:course_connect/User/Sreens/Home/Universities.dart';
 import 'package:course_connect/User/Sreens/Home/homepage.dart';
 // import 'package:course_connect/User/Profile/Profile.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../Profile/Profile.dart';
+
+class BottomNavWrapper extends StatelessWidget {
+  const BottomNavWrapper({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocProvider(
+      create: (context) => AuthBloc()..add(FetchUserDetailsById()),
+      child: Bottom_Nav(),
+    );
+  }
+}
 
 class BottomNav extends StatelessWidget {
   @override
@@ -37,14 +51,15 @@ class _Bottom_NavState extends State<Bottom_Nav> {
     return Scaffold(
       // appBar: AppBar(title: Text("Bottom Navigation Example")),
       body: _pages[_currentIndex], // Display the selected page
-      
+
       bottomNavigationBar: BottomNavigationBar(
         unselectedIconTheme: IconThemeData(color: Colors.black),
         selectedIconTheme: IconThemeData(color: Colors.blue),
         showUnselectedLabels: true,
         selectedFontSize: 20,
         fixedColor: Colors.blue,
-        unselectedItemColor: Colors.black, // Set unselected label color to black
+        unselectedItemColor:
+            Colors.black, // Set unselected label color to black
         unselectedLabelStyle: TextStyle(color: Colors.black),
         currentIndex: _currentIndex,
         onTap: (index) {
@@ -55,11 +70,11 @@ class _Bottom_NavState extends State<Bottom_Nav> {
         items: [
           BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home"),
           BottomNavigationBarItem(icon: Icon(Icons.school), label: "Colleges"),
-          BottomNavigationBarItem(icon: Icon(Icons.calendar_today), label: "Applications"),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.calendar_today), label: "Applications"),
           BottomNavigationBarItem(icon: Icon(Icons.person), label: "Profile"),
         ],
       ),
-
     );
   }
 }
@@ -81,5 +96,3 @@ class PageTwo extends StatelessWidget {
     );
   }
 }
-
-
