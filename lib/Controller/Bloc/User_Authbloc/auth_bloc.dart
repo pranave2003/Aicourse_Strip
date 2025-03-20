@@ -51,6 +51,8 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
               "Country": event.user.Country,
               "City": event.user.City,
               "Onesignal_id": "playerId",
+              "District": event.user.District,
+              "role": "User",
               "ban": "1",
               "status": "1"
             });
@@ -189,5 +191,34 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         }
       },
     );
+
+    // get all users
+
+    on<FetchUsers>((event, emit) async {
+      emit(UsersLoading());
+      try {
+        CollectionReference driversCollection =
+            FirebaseFirestore.instance.collection('Users');
+
+        Query query = driversCollection;
+        QuerySnapshot snapshot = await query.get();
+
+        List<UserModel> userss = snapshot.docs.map((doc) {
+          return UserModel.fromMap(doc.data() as Map<String, dynamic>);
+        }).toList();
+
+        if (event.searchQuery != null && event.searchQuery!.isNotEmpty) {
+          userss = userss.where((driver) {
+            return driver.name!
+                .toLowerCase()
+                .contains(event.searchQuery!.toLowerCase());
+          }).toList();
+        }
+
+        emit(Usersloaded(userss));
+      } catch (e) {
+        emit(Usersfailerror(e.toString()));
+      }
+    });
   }
 }

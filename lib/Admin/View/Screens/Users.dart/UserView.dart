@@ -226,7 +226,11 @@
 //
 //
 //
+import 'package:course_connect/Controller/Bloc/User_Authbloc/auth_bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+import '../../../../Widget/Constands/Loading.dart';
 
 class Userview extends StatefulWidget {
   const Userview({super.key});
@@ -252,7 +256,7 @@ class _UserviewState extends State<Userview> {
                     Text(
                       "Welcome ",
                       style:
-                      TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                          TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
                     ),
                     Text(
                       "Admin, ",
@@ -266,10 +270,13 @@ class _UserviewState extends State<Userview> {
               ),
               Row(
                 children: [
-                  CircleAvatar(backgroundColor: Color(0xffD9D9D9), child: Icon(Icons.notification_add)),
+                  CircleAvatar(
+                      backgroundColor: Color(0xffD9D9D9),
+                      child: Icon(Icons.notification_add)),
                   SizedBox(width: 10),
                   Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 6),
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 14, vertical: 6),
                     decoration: BoxDecoration(
                       color: Colors.white,
                       borderRadius: BorderRadius.circular(20),
@@ -285,7 +292,8 @@ class _UserviewState extends State<Userview> {
                         const SizedBox(width: 10),
                         const Text(
                           "Admin",
-                          style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                          style: TextStyle(
+                              fontSize: 16, fontWeight: FontWeight.bold),
                         ),
                       ],
                     ),
@@ -304,37 +312,113 @@ class _UserviewState extends State<Userview> {
                   "User View Page",
                   style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
                 ),
+                Container(
+                  width: 300,
+                  decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(10),
+                      border: Border.all(width: 0.5, color: Colors.grey)),
+                  child: TextField(
+                    onChanged: (value) {
+                      context.read<AuthBloc>().add(
+                          FetchUsers(searchQuery: value)); // Pass search query
+                    },
+                    decoration: InputDecoration(
+                      hintText: 'Search users',
+                      prefixIcon: Icon(Icons.search, color: Colors.grey),
+                      border: InputBorder.none,
+                    ),
+                  ),
+                ),
               ],
             ),
           ),
           const SizedBox(height: 20),
           Expanded(
-            child: SingleChildScrollView(
-              scrollDirection: Axis.horizontal,
-              child: SingleChildScrollView(
-                scrollDirection: Axis.vertical,
-                child: DataTable(
-                  headingRowColor: MaterialStateColor.resolveWith(
-                          (states) => Colors.grey.shade300),
-                  columnSpacing: 50,
-                  dataRowMaxHeight: 70,
-                  decoration: BoxDecoration(color: Colors.white),
-                  columns: [
-                    _buildColumn('S/no'),
-                    _buildColumn('Name'),
-                    _buildColumn('Phone number'),
-                    _buildColumn('Email'),
-                    _buildColumn('Country'),
-                    _buildColumn('State'),
-                    _buildColumn('District'),
-                    _buildColumn('Street'),
-                  ],
-                  rows: [
-                    _buildRow("1"),
-                    _buildRow("2"),
-                  ],
-                ),
-              ),
+            child: BlocConsumer<AuthBloc, AuthState>(
+              listener: (context, state) {
+                // TODO: implement listener
+              },
+              builder: (context, state) {
+                if (state is UsersLoading) {
+                  return Center(child: Loading_Widget());
+                } else if (state is Usersfailerror) {
+                  return Text(state.error.toString());
+                } else if (state is Usersloaded) {
+                  if (state.Users.isEmpty) {
+                    // Return "No data found" if txhe list is empty
+                    return Center(
+                      child: Text(
+                        "No data found",
+                        style: TextStyle(
+                            fontSize: 16, fontWeight: FontWeight.bold),
+                      ),
+                    );
+                  }
+                  return SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    child: SingleChildScrollView(
+                      scrollDirection: Axis.vertical,
+                      child: DataTable(
+                        headingRowColor: MaterialStateColor.resolveWith(
+                            (states) => Colors.grey.shade300),
+                        columnSpacing: 50,
+                        dataRowMaxHeight: 70,
+                        decoration: BoxDecoration(color: Colors.white),
+                        columns: [
+                          _buildColumn('S/no'),
+                          _buildColumn('Name'),
+                          _buildColumn('Phone number'),
+                          _buildColumn('Email'),
+                          _buildColumn('Country'),
+                          _buildColumn('State'),
+                          _buildColumn('District'),
+                          _buildColumn('Street'),
+                        ],
+                        rows: List.generate(
+                          state.Users.length,
+                          (index) {
+                            final User = state.Users[index];
+                            return DataRow(
+                              cells: [
+                                DataCell(Text((index + 1).toString(),
+                                    style: const TextStyle(
+                                        fontWeight: FontWeight.bold))),
+                                DataCell(
+                                  Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        state.Users[index].name.toString(),
+                                        style: const TextStyle(
+                                            fontWeight: FontWeight.bold),
+                                        overflow: TextOverflow.ellipsis,
+                                      ),
+                                      Text(User.phone.toString(),
+                                          overflow: TextOverflow.ellipsis),
+                                      Text(User.email.toString(),
+                                          overflow: TextOverflow.ellipsis),
+                                    ],
+                                  ),
+                                ),
+                                DataCell(Text(User.phone.toString())),
+                                DataCell(Text(User.email.toString())),
+                                DataCell(Text(User.Country.toString())),
+                                DataCell(Text(User.state.toString())),
+                                DataCell(Text(User.District.toString())),
+                                DataCell(Text(User.City.toString())),
+                              ],
+                            );
+                          },
+                        ),
+                      ),
+                    ),
+                  );
+                }
+                return SizedBox();
+              },
             ),
           ),
         ],
@@ -356,8 +440,24 @@ class _UserviewState extends State<Userview> {
 
   DataRow _buildRow(String index) {
     List<List<String>> userData = [
-      ["John Doe", "+1 123-456-7890", "johndoe@example.com", "United States", "California", "Los Angeles", "123 Baker Street"],
-      ["Devid John", "+44 987-654-3210", "devid@example.com", "United Kingdom", "London", "Westminster", "456 Oxford Street"],
+      [
+        "John Doe",
+        "+1 123-456-7890",
+        "johndoe@example.com",
+        "United States",
+        "California",
+        "Los Angeles",
+        "123 Baker Street"
+      ],
+      [
+        "Devid John",
+        "+44 987-654-3210",
+        "devid@example.com",
+        "United Kingdom",
+        "London",
+        "Westminster",
+        "456 Oxford Street"
+      ],
     ];
 
     return DataRow(

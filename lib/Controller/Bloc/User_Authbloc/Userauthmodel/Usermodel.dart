@@ -10,6 +10,7 @@ class UserModel {
   String? state;
   String? City;
   String? Onesignal_id;
+  String? District;
 
   UserModel(
       {this.email,
@@ -22,7 +23,10 @@ class UserModel {
       this.state,
       this.Country,
       this.City,
-      this.Onesignal_id});
+      this.Onesignal_id,
+        this.District
+
+      });
 
   factory UserModel.fromMap(Map<String, dynamic> data) {
     return UserModel(
@@ -35,8 +39,9 @@ class UserModel {
       Ban: data['ban'],
       Onesignal_id: data['image'],
       Country: data['Country'],
-      state: data['State'],
-      City: data['city'],
+      state: data['state'],
+      City: data['City'],
+      District: data['District']
     );
   }
 }
