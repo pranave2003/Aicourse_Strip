@@ -1,4 +1,8 @@
+import 'package:course_connect/Controller/Bloc/University_block/University_model/University_model.dart';
+import 'package:course_connect/Controller/Bloc/University_block/university_bloc.dart';
+import 'package:course_connect/Widget/Constands/Loading.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class AddUniversity extends StatefulWidget {
   @override
@@ -18,14 +22,20 @@ class _AddUniversityState extends State<AddUniversity> {
   String? selectedRank;
   String? selectedFeeCourse;
   String? selectedScholarshipCourse;
-
   String admissionType = "Public"; // Default selected radio button
   DateTime? establishedDate;
   DateTime? admissionStartDate;
   DateTime? admissionEndDate;
-  final TextEditingController establishedDateController = TextEditingController();
-  final TextEditingController admissionStartDateController = TextEditingController();
-  final TextEditingController admissionEndDateController = TextEditingController();
+  final TextEditingController establishedDateController =
+      TextEditingController();
+  final TextEditingController admissionStartDateController =
+      TextEditingController();
+  final TextEditingController admissionEndDateController =
+      TextEditingController();
+  final TextEditingController DiscriptionController = TextEditingController();
+  final TextEditingController UniversitynameController =
+      TextEditingController();
+  final TextEditingController Terms_and_conditions = TextEditingController();
   @override
   void dispose() {
     establishedDateController.dispose();
@@ -33,13 +43,15 @@ class _AddUniversityState extends State<AddUniversity> {
     admissionEndDateController.dispose();
     super.dispose();
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(20),
-        child: Form( // Wrap the form fields in a Form widget
+        child: Form(
+          // Wrap the form fields in a Form widget
           key: _formKey,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -97,44 +109,72 @@ class _AddUniversityState extends State<AddUniversity> {
               ),
 
               SizedBox(height: 20),
-              Padding(
-                padding: const EdgeInsets.only(left: 25, right: 25),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      "University Adding Page",
-                      style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-                    ),
-                    SizedBox(width: 20),
-                    InkWell(
-                      onTap: () {
-                        if (_formKey.currentState!.validate()) {
-                          // If the form is valid, proceed with the action
-                          // Add action here
-                        }
-                      },
-                      borderRadius:
-                      BorderRadius.circular(8), // Smooth border effect on tap
-                      child: Container(
-                        padding:
-                        EdgeInsets.symmetric(vertical: 8, horizontal: 36),
-                        decoration: BoxDecoration(
-                          color: Colors.blue, // Blue background
-                          borderRadius:
-                          BorderRadius.circular(8), // Rounded corners
-                        ),
-                        child: Text(
-                          "+Add",
+              BlocBuilder<UniversityBloc, UniversityState>(
+                builder: (context, state) {
+                  return Padding(
+                    padding: const EdgeInsets.only(left: 25, right: 25),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          "University Adding Page",
                           style: TextStyle(
-                              fontSize: 18,
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold),
+                              fontSize: 24, fontWeight: FontWeight.bold),
                         ),
-                      ),
+                        SizedBox(width: 20),
+                        InkWell(
+                          onTap: () {
+                            if (_formKey.currentState!.validate()) {
+                              University_model university = University_model(
+                                  Country: selectedCountry,
+                                  Admission_enddate:
+                                      admissionEndDate.toString(),
+                                  Admission_startdate:
+                                      admissionStartDate.toString(),
+                                  Course_offered: selectedCourse,
+                                  Degree_offered: selectedDegree,
+                                  Description: DiscriptionController.text,
+                                  Duration: selectedDuration,
+                                  Eligibility_criteria: selectedEligibility,
+                                  Established_date:
+                                      establishedDateController.text,
+                                  Schoolarship_details:
+                                      selectedScholarshipCourse,
+                                  Terms_and_conditions:
+                                      Terms_and_conditions.text,
+                                  Tuition_fees: selectedFeeCourse,
+                                  Universityname: UniversitynameController.text,
+                                  Universitytype: selectedMBACourse,
+                                  Rank: selectedRank);
+                              context.read<UniversityBloc>().add(
+                                  University_Add_Event(University: university));
+                            }
+                          },
+                          borderRadius: BorderRadius.circular(
+                              8), // Smooth border effect on tap
+                          child: Container(
+                            padding: EdgeInsets.symmetric(
+                                vertical: 8, horizontal: 36),
+                            decoration: BoxDecoration(
+                              color: Colors.blue, // Blue background
+                              borderRadius:
+                                  BorderRadius.circular(8), // Rounded corners
+                            ),
+                            child: state is UniversityaddSuccess
+                                ? Loading_Widget()
+                                : Text(
+                                    "+Add",
+                                    style: TextStyle(
+                                        fontSize: 18,
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                          ),
+                        ),
+                      ],
                     ),
-                  ],
-                ),
+                  );
+                },
               ),
 
               /// **Divider Line**
@@ -142,7 +182,20 @@ class _AddUniversityState extends State<AddUniversity> {
               Divider(thickness: 2, color: Colors.grey),
 
               SizedBox(height: 20),
-              buildTextField("University Name", required: true),
+              Padding(
+                padding:
+                    const EdgeInsets.symmetric(vertical: 8, horizontal: 25),
+                child: TextFormField(
+                  controller: UniversitynameController,
+                  maxLines: 1,
+                  decoration: InputDecoration(
+                      labelText: "University Name",
+                      border: OutlineInputBorder()),
+                  validator: (value) => true && (value == null || value.isEmpty)
+                      ? 'University Name is required'
+                      : null,
+                ),
+              ),
 
               buildDropdown(
                   "Country",
@@ -161,29 +214,31 @@ class _AddUniversityState extends State<AddUniversity> {
               Padding(
                 padding: const EdgeInsets.all(8.4),
                 child: Text("Admission Type:",
-                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500)),
+                    style:
+                        TextStyle(fontSize: 16, fontWeight: FontWeight.w500)),
               ),
-            Row(
-              children: [
-                Radio(
-                  value: "Public",
-                  groupValue: admissionType,
-                  onChanged: (value) {
-                    setState(() => admissionType = value.toString());
-                  },
-                ),
-                Text("Public"),
-                SizedBox(width: 20),
-                Radio(
-                  value: "Private",
-                  groupValue: admissionType,
-                  onChanged: (value) {
-                    setState(() => admissionType = value.toString());
-                  },
-                ),
-                Text("Private"),
-              ],
-            ),
+              Row(
+                children: [
+                  Radio(
+                    value: "Public",
+                    groupValue: admissionType,
+                    onChanged: (value) {
+                      setState(() => admissionType = value.toString());
+                    },
+                  ),
+                  Text("Public"),
+                  SizedBox(width: 20),
+                  Radio(
+                    value: "Private",
+                    groupValue: admissionType,
+                    onChanged: (value) {
+                      setState(() => admissionType = value.toString());
+                    },
+                  ),
+                  Text("Private"),
+                ],
+              ),
+
               /// **Admission Type (Radio Buttons)**
 
               if (admissionType.isEmpty)
@@ -194,7 +249,8 @@ class _AddUniversityState extends State<AddUniversity> {
               buildDatePicker("Established Date", establishedDate, (date) {
                 setState(() {
                   establishedDate = date;
-                  establishedDateController.text = "${date?.toLocal()}".split(' ')[0]; // Format the date
+                  establishedDateController.text =
+                      "${date?.toLocal()}".split(' ')[0]; // Format the date
                 });
               }, required: true),
 
@@ -202,35 +258,37 @@ class _AddUniversityState extends State<AddUniversity> {
               Row(
                 children: [
                   Expanded(
-                    child: buildDatePicker("Admission Start Date", admissionStartDate, (date) {
+                    child: buildDatePicker(
+                        "Admission Start Date", admissionStartDate, (date) {
                       setState(() {
                         admissionStartDate = date;
-                        admissionStartDateController.text = "${date?.toLocal()}".split(' ')[0]; // Format the date
+                        admissionStartDateController.text = "${date?.toLocal()}"
+                            .split(' ')[0]; // Format the date
                       });
                     }, required: true),
                   ),
                   SizedBox(width: 10),
                   Expanded(
-                    child: buildDatePicker("Admission End Date", admissionEndDate, (date) {
+                    child: buildDatePicker(
+                        "Admission End Date", admissionEndDate, (date) {
                       setState(() {
                         admissionEndDate = date;
-                        admissionEndDateController.text = "${date?.toLocal()}".split(' ')[0]; // Format the date
+                        admissionEndDateController.text = "${date?.toLocal()}"
+                            .split(' ')[0]; // Format the date
                       });
                     }, required: true),
                   ),
                 ],
               ),
 
-        //       // Other widgets...
-        //     ],
-        //   ),
-        // ),
-        //       /// **Date Pickers for Established Date**
+              //       // Other widgets...
+              //     ],
+              //   ),
+              // ),
+              //       /// **Date Pickers for Established Date**
               buildDatePicker("Established Date", establishedDate, (date) {
-
                 setState(() => establishedDate = date);
               }, required: true),
-
 
               Row(
                 children: [
@@ -242,10 +300,10 @@ class _AddUniversityState extends State<AddUniversity> {
                   ),
                   SizedBox(width: 10),
                   Expanded(
-                    child: buildDatePicker("Admission End Date", admissionEndDate,
-                            (date) {
-                          setState(() => admissionEndDate = date);
-                        }, required: true),
+                    child: buildDatePicker(
+                        "Admission End Date", admissionEndDate, (date) {
+                      setState(() => admissionEndDate = date);
+                    }, required: true),
                   ),
                 ],
               ),
@@ -253,9 +311,9 @@ class _AddUniversityState extends State<AddUniversity> {
               // Dropdown for Degree Type
               buildDropdown(
                   "Degree Type", ["Bachelor", "Master", "MBA"], selectedDegree,
-                      (value) {
-                    setState(() => selectedDegree = value);
-                  }, required: true),
+                  (value) {
+                setState(() => selectedDegree = value);
+              }, required: true),
 
               // Dropdown for Bachelor's Courses
               if (selectedDegree == "Bachelor")
@@ -391,8 +449,8 @@ class _AddUniversityState extends State<AddUniversity> {
               // Dropdown for Course Duration
               buildDropdown("Course Duration", ["1 Year", "2 Years", "3 Years"],
                   selectedDuration, (value) {
-                    setState(() => selectedDuration = value);
-                  }, required: true),
+                setState(() => selectedDuration = value);
+              }, required: true),
 
               buildDropdown(
                   "Eligibility Criteria",
@@ -401,14 +459,41 @@ class _AddUniversityState extends State<AddUniversity> {
                 setState(() => selectedEligibility = value);
               }, required: true),
 
-              buildDropdown("Rank", ["Top 10", "Top 50", "Top 100"], selectedRank,
-                      (value) {
-                    setState(() => selectedRank = value);
-                  }, required: true),
+              buildDropdown(
+                  "Rank", ["Top 10", "Top 50", "Top 100"], selectedRank,
+                  (value) {
+                setState(() => selectedRank = value);
+              }, required: true),
 
               SizedBox(height: 10),
-              buildTextField("Description", maxLines: 3,required: true),
+              Padding(
+                padding:
+                    const EdgeInsets.symmetric(vertical: 8, horizontal: 25),
+                child: TextFormField(
+                  controller: DiscriptionController,
+                  maxLines: 3,
+                  decoration: InputDecoration(
+                      labelText: "Description", border: OutlineInputBorder()),
+                  validator: (value) => true && (value == null || value.isEmpty)
+                      ? 'Description is required'
+                      : null,
+                ),
+              ),
 
+              Padding(
+                padding:
+                    const EdgeInsets.symmetric(vertical: 8, horizontal: 25),
+                child: TextFormField(
+                  controller: Terms_and_conditions,
+                  maxLines: 3,
+                  decoration: InputDecoration(
+                      labelText: "Terms_and_conditions",
+                      border: OutlineInputBorder()),
+                  validator: (value) => true && (value == null || value.isEmpty)
+                      ? 'Terms_and_conditions is required'
+                      : null,
+                ),
+              ),
               buildDropdownWithAmount("Fee Details"),
               buildDropdownWithAmount("Scholarships"),
             ],
@@ -436,11 +521,11 @@ class _AddUniversityState extends State<AddUniversity> {
             child: Text(value),
           );
         }).toList(),
-        validator: (value) => required && value == null ? '$label is required' : null,
+        validator: (value) =>
+            required && value == null ? '$label is required' : null,
       ),
     );
   }
-
 
   Widget buildDatePicker(
       String label, DateTime? selectedDate, ValueChanged<DateTime?> onChanged,
@@ -451,8 +536,8 @@ class _AddUniversityState extends State<AddUniversity> {
         controller: selectedDate == establishedDate
             ? establishedDateController
             : selectedDate == admissionStartDate
-            ? admissionStartDateController
-            : admissionEndDateController,
+                ? admissionStartDateController
+                : admissionEndDateController,
         decoration: InputDecoration(
           labelText: label,
           border: OutlineInputBorder(),
@@ -470,11 +555,10 @@ class _AddUniversityState extends State<AddUniversity> {
           }
         },
         validator: (value) =>
-        required && selectedDate == null ? '$label is required' : null,
+            required && selectedDate == null ? '$label is required' : null,
       ),
     );
   }
-
 
   Widget buildDropdownWithAmount(String label) {
     return Padding(
@@ -485,9 +569,9 @@ class _AddUniversityState extends State<AddUniversity> {
             flex: 3, // Reduced width for dropdown
             child: buildDropdown(
                 label, ["Bachelors", "Masters", "MBA"], selectedFeeCourse,
-                    (value) {
-                  setState(() => selectedFeeCourse = value);
-                }),
+                (value) {
+              setState(() => selectedFeeCourse = value);
+            }),
           ),
           SizedBox(width: 8), // Reduced spacing
           Expanded(
@@ -526,20 +610,20 @@ class _AddUniversityState extends State<AddUniversity> {
 
   /// **Reusable Text Field Widget**
   Widget buildTextField(String label,
-      {int maxLines = 1, TextInputType keyboardType = TextInputType.text, bool required = false}) {
+      {int maxLines = 1,
+      TextInputType keyboardType = TextInputType.text,
+      bool required = false}) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 25),
       child: TextFormField(
         maxLines: maxLines,
         keyboardType: keyboardType,
         decoration:
-        InputDecoration(labelText: label, border: OutlineInputBorder()),
-        validator: (value) => required && (value == null || value.isEmpty) ? '$label is required' : null,
+            InputDecoration(labelText: label, border: OutlineInputBorder()),
+        validator: (value) => required && (value == null || value.isEmpty)
+            ? '$label is required'
+            : null,
       ),
     );
   }
 }
-
-
-
-

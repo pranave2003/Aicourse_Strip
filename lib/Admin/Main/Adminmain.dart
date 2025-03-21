@@ -1,20 +1,17 @@
 import 'package:course_connect/Admin/View/Screens/Feedback/FeedbackView.dart';
+import 'package:course_connect/Controller/Bloc/University_block/university_bloc.dart';
 import 'package:course_connect/Widget/Constands/colors.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-
 import 'package:course_connect/Admin/View/Screens/Courses/Addcourses.dart';
 import 'package:course_connect/Admin/View/Screens/Courses/Courses.dart';
 import 'package:course_connect/Admin/View/Screens/Courses/Editcourses.dart';
-
 import 'package:course_connect/Admin/View/Screens/KnowledgeBank/CountryRules.dart';
 import 'package:course_connect/Admin/View/Screens/Landlord/New_Landlords.dart';
-
 import 'package:course_connect/Admin/View/Screens/University/AddUniversity.dart';
 import 'package:course_connect/Admin/View/Screens/University/EditUniversity.dart';
 import 'package:course_connect/Admin/View/Screens/University/Universitymain.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
 import '../../Controller/Bloc/Landloard_auth/landloard_auth_bloc.dart';
 import '../../Controller/Bloc/User_Authbloc/auth_bloc.dart';
 import '../../firebase_options.dart';
@@ -42,7 +39,8 @@ class MyApp extends StatelessWidget {
         BlocProvider<LandloardAuthBloc>(
           create: (context) => LandloardAuthBloc()
             ..add(FetchLandloards(searchQuery: null, status: "0")),
-        )
+        ),
+        BlocProvider<UniversityBloc>(create: (context) => UniversityBloc()),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
