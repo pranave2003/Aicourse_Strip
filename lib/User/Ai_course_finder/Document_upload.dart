@@ -1,3 +1,4 @@
+import 'package:course_connect/User/Ai_course_finder/SuccessScreen.dart';
 import 'package:course_connect/Widget/Constands/colors.dart';
 import 'package:flutter/material.dart';
 
@@ -40,18 +41,30 @@ class Document_upload extends StatelessWidget {
               ),
             ),
             SizedBox(height: 20),
-            ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                minimumSize: Size(double.infinity, 50),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(8),
-                ),
-                backgroundColor: blueColor,
-              ),
-              onPressed: () {},
-              child: Text(
-                'Next',
-                style: TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold),
+            InkWell(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => SuccessScreen(),
+                  ),
+                );
+
+              },
+              child: Container(
+                height: 51,
+                width: 231,
+                decoration: BoxDecoration(
+                    color:blueColor,
+                    borderRadius: BorderRadius.circular(30)),
+                child: Center(
+                    child: Text(
+                      "Next",
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 22,
+                          fontWeight: FontWeight.bold),
+                    )),
               ),
             ),
           ],

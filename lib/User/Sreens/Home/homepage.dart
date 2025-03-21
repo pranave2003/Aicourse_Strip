@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:course_connect/User/Accomodation/AccomodationDetailScreen.dart';
 import 'package:course_connect/User/Ai_course_finder/ChooseCountry.dart';
+import 'package:course_connect/User/Ai_course_finder/FilterPage.dart';
 import 'package:course_connect/User/Sreens/BottomNavigation/Bottom_nav2.dart';
 import 'package:course_connect/User/Profile/Notifications.dart';
 import 'package:flutter/cupertino.dart';
@@ -72,7 +73,7 @@ class _HomepageState extends State<Homepage> {
       "surname": "United States"
     },
     {
-      "icon": "assets/img_20.png",
+      "icon": "assets/img_19.png",
       "name": "Ota go\n University",
       "surname": "Dunedin, New Zealand"
     },
@@ -97,20 +98,21 @@ class _HomepageState extends State<Homepage> {
               padding: const EdgeInsets.only(right: 18.0),
               child: GestureDetector(
                 onTap: () {
-                  // Navigate to Notifications Page
-                  // Navigator.push(
-                  //   context,
-                  //   MaterialPageRoute(builder: (context) => Notifications()),
-                  // );
-                  final Authbloc = BlocProvider.of<AuthBloc>(context);
 
-                  Authbloc.add(SigOutEvent());
-                  Navigator.pushNamedAndRemoveUntil(
+                  Navigator.push(
                     context,
-                    "/login",
-                    (route) => false,
+                    MaterialPageRoute(builder: (context) => Notifications()),
                   );
+                  // / final Authbloc = BlocProvider.of<AuthBloc>(context);
+                  // //
+                  // Authbloc.add(SigOutEvent());
+                  // Navigator.pushNamedAndRemoveUntil(
+                  //   context,
+                  //   "/login",
+                  //   (route) => false,
+                  // );
                 },
+
                 child: Container(
                   height: 52,
                   width: 52,
@@ -151,21 +153,30 @@ class _HomepageState extends State<Homepage> {
                     ),
                     Expanded(
                       flex: 1,
-                      child: Container(
-                        height: 50,
-                        width: 50,
-                        decoration: BoxDecoration(
-                          color: Colors.grey[100], // Soft pink background
-                          borderRadius: BorderRadius.circular(12),
-                        ),
-                        child: IconButton(
-                          icon: Icon(Icons.tune, color: Colors.brown),
-                          onPressed: () {
-                            // Filter button action
-                          },
+                      child: GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => FilterPage()), // Correct Navigation
+                          );
+                        },
+                        child: Container(
+                          height: 50,
+                          width: 50,
+                          decoration: BoxDecoration(
+                            color: Colors.grey[100], // Soft pink background
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                          child: Center( // Ensuring proper alignment
+                            child: Icon(
+                              Icons.tune,
+                              color: Colors.brown,
+                            ),
+                          ),
                         ),
                       ),
-                    )
+                    ),
+
                   ],
                 ),
                 SizedBox(height: 10),

@@ -15,9 +15,12 @@ class _Bachelors_academictestState extends State<Bachelors_academictest> {
   final TextEditingController percentageController = TextEditingController(); // Controller for text input
 
   // List of English language tests
-  final List<String> englishTests = [
+  final List<String> academicTests = [
     "ACT",
     "SAT",
+    "JEE (For Civil Engineering)",
+    "NEET (For Medical courses )",
+    "CUET (For General courses )",
     "TEST NOT TAKEN"
   ];
 
@@ -74,14 +77,14 @@ class _Bachelors_academictestState extends State<Bachelors_academictest> {
             Expanded(
               child: ListView.builder(
                 shrinkWrap: true,
-                itemCount: englishTests.length,
+                itemCount: academicTests.length,
                 itemBuilder: (context, index) {
                   bool isSelected = selectedIndex == index;
                   return GestureDetector(
                     onTap: () {
                       setState(() {
                         selectedIndex = index;
-                        selectedacademicTest = englishTests[index];
+                        selectedacademicTest = academicTests[index];
                         print(selectedacademicTest);
                       });
                     },
@@ -95,7 +98,7 @@ class _Bachelors_academictestState extends State<Bachelors_academictest> {
                       ),
                       child: Center(
                         child: Text(
-                          englishTests[index],
+                          academicTests[index],
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
                             color: isSelected ? Colors.white : Colors.black,
