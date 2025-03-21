@@ -70,7 +70,36 @@ class _EditUniversityState extends State<EditUniversity> {
             ),
 
             SizedBox(height: 20),
-            Text("Edit University", style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold)),
+            Padding(
+              padding: const EdgeInsets.only(left: 25, right: 25),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    "Edit University",
+                    style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                  ),
+                  SizedBox(width: 20),
+                  InkWell(
+                    onTap: () {
+                      // Add action here
+                    },
+                    borderRadius: BorderRadius.circular(8), // Smooth border effect on tap
+                    child: Container(
+                      padding: EdgeInsets.symmetric(vertical: 8, horizontal: 36),
+                      decoration: BoxDecoration(
+                        color: Colors.blue, // Blue background
+                        borderRadius: BorderRadius.circular(8), // Rounded corners
+                      ),
+                      child: Text(
+                        "+Save",
+                        style: TextStyle(fontSize: 18, color: Colors.white, fontWeight: FontWeight.bold),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
 
             /// **Divider Line**
             SizedBox(height: 5),

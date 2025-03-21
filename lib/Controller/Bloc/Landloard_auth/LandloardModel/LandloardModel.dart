@@ -46,6 +46,8 @@ class Landloard_Model {
         DOB: data['dob'],
       Adress : data['address'],
 
+
+
     );
   }
 }

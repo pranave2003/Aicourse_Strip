@@ -105,21 +105,36 @@ class CourseFinderScreen extends StatelessWidget {
                 height: 10,
               ),
               Padding(
-                padding: const EdgeInsets.only(left: 25),
+                padding: const EdgeInsets.only(left: 25, right: 25),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
                       "AI Course Management",
-                      style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
+                      style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
                     ),
-                    Divider(thickness: 23,height:10,color: Colors.red,),
-                    const SizedBox(
-                      width: 18,
+                    SizedBox(width: 20),
+                    InkWell(
+                      onTap: () {
+                        // Add action here
+                      },
+                      borderRadius: BorderRadius.circular(8), // Smooth border effect on tap
+                      child: Container(
+                        padding: EdgeInsets.symmetric(vertical: 8, horizontal: 36),
+                        decoration: BoxDecoration(
+                          color: Colors.blue, // Blue background
+                          borderRadius: BorderRadius.circular(8), // Rounded corners
+                        ),
+                        child: Text(
+                          "+Add",
+                          style: TextStyle(fontSize: 18, color: Colors.white, fontWeight: FontWeight.bold),
+                        ),
+                      ),
                     ),
                   ],
                 ),
               ),
+
 
               SizedBox(height: 20),
 

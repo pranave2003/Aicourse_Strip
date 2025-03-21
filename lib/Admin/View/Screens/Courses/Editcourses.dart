@@ -105,7 +105,36 @@ class EditCourseScreen extends StatelessWidget {
               ),
 
               SizedBox(height: 20),
-
+              Padding(
+                padding: const EdgeInsets.only(left: 25, right: 25),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      "Ai COURSES  Editing Page",
+                      style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                    ),
+                    SizedBox(width: 20),
+                    InkWell(
+                      onTap: () {
+                        // Add action here
+                      },
+                      borderRadius: BorderRadius.circular(8), // Smooth border effect on tap
+                      child: Container(
+                        padding: EdgeInsets.symmetric(vertical: 8, horizontal: 36),
+                        decoration: BoxDecoration(
+                          color: Colors.blue, // Blue background
+                          borderRadius: BorderRadius.circular(8), // Rounded corners
+                        ),
+                        child: Text(
+                          "+Save",
+                          style: TextStyle(fontSize: 18, color: Colors.white, fontWeight: FontWeight.bold),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
               /// **Tab Bar**
               Container(
                 decoration: BoxDecoration(
