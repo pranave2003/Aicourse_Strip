@@ -44,6 +44,7 @@ class MyApp extends StatelessWidget {
     );
   }
 }
+
 class LandlordPageWrapper extends StatelessWidget {
   const LandlordPageWrapper({super.key});
 
@@ -55,6 +56,7 @@ class LandlordPageWrapper extends StatelessWidget {
     );
   }
 }
+
 class LandlordPage extends StatefulWidget {
   const LandlordPage({super.key});
 
@@ -126,10 +128,9 @@ class _LandlordPageState extends State<LandlordPage> {
                   ],
                 ),
 
-
-                _buildMainListTile('Bookings',  Allbookings(),
+                _buildMainListTile('Bookings', Allbookings(),
                     icon: Icons.book_online),
-                _buildMainListTile('Payment',  ViewPayment(),
+                _buildMainListTile('Payment', ViewPayment(),
                     icon: Icons.payments_outlined),
                 // _buildMainExpansionTile(
                 //   title: 'Account',
@@ -139,7 +140,7 @@ class _LandlordPageState extends State<LandlordPage> {
                 //
                 //   ],
                 // ),
-                _buildMainListTile('Account',  LandlordProfile(),
+                _buildMainListTile('Account', LandlordProfile(),
                     icon: Icons.person),
                 _buildMainExpansionTile(
                   title: 'Settings',

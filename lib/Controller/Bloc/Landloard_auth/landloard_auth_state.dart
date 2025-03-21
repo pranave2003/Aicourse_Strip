@@ -19,13 +19,49 @@ class AuthenticatedError extends LandloardAuthState {
 
   AuthenticatedError({required this.message});
 }
+
 final class LandlordByidLoaded extends LandloardAuthState {
   final Landloard_Model Userdata;
   LandlordByidLoaded(this.Userdata);
 }
+
 class Landlordloading extends LandloardAuthState {}
 
 class LandloardError extends LandloardAuthState {
   String error;
   LandloardError({required this.error});
+}
+
+// fetch  all landLoard
+
+// get al user
+
+final class LandloardessLoading extends LandloardAuthState {}
+
+final class LandloardsgetGetSuccess extends LandloardAuthState {}
+
+final class Landloardfailfailerror extends LandloardAuthState {
+  final String error;
+
+  Landloardfailfailerror(this.error);
+}
+
+class Landloaredloaded extends LandloardAuthState {
+  final List<Landloard_Model> landloareds;
+
+  Landloaredloaded(
+    this.landloareds,
+  );
+}
+
+// accept or reject
+
+class AcceptorrejectLoadingstate extends LandloardAuthState {}
+
+class Acceptorrejectstate extends LandloardAuthState {}
+
+class AcceptorrejectErrorstate extends LandloardAuthState {
+  final String error;
+
+  AcceptorrejectErrorstate(this.error);
 }

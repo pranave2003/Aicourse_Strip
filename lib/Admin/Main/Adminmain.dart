@@ -15,6 +15,7 @@ import 'package:course_connect/Admin/View/Screens/University/EditUniversity.dart
 import 'package:course_connect/Admin/View/Screens/University/Universitymain.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../Controller/Bloc/Landloard_auth/landloard_auth_bloc.dart';
 import '../../Controller/Bloc/User_Authbloc/auth_bloc.dart';
 import '../../firebase_options.dart';
 import '../View/Screens/House.dart/ViewHouses.dart';
@@ -38,6 +39,10 @@ class MyApp extends StatelessWidget {
         BlocProvider<AuthBloc>(
           create: (context) => AuthBloc()..add(FetchUsers(searchQuery: null)),
         ),
+        BlocProvider<LandloardAuthBloc>(
+          create: (context) => LandloardAuthBloc()
+            ..add(FetchLandloards(searchQuery: null, status: "0")),
+        )
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
@@ -130,7 +135,7 @@ class _AdminPageState extends State<AdminPage> {
                   title: 'Landlord',
                   icon: Icons.people_alt_outlined,
                   children: [
-                    _buildSubListTile("New Landlords", NewLandlords()),
+                    _buildSubListTile("New Landlords", Landlord()),
                   ],
                 ),
                 _buildMainListTile('Houses', ViewHouses(),

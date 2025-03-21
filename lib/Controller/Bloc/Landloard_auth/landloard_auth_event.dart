@@ -24,4 +24,26 @@ class LandloardSignupEvent extends LandloardAuthEvent {
 //signout
 
 class LandloardSigOutEvent extends LandloardAuthEvent {}
-class FetchLandlordDetailsById extends LandloardAuthEvent {}
+
+// fetch by id
+class FetchLandlordDetailsById extends LandloardAuthEvent {
+  final String? getid;
+  FetchLandlordDetailsById({this.getid});
+}
+
+// fetch all landloard
+
+class FetchLandloards extends LandloardAuthEvent {
+  final String? searchQuery;
+  final String? status;
+  FetchLandloards({required this.searchQuery, required this.status});
+}
+
+// acccept or reject
+
+
+class AcceptOrRejectLandloard extends LandloardAuthEvent {
+  final String? Landloaredid;
+  final String? Status;
+  AcceptOrRejectLandloard({this.Landloaredid, this.Status});
+}

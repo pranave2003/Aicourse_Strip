@@ -57,8 +57,8 @@ class LandloardAuthBloc extends Bloc<LandloardAuthEvent, LandloardAuthState> {
               "university": event.user.Universityname,
               "timestamp": DateTime.now(),
               "Onesignal_id": "playerId",
-              "ban": "1",
-              "status": "1"
+              "ban": "0",
+              "status": "0"
             });
             emit(Authenticated(user) as LandloardAuthState);
           } else {
@@ -71,79 +71,6 @@ class LandloardAuthBloc extends Bloc<LandloardAuthEvent, LandloardAuthState> {
         }
       },
     );
-
-    // logout
-    // on<SigOutEvent>(
-    //   (event, emit) async {
-    //     User? user=_auth.currentUser;
-    //     try {
-    //       user = _auth.currentUser;
-    //
-    //      await FirebaseFirestore.instance
-    //           .collection("User")
-    //           .doc(user.uid)
-    //           .update({"Onesignal_id": 12121});
-    //       await _auth.signOut();
-    //       emit(UnAuthenticated());
-    //     } catch (e) {
-    //       emit(AuthenticatedError(message: e.toString()));
-    //     }
-    //   },
-    // );
-    on<LandloardSigOutEvent>(
-      (event, emit) async {
-        try {
-          User? user = _auth.currentUser;
-
-          if (user != null) {
-            // Get the Player ID from OneSignalService
-
-            // Update Firestore with the correct user ID and OneSignal ID
-            await FirebaseFirestore.instance
-                .collection("Landloard")
-                .doc(user.uid) // Use current user's UID
-                .update({"Onesignal_id": "null"}); // Update with OneSignal ID
-
-            // Sign out the user
-            await _auth.signOut();
-            print("sign out ${user.uid}");
-            emit(UnAuthenticated() as LandloardAuthState);
-          } else {
-            emit(AuthenticatedError(message: "No user is logged in")
-                as LandloardAuthState);
-          }
-        } catch (e) {
-          emit(AuthenticatedError(message: e.toString()) as LandloardAuthState);
-        }
-      },
-    );
-    on<FetchLandlordDetailsById>((event, emit) async {
-      emit(Landlordloading());
-      User? user = _auth.currentUser;
-
-      if (user != null) {
-        try {
-          final user = FirebaseAuth.instance.currentUser;
-          if (user != null) {
-            final doc = await FirebaseFirestore.instance
-                .collection('Landloard')
-                .doc(user.uid)
-                .get();
-
-            if (doc.exists) {
-              Landloard_Model userData = Landloard_Model.fromMap(doc.data()!);
-              emit(LandlordByidLoaded(userData));
-            } else {
-              emit(LandloardError(error: "User profile not found"));
-            }
-          } else {
-            emit(LandloardError(error: "User not authenticated"));
-          }
-        } catch (e) {
-          emit(LandloardError(error: e.toString()));
-        }
-      }
-    });
 
     on<Landloard_LoginEvent>(
       (event, emit) async {
@@ -202,5 +129,106 @@ class LandloardAuthBloc extends Bloc<LandloardAuthEvent, LandloardAuthState> {
         }
       },
     );
+    on<LandloardSigOutEvent>(
+      (event, emit) async {
+        try {
+          User? user = _auth.currentUser;
+
+          if (user != null) {
+            // Get the Player ID from OneSignalService
+
+            // Update Firestore with the correct user ID and OneSignal ID
+            await FirebaseFirestore.instance
+                .collection("Landloard")
+                .doc(user.uid) // Use current user's UID
+                .update({"Onesignal_id": "null"}); // Update with OneSignal ID
+
+            // Sign out the user
+            await _auth.signOut();
+            print("sign out ${user.uid}");
+            emit(UnAuthenticated() as LandloardAuthState);
+          } else {
+            emit(AuthenticatedError(message: "No user is logged in")
+                as LandloardAuthState);
+          }
+        } catch (e) {
+          emit(AuthenticatedError(message: e.toString()) as LandloardAuthState);
+        }
+      },
+    );
+
+    //  fetch by id...
+    on<FetchLandlordDetailsById>((event, emit) async {
+      emit(Landlordloading());
+
+      String? userId = event.getid ?? FirebaseAuth.instance.currentUser?.uid;
+
+      if (userId != null) {
+        try {
+          final doc = await FirebaseFirestore.instance
+              .collection('Landloard')
+              .doc(userId) // userId ഉപയോഗിച്ചു
+              .get();
+
+          if (doc.exists) {
+            Landloard_Model userData = Landloard_Model.fromMap(doc.data()!);
+            emit(LandlordByidLoaded(userData));
+          } else {
+            emit(LandloardError(error: "User profile not found"));
+          }
+        } catch (e) {
+          emit(LandloardError(error: e.toString()));
+        }
+      } else {
+        emit(LandloardError(error: "User not authenticated"));
+      }
+    });
+
+    // get all
+
+    on<FetchLandloards>((event, emit) async {
+      emit(LandloardessLoading());
+      try {
+        CollectionReference ShopesCollection =
+            FirebaseFirestore.instance.collection('Landloard');
+
+        Query query = ShopesCollection;
+        query = query.where("status", isEqualTo: event.status);
+
+        QuerySnapshot snapshot = await query.get();
+
+        List<Landloard_Model> Landloared = snapshot.docs.map((doc) {
+          return Landloard_Model.fromMap(doc.data() as Map<String, dynamic>);
+        }).toList();
+
+        if (event.searchQuery != null && event.searchQuery!.isNotEmpty) {
+          Landloared = Landloared.where((landlored) {
+            return landlored.name!
+                .toLowerCase()
+                .contains(event.searchQuery!.toLowerCase());
+          }).toList();
+        }
+
+        emit(Landloaredloaded(Landloared));
+      } catch (e) {
+        emit(Landloardfailfailerror(e.toString()));
+      }
+    });
+
+    //   update by id Accept or reject
+
+    on<AcceptOrRejectLandloard>((event, emit) async {
+      emit(AcceptorrejectLoadingstate());
+
+      try {
+        FirebaseFirestore.instance
+            .collection("Landloard")
+            .doc(event.Landloaredid)
+            .update({"status": event.Status.toString()});
+        emit(Acceptorrejectstate());
+      } catch (e) {
+        emit(AcceptorrejectErrorstate(e.toString()));
+      }
+    });
   }
 }
