@@ -1,3 +1,4 @@
+import 'package:course_connect/Admin/View/Screens/University/Alertbox.dart';
 import 'package:course_connect/Widget/Constands/Loading.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -180,26 +181,32 @@ class _University_mainState extends State<University_main> {
                                   DataCell(Text(
                                       student.Established_date.toString())),
                                   DataCell(Row(
-                                    children: [
+                                    children: <Widget>[
+                                    IconButton(
+                                    icon: Icon(Icons.remove_red_eye, color: Colors.green),
+                              iconSize: 30.0,
+                              onPressed: () {
+                              // Navigate to NextPage when button is pressed
+                              Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (context) => Alertbox()),
+                              );
+                              },
+                                    ),      // IconButton(
                                       IconButton(
-                                        icon: Icon(Icons.remove_red_eye,
-                                            color: Colors.green),
-                                        iconSize: 30.0,
-                                        onPressed: () {},
-                                      ),
-                                      IconButton(
-                                        icon: Icon(Icons.delete,
-                                            color: Colors.red),
+                                        icon: const Icon(Icons.delete, color: Colors.red),
                                         iconSize: 30.0,
                                         onPressed: () {
-                                          context
-                                              .read<UniversityBloc>()
-                                              .add(DeleteUniversity(
-                                                Universityid:
-                                                    student.Universityid,
-                                              ));
+                                          _showDeleteConfirmationDialog(context, () {
+                                            context.read<UniversityBloc>().add(
+                                              DeleteUniversity(
+                                                Universityid: student.Universityid,
+                                              ),
+                                            );
+                                          });
                                         },
                                       ),
+
                                     ],
                                   )),
                                 ],
@@ -231,4 +238,30 @@ class _University_mainState extends State<University_main> {
       ),
     );
   }
+}
+void _showDeleteConfirmationDialog(BuildContext context, VoidCallback onDeleteConfirmed) {
+  showDialog(
+    context: context,
+    builder: (BuildContext dialogContext) {
+      return AlertDialog(
+        title: const Text("Confirm Deletion"),
+        content: const Text("Are you sure you want to delete this university?"),
+        actions: [
+          TextButton(
+            onPressed: () {
+              Navigator.of(dialogContext).pop(); // Close the dialog
+            },
+            child: const Text("Cancel"),
+          ),
+          TextButton(
+            onPressed: () {
+              onDeleteConfirmed(); // Perform delete action
+              Navigator.of(dialogContext).pop(); // Close the dialog
+            },
+            child: const Text("Delete", style: TextStyle(color: Colors.red)),
+          ),
+        ],
+      );
+    },
+  );
 }

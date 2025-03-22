@@ -127,30 +127,7 @@ class _PropertyAddState extends State<PropertyAdd> {
             SizedBox(
               height: 30,
             ),
-            // Padding(
-            //   padding: const EdgeInsets.only(left: 25),
-            //   child: Row(
-            //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            //     children: [
-            //       Text(
-            //         "Property Adding page",
-            //         style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
-            //       ),
-            //       Divider(thickness: 23,height:10,color: Colors.red,),
-            //       SizedBox(
-            //         width: 18,
-            //         child:ElevatedButton(
-            //           onPressed: () {},
-            //           style: ElevatedButton.styleFrom(
-            //             backgroundColor: Colors.blue,
-            //             padding: EdgeInsets.symmetric(vertical: 12, horizontal: 25),
-            //           ),
-            //           child: const Text("Submit", style: TextStyle(fontSize: 18, color: Colors.white)),
-            //         ),
-            //       ),
-            //     ],
-            //   ),
-            // ),
+
             Padding(
               padding: const EdgeInsets.only(left: 25, right: 25),
               child: Row(

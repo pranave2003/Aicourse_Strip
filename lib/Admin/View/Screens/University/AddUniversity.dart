@@ -779,53 +779,6 @@ class _AddUniversityState extends State<AddUniversity> {
     );
   }
 
-  // Widget buildDropdownWithAmount(String label) {
-  //   return Padding(
-  //     padding: const EdgeInsets.symmetric(vertical: 8),
-  //     child: Row(
-  //       children: [
-  //         Expanded(
-  //           flex: 3, // Reduced width for dropdown
-  //           child: buildDropdown(
-  //               label, ["Bachelors", "Masters", "MBA"], selectedFeeCourse,
-  //               (value) {
-  //             setState(() => selectedFeeCourse = value);
-  //           }),
-  //         ),
-  //         SizedBox(width: 8), // Reduced spacing
-  //         Expanded(
-  //           flex: 2, // Reduced width for text field
-  //           child: buildTextField("Enter Amount",
-  //               keyboardType: TextInputType.number, required: true),
-  //         ),
-  //         SizedBox(width: 8), // Reduced spacing
-  //         InkWell(
-  //           onTap: () {
-  //             // Add action here
-  //           },
-  //           child: Container(
-  //             height: 30, // Reduced height
-  //             width: 60, // Adjusted width
-  //             decoration: BoxDecoration(
-  //               color: Color(0xff0A71CB),
-  //               borderRadius: BorderRadius.circular(20),
-  //             ),
-  //             child: Center(
-  //               child: Text(
-  //                 "+Add",
-  //                 style: TextStyle(
-  //                   color: Colors.white,
-  //                   fontSize: 16, // Reduced font size
-  //                   fontWeight: FontWeight.bold,
-  //                 ),
-  //               ),
-  //             ),
-  //           ),
-  //         ),
-  //       ],
-  //     ),
-  //   );
-  // }
 
   /// **Reusable Text Field Widget**
   Widget buildTextField(String label,

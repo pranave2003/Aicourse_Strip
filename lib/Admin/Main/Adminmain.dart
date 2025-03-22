@@ -121,15 +121,7 @@ class _AdminPageState extends State<AdminPage> {
                     _buildSubListTile("Edit University", EditUniversity()),
                   ],
                 ),
-                _buildMainExpansionTile(
-                  title: 'Courses',
-                  icon: Icons.book_outlined,
-                  children: [
-                    _buildSubListTile("View Courses", Courses_main()),
-                    _buildSubListTile("Add Course", Addcourses()),
-                    _buildSubListTile("Edit Course", Editcourses()),
-                  ],
-                ),
+
                 _buildMainExpansionTile(
                   title: 'Landlord',
                   icon: Icons.people_alt_outlined,
@@ -145,8 +137,8 @@ class _AdminPageState extends State<AdminPage> {
                     icon: Icons.supervised_user_circle_sharp),
                 _buildMainListTile('Feedback', FeedbackView(),
                     icon: Icons.feedback),
-                _buildMainListTile('Knowledge Bank', CountryRules(),
-                    icon: Icons.my_library_books_rounded),
+                // _buildMainListTile('Knowledge Bank', CountryRules(),
+                //     icon: Icons.my_library_books_rounded),
                 _buildMainExpansionTile(
                   title: 'Account',
                   icon: Icons.person,
