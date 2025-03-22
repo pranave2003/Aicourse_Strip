@@ -176,7 +176,7 @@ class _University_mainState extends State<University_main> {
                                   )),
                                   DataCell(Text(student.Country.toString())),
                                   DataCell(
-                                      Text(student. Course_offered.toString())),
+                                      Text(student.Course_offered.toString())),
                                   DataCell(Text(
                                       student.Established_date.toString())),
                                   DataCell(Row(
