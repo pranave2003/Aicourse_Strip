@@ -19,8 +19,14 @@ class _MbaAcademicState extends State<MbaAcademic> {
 
   // List of English language tests
   final List<String> englishTests = [
-    "ACT",
-    "SAT",
+    "GMAT",
+    "GRE",
+    "CAT",
+    "XAT/CMAT/MAT/SNAP",
+    // "XAT ",
+    // "CMAT",
+    // "MAT",
+    // "NMAT ",
     "TEST NOT TAKEN"
   ];
 
@@ -49,7 +55,7 @@ class _MbaAcademicState extends State<MbaAcademic> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
-                  "Which Academic test have you \n taken OR planning to take?",
+                  "Which Standardized MBA entrance \n exams have you  taken OR planning to take?",
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     color: Color(0xff0A1F52),

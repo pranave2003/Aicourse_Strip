@@ -16,7 +16,7 @@ class _Maters_academicState extends State<Maters_academic> {
   final TextEditingController quantScoreController = TextEditingController();
 
   // List of English language tests
-  final List<String> englishTests = ["GRE", "GMAT", "TEST NOT TAKEN"];
+  final List<String> englishTests = ["GRE", "GMAT"," GATE","IIT JAM ","NEET","LSAT", "TEST NOT TAKEN"];
 
   @override
   Widget build(BuildContext context) {

@@ -30,7 +30,7 @@ class _Masters_CoursesState extends State<Masters_Courses> {
     "MSc in Cybersecurity",
     "MSc in Information Technology",
     "MTech in Civil /"
-        "MTech in Mechanical "
+        "MTech in Mechanical ",
   "MTech in Electrical Engineering",
     "MSc in Biotechnology",
     "MSc in Physics / Chemistry / Mathematics",
