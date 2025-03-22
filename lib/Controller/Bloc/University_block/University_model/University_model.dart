@@ -1,5 +1,5 @@
 class University_model {
-  String? Universitytype;
+
   String? Rank;
   String? Established_date;
   String? Universityname;
@@ -18,10 +18,16 @@ class University_model {
   String? Onesignal_id;
   String? UniversityimageURL;
   String? Universityid;
+  String? highestEducation;
+  String? highestEducationpercentage;
+  String? AcadamicTest;
+  String? AcadamicTestPercentage;
+  String? Englishtest;
+  String? Englishtestpercentage;
 
   University_model(
-      {this.Universitytype,
-        this.Universityid,
+      {
+      this.Universityid,
       this.Rank,
       this.Established_date,
       this.Universityname,
@@ -38,10 +44,16 @@ class University_model {
       this.Ban,
       this.Onesignal_id,
       this.Country,
-      this.UniversityimageURL});
+      this.UniversityimageURL,
+      this.highestEducation,
+      this.AcadamicTest,
+      this.AcadamicTestPercentage,
+      this.Englishtest,
+      this.Englishtestpercentage,
+      this.highestEducationpercentage});
   factory University_model.fromMap(Map<String, dynamic> data) {
     return University_model(
-        Universitytype: data['Universitytype'],
+
         Rank: data['Rank'],
         Established_date: data['Established_date'],
         Universityname: data['Universityname'],
@@ -58,8 +70,13 @@ class University_model {
         Eligibility_criteria: data['Eligibility_criteria'],
         Terms_and_conditions: data['Terms_and_conditions'],
         Country: data['Country'],
-        Universityid:data['Universityid'],
-        UniversityimageURL: data['UniversityImageUrl']);
-
+        Universityid: data['Universityid'],
+        UniversityimageURL: data['UniversityImageUrl'],
+        AcadamicTest: data['AcadamicTest'],
+        AcadamicTestPercentage: data['AcadamicTestPercentage'],
+        Englishtest: data['Englishtest'],
+        Englishtestpercentage: data['Englishtestpercentage'],
+        highestEducation: data['highestEducation'],
+        highestEducationpercentage: data['highestEducationpercentage']);
   }
 }

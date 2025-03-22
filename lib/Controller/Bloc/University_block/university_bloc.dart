@@ -23,7 +23,7 @@ class UniversityBloc extends Bloc<UniversityEvent, UniversityState> {
           await orderRef.set({
             "Universityid": universityId,
             "Universityimage": event.University.UniversityimageURL,
-            "Universitytype": event.University.Universitytype,
+
             "Rank": event.University.Rank,
             "Established_date": event.University.Established_date,
             "Universityname": event.University.Universityname,
@@ -41,6 +41,13 @@ class UniversityBloc extends Bloc<UniversityEvent, UniversityState> {
             "Ban": "0",
             "status": "1",
             "Onesignal_id": "on signal id",
+            "AcadamicTest": event.University.AcadamicTest,
+            "AcadamicTestPercentage": event.University.AcadamicTestPercentage,
+            "Englishtest": event.University.Englishtest,
+            "Englishtestpercentage": event.University.Englishtestpercentage,
+            "highestEducation": event.University.highestEducation,
+            "highestEducationpercentage":
+                event.University.highestEducationpercentage
           });
           print("done...");
           emit(UniversityaddSuccess());

@@ -4,6 +4,8 @@ import 'package:course_connect/Widget/Constands/Loading.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../Main/Adminmain.dart';
+
 class AddUniversity extends StatefulWidget {
   @override
   _AddUniversityState createState() => _AddUniversityState();
@@ -16,16 +18,23 @@ class _AddUniversityState extends State<AddUniversity> {
   String? selectedCourse;
   String? selectedDuration;
   String? selectedEligibility;
-  String? selectedBachelorCourse;
-  String? selectedMasterCourse;
-  String? selectedMBACourse;
   String? selectedRank;
-  String? selectedFeeCourse;
-  String? selectedScholarshipCourse;
-  String admissionType = "Public"; // Default selected radio button
+
   DateTime? establishedDate;
   DateTime? admissionStartDate;
   DateTime? admissionEndDate;
+
+  // education
+  String? highestEducation;
+  String? highestEducationpercentage;
+
+  String? AcadamicTest;
+  String? AcadamicTestPercentage;
+
+  // common
+  String? Englishtest;
+  String? Englishtestpercentage;
+
   final TextEditingController establishedDateController =
       TextEditingController();
   final TextEditingController admissionStartDateController =
@@ -39,13 +48,14 @@ class _AddUniversityState extends State<AddUniversity> {
   final TextEditingController courseFeeController = TextEditingController();
   final TextEditingController scholarshipFeeController =
       TextEditingController();
-  @override
-  void dispose() {
-    establishedDateController.dispose();
-    admissionStartDateController.dispose();
-    admissionEndDateController.dispose();
-    super.dispose();
-  }
+
+  // @override
+  // void dispose() {
+  //   establishedDateController.dispose();
+  //   admissionStartDateController.dispose();
+  //   admissionEndDateController.dispose();
+  //   super.dispose();
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -121,6 +131,12 @@ class _AddUniversityState extends State<AddUniversity> {
                       duration: Duration(seconds: 2),
                     ),
                   );
+
+                  Navigator.push(context, MaterialPageRoute(
+                    builder: (context) {
+                      return AdminPage();
+                    },
+                  ));
                 },
                 builder: (context, state) {
                   return Padding(
@@ -138,28 +154,34 @@ class _AddUniversityState extends State<AddUniversity> {
                           onTap: () {
                             if (_formKey.currentState!.validate()) {
                               University_model university = University_model(
-                                  UniversityimageURL:
-                                      "https://content.jdmagicbox.com/v2/comp/malappuram/m9/9999px483.x483.221229222631.k6m9/catalogue/calicut-university-malappuram-universities-ez2kcrhfsj.jpg",
-                                  Country: selectedCountry,
-                                  Admission_enddate:
-                                      admissionEndDateController.text,
-                                  Admission_startdate:
-                                      admissionStartDateController.text,
-                                  Course_offered: selectedCourse,
-                                  Degree_offered: selectedDegree,
-                                  Description: DiscriptionController.text,
-                                  Duration: selectedDuration,
-                                  Eligibility_criteria: selectedEligibility,
-                                  Established_date:
-                                      establishedDateController.text,
-                                  Schoolarship_details:
-                                      scholarshipFeeController.text,
-                                  Terms_and_conditions:
-                                      Terms_and_conditions.text,
-                                  Tuition_fees: courseFeeController.text,
-                                  Universityname: UniversitynameController.text,
-                                  Universitytype: admissionType,
-                                  Rank: selectedRank);
+                                UniversityimageURL:
+                                    "https://content.jdmagicbox.com/v2/comp/malappuram/m9/9999px483.x483.221229222631.k6m9/catalogue/calicut-university-malappuram-universities-ez2kcrhfsj.jpg",
+                                Country: selectedCountry,
+                                Admission_enddate:
+                                    admissionEndDateController.text,
+                                Admission_startdate:
+                                    admissionStartDateController.text,
+                                Course_offered: selectedCourse,
+                                Degree_offered: selectedDegree,
+                                Description: DiscriptionController.text,
+                                Duration: selectedDuration,
+                                Eligibility_criteria: selectedEligibility,
+                                Established_date:
+                                    establishedDateController.text,
+                                Schoolarship_details:
+                                    scholarshipFeeController.text,
+                                Terms_and_conditions: Terms_and_conditions.text,
+                                Tuition_fees: courseFeeController.text,
+                                Universityname: UniversitynameController.text,
+                                Rank: selectedRank,
+                                highestEducationpercentage:
+                                    highestEducationpercentage,
+                                highestEducation: highestEducation,
+                                Englishtestpercentage: Englishtestpercentage,
+                                Englishtest: Englishtest,
+                                AcadamicTestPercentage: AcadamicTestPercentage,
+                                AcadamicTest: AcadamicTest,
+                              );
                               context.read<UniversityBloc>().add(
                                   University_Add_Event(University: university));
                             }
@@ -211,62 +233,38 @@ class _AddUniversityState extends State<AddUniversity> {
                 ),
               ),
 
-              buildDropdown(
-                  "Country",
-                  [
-                    "United States",
-                    "United Kingdom",
-                    "New Zealand",
-                    "Canada",
-                    "Australia",
-                    "India"
-                  ],
-                  selectedCountry, (value) {
-                setState(() => selectedCountry = value);
-              }, required: true),
-
-              Padding(
-                padding: const EdgeInsets.all(8.4),
-                child: Text("Admission Type:",
-                    style:
-                        TextStyle(fontSize: 16, fontWeight: FontWeight.w500)),
-              ),
-              Row(
-                children: [
-                  Radio(
-                    value: "Public",
-                    groupValue: admissionType,
-                    onChanged: (value) {
-                      setState(() => admissionType = value.toString());
-                    },
-                  ),
-                  Text("Public"),
-                  SizedBox(width: 20),
-                  Radio(
-                    value: "Private",
-                    groupValue: admissionType,
-                    onChanged: (value) {
-                      setState(() => admissionType = value.toString());
-                    },
-                  ),
-                  Text("Private"),
-                ],
-              ),
-
               /// **Admission Type (Radio Buttons)**
 
-              if (admissionType.isEmpty)
-                Text(
-                  'Please select an admission type',
-                  style: TextStyle(color: Colors.red),
-                ),
-              buildDatePicker("Established Date", establishedDate, (date) {
-                setState(() {
-                  establishedDate = date;
-                  establishedDateController.text =
-                      "${date?.toLocal()}".split(' ')[0]; // Format the date
-                });
-              }, required: true),
+              Row(
+                children: [
+                  Expanded(
+                    child: buildDropdown(
+                        "Country",
+                        [
+                          "United States",
+                          "United Kingdom",
+                          "New Zealand",
+                          "Canada",
+                          "Australia",
+                          "India"
+                        ],
+                        selectedCountry, (value) {
+                      setState(() => selectedCountry = value);
+                    }, required: true),
+                  ),
+                  SizedBox(width: 10),
+                  Expanded(
+                    child: buildDatePicker("Established Date", establishedDate,
+                        (date) {
+                      setState(() {
+                        establishedDate = date;
+                        establishedDateController.text = "${date?.toLocal()}"
+                            .split(' ')[0]; // Format the date
+                      });
+                    }, required: true),
+                  ),
+                ],
+              ),
 
               // Admission Start & End Date in the Same Row
               Row(
@@ -295,29 +293,13 @@ class _AddUniversityState extends State<AddUniversity> {
                 ],
               ),
 
-              //       // Other widgets...
-              //     ],
-              //   ),
-              // ),
-              //       /// **Date Pickers for Established Date**
-
-              // Row(
-              //   children: [
-              //     Expanded(
-              //       child: buildDatePicker(
-              //           "Admission Start Date", admissionStartDate, (date) {
-              //         setState(() => admissionStartDate = date);
-              //       }, required: true),
-              //     ),
-              //     SizedBox(width: 10),
-              //     Expanded(
-              //       child: buildDatePicker(
-              //           "Admission End Date", admissionEndDate, (date) {
-              //         setState(() => admissionEndDate = date);
-              //       }, required: true),
-              //     ),
-              //   ],
-              // ),
+              Padding(
+                padding: const EdgeInsets.only(left: 20),
+                child: Text(
+                  "Course Details..",
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+                ),
+              ),
 
               // Dropdown for Degree Type
               buildDropdown(
@@ -328,156 +310,342 @@ class _AddUniversityState extends State<AddUniversity> {
 
               // Dropdown for Bachelor's Courses
               if (selectedDegree == "Bachelor")
-                buildDropdown(
-                    "Course Name",
-                    [
-                      "BBA (Bachelor of Business Administration)",
-                      "BCom (Bachelor of Commerce)",
-                      "BA in Business Management",
-                      "BSc in International Business",
-                      "BBA in Marketing",
-                      "BBA in Finance",
-                      "BBA in Human Resource Management",
-                      "BBA in Entrepreneurship",
-                      "BBA in Supply Chain Management",
-                      "BSc in Computer Science",
-                      "BSc in Information Technology (IT)",
-                      "BTech / BE",
-                      "BSc in Data Science",
-                      "BSc in AI & Machine Learning",
-                      "BSc in Biotechnology",
-                      "BSc in Environmental Science",
-                      "BA in Political Science",
-                      "BA in Sociology",
-                      "BA in History",
-                      "BA in English Literature",
-                      "BA in Journalism & Mass Communication",
-                      "BA in Fine Arts",
-                      "MBBS (Bachelor of Medicine & Surgery)",
-                      "BDS (Bachelor of Dental Surgery)",
-                      "BPharm (Bachelor of Pharmacy)",
-                      "BPT (Bachelor of Physiotherapy)",
-                      "BSc in Nursing",
-                      "BSc in Nutrition & Dietetics",
-                      "BSc in Medical Lab Technology",
-                      "BTech in Computer Science",
-                      "BTech in Mechanical Engineering",
-                      "BTech in Electrical Engineering",
-                      "BTech in Civil Engineering",
-                      "BTech in Electronics & Communication",
-                      "BTech in Aerospace Engineering",
-                      "LLB (Bachelor of Laws)",
-                      "BA in Criminology",
-                      "BA in Public Administration",
-                      "BA in Economics",
-                      "BA in International Relations"
-                    ],
-                    selectedCourse, (value) {
-                  setState(() => selectedCourse = value);
-                }),
+                Column(
+                  children: [
+                    buildDropdown(
+                        "Course Name",
+                        [
+                          "BBA (Bachelor of Business Administration)",
+                          "BCom (Bachelor of Commerce)",
+                          "BA in Business Management",
+                          "BSc in International Business",
+                          "BBA in Marketing",
+                          "BBA in Finance",
+                          "BBA in Human Resource Management",
+                          "BBA in Entrepreneurship",
+                          "BBA in Supply Chain Management",
+                          "BSc in Computer Science",
+                          "BSc in Information Technology (IT)",
+                          "BTech / BE",
+                          "BSc in Data Science",
+                          "BSc in AI & Machine Learning",
+                          "BSc in Biotechnology",
+                          "BSc in Environmental Science",
+                          "BA in Political Science",
+                          "BA in Sociology",
+                          "BA in History",
+                          "BA in English Literature",
+                          "BA in Journalism & Mass Communication",
+                          "BA in Fine Arts",
+                          "MBBS (Bachelor of Medicine & Surgery)",
+                          "BDS (Bachelor of Dental Surgery)",
+                          "BPharm (Bachelor of Pharmacy)",
+                          "BPT (Bachelor of Physiotherapy)",
+                          "BSc in Nursing",
+                          "BSc in Nutrition & Dietetics",
+                          "BSc in Medical Lab Technology",
+                          "BTech in Computer Science",
+                          "BTech in Mechanical Engineering",
+                          "BTech in Electrical Engineering",
+                          "BTech in Civil Engineering",
+                          "BTech in Electronics & Communication",
+                          "BTech in Aerospace Engineering",
+                          "LLB (Bachelor of Laws)",
+                          "BA in Criminology",
+                          "BA in Public Administration",
+                          "BA in Economics",
+                          "BA in International Relations"
+                        ],
+                        selectedCourse, (value) {
+                      setState(() => selectedCourse = value);
+                    }),
+                    buildDropdown(
+                        "Education Level",
+                        ["Grade 12", "Undergraduate diploma"],
+                        highestEducation, (value) {
+                      setState(() {
+                        highestEducation = value;
+                        print(highestEducation);
+                      });
+                    }),
+                    buildDropdown(
+                        "Minimum Required Percentage ",
+                        ["50", "60", "70", "80", "90", "100"],
+                        highestEducationpercentage, (value) {
+                      setState(() {
+                        highestEducationpercentage = value;
+                        print(highestEducationpercentage);
+                      });
+                    }),
+                    buildDropdown(
+                        "AcademicTest",
+                        [
+                          "ACT",
+                          "SAT",
+                          "JEE",
+                          "NEET",
+                          "CUET",
+                        ],
+                        AcadamicTest, (value) {
+                      setState(() {
+                        AcadamicTest = value;
+                        print(AcadamicTest);
+                      });
+                    }),
+                    buildDropdown(
+                        "AcademicTestPercentage minimum",
+                        ["50", "60", "70", "80", "90", "100"],
+                        AcadamicTestPercentage, (value) {
+                      setState(() {
+                        AcadamicTestPercentage = value;
+                        print(AcadamicTestPercentage);
+                      });
+                    }),
+                  ],
+                ),
 
               // Dropdown for Master's Courses
               if (selectedDegree == "Master")
-                buildDropdown(
-                    "Course Name",
-                    [
-                      "MSc in Finance",
-                      "MSc in Economics",
-                      "MSc in Human Resource Management",
-                      "MSc in Marketing",
-                      "MSc in Digital Business",
-                      "MSc in Project Management",
-                      "MSc in Supply Chain & Logistics",
-                      "MSc in Computer Science",
-                      "MSc in Artificial Intelligence",
-                      "MSc in Data Science",
-                      "MSc in Cybersecurity",
-                      "MSc in Information Technology",
-                      "MTech in Civil Engineering",
-                      "MTech in Mechanical Engineering",
-                      "MTech in Electrical Engineering",
-                      "MSc in Biotechnology",
-                      "MSc in Physics / Chemistry / Mathematics",
-                      "MD (Doctor of Medicine)",
-                      "MDS (Master of Dental Surgery)",
-                      "MPharm (Master of Pharmacy)",
-                      "MSc in Public Health",
-                      "MSc in Nursing",
-                      "MSc in Medical Lab Technology",
-                      "MA in Psychology",
-                      "MA in Sociology",
-                      "MA in Journalism & Mass Communication",
-                      "MA in English Literature",
-                      "MA in History",
-                      "MA in Political Science",
-                      "MA in Fine Arts",
-                      "LLM (Master of Laws)",
-                      "Master in Criminology",
-                      "MSc in International Relations",
-                      "MSc in Public Policy",
-                      "Master in Social Work (MSW)",
-                      "MTech in Computer Science",
-                      "MTech in Robotics",
-                      "MSc in Industrial Engineering"
-                    ],
-                    selectedCourse, (value) {
-                  setState(() => selectedCourse = value);
-                }),
+                Column(
+                  children: [
+                    buildDropdown(
+                        "Course Name",
+                        [
+                          "MSc in Finance",
+                          "MSc in Economics",
+                          "MSc in Human Resource Management",
+                          "MSc in Marketing",
+                          "MSc in Digital Business",
+                          "MSc in Project Management",
+                          "MSc in Supply Chain & Logistics",
+                          "MSc in Computer Science",
+                          "MSc in Artificial Intelligence",
+                          "MSc in Data Science",
+                          "MSc in Cybersecurity",
+                          "MSc in Information Technology",
+                          "MTech in Civil Engineering",
+                          "MTech in Mechanical Engineering",
+                          "MTech in Electrical Engineering",
+                          "MSc in Biotechnology",
+                          "MSc in Physics / Chemistry / Mathematics",
+                          "MD (Doctor of Medicine)",
+                          "MDS (Master of Dental Surgery)",
+                          "MPharm (Master of Pharmacy)",
+                          "MSc in Public Health",
+                          "MSc in Nursing",
+                          "MSc in Medical Lab Technology",
+                          "MA in Psychology",
+                          "MA in Sociology",
+                          "MA in Journalism & Mass Communication",
+                          "MA in English Literature",
+                          "MA in History",
+                          "MA in Political Science",
+                          "MA in Fine Arts",
+                          "LLM (Master of Laws)",
+                          "Master in Criminology",
+                          "MSc in International Relations",
+                          "MSc in Public Policy",
+                          "Master in Social Work (MSW)",
+                          "MTech in Computer Science",
+                          "MTech in Robotics",
+                          "MSc in Industrial Engineering"
+                        ],
+                        selectedCourse, (value) {
+                      setState(() => selectedCourse = value);
+                    }),
+                    buildDropdown(
+                        "Education Level",
+                        [
+                          "Undergraduate Degree",
+                          "Undergraduate Diploma",
+                          "Postgraduate Degree",
+                          "Postgraduate Diploma",
+                        ],
+                        highestEducation, (value) {
+                      setState(() {
+                        highestEducation = value;
+                        print(highestEducation);
+                      });
+                    }),
+                    buildDropdown(
+                        "Minimum Required Percentage ",
+                        ["50", "60", "70", "80", "90", "100"],
+                        highestEducationpercentage, (value) {
+                      setState(() {
+                        highestEducationpercentage = value;
+                        print(highestEducationpercentage);
+                      });
+                    }),
+                    buildDropdown(
+                        "AcademicTest",
+                        [
+                          "GRE",
+                          "GMAT",
+                          "GATE",
+                          "IIT JAM",
+                          "NEET",
+                          "LSAT",
+                        ],
+                        AcadamicTest, (value) {
+                      setState(() {
+                        AcadamicTest = value;
+                        print(AcadamicTest);
+                      });
+                    }),
+                    buildDropdown(
+                        "AcademicTestPercentage minimum",
+                        ["50", "60", "70", "80", "90", "100"],
+                        AcadamicTestPercentage, (value) {
+                      setState(() {
+                        AcadamicTestPercentage = value;
+                        print(AcadamicTestPercentage);
+                      });
+                    }),
+                  ],
+                ),
 
               // Dropdown for MBA Courses
               if (selectedDegree == "MBA")
-                buildDropdown(
-                    "Course Name",
-                    [
-                      "General MBA",
-                      "MBA in Finance",
-                      "MBA in Marketing",
-                      "MBA in Human Resource Management",
-                      "MBA in International Business",
-                      "MBA in Entrepreneurship",
-                      "MBA in Business Analytics",
-                      "MBA in Supply Chain Management",
-                      "MBA in Digital Marketing",
-                      "MBA in Operations Management",
-                      "MBA in Healthcare Management",
-                      "MBA in Hospitality & Tourism Management",
-                      "MBA in Retail Management",
-                      "MBA in Agribusiness Management",
-                      "MBA in Sports Management",
-                      "MBA in Luxury Brand Management",
-                      "MBA in Real Estate Management",
-                      "MBA in Information Technology",
-                      "MBA in Data Science",
-                      "MBA in Cybersecurity Management",
-                      "MBA in AI & Machine Learning",
-                      "MBA in Blockchain & FinTech",
-                      "Executive MBA (EMBA)"
-                    ],
-                    selectedCourse, (value) {
-                  setState(() {
-                    selectedCourse = value;
-                    print(selectedCourse);
-                  });
-                }),
+                Column(
+                  children: [
+                    buildDropdown(
+                        "Course Name",
+                        [
+                          "General MBA",
+                          "MBA in Finance",
+                          "MBA in Marketing",
+                          "MBA in Human Resource Management",
+                          "MBA in International Business",
+                          "MBA in Entrepreneurship",
+                          "MBA in Business Analytics",
+                          "MBA in Supply Chain Management",
+                          "MBA in Digital Marketing",
+                          "MBA in Operations Management",
+                          "MBA in Healthcare Management",
+                          "MBA in Hospitality & Tourism Management",
+                          "MBA in Retail Management",
+                          "MBA in Agribusiness Management",
+                          "MBA in Sports Management",
+                          "MBA in Luxury Brand Management",
+                          "MBA in Real Estate Management",
+                          "MBA in Information Technology",
+                          "MBA in Data Science",
+                          "MBA in Cybersecurity Management",
+                          "MBA in AI & Machine Learning",
+                          "MBA in Blockchain & FinTech",
+                          "Executive MBA (EMBA)"
+                        ],
+                        selectedCourse, (value) {
+                      setState(() {
+                        selectedCourse = value;
+                        print(selectedCourse);
+                      });
+                    }),
+                    buildDropdown(
+                        "Education Level",
+                        [
+                          "Undergraduate Degree",
+                          "Undergraduate Diploma",
+                          "Postgraduate Degree",
+                          "Postgraduate Diploma",
+                        ],
+                        highestEducation, (value) {
+                      setState(() {
+                        highestEducation = value;
+                        print(highestEducation);
+                      });
+                    }),
+                    buildDropdown(
+                        "Minimum Required Percentage ",
+                        ["50", "60", "70", "80", "90", "100"],
+                        highestEducationpercentage, (value) {
+                      setState(() {
+                        highestEducationpercentage = value;
+                        print(highestEducationpercentage);
+                      });
+                    }),
+                    buildDropdown(
+                        "AcademicTest",
+                        [
+                          "GRE",
+                          "GMAT",
+                          "CAT",
+                          "IIT JAM",
+                          "CMAT",
+                        ],
+                        AcadamicTest, (value) {
+                      setState(() {
+                        AcadamicTest = value;
+                        print(AcadamicTest);
+                      });
+                    }),
+                    buildDropdown(
+                        "AcademicTestPercentage minimum",
+                        ["50", "60", "70", "80", "90", "100"],
+                        AcadamicTestPercentage, (value) {
+                      setState(() {
+                        AcadamicTestPercentage = value;
+                        print(AcadamicTestPercentage);
+                      });
+                    }),
+                  ],
+                ),
 
               // Dropdown for Course Duration
-              buildDropdown("Course Duration", ["1 Year", "2 Years", "3 Years"],
-                  selectedDuration, (value) {
-                setState(() => selectedDuration = value);
-              }, required: true),
+              Row(
+                children: [
+                  Expanded(
+                    child: buildDropdown(
+                        "Course Duration",
+                        ["1 Year", "2 Years", "3 Years"],
+                        selectedDuration, (value) {
+                      setState(() => selectedDuration = value);
+                    }, required: true),
+                  ),
+                  Expanded(
+                    child: buildDropdown(
+                        "Eligibility Criteria",
+                        ["12th Pass", "Graduate", "Postgraduate"],
+                        selectedEligibility, (value) {
+                      setState(() => selectedEligibility = value);
+                    }, required: true),
+                  ),
+                  Expanded(
+                    child: buildDropdown(
+                        "Rank", ["Top 10", "Top 50", "Top 100"], selectedRank,
+                        (value) {
+                      setState(() => selectedRank = value);
+                    }, required: true),
+                  ),
+                ],
+              ),
 
-              buildDropdown(
-                  "Eligibility Criteria",
-                  ["12th Pass", "Graduate", "Postgraduate"],
-                  selectedEligibility, (value) {
-                setState(() => selectedEligibility = value);
-              }, required: true),
+              Row(
+                children: [
+                  Expanded(
+                    child: buildDropdown(
+                        "English Test", ["PTE", "IELTS", "TOEFL"], Englishtest,
+                        (value) {
+                      setState(() {
+                        Englishtest = value;
+                        print(Englishtest);
+                      });
+                    }, required: true),
+                  ),
+                  Expanded(
+                    child: buildDropdown(
+                        "Required Percentage ",
+                        ["50", "60", "70", "80", "90", "100"],
+                        Englishtestpercentage, (value) {
+                      setState(() {
+                        Englishtestpercentage = value;
 
-              buildDropdown(
-                  "Rank", ["Top 10", "Top 50", "Top 100"], selectedRank,
-                  (value) {
-                setState(() => selectedRank = value);
-              }, required: true),
+                        print(Englishtestpercentage);
+                      });
+                    }, required: true),
+                  ),
+                ],
+              ),
 
               SizedBox(height: 10),
               Padding(

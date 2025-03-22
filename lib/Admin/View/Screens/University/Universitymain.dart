@@ -158,7 +158,7 @@ class _University_mainState extends State<University_main> {
                           columns: [
                             _buildColumn('University '),
                             _buildColumn('country'),
-                            _buildColumn('Type'),
+                            _buildColumn('Course'),
                             _buildColumn('Established'),
                             _buildColumn('Action'),
                           ],
@@ -176,7 +176,7 @@ class _University_mainState extends State<University_main> {
                                   )),
                                   DataCell(Text(student.Country.toString())),
                                   DataCell(
-                                      Text(student.Universitytype.toString())),
+                                      Text(student. Course_offered.toString())),
                                   DataCell(Text(
                                       student.Established_date.toString())),
                                   DataCell(Row(
