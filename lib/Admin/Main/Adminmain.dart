@@ -115,7 +115,8 @@ class _AdminPageState extends State<AdminPage> {
                   title: 'Universities',
                   icon: Icons.school_outlined,
                   children: [
-                    _buildSubListTile("View University", University_main()),
+                    _buildSubListTile(
+                        "View University", Universitymainwrapper()),
                     _buildSubListTile("Add University", AddUniversity()),
                     _buildSubListTile("Edit University", EditUniversity()),
                   ],

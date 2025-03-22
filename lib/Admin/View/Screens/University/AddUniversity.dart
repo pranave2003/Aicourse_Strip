@@ -36,6 +36,9 @@ class _AddUniversityState extends State<AddUniversity> {
   final TextEditingController UniversitynameController =
       TextEditingController();
   final TextEditingController Terms_and_conditions = TextEditingController();
+  final TextEditingController courseFeeController = TextEditingController();
+  final TextEditingController scholarshipFeeController =
+      TextEditingController();
   @override
   void dispose() {
     establishedDateController.dispose();
@@ -109,7 +112,16 @@ class _AddUniversityState extends State<AddUniversity> {
               ),
 
               SizedBox(height: 20),
-              BlocBuilder<UniversityBloc, UniversityState>(
+              BlocConsumer<UniversityBloc, UniversityState>(
+                listener: (context, state) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text("University added successfully!"),
+                      backgroundColor: Colors.green,
+                      duration: Duration(seconds: 2),
+                    ),
+                  );
+                },
                 builder: (context, state) {
                   return Padding(
                     padding: const EdgeInsets.only(left: 25, right: 25),
@@ -126,11 +138,13 @@ class _AddUniversityState extends State<AddUniversity> {
                           onTap: () {
                             if (_formKey.currentState!.validate()) {
                               University_model university = University_model(
+                                  UniversityimageURL:
+                                      "https://content.jdmagicbox.com/v2/comp/malappuram/m9/9999px483.x483.221229222631.k6m9/catalogue/calicut-university-malappuram-universities-ez2kcrhfsj.jpg",
                                   Country: selectedCountry,
                                   Admission_enddate:
-                                      admissionEndDate.toString(),
+                                      admissionEndDateController.text,
                                   Admission_startdate:
-                                      admissionStartDate.toString(),
+                                      admissionStartDateController.text,
                                   Course_offered: selectedCourse,
                                   Degree_offered: selectedDegree,
                                   Description: DiscriptionController.text,
@@ -139,12 +153,12 @@ class _AddUniversityState extends State<AddUniversity> {
                                   Established_date:
                                       establishedDateController.text,
                                   Schoolarship_details:
-                                      selectedScholarshipCourse,
+                                      scholarshipFeeController.text,
                                   Terms_and_conditions:
                                       Terms_and_conditions.text,
-                                  Tuition_fees: selectedFeeCourse,
+                                  Tuition_fees: courseFeeController.text,
                                   Universityname: UniversitynameController.text,
-                                  Universitytype: selectedMBACourse,
+                                  Universitytype: admissionType,
                                   Rank: selectedRank);
                               context.read<UniversityBloc>().add(
                                   University_Add_Event(University: university));
@@ -286,27 +300,24 @@ class _AddUniversityState extends State<AddUniversity> {
               //   ),
               // ),
               //       /// **Date Pickers for Established Date**
-              buildDatePicker("Established Date", establishedDate, (date) {
-                setState(() => establishedDate = date);
-              }, required: true),
 
-              Row(
-                children: [
-                  Expanded(
-                    child: buildDatePicker(
-                        "Admission Start Date", admissionStartDate, (date) {
-                      setState(() => admissionStartDate = date);
-                    }, required: true),
-                  ),
-                  SizedBox(width: 10),
-                  Expanded(
-                    child: buildDatePicker(
-                        "Admission End Date", admissionEndDate, (date) {
-                      setState(() => admissionEndDate = date);
-                    }, required: true),
-                  ),
-                ],
-              ),
+              // Row(
+              //   children: [
+              //     Expanded(
+              //       child: buildDatePicker(
+              //           "Admission Start Date", admissionStartDate, (date) {
+              //         setState(() => admissionStartDate = date);
+              //       }, required: true),
+              //     ),
+              //     SizedBox(width: 10),
+              //     Expanded(
+              //       child: buildDatePicker(
+              //           "Admission End Date", admissionEndDate, (date) {
+              //         setState(() => admissionEndDate = date);
+              //       }, required: true),
+              //     ),
+              //   ],
+              // ),
 
               // Dropdown for Degree Type
               buildDropdown(
@@ -361,8 +372,8 @@ class _AddUniversityState extends State<AddUniversity> {
                       "BA in Economics",
                       "BA in International Relations"
                     ],
-                    selectedBachelorCourse, (value) {
-                  setState(() => selectedBachelorCourse = value);
+                    selectedCourse, (value) {
+                  setState(() => selectedCourse = value);
                 }),
 
               // Dropdown for Master's Courses
@@ -409,8 +420,8 @@ class _AddUniversityState extends State<AddUniversity> {
                       "MTech in Robotics",
                       "MSc in Industrial Engineering"
                     ],
-                    selectedMasterCourse, (value) {
-                  setState(() => selectedMasterCourse = value);
+                    selectedCourse, (value) {
+                  setState(() => selectedCourse = value);
                 }),
 
               // Dropdown for MBA Courses
@@ -442,8 +453,11 @@ class _AddUniversityState extends State<AddUniversity> {
                       "MBA in Blockchain & FinTech",
                       "Executive MBA (EMBA)"
                     ],
-                    selectedMBACourse, (value) {
-                  setState(() => selectedMBACourse = value);
+                    selectedCourse, (value) {
+                  setState(() {
+                    selectedCourse = value;
+                    print(selectedCourse);
+                  });
                 }),
 
               // Dropdown for Course Duration
@@ -494,8 +508,45 @@ class _AddUniversityState extends State<AddUniversity> {
                       : null,
                 ),
               ),
-              buildDropdownWithAmount("Fee Details"),
-              buildDropdownWithAmount("Scholarships"),
+              Padding(
+                padding:
+                    const EdgeInsets.symmetric(vertical: 8, horizontal: 25),
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: TextFormField(
+                        controller: courseFeeController,
+                        decoration: InputDecoration(
+                          border: OutlineInputBorder(),
+                          hintText: "Enter Course Fee",
+                        ),
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return "This field cannot be empty";
+                          }
+                          return null;
+                        },
+                      ),
+                    ),
+                    SizedBox(width: 20),
+                    Expanded(
+                      child: TextFormField(
+                        controller: scholarshipFeeController,
+                        decoration: InputDecoration(
+                          border: OutlineInputBorder(),
+                          hintText: "Enter Scholarship Fee",
+                        ),
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return "This field cannot be empty";
+                          }
+                          return null;
+                        },
+                      ),
+                    ),
+                  ],
+                ),
+              ),
             ],
           ),
         ),
@@ -560,53 +611,53 @@ class _AddUniversityState extends State<AddUniversity> {
     );
   }
 
-  Widget buildDropdownWithAmount(String label) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 8),
-      child: Row(
-        children: [
-          Expanded(
-            flex: 3, // Reduced width for dropdown
-            child: buildDropdown(
-                label, ["Bachelors", "Masters", "MBA"], selectedFeeCourse,
-                (value) {
-              setState(() => selectedFeeCourse = value);
-            }),
-          ),
-          SizedBox(width: 8), // Reduced spacing
-          Expanded(
-            flex: 2, // Reduced width for text field
-            child: buildTextField("Enter Amount",
-                keyboardType: TextInputType.number, required: true),
-          ),
-          SizedBox(width: 8), // Reduced spacing
-          InkWell(
-            onTap: () {
-              // Add action here
-            },
-            child: Container(
-              height: 30, // Reduced height
-              width: 60, // Adjusted width
-              decoration: BoxDecoration(
-                color: Color(0xff0A71CB),
-                borderRadius: BorderRadius.circular(20),
-              ),
-              child: Center(
-                child: Text(
-                  "+Add",
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 16, // Reduced font size
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
+  // Widget buildDropdownWithAmount(String label) {
+  //   return Padding(
+  //     padding: const EdgeInsets.symmetric(vertical: 8),
+  //     child: Row(
+  //       children: [
+  //         Expanded(
+  //           flex: 3, // Reduced width for dropdown
+  //           child: buildDropdown(
+  //               label, ["Bachelors", "Masters", "MBA"], selectedFeeCourse,
+  //               (value) {
+  //             setState(() => selectedFeeCourse = value);
+  //           }),
+  //         ),
+  //         SizedBox(width: 8), // Reduced spacing
+  //         Expanded(
+  //           flex: 2, // Reduced width for text field
+  //           child: buildTextField("Enter Amount",
+  //               keyboardType: TextInputType.number, required: true),
+  //         ),
+  //         SizedBox(width: 8), // Reduced spacing
+  //         InkWell(
+  //           onTap: () {
+  //             // Add action here
+  //           },
+  //           child: Container(
+  //             height: 30, // Reduced height
+  //             width: 60, // Adjusted width
+  //             decoration: BoxDecoration(
+  //               color: Color(0xff0A71CB),
+  //               borderRadius: BorderRadius.circular(20),
+  //             ),
+  //             child: Center(
+  //               child: Text(
+  //                 "+Add",
+  //                 style: TextStyle(
+  //                   color: Colors.white,
+  //                   fontSize: 16, // Reduced font size
+  //                   fontWeight: FontWeight.bold,
+  //                 ),
+  //               ),
+  //             ),
+  //           ),
+  //         ),
+  //       ],
+  //     ),
+  //   );
+  // }
 
   /// **Reusable Text Field Widget**
   Widget buildTextField(String label,

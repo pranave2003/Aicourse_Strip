@@ -1,6 +1,23 @@
+import 'package:course_connect/Widget/Constands/Loading.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import '../../../../Controller/Bloc/University_block/university_bloc.dart';
 import '../../../Model/Universitymodel/Universitymodel.dart';
-import 'EditUniversity.dart';
+
+class Universitymainwrapper extends StatelessWidget {
+  const Universitymainwrapper({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocProvider<UniversityBloc>(
+      create: (context) => UniversityBloc()
+        ..add(FetchUniversity(
+          searchQuery: null,
+        )),
+      child: University_main(),
+    );
+  }
+}
 
 class University_main extends StatefulWidget {
   const University_main({super.key});
@@ -40,10 +57,13 @@ class _University_mainState extends State<University_main> {
               ),
               Row(
                 children: [
-                  CircleAvatar(backgroundColor: Color(0xffD9D9D9), child: Icon(Icons.notification_add)),
+                  CircleAvatar(
+                      backgroundColor: Color(0xffD9D9D9),
+                      child: Icon(Icons.notification_add)),
                   SizedBox(width: 10),
                   Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 6),
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 14, vertical: 6),
                     decoration: BoxDecoration(
                       color: Colors.white,
                       borderRadius: BorderRadius.circular(20),
@@ -54,12 +74,14 @@ class _University_mainState extends State<University_main> {
                         const CircleAvatar(
                           radius: 20, // Ensure a proper radius is set
                           backgroundColor: Colors.grey, // Fallback color
-                          backgroundImage: AssetImage('assets/Profile/img.png'), // Corrected Path
+                          backgroundImage: AssetImage(
+                              'assets/Profile/img.png'), // Corrected Path
                         ),
                         const SizedBox(width: 10),
                         const Text(
                           "Admin",
-                          style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                          style: TextStyle(
+                              fontSize: 16, fontWeight: FontWeight.bold),
                         ),
                       ],
                     ),
@@ -80,78 +102,116 @@ class _University_mainState extends State<University_main> {
                   "University Management",
                   style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
                 ),
-                Divider(thickness: 23,height:10,color: Colors.red,),
+                Divider(
+                  thickness: 23,
+                  height: 10,
+                  color: Colors.red,
+                ),
                 const SizedBox(
                   width: 18,
                 ),
               ],
             ),
           ),
-          SizedBox(height: 20,),
+          SizedBox(
+            height: 20,
+          ),
           Expanded(
             child: Container(
               // Background color
-              child: SingleChildScrollView(
-                scrollDirection: Axis.vertical,
-                child: ConstrainedBox(
-                  constraints: BoxConstraints(
-                    minWidth:
-                        MediaQuery.of(context).size.width, // Ensures full width
-                  ),
-                  child: DataTable(
-                    headingRowColor: MaterialStateColor.resolveWith((states) => Colors.grey.shade300),
+              child: BlocConsumer<UniversityBloc, UniversityState>(
+                listener: (context, state) {
+                  if (state is RefreshUniversity) {
+                    context
+                        .read<UniversityBloc>()
+                        .add(FetchUniversity(searchQuery: null));
+                  }
+                },
+                builder: (context, state) {
+                  if (state is UniversitysLoading) {
+                    return Center(
+                      child: Loading_Widget(),
+                    );
+                  } else if (state is Universitysfailerror) {
+                    return Text(state.error.toString());
+                  } else if (state is University_loaded) {
+                    return SingleChildScrollView(
+                      scrollDirection: Axis.vertical,
+                      child: ConstrainedBox(
+                        constraints: BoxConstraints(
+                          minWidth: MediaQuery.of(context)
+                              .size
+                              .width, // Ensures full width
+                        ),
+                        child: DataTable(
+                          headingRowColor: MaterialStateColor.resolveWith(
+                              (states) => Colors.grey.shade300),
 
-                    // border: TableBorder(
-                    //   verticalInside: BorderSide(
-                    //       color: Colors.black,
-                    //       width: 1), // Vertical line between columns
-                    //   horizontalInside: BorderSide(
-                    //       color: Colors.grey, width: 0.5), // Horizontal lines
-                    // ),
-                    decoration: BoxDecoration(color: Colors.white),
-                    columns: [
-                      _buildColumn('University '),
-                      _buildColumn('country'),
-                      _buildColumn('Type'),
-                      _buildColumn('Established'),
-                      _buildColumn('Action'),
-                    ],
-
-                    rows: List.generate(
-                      students.length,
-                      (index) {
-                        final student = students[index];
-                        return DataRow(
-
-                          cells: [
-                            DataCell(Text(
-                              student.University_name,
-                              style: TextStyle(fontWeight: FontWeight.bold),
-                            )),
-                            DataCell(Text(student.Country)),
-                            DataCell(Text(student.Type)),
-                            DataCell(Text(student.Established)),
-                            DataCell(Row(
-                              children: [
-                        IconButton(
-                        icon: Icon(Icons.remove_red_eye, color: Colors.green),
-                        iconSize: 30.0,
-                        onPressed: () {
-                        print('View all  button pressed');
-                        },),IconButton(
-                        icon: Icon(Icons.delete, color: Colors.red),
-                        iconSize: 30.0,
-                        onPressed: () {
-                        print('Delete button pressed');
-                        },),
-                              ],
-                            )),
+                          // border: TableBorder(
+                          //   verticalInside: BorderSide(
+                          //       color: Colors.black,
+                          //       width: 1), // Vertical line between columns
+                          //   horizontalInside: BorderSide(
+                          //       color: Colors.grey, width: 0.5), // Horizontal lines
+                          // ),
+                          decoration: BoxDecoration(color: Colors.white),
+                          columns: [
+                            _buildColumn('University '),
+                            _buildColumn('country'),
+                            _buildColumn('Type'),
+                            _buildColumn('Established'),
+                            _buildColumn('Action'),
                           ],
-                        );
-                      },
-                    ),
-                  ),
-                ),
+
+                          rows: List.generate(
+                            state.University.length,
+                            (index) {
+                              final student = state.University[index];
+                              return DataRow(
+                                cells: [
+                                  DataCell(Text(
+                                    student.Universityname.toString(),
+                                    style:
+                                        TextStyle(fontWeight: FontWeight.bold),
+                                  )),
+                                  DataCell(Text(student.Country.toString())),
+                                  DataCell(
+                                      Text(student.Universitytype.toString())),
+                                  DataCell(Text(
+                                      student.Established_date.toString())),
+                                  DataCell(Row(
+                                    children: [
+                                      IconButton(
+                                        icon: Icon(Icons.remove_red_eye,
+                                            color: Colors.green),
+                                        iconSize: 30.0,
+                                        onPressed: () {},
+                                      ),
+                                      IconButton(
+                                        icon: Icon(Icons.delete,
+                                            color: Colors.red),
+                                        iconSize: 30.0,
+                                        onPressed: () {
+                                          context
+                                              .read<UniversityBloc>()
+                                              .add(DeleteUniversity(
+                                                Universityid:
+                                                    student.Universityid,
+                                              ));
+                                        },
+                                      ),
+                                    ],
+                                  )),
+                                ],
+                              );
+                            },
+                          ),
+                        ),
+                      ),
+                    );
+                  }
+                  return SizedBox();
+                },
               ),
             ),
           ),

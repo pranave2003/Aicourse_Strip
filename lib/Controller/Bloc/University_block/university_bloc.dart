@@ -9,9 +9,7 @@ part 'university_state.dart';
 
 class UniversityBloc extends Bloc<UniversityEvent, UniversityState> {
   UniversityBloc() : super(UniversityInitial()) {
-    on<UniversityEvent>((event, emit) {
-      // TODO: implement event handler
-    });
+    on<UniversityEvent>((event, emit) {});
 
     on<University_Add_Event>(
       (event, emit) async {
@@ -24,6 +22,7 @@ class UniversityBloc extends Bloc<UniversityEvent, UniversityState> {
 
           await orderRef.set({
             "Universityid": universityId,
+            "Universityimage": event.University.UniversityimageURL,
             "Universitytype": event.University.Universitytype,
             "Rank": event.University.Rank,
             "Established_date": event.University.Established_date,
@@ -47,6 +46,50 @@ class UniversityBloc extends Bloc<UniversityEvent, UniversityState> {
           emit(UniversityaddSuccess());
         } catch (e) {
           emit(Universityfailerror(e.toString().split("]").last));
+          print("Authenticated Error : ${e.toString().split(']').last}");
+        }
+      },
+    );
+
+    on<FetchUniversity>((event, emit) async {
+      emit(UniversitysLoading());
+      try {
+        CollectionReference Universitycollection =
+            FirebaseFirestore.instance.collection('University');
+
+        Query query = Universitycollection;
+        QuerySnapshot snapshot = await query.get();
+
+        List<University_model> userss = snapshot.docs.map((doc) {
+          return University_model.fromMap(doc.data() as Map<String, dynamic>);
+        }).toList();
+
+        if (event.searchQuery != null && event.searchQuery!.isNotEmpty) {
+          userss = userss.where((University) {
+            return University.Universityname!
+                .toLowerCase()
+                .contains(event.searchQuery!.toLowerCase());
+          }).toList();
+        }
+
+        emit(University_loaded(userss));
+      } catch (e) {
+        emit(Universitysfailerror(e.toString()));
+      }
+    });
+
+    // delete University
+    on<DeleteUniversity>(
+      (event, emit) async {
+        emit(UniversityLoading());
+        try {
+          FirebaseFirestore.instance
+              .collection("University")
+              .doc(event.Universityid)
+              .delete(); // Generate ID
+          emit(RefreshUniversity());
+        } catch (e) {
+          emit(Universitysfailerror(e.toString().split("]").last));
           print("Authenticated Error : ${e.toString().split(']').last}");
         }
       },
