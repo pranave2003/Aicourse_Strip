@@ -32,7 +32,7 @@
 //       body: Container(
 //         decoration: const BoxDecoration(
 //           image: DecorationImage(
-//             image: AssetImage("assets/country/img_6.png"),
+//             image: AssetImage("assets/country/main.png"),
 //             fit: BoxFit.cover,
 //           ),
 //         ),
@@ -207,7 +207,7 @@
 // //       body: Container(
 // //         decoration: const BoxDecoration(
 // //           image: DecorationImage(
-// //             image: AssetImage("assets/country/img_6.png"),
+// //             image: AssetImage("assets/country/main.png"),
 // //             fit: BoxFit.cover,
 // //           ),
 // //         ),
@@ -371,7 +371,7 @@ class _MastersWorkState extends State<MastersWork> {
       body: Container(
         decoration: const BoxDecoration(
           image: DecorationImage(
-            image: AssetImage("assets/country/img_6.png"),
+            image: AssetImage("assets/country/main.png"),
             fit: BoxFit.cover,
           ),
         ),

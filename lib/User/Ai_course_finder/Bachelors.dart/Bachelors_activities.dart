@@ -33,7 +33,7 @@ class _Bachelors_activitiesState extends State<Bachelors_activities> {
       body: Container(
         decoration: BoxDecoration(
           image: DecorationImage(
-            image: AssetImage("assets/country/img_6.png"),
+            image: AssetImage("assets/country/main.png"),
             fit: BoxFit.cover,
           ),
         ),
@@ -187,7 +187,7 @@ class _Bachelors_activitiesState extends State<Bachelors_activities> {
 //         body: Container(
 //           decoration: BoxDecoration(
 //             image: DecorationImage(
-//               image: AssetImage("assets/country/img_6.png"),
+//               image: AssetImage("assets/country/main.png"),
 //               fit: BoxFit.cover,
 //             ),
 //           ),

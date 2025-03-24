@@ -33,7 +33,7 @@ class _MBA_workState extends State<MBA_work> {
       body: Container(
         decoration: const BoxDecoration(
           image: DecorationImage(
-            image: AssetImage("assets/country/img_6.png"),
+            image: AssetImage("assets/country/main.png"),
             fit: BoxFit.cover,
           ),
         ),

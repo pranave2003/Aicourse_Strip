@@ -1,3 +1,4 @@
+import 'package:course_connect/Controller/Bloc/University_block/university_bloc.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -24,12 +25,17 @@ class MyApp extends StatelessWidget {
       providers: [
         BlocProvider<AuthBloc>(
           create: (context) => AuthBloc(),
+        ),
+        BlocProvider<UniversityBloc>(
+          create: (context) => UniversityBloc(),
         )
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         initialRoute: '/',
-        theme: ThemeData(scaffoldBackgroundColor: Colors.white),
+        theme: ThemeData(
+            scaffoldBackgroundColor: Colors.white,
+            appBarTheme: AppBarTheme(backgroundColor: Colors.white)),
         routes: {
           '/': (context) => Splashpagewrapper(),
           '/home': (context) => BottomNavWrapper(),

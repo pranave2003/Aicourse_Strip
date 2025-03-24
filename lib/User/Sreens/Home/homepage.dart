@@ -1,7 +1,5 @@
 import 'dart:async';
-
-import 'package:carousel_slider/carousel_slider.dart';
-import 'package:course_connect/User/Accomodation/AccomodationDetailScreen.dart';
+import 'package:course_connect/Controller/Bloc/University_block/university_bloc.dart';
 import 'package:course_connect/User/Ai_course_finder/ChooseCountry.dart';
 import 'package:course_connect/User/Ai_course_finder/FilterPage.dart';
 import 'package:course_connect/User/Sreens/BottomNavigation/Bottom_nav2.dart';
@@ -9,11 +7,23 @@ import 'package:course_connect/User/Profile/Notifications.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import '../../../Widget/Constands/Loading.dart';
+import 'Colleges.dart';
 
-import '../../../Controller/Bloc/User_Authbloc/auth_bloc.dart';
-import '../../../Widget/Constands/Widget.dart';
-import '../../../Widget/Constands/colors.dart';
-import '../../../Widget/Constands/button.dart';
+class HomepageWrapper extends StatelessWidget {
+  const HomepageWrapper({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocProvider<UniversityBloc>(
+      create: (context) => UniversityBloc()
+        ..add(FetchAllUniversites(
+          searchQuery: null,
+        )),
+      child: Homepage(),
+    );
+  }
+}
 
 class Homepage extends StatefulWidget {
   const Homepage({super.key});
@@ -23,7 +33,12 @@ class Homepage extends StatefulWidget {
 }
 
 class _HomepageState extends State<Homepage> {
-  List<String> images = ["img_5.png", "img_6.png"];
+  List<String> images = [
+    "assets/img_12.png",
+    "assets/img_12.png",
+    "assets/img_12.png",
+    "assets/img_12.png",
+  ];
   int currentIndex = 0;
   final PageController _pageController = PageController();
 
@@ -46,45 +61,12 @@ class _HomepageState extends State<Homepage> {
     });
   }
 
-  List<Map<String, dynamic>> serviceList = [
-    {
-      "icon": "assets/img_2.png",
-      "name": "Harvard \n University",
-      "surname": "Massachusetts,USA"
-    },
-    {
-      "icon": "assets/img_15.png",
-      "name": "Stanford \n University",
-      "surname": "Stanford, California"
-    },
-    {
-      "icon": "assets/img_16.png",
-      "name": " Chicago	\n University",
-      "surname": "Massachusetts,USA"
-    },
-    {
-      "icon": "assets/img_17.png",
-      "name": "Toronto \n University",
-      "surname": "Toronto,Canada"
-    },
-    {
-      "icon": "assets/img_19.png",
-      "name": "Yale \n University",
-      "surname": "United States"
-    },
-    {
-      "icon": "assets/img_19.png",
-      "name": "Ota go\n University",
-      "surname": "Dunedin, New Zealand"
-    },
-  ];
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
           automaticallyImplyLeading: false,
-          toolbarHeight: 120,
+          toolbarHeight: 60,
           title: const Text(
             "Find Your\nDream Degree",
             style: TextStyle(
@@ -98,21 +80,11 @@ class _HomepageState extends State<Homepage> {
               padding: const EdgeInsets.only(right: 18.0),
               child: GestureDetector(
                 onTap: () {
-
                   Navigator.push(
                     context,
                     MaterialPageRoute(builder: (context) => Notifications()),
                   );
-                  // / final Authbloc = BlocProvider.of<AuthBloc>(context);
-                  // //
-                  // Authbloc.add(SigOutEvent());
-                  // Navigator.pushNamedAndRemoveUntil(
-                  //   context,
-                  //   "/login",
-                  //   (route) => false,
-                  // );
                 },
-
                 child: Container(
                   height: 52,
                   width: 52,
@@ -131,55 +103,7 @@ class _HomepageState extends State<Homepage> {
         body: Padding(
             padding: const EdgeInsets.all(10),
             child: ListView(
-              // mainAxisAlignment: MainAxisAlignment.center,
-              // crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Expanded(
-                      flex: 5,
-                      child: TextFormField(
-                        decoration: InputDecoration(
-                            hintText: "search university or course",
-                            prefixIcon: Icon(Icons.search),
-                            border: OutlineInputBorder(
-                                borderSide:
-                                    BorderSide(width: 1, color: Colors.black))),
-                      ),
-                    ),
-                    SizedBox(
-                      width: 10,
-                    ),
-                    Expanded(
-                      flex: 1,
-                      child: GestureDetector(
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(builder: (context) => FilterPage()), // Correct Navigation
-                          );
-                        },
-                        child: Container(
-                          height: 50,
-                          width: 50,
-                          decoration: BoxDecoration(
-                            color: Colors.grey[100], // Soft pink background
-                            borderRadius: BorderRadius.circular(12),
-                          ),
-                          child: Center( // Ensuring proper alignment
-                            child: Icon(
-                              Icons.tune,
-                              color: Colors.brown,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-
-                  ],
-                ),
-                SizedBox(height: 10),
                 SingleChildScrollView(
                     child: Padding(
                   padding: const EdgeInsets.all(10),
@@ -202,7 +126,7 @@ class _HomepageState extends State<Homepage> {
                             return ClipRRect(
                               borderRadius: BorderRadius.circular(12),
                               child: Image.asset(
-                                "assets/Homepageimages/${images[index]}",
+                                images[index],
                                 fit: BoxFit.cover,
                                 width: double.infinity,
                               ),
@@ -340,84 +264,183 @@ class _HomepageState extends State<Homepage> {
                           )
                         ],
                       ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Expanded(
+                            flex: 5,
+                            child: TextFormField(
+                              decoration: InputDecoration(
+                                  hintText: "search university or course",
+                                  prefixIcon: Icon(Icons.search),
+                                  border: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                          width: 1, color: Colors.black))),
+                            ),
+                          ),
+                          SizedBox(
+                            width: 10,
+                          ),
+                          Expanded(
+                            flex: 1,
+                            child: GestureDetector(
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          FilterPage()), // Correct Navigation
+                                );
+                              },
+                              child: Container(
+                                height: 50,
+                                width: 50,
+                                decoration: BoxDecoration(
+                                  color:
+                                      Colors.grey[100], // Soft pink background
+                                  borderRadius: BorderRadius.circular(12),
+                                ),
+                                child: Center(
+                                  // Ensuring proper alignment
+                                  child: Icon(
+                                    Icons.tune,
+                                    color: Colors.brown,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
 
                       Row(
                         children: [
                           Expanded(
-                            child: GridView.builder(
-                              physics:
-                                  NeverScrollableScrollPhysics(), // Prevents extra scrolling
-                              shrinkWrap: true,
-                              padding: EdgeInsets.symmetric(
-                                  horizontal: 5, vertical: 10),
-                              gridDelegate:
-                                  SliverGridDelegateWithFixedCrossAxisCount(
-                                crossAxisCount: 2, // Two columns
-                                crossAxisSpacing: 10, // Space between columns
-                                mainAxisSpacing: 10, // Space between rows
-                                childAspectRatio:
-                                    0.75, // Adjusted for better image fit
-                              ),
-                              itemCount: serviceList.length,
-                              itemBuilder: (context, index) {
-                                return Container(
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(12),
-                                    color: Colors.white,
-                                    boxShadow: [
-                                      BoxShadow(
-                                        color: Colors.grey.withOpacity(0.2),
-                                        blurRadius: 5,
-                                        spreadRadius: 2,
+                            child:
+                                BlocConsumer<UniversityBloc, UniversityState>(
+                              listener: (context, state) {
+                                // TODO: implement listener
+                              },
+                              builder: (context, state) {
+                                if (state is UniversitysLoading) {
+                                  return Center(
+                                    child: Loading_Widget(),
+                                  );
+                                } else if (state is Universitysfailerror) {
+                                  return Text(state.error.toString());
+                                } else if (state is University_loaded) {
+                                  if (state.University.isEmpty) {
+                                    // Return "No data found" if txhe list is empty
+                                    return Center(
+                                      child: Text(
+                                        "No university courses available for the given name.",
+                                        style: TextStyle(
+                                            fontSize: 16,
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.grey),
                                       ),
-                                    ],
-                                  ),
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
-                                    children: [
-                                      SizedBox(height: 10),
-                                      ClipRRect(
-                                        // borderRadius: BorderRadius.circular(10),
-                                        child: Image.asset(
-                                          serviceList[index]["icon"].toString(),
-                                          height: 120,
-                                          width: 160,
-                                          fit: BoxFit.cover,
+                                    );
+                                  }
+                                  return GridView.builder(
+                                    physics:
+                                        NeverScrollableScrollPhysics(), // Prevents extra scrolling
+                                    shrinkWrap: true,
+                                    padding: EdgeInsets.symmetric(
+                                        horizontal: 5, vertical: 10),
+                                    gridDelegate:
+                                        SliverGridDelegateWithFixedCrossAxisCount(
+                                      crossAxisCount: 2, // Two columns
+                                      crossAxisSpacing:
+                                          10, // Space between columns
+                                      mainAxisSpacing: 10, // Space between rows
+                                      childAspectRatio:
+                                          0.75, // Adjusted for better image fit
+                                    ),
+                                    itemCount: state.University.length,
+                                    itemBuilder: (context, index) {
+                                      final university =
+                                          state.University[index];
+
+                                      return InkWell(
+                                        onTap: () {
+                                          Navigator.push(context,
+                                              MaterialPageRoute(
+                                            builder: (context) {
+                                              return Collages_Wrapper(
+                                                  university: university
+                                                      .Universityname);
+                                            },
+                                          ));
+                                        },
+                                        child: Container(
+                                          decoration: BoxDecoration(
+                                            borderRadius:
+                                                BorderRadius.circular(12),
+                                            color: Colors.white,
+                                            boxShadow: [
+                                              BoxShadow(
+                                                color: Colors.grey
+                                                    .withOpacity(0.2),
+                                                blurRadius: 5,
+                                                spreadRadius: 2,
+                                              ),
+                                            ],
+                                          ),
+                                          child: Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.center,
+                                            children: [
+                                              SizedBox(height: 10),
+                                              ClipRRect(
+                                                // borderRadius: BorderRadius.circular(10),
+                                                child: Image.network(
+                                                  university.UniversityimageURL
+                                                      .toString(),
+                                                  height: 140,
+                                                  width: 160,
+                                                  fit: BoxFit.cover,
+                                                ),
+                                              ),
+                                              SizedBox(height: 8),
+                                              Padding(
+                                                  padding: EdgeInsets.symmetric(
+                                                      horizontal: 8),
+                                                  child: Text(
+                                                    university.Universityname
+                                                        .toString(),
+                                                    style: TextStyle(
+                                                        fontSize: 16,
+                                                        fontWeight:
+                                                            FontWeight.bold),
+                                                    textAlign: TextAlign.left,
+                                                  )),
+                                              SizedBox(height: 4),
+                                              Padding(
+                                                  padding: EdgeInsets.symmetric(
+                                                      horizontal: 8),
+                                                  child: Text(
+                                                    university.Country
+                                                            .toString()
+                                                        .toString(),
+                                                    style: TextStyle(
+                                                        fontSize: 12,
+                                                        color:
+                                                            Colors.grey[700]),
+                                                    textAlign: TextAlign.left,
+                                                  )),
+                                            ],
+                                          ),
                                         ),
-                                      ),
-                                      SizedBox(height: 8),
-                                      Padding(
-                                          padding: EdgeInsets.symmetric(
-                                              horizontal: 8),
-                                          child: Text(
-                                            serviceList[index]["name"]
-                                                .toString(),
-                                            style: TextStyle(
-                                                fontSize: 16,
-                                                fontWeight: FontWeight.bold),
-                                            textAlign: TextAlign.left,
-                                          )),
-                                      SizedBox(height: 4),
-                                      Padding(
-                                          padding: EdgeInsets.symmetric(
-                                              horizontal: 8),
-                                          child: Text(
-                                            serviceList[index]["surname"]
-                                                .toString(),
-                                            style: TextStyle(
-                                                fontSize: 12,
-                                                color: Colors.grey[700]),
-                                            textAlign: TextAlign.left,
-                                          )),
-                                    ],
-                                  ),
-                                );
+                                      );
+                                    },
+                                  );
+                                }
+                                return SizedBox();
                               },
                             ),
                           ),
                         ],
-                      )
+                      ),
                     ],
                   ),
                 ))

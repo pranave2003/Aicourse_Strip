@@ -3,7 +3,6 @@ import 'package:course_connect/Widget/Constands/Loading.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../Controller/Bloc/University_block/university_bloc.dart';
-import '../../../Model/Universitymodel/Universitymodel.dart';
 
 class Universitymainwrapper extends StatelessWidget {
   const Universitymainwrapper({super.key});
@@ -147,14 +146,6 @@ class _University_mainState extends State<University_main> {
                         child: DataTable(
                           headingRowColor: MaterialStateColor.resolveWith(
                               (states) => Colors.grey.shade300),
-
-                          // border: TableBorder(
-                          //   verticalInside: BorderSide(
-                          //       color: Colors.black,
-                          //       width: 1), // Vertical line between columns
-                          //   horizontalInside: BorderSide(
-                          //       color: Colors.grey, width: 0.5), // Horizontal lines
-                          // ),
                           decoration: BoxDecoration(color: Colors.white),
                           columns: [
 
@@ -165,7 +156,6 @@ class _University_mainState extends State<University_main> {
                             _buildColumn('Established'),
                             _buildColumn('Action'),
                           ],
-
                           rows: List.generate(
                             state.University.length,
                             (index) {

@@ -39,7 +39,7 @@ class _MastersEnglishtestState extends State<MastersEnglishtest> {
       body: Container(
         decoration: BoxDecoration(
           image: DecorationImage(
-            image: AssetImage("assets/country/img_6.png"),
+            image: AssetImage("assets/country/main.png"),
             fit: BoxFit.cover,
           ),
         ),

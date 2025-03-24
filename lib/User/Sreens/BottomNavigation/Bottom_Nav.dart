@@ -40,8 +40,8 @@ class _Bottom_NavState extends State<Bottom_Nav> {
   int _currentIndex = 0; // Track the selected page
 
   final List<Widget> _pages = [
-    Homepage(),
-    Universities(),
+    HomepageWrapper(),
+    UniversitiesWrapper(),
     ApplicationStatusPage(),
     Profile(),
   ];
@@ -53,6 +53,8 @@ class _Bottom_NavState extends State<Bottom_Nav> {
       body: _pages[_currentIndex], // Display the selected page
 
       bottomNavigationBar: BottomNavigationBar(
+        backgroundColor: Colors.white,
+
         unselectedIconTheme: IconThemeData(color: Colors.black),
         selectedIconTheme: IconThemeData(color: Colors.blue),
         showUnselectedLabels: true,

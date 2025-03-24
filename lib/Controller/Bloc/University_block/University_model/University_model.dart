@@ -73,7 +73,7 @@ class University_model {
       Terms_and_conditions: data['Terms_and_conditions'],
       Country: data['Country'],
       Universityid: data['Universityid'],
-      UniversityimageURL: data['UniversityImageUrl'],
+      UniversityimageURL: data['Universityimage'],
       AcadamicTest: data['AcadamicTest'],
       AcadamicTestPercentage: data['AcadamicTestPercentage'],
       Englishtest: data['Englishtest'],

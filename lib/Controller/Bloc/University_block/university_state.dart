@@ -33,4 +33,15 @@ class University_loaded extends UniversityState {
   );
 }
 
+final class Coursesgetloading extends UniversityState {}
 
+final class UniversitysCoursefailerror extends UniversityState {
+  final String error;
+
+  UniversitysCoursefailerror(this.error);
+}
+
+final class UniversityModel extends UniversityState {
+  final University_model university;
+  UniversityModel(this.university);
+}

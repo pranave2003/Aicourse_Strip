@@ -32,7 +32,7 @@ class _Maters_academicState extends State<Maters_academic> {
       body: Container(
         decoration: const BoxDecoration(
           image: DecorationImage(
-            image: AssetImage("assets/country/img_6.png"),
+            image: AssetImage("assets/country/main.png"),
             fit: BoxFit.cover,
           ),
         ),
