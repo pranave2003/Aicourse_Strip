@@ -55,12 +55,12 @@ class _UniversitiesState extends State<Universities> {
     },
     {
       "icon2": "assets/img_2.png",
-      "name2": "Harward \n University",
+      "name2": "Harvard \n University",
       "surname2": "Massachusetts,USA"
     },
     {
       "icon2": "assets/img_2.png",
-      "name2": "Harward \n University",
+      "name2": "Harvard \n University",
       "surname2": "Massachusetts,USA"
     },
   ];

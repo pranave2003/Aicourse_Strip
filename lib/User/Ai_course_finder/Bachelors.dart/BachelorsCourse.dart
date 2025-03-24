@@ -15,6 +15,7 @@ class _BachelorsCourseState extends State<BachelorsCourse> {
 
   // List of available courses
   final List<String> courses = [
+
     "BBA (Bachelor of Business Administration)",
     "BCom (Bachelor of Commerce)",
     "BA in Business Management",
@@ -26,7 +27,7 @@ class _BachelorsCourseState extends State<BachelorsCourse> {
     "BBA in Supply Chain Management",
     "BSc in Computer Science",
     "BSc in Information Technology (IT)",
-    "BTech / BE ",
+    "BTech / BE",
     "BSc in Data Science",
     "BSc in AI & Machine Learning",
     "BSc in Biotechnology",
@@ -37,24 +38,11 @@ class _BachelorsCourseState extends State<BachelorsCourse> {
     "BA in English Literature",
     "BA in Journalism & Mass Communication",
     "BA in Fine Arts",
-    "MBBS (Bachelor of Medicine & Surgery)",
-    "BDS (Bachelor of Dental Surgery)",
-    "BPharm (Bachelor of Pharmacy)",
-    "BPT (Bachelor of Physiotherapy)",
-    "BSc in Nursing",
-    "BSc in Nutrition & Dietetics",
-    "BSc in Medical Lab Technology",
-    "BTech in Computer Science",
-    "BTech in Mechanical Engineering",
-    "BTech in Electrical Engineering",
-    "BTech in Civil Engineering",
-    "BTech in Electronics & Communication",
-    "BTech in Aerospace Engineering",
     "LLB (Bachelor of Laws)",
     "BA in Criminology",
     "BA in Public Administration",
     "BA in Economics",
-    "BA in International Relations",
+    "BA in International Relations"
   ];
 
 

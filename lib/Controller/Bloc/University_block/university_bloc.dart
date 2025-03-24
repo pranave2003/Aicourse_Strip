@@ -23,7 +23,6 @@ class UniversityBloc extends Bloc<UniversityEvent, UniversityState> {
           await orderRef.set({
             "Universityid": universityId,
             "Universityimage": event.University.UniversityimageURL,
-
             "Rank": event.University.Rank,
             "Established_date": event.University.Established_date,
             "Universityname": event.University.Universityname,
@@ -47,10 +46,13 @@ class UniversityBloc extends Bloc<UniversityEvent, UniversityState> {
             "Englishtestpercentage": event.University.Englishtestpercentage,
             "highestEducation": event.University.highestEducation,
             "highestEducationpercentage":
-                event.University.highestEducationpercentage
+                event.University.highestEducationpercentage,
+            "collagecode": event.University.collagecode,
+            "Collegename": event.University.Collegename
           });
           print("done...");
           emit(UniversityaddSuccess());
+          emit(RefreshUniversity());
         } catch (e) {
           emit(Universityfailerror(e.toString().split("]").last));
           print("Authenticated Error : ${e.toString().split(']').last}");

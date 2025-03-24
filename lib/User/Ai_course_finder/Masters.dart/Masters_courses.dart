@@ -29,17 +29,10 @@ class _Masters_CoursesState extends State<Masters_Courses> {
     "MSc in Data Science",
     "MSc in Cybersecurity",
     "MSc in Information Technology",
-    "MTech in Civil /"
-        "MTech in Mechanical ",
-  "MTech in Electrical Engineering",
     "MSc in Biotechnology",
-    "MSc in Physics / Chemistry / Mathematics",
-    "MD (Doctor of Medicine)",
-    "MDS (Master of Dental Surgery)",
-    "MPharm (Master of Pharmacy)",
-    "MSc in Public Health",
-    "MSc in Nursing",
-    "MSc in Medical Lab Technology",
+    "MSc in Physics" ,
+    "MSc in Chemistry ",
+    "MSc in Mathematics",
     "MA in Psychology",
     "MA in Sociology",
     "MA in Journalism & Mass Communication",
@@ -52,10 +45,6 @@ class _Masters_CoursesState extends State<Masters_Courses> {
     "MSc in International Relations",
     "MSc in Public Policy",
     "Master in Social Work (MSW)",
-    "MTech in Computer Science",
-    "MTech in Mechanical Engineering",
-    "MTech in Electrical Engineering",
-    "MTech in Robotics",
     "MSc in Industrial Engineering"
   ];
 

@@ -48,6 +48,8 @@ class _AddUniversityState extends State<AddUniversity> {
   final TextEditingController courseFeeController = TextEditingController();
   final TextEditingController scholarshipFeeController =
       TextEditingController();
+  final TextEditingController collegenamectrl = TextEditingController();
+  final TextEditingController collegecodectrl = TextEditingController();
 
   // @override
   // void dispose() {
@@ -131,12 +133,13 @@ class _AddUniversityState extends State<AddUniversity> {
                       duration: Duration(seconds: 2),
                     ),
                   );
-
-                  Navigator.push(context, MaterialPageRoute(
-                    builder: (context) {
-                      return AdminPage();
-                    },
-                  ));
+                  if (state is RefreshUniversity) {
+                    Navigator.push(context, MaterialPageRoute(
+                      builder: (context) {
+                        return AdminPage();
+                      },
+                    ));
+                  }
                 },
                 builder: (context, state) {
                   return Padding(
@@ -154,34 +157,37 @@ class _AddUniversityState extends State<AddUniversity> {
                           onTap: () {
                             if (_formKey.currentState!.validate()) {
                               University_model university = University_model(
-                                UniversityimageURL:
-                                    "https://content.jdmagicbox.com/v2/comp/malappuram/m9/9999px483.x483.221229222631.k6m9/catalogue/calicut-university-malappuram-universities-ez2kcrhfsj.jpg",
-                                Country: selectedCountry,
-                                Admission_enddate:
-                                    admissionEndDateController.text,
-                                Admission_startdate:
-                                    admissionStartDateController.text,
-                                Course_offered: selectedCourse,
-                                Degree_offered: selectedDegree,
-                                Description: DiscriptionController.text,
-                                Duration: selectedDuration,
-                                Eligibility_criteria: selectedEligibility,
-                                Established_date:
-                                    establishedDateController.text,
-                                Schoolarship_details:
-                                    scholarshipFeeController.text,
-                                Terms_and_conditions: Terms_and_conditions.text,
-                                Tuition_fees: courseFeeController.text,
-                                Universityname: UniversitynameController.text,
-                                Rank: selectedRank,
-                                highestEducationpercentage:
-                                    highestEducationpercentage,
-                                highestEducation: highestEducation,
-                                Englishtestpercentage: Englishtestpercentage,
-                                Englishtest: Englishtest,
-                                AcadamicTestPercentage: AcadamicTestPercentage,
-                                AcadamicTest: AcadamicTest,
-                              );
+                                  UniversityimageURL:
+                                      "https://content.jdmagicbox.com/v2/comp/malappuram/m9/9999px483.x483.221229222631.k6m9/catalogue/calicut-university-malappuram-universities-ez2kcrhfsj.jpg",
+                                  Country: selectedCountry,
+                                  Admission_enddate:
+                                      admissionEndDateController.text,
+                                  Admission_startdate:
+                                      admissionStartDateController.text,
+                                  Course_offered: selectedCourse,
+                                  Degree_offered: selectedDegree,
+                                  Description: DiscriptionController.text,
+                                  Duration: selectedDuration,
+                                  Eligibility_criteria: selectedEligibility,
+                                  Established_date:
+                                      establishedDateController.text,
+                                  Schoolarship_details:
+                                      scholarshipFeeController.text,
+                                  Terms_and_conditions:
+                                      Terms_and_conditions.text,
+                                  Tuition_fees: courseFeeController.text,
+                                  Universityname: UniversitynameController.text,
+                                  Rank: selectedRank,
+                                  highestEducationpercentage:
+                                      highestEducationpercentage,
+                                  highestEducation: highestEducation,
+                                  Englishtestpercentage: Englishtestpercentage,
+                                  Englishtest: Englishtest,
+                                  AcadamicTestPercentage:
+                                      AcadamicTestPercentage,
+                                  AcadamicTest: AcadamicTest,
+                                  Collegename: collegenamectrl.text,
+                                  collagecode: collegecodectrl.text);
                               context.read<UniversityBloc>().add(
                                   University_Add_Event(University: university));
                             }
@@ -231,6 +237,44 @@ class _AddUniversityState extends State<AddUniversity> {
                       ? 'University Name is required'
                       : null,
                 ),
+              ),
+              Row(
+                children: [
+                  Expanded(
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 8, horizontal: 25),
+                      child: TextFormField(
+                        controller: collegenamectrl,
+                        maxLines: 1,
+                        decoration: InputDecoration(
+                            labelText: "College Name",
+                            border: OutlineInputBorder()),
+                        validator: (value) =>
+                            true && (value == null || value.isEmpty)
+                                ? 'College Name is required'
+                                : null,
+                      ),
+                    ),
+                  ),
+                  Expanded(
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 8, horizontal: 25),
+                      child: TextFormField(
+                        controller: collegecodectrl,
+                        maxLines: 1,
+                        decoration: InputDecoration(
+                            labelText: "College Code",
+                            border: OutlineInputBorder()),
+                        validator: (value) =>
+                            true && (value == null || value.isEmpty)
+                                ? 'College Code is required'
+                                : null,
+                      ),
+                    ),
+                  ),
+                ],
               ),
 
               /// **Admission Type (Radio Buttons)**
@@ -337,19 +381,6 @@ class _AddUniversityState extends State<AddUniversity> {
                           "BA in English Literature",
                           "BA in Journalism & Mass Communication",
                           "BA in Fine Arts",
-                          "MBBS (Bachelor of Medicine & Surgery)",
-                          "BDS (Bachelor of Dental Surgery)",
-                          "BPharm (Bachelor of Pharmacy)",
-                          "BPT (Bachelor of Physiotherapy)",
-                          "BSc in Nursing",
-                          "BSc in Nutrition & Dietetics",
-                          "BSc in Medical Lab Technology",
-                          "BTech in Computer Science",
-                          "BTech in Mechanical Engineering",
-                          "BTech in Electrical Engineering",
-                          "BTech in Civil Engineering",
-                          "BTech in Electronics & Communication",
-                          "BTech in Aerospace Engineering",
                           "LLB (Bachelor of Laws)",
                           "BA in Criminology",
                           "BA in Public Administration",
@@ -385,6 +416,7 @@ class _AddUniversityState extends State<AddUniversity> {
                           "JEE",
                           "NEET",
                           "CUET",
+                          "Not Required",
                         ],
                         AcadamicTest, (value) {
                       setState(() {
@@ -423,17 +455,10 @@ class _AddUniversityState extends State<AddUniversity> {
                           "MSc in Data Science",
                           "MSc in Cybersecurity",
                           "MSc in Information Technology",
-                          "MTech in Civil Engineering",
-                          "MTech in Mechanical Engineering",
-                          "MTech in Electrical Engineering",
                           "MSc in Biotechnology",
-                          "MSc in Physics / Chemistry / Mathematics",
-                          "MD (Doctor of Medicine)",
-                          "MDS (Master of Dental Surgery)",
-                          "MPharm (Master of Pharmacy)",
-                          "MSc in Public Health",
-                          "MSc in Nursing",
-                          "MSc in Medical Lab Technology",
+                          "MSc in Physics" ,
+                          "MSc in Chemistry ",
+                          "MSc in Mathematics",
                           "MA in Psychology",
                           "MA in Sociology",
                           "MA in Journalism & Mass Communication",
@@ -446,8 +471,6 @@ class _AddUniversityState extends State<AddUniversity> {
                           "MSc in International Relations",
                           "MSc in Public Policy",
                           "Master in Social Work (MSW)",
-                          "MTech in Computer Science",
-                          "MTech in Robotics",
                           "MSc in Industrial Engineering"
                         ],
                         selectedCourse, (value) {
@@ -572,6 +595,7 @@ class _AddUniversityState extends State<AddUniversity> {
                           "CAT",
                           "IIT JAM",
                           "CMAT",
+                          "Not Required",
                         ],
                         AcadamicTest, (value) {
                       setState(() {
@@ -602,14 +626,14 @@ class _AddUniversityState extends State<AddUniversity> {
                       setState(() => selectedDuration = value);
                     }, required: true),
                   ),
-                  Expanded(
-                    child: buildDropdown(
-                        "Eligibility Criteria",
-                        ["12th Pass", "Graduate", "Postgraduate"],
-                        selectedEligibility, (value) {
-                      setState(() => selectedEligibility = value);
-                    }, required: true),
-                  ),
+                  // Expanded(
+                  //   child: buildDropdown(
+                  //       "Eligibility Criteria",
+                  //       ["12th Pass", "Graduate", "Postgraduate"],
+                  //       selectedEligibility, (value) {
+                  //     setState(() => selectedEligibility = value);
+                  //   }, required: true),
+                  // ),
                   Expanded(
                     child: buildDropdown(
                         "Rank", ["Top 10", "Top 50", "Top 100"], selectedRank,
@@ -624,8 +648,9 @@ class _AddUniversityState extends State<AddUniversity> {
                 children: [
                   Expanded(
                     child: buildDropdown(
-                        "English Test", ["PTE", "IELTS", "TOEFL"], Englishtest,
-                        (value) {
+                        "English Test",
+                        ["PTE", "IELTS", "TOEFL", "Not Required"],
+                        Englishtest, (value) {
                       setState(() {
                         Englishtest = value;
                         print(Englishtest);
@@ -778,7 +803,6 @@ class _AddUniversityState extends State<AddUniversity> {
       ),
     );
   }
-
 
   /// **Reusable Text Field Widget**
   Widget buildTextField(String label,

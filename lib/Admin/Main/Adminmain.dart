@@ -112,13 +112,13 @@ class _AdminPageState extends State<AdminPage> {
                 _buildMainListTile('Dashboard', const Dashboard(),
                     icon: Icons.dashboard),
                 _buildMainExpansionTile(
-                  title: 'Universities',
+                  title: 'Courses',
                   icon: Icons.school_outlined,
                   children: [
                     _buildSubListTile(
-                        "View University", Universitymainwrapper()),
-                    _buildSubListTile("Add University", AddUniversity()),
-                    _buildSubListTile("Edit University", EditUniversity()),
+                        "View Courses", Universitymainwrapper()),
+                    _buildSubListTile("Add Courses", AddUniversity()),
+                    _buildSubListTile("Edit Courses", EditUniversity()),
                   ],
                 ),
 
