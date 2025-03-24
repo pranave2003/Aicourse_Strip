@@ -157,6 +157,8 @@ class _University_mainState extends State<University_main> {
                           // ),
                           decoration: BoxDecoration(color: Colors.white),
                           columns: [
+
+                            _buildColumn('College '),
                             _buildColumn('University '),
                             _buildColumn('country'),
                             _buildColumn('Course'),
@@ -171,6 +173,10 @@ class _University_mainState extends State<University_main> {
                               return DataRow(
                                 cells: [
                                   DataCell(Text(
+                                    student.Collegename.toString(),
+                                    style:
+                                        TextStyle(fontWeight: FontWeight.bold),
+                                  )),DataCell(Text(
                                     student.Universityname.toString(),
                                     style:
                                         TextStyle(fontWeight: FontWeight.bold),

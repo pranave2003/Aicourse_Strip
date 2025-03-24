@@ -1,5 +1,6 @@
 
 import 'package:course_connect/Admin/View/Screens/University/AddUniversity.dart';
+import 'package:course_connect/Admin/View/Screens/University/OverallPage1.dart';
 import 'package:course_connect/Admin/View/Screens/University/Universitymain.dart';
 import 'package:course_connect/Widget/Constands/colors.dart';
 import 'package:flutter/material.dart';
@@ -17,9 +18,9 @@ class _AlertboxState extends State<Alertbox> {
     return AlertDialog(
       backgroundColor: Colors.white,
       content: SizedBox(
-        width: 730,
-        height: 500,
-        child: University_main(), // Ensure this widget fits properly
+        width: 1600,
+        height: 1000,
+        child: Overallpage1(), // Ensure this widget fits properly
       ),
       actions: [
         TextButton(

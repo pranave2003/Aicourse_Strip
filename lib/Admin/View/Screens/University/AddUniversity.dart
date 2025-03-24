@@ -457,7 +457,7 @@ class _AddUniversityState extends State<AddUniversity> {
                           "MSc in Information Technology",
                           "MSc in Biotechnology",
                           "MSc in Physics" ,
-                          "MSc in Chemistry ",
+                          "MSc in Chemistry ", 
                           "MSc in Mathematics",
                           "MA in Psychology",
                           "MA in Sociology",
