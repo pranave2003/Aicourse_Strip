@@ -1,7 +1,6 @@
 import 'package:course_connect/Controller/Bloc/University_block/university_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
 import '../../../../Widget/Constands/Loading.dart';
 
 class AdminInfoWrapper extends StatelessWidget {

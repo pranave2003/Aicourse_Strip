@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:course_connect/Controller/Bloc/University_block/university_bloc.dart';
 import 'package:course_connect/User/Ai_course_finder/ChooseCountry.dart';
 import 'package:course_connect/User/Ai_course_finder/FilterPage.dart';
@@ -312,7 +313,6 @@ class _HomepageState extends State<Homepage> {
                           ),
                         ],
                       ),
-
                       Row(
                         children: [
                           Expanded(
@@ -392,15 +392,34 @@ class _HomepageState extends State<Homepage> {
                                             children: [
                                               SizedBox(height: 10),
                                               ClipRRect(
-                                                // borderRadius: BorderRadius.circular(10),
-                                                child: Image.network(
-                                                  university.UniversityimageURL
-                                                      .toString(),
-                                                  height: 140,
-                                                  width: 160,
-                                                  fit: BoxFit.cover,
-                                                ),
-                                              ),
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          10), // Uncomment if needed
+                                                  child: CachedNetworkImage(
+                                                    imageUrl: university
+                                                            .UniversityimageURL
+                                                        .toString(),
+                                                    height: 140,
+                                                    width: 160,
+                                                    fit: BoxFit.cover,
+
+                                                    // Show a loading indicator while fetching the image
+                                                    placeholder:
+                                                        (context, url) =>
+                                                            Center(
+                                                      child:
+                                                          CircularProgressIndicator(),
+                                                    ),
+
+                                                    // Show an error icon if the image fails to load
+                                                    errorWidget:
+                                                        (context, url, error) =>
+                                                            Icon(
+                                                      Icons.image_not_supported,
+                                                      size: 50,
+                                                      color: Colors.grey,
+                                                    ),
+                                                  )),
                                               SizedBox(height: 8),
                                               Padding(
                                                   padding: EdgeInsets.symmetric(

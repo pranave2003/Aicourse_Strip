@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../Controller/Bloc/University_block/university_bloc.dart';
@@ -114,16 +115,25 @@ class _CourseState extends State<Course> {
                             ));
                           },
                           leading: ClipRRect(
-                            borderRadius: BorderRadius.circular(8),
-                            child: Image.network(
-                              university.UniversityimageURL.toString(),
-                              width: 50,
-                              height: 50,
-                              fit: BoxFit.cover,
-                              errorBuilder: (context, error, stackTrace) =>
-                                  const Icon(Icons.error, size: 50),
-                            ),
-                          ),
+                              borderRadius: BorderRadius.circular(10), // Uncomment if needed
+                              child: CachedNetworkImage(
+                                imageUrl: university.UniversityimageURL.toString(),
+                                height: 140,
+                                width: 160,
+                                fit: BoxFit.cover,
+
+                                // Show a loading indicator while fetching the image
+                                placeholder: (context, url) => Center(
+                                  child: CircularProgressIndicator(),
+                                ),
+
+                                // Show an error icon if the image fails to load
+                                errorWidget: (context, url, error) => Icon(
+                                  Icons.image_not_supported,
+                                  size: 50,
+                                  color: Colors.grey,
+                                ),
+                              )),
                           title: Text(
                             university.Course_offered.toString(),
                             style: const TextStyle(

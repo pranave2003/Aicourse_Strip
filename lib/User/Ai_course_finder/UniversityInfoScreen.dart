@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:course_connect/Controller/Bloc/University_block/university_bloc.dart';
 import 'package:course_connect/Widget/Constands/Loading.dart';
 import 'package:flutter/material.dart';
@@ -43,12 +44,27 @@ class UniversityInfoScreen extends StatelessWidget {
                 children: [
                   Stack(
                     children: [
-                      Image.network(
-                        "https://content.jdmagicbox.com/v2/comp/malappuram/m9/9999px483.x483.221229222631.k6m9/catalogue/calicut-university-malappuram-universities-ez2kcrhfsj.jpg",
-                        width: double.infinity,
-                        height: 200,
-                        fit: BoxFit.cover,
-                      ),
+                      ClipRRect(
+                          borderRadius:
+                              BorderRadius.circular(10), // Uncomment if needed
+                          child: CachedNetworkImage(
+                            imageUrl: university.UniversityimageURL.toString(),
+                            height: 140,
+                            width: 160,
+                            fit: BoxFit.cover,
+
+                            // Show a loading indicator while fetching the image
+                            placeholder: (context, url) => Center(
+                              child: CircularProgressIndicator(),
+                            ),
+
+                            // Show an error icon if the image fails to load
+                            errorWidget: (context, url, error) => Icon(
+                              Icons.image_not_supported,
+                              size: 50,
+                              color: Colors.grey,
+                            ),
+                          )),
                       Positioned(
                         left: 16,
                         bottom: 16,
