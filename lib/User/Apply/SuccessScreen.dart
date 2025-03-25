@@ -2,13 +2,6 @@ import 'package:course_connect/User/Sreens/Home/homepage.dart';
 import 'package:course_connect/Widget/Constands/colors.dart';
 import 'package:flutter/material.dart';
 
-void main() {
-  runApp(MaterialApp(
-    debugShowCheckedModeBanner: false,
-    home: SuccessScreen(),
-  ));
-}
-
 class SuccessScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -67,7 +60,7 @@ class SuccessScreen extends StatelessWidget {
                 //     style: TextStyle(fontSize: 18, color: Colors.white),
                 //   ),
                 // ),
-                child:InkWell(
+                child: InkWell(
                   onTap: () {
                     Navigator.push(
                       context,
@@ -75,22 +68,21 @@ class SuccessScreen extends StatelessWidget {
                         builder: (context) => Homepage(),
                       ),
                     );
-
                   },
                   child: Container(
                     height: 51,
                     width: 231,
                     decoration: BoxDecoration(
-                        color:blueColor,
+                        color: blueColor,
                         borderRadius: BorderRadius.circular(30)),
                     child: Center(
                         child: Text(
-                          "Go to Home",
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 22,
-                              fontWeight: FontWeight.bold),
-                        )),
+                      "Go to Home",
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 22,
+                          fontWeight: FontWeight.bold),
+                    )),
                   ),
                 ),
               ),

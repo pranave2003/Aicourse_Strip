@@ -1,4 +1,4 @@
-import 'package:course_connect/User/Ai_course_finder/Document_upload.dart';
+import 'package:course_connect/User/Apply/Document_upload.dart';
 import 'package:flutter/material.dart';
 
 void main() {

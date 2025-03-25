@@ -1,13 +1,7 @@
-import 'package:course_connect/User/Ai_course_finder/SuccessScreen.dart';
+import 'package:course_connect/User/Apply/SuccessScreen.dart';
 import 'package:course_connect/Widget/Constands/colors.dart';
 import 'package:flutter/material.dart';
 
-void main() {
-  runApp(MaterialApp(
-    home: Document_upload(),
-    debugShowCheckedModeBanner: false,
-  ));
-}
 
 class Document_upload extends StatelessWidget {
   @override

@@ -2,7 +2,7 @@ import 'dart:async';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:course_connect/Controller/Bloc/University_block/university_bloc.dart';
 import 'package:course_connect/User/Ai_course_finder/ChooseCountry.dart';
-import 'package:course_connect/User/Ai_course_finder/FilterPage.dart';
+import 'package:course_connect/User/Ai_course_finder/FilterPage.md';
 import 'package:course_connect/User/Sreens/BottomNavigation/Bottom_nav2.dart';
 import 'package:course_connect/User/Profile/Notifications.dart';
 import 'package:flutter/cupertino.dart';

@@ -3,8 +3,16 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class BachelorsCourse extends StatefulWidget {
-  const BachelorsCourse({super.key});
-
+  const BachelorsCourse(
+      {super.key,
+      required this.Country,
+      required this.selecteddegree,
+      required this.highestEducationpercentage,
+      required this.highestEducation});
+  final Country;
+  final selecteddegree;
+  final highestEducationpercentage;
+  final highestEducation;
   @override
   State<BachelorsCourse> createState() => _BachelorsCourseState();
 }
@@ -13,9 +21,19 @@ class _BachelorsCourseState extends State<BachelorsCourse> {
   Set<int> selectedIndices = {}; // Track selected course indices
   List<String> selectedCourses = []; // Store selected course names
 
+  @override
+  void initState() {
+    // TODO: implement initState
+    print("bc course");
+    print(widget.selecteddegree);
+    print(widget.Country);
+    print(widget.highestEducationpercentage);
+    print(widget.highestEducation);
+    super.initState();
+  }
+
   // List of available courses
   final List<String> courses = [
-
     "BBA (Bachelor of Business Administration)",
     "BCom (Bachelor of Commerce)",
     "BA in Business Management",
@@ -45,7 +63,6 @@ class _BachelorsCourseState extends State<BachelorsCourse> {
     "BA in International Relations"
   ];
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -60,7 +77,7 @@ class _BachelorsCourseState extends State<BachelorsCourse> {
       body: Container(
         decoration: BoxDecoration(
           image: DecorationImage(
-            image: AssetImage("assets/country/main.png"),
+            image: AssetImage("assets/Country/main.png"),
             fit: BoxFit.cover,
           ),
         ),
@@ -163,8 +180,7 @@ class _BachelorsCourseState extends State<BachelorsCourse> {
                     ),
                   );
                   print("Selected Courses: $selectedCourses");
-                }
-                else {
+                } else {
                   print("No course selected");
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(content: Text("Please choose courses")),

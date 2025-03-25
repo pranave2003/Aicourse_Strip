@@ -1,7 +1,6 @@
 
 import 'package:course_connect/User/Ai_course_finder/Personal_details.dart';
 import 'package:flutter/material.dart';
-
 import '../../Widget/Constands/colors.dart';
 
 

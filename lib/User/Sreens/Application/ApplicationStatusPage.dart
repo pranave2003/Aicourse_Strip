@@ -1,6 +1,6 @@
 
 import 'package:flutter/material.dart';
-import 'TrackingApplication.dart'; // Ensure correct import
+import '../../Apply/TrackingApplication.dart'; // Ensure correct import
 
 class ApplicationStatusPage extends StatelessWidget {
   @override

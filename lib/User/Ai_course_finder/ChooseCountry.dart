@@ -28,17 +28,18 @@ class _ChooseCountryState extends State<ChooseCountry> {
       body: Container(
         decoration: BoxDecoration(
             image: DecorationImage(
-                image: AssetImage("assets/country/main.png"),
+                image: AssetImage("assets/Country/img_6.png"),
                 fit: BoxFit.cover)),
         child: Center(
           child: Center(
             child: Column(
-               crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment:MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 const SizedBox(height: 50), //
                 // Top spacing
-                Text("Which country do you wish to \n  pursue your education in?",
+                Text(
+                    "Which country do you wish to \n  pursue your education in?",
                     style: TextStyle(
                         fontSize: 22,
                         fontWeight: FontWeight.bold,
@@ -49,7 +50,8 @@ class _ChooseCountryState extends State<ChooseCountry> {
                     padding: const EdgeInsets.all(16),
                     scrollDirection:
                         Axis.vertical, // Changed to vertical for better UX
-                    gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
+                    gridDelegate:
+                        const SliverGridDelegateWithMaxCrossAxisExtent(
                       maxCrossAxisExtent: 200, // Adjust for responsiveness
                       childAspectRatio: 0.9, // Height/Width ratio
                       crossAxisSpacing: 15,
@@ -110,7 +112,8 @@ class _ChooseCountryState extends State<ChooseCountry> {
                               Text(
                                 category[index]["name"]!,
                                 style: TextStyle(
-                                  color: isSelected ? Colors.white : Colors.black,
+                                  color:
+                                      isSelected ? Colors.white : Colors.black,
                                   fontSize: 20,
                                   fontWeight: FontWeight.bold,
                                 ),
@@ -122,7 +125,6 @@ class _ChooseCountryState extends State<ChooseCountry> {
                     },
                   ),
                 ),
-
 
                 // SizedBox(height: 3),
                 // InkWell(
@@ -138,36 +140,33 @@ class _ChooseCountryState extends State<ChooseCountry> {
                 //   ) {
                 // print("object");
                 //   },
-            InkWell(
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => Degree(),
+                InkWell(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => Degree(Country:selectedcountry),
+                      ),
+                    );
+                    print("object");
+                  },
+                  child: Container(
+                    height: 51,
+                    width: 231,
+                    decoration: BoxDecoration(
+                        color: blueColor,
+                        borderRadius: BorderRadius.circular(30)),
+                    child: Center(
+                        child: Text(
+                      "Continue",
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 22,
+                          fontWeight: FontWeight.bold),
+                    )),
                   ),
-                );
-                print("object");
-              },
-              child: Container(
-              height: 51,
-              width: 231,
-              decoration: BoxDecoration(
-                  color:blueColor,
-                  borderRadius: BorderRadius.circular(30)),
-              child: Center(
-                  child: Text(
-                    "Continue",
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 22,
-                        fontWeight: FontWeight.bold),
-                  )),
-            ),
-            ),
-
-        ],
-
-
+                ),
+              ],
             ),
           ),
         ),
