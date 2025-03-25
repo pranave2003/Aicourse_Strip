@@ -207,6 +207,7 @@ class UniversityBloc extends Bloc<UniversityEvent, UniversityState> {
       emit(Coursesgetloading());
 
       if (event.CourseUniversity_id != null) {
+        print("fetch university detaisl");
         try {
           final doc = await FirebaseFirestore.instance
               .collection('University')

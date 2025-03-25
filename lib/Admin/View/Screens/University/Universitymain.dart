@@ -153,7 +153,6 @@ class _University_mainState extends State<University_main> {
                             _buildColumn('University '),
                             _buildColumn('country'),
                             _buildColumn('Course'),
-                            _buildColumn('Established'),
                             _buildColumn('Action'),
                           ],
                           rows: List.generate(
@@ -175,8 +174,6 @@ class _University_mainState extends State<University_main> {
                                   DataCell(Text(student.Country.toString())),
                                   DataCell(
                                       Text(student.Course_offered.toString())),
-                                  DataCell(Text(
-                                      student.Established_date.toString())),
                                   DataCell(Row(
                                     children: <Widget>[
                                       IconButton(

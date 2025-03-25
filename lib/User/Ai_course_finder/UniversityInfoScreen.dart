@@ -29,7 +29,7 @@ class UniversityInfoScreen extends StatelessWidget {
       ),
       body: BlocConsumer<UniversityBloc, UniversityState>(
         listener: (context, state) {
-          // TODO: implement listener
+          // TODO: implement listen
         },
         builder: (context, state) {
           if (state is Coursesgetloading) {
