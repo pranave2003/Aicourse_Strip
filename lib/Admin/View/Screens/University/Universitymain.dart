@@ -3,6 +3,7 @@ import 'package:course_connect/Widget/Constands/Loading.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../Controller/Bloc/University_block/university_bloc.dart';
+import 'OverallPage1.dart';
 
 class Universitymainwrapper extends StatelessWidget {
   const Universitymainwrapper({super.key});
@@ -148,7 +149,6 @@ class _University_mainState extends State<University_main> {
                               (states) => Colors.grey.shade300),
                           decoration: BoxDecoration(color: Colors.white),
                           columns: [
-
                             _buildColumn('College '),
                             _buildColumn('University '),
                             _buildColumn('country'),
@@ -166,7 +166,8 @@ class _University_mainState extends State<University_main> {
                                     student.Collegename.toString(),
                                     style:
                                         TextStyle(fontWeight: FontWeight.bold),
-                                  )),DataCell(Text(
+                                  )),
+                                  DataCell(Text(
                                     student.Universityname.toString(),
                                     style:
                                         TextStyle(fontWeight: FontWeight.bold),
@@ -178,31 +179,39 @@ class _University_mainState extends State<University_main> {
                                       student.Established_date.toString())),
                                   DataCell(Row(
                                     children: <Widget>[
-                                    IconButton(
-                                    icon: Icon(Icons.remove_red_eye, color: Colors.green),
-                              iconSize: 30.0,
-                              onPressed: () {
-                              // Navigate to NextPage when button is pressed
-                              Navigator.push(
-                              context,
-                              MaterialPageRoute(builder: (context) => Alertbox()),
-                              );
-                              },
-                                    ),      // IconButton(
                                       IconButton(
-                                        icon: const Icon(Icons.delete, color: Colors.red),
+                                        icon: Icon(Icons.remove_red_eye,
+                                            color: Colors.green),
                                         iconSize: 30.0,
                                         onPressed: () {
-                                          _showDeleteConfirmationDialog(context, () {
+                                          // Navigate to NextPage when button is pressed
+                                          Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                builder: (context) =>
+                                                    AdminInfoWrapper(
+                                                  universityid:
+                                                      student.Universityid,
+                                                ),
+                                              ));
+                                        },
+                                      ), // IconButton(
+                                      IconButton(
+                                        icon: const Icon(Icons.delete,
+                                            color: Colors.red),
+                                        iconSize: 30.0,
+                                        onPressed: () {
+                                          _showDeleteConfirmationDialog(context,
+                                              () {
                                             context.read<UniversityBloc>().add(
-                                              DeleteUniversity(
-                                                Universityid: student.Universityid,
-                                              ),
-                                            );
+                                                  DeleteUniversity(
+                                                    Universityid:
+                                                        student.Universityid,
+                                                  ),
+                                                );
                                           });
                                         },
                                       ),
-
                                     ],
                                   )),
                                 ],
@@ -235,7 +244,9 @@ class _University_mainState extends State<University_main> {
     );
   }
 }
-void _showDeleteConfirmationDialog(BuildContext context, VoidCallback onDeleteConfirmed) {
+
+void _showDeleteConfirmationDialog(
+    BuildContext context, VoidCallback onDeleteConfirmed) {
   showDialog(
     context: context,
     builder: (BuildContext dialogContext) {

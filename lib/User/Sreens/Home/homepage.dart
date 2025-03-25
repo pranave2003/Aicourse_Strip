@@ -34,8 +34,8 @@ class Homepage extends StatefulWidget {
 
 class _HomepageState extends State<Homepage> {
   List<String> images = [
-    "assets/img_12.png",
-    "assets/img_12.png",
+    "assets/Homepageimages/img_5.png",
+    "assets/Homepageimages/main.png",
     "assets/img_12.png",
     "assets/img_12.png",
   ];

@@ -1,6 +1,21 @@
 
+import 'package:course_connect/Controller/Bloc/University_block/university_bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../../Widget/Constands/Loading.dart';
+class AdminInfoWrapper extends StatelessWidget {
+  const AdminInfoWrapper({super.key, required this.universityid});
+  final universityid;
+  @override
+  Widget build(BuildContext context) {
+    return BlocProvider<UniversityBloc>(
+      create: (context) => UniversityBloc()
+        ..add(FetchCourseDetailsById(CourseUniversity_id: universityid)),
+      child: Overallpage1(),
+    );
+  }
+}
 class Overallpage1 extends StatefulWidget {
   const Overallpage1({super.key});
 
@@ -61,58 +76,106 @@ class _Overallpage1State extends State<Overallpage1> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      body: Center(
-        child: SingleChildScrollView(
-          padding: const EdgeInsets.all(20),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Padding(
-                padding: const EdgeInsets.only(left: 25),
-                child: Text(
-                  "View Course Details",
-                  style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
+      body: BlocConsumer<UniversityBloc, UniversityState>(
+
+      listener: (context, state) {
+        if (state is RefreshUniversity) {
+          context
+              .read<UniversityBloc>()
+              .add(FetchUniversity(searchQuery: null));
+        }
+      },
+    builder: (context, state) {
+      if (state is UniversitysLoading) {
+        return Center(
+          child: Loading_Widget(),
+        );
+      } else if (state is Universitysfailerror) {
+        return Text(state.error.toString());
+      } else if (state is University_loaded) {
+        // TODO: implement listener
+        return Center(
+          child: SingleChildScrollView(
+            padding: const EdgeInsets.all(20),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(left: 25),
+                  child: Text(
+                    "View Course Details",
+                    style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
+                  ),
                 ),
-              ),
-              SizedBox(height: 20),
-              Container(
-                padding: EdgeInsets.all(20),
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(10),
-                  border: Border.all(color: Colors.grey.shade300),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.grey.withOpacity(0.2),
-                      blurRadius: 5,
-                      spreadRadius: 2,
-                      offset: Offset(0, 2),
-                    ),
-                  ],
+                SizedBox(height: 20),
+                Container(
+                  padding: EdgeInsets.all(20),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(10),
+                    border: Border.all(color: Colors.grey.shade300),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.grey.withOpacity(0.2),
+                        blurRadius: 5,
+                        spreadRadius: 2,
+                        offset: Offset(0, 2),
+                      ),
+                    ],
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      buildRowFields(
+                          "University Name", universityNameController,
+                          "College Name", collegeNameController),
+                      buildRowFields(
+                          "College Code", collegeCodeController, "Country",
+                          countryController),
+                      buildRowFields(
+                          "Established Date", establishedDateController,
+                          "Admission Start Date", admissionStartDateController),
+                      buildRowFields(
+                          "Admission End Date", admissionEndDateController,
+                          "Description", descriptionController),
+                      buildRowFields(
+                          "Terms and Conditions", termsAndConditionsController,
+                          "Course Fee", courseFeeController),
+                      buildRowFields(
+                          "Scholarship Fee", scholarshipFeeController,
+                          "Education Level", educationLevelController),
+                      buildRowFields(
+                          "Education Percentage", educationPercentageController,
+                          "Academic Test", academicTestController),
+                      buildRowFields("Academic Test Percentage",
+                          academicTestPercentageController, "Degree Type",
+                          TextEditingController(text: selectedDegree)),
+                      buildRowFields("Course Name",
+                          TextEditingController(text: selectedCourse),
+                          "Course Duration",
+                          TextEditingController(text: selectedDuration)),
+                      buildRowFields("College Rank",
+                          TextEditingController(text: selectedRank),
+                          "English Test",
+                          TextEditingController(text: englishTest)),
+                      buildRowFields("English Test Percentage",
+                          TextEditingController(text: englishTestPercentage),
+                          "", TextEditingController()),
+                    ],
+                  ),
                 ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    buildRowFields("University Name", universityNameController, "College Name", collegeNameController),
-                    buildRowFields("College Code", collegeCodeController, "Country", countryController),
-                    buildRowFields("Established Date", establishedDateController, "Admission Start Date", admissionStartDateController),
-                    buildRowFields("Admission End Date", admissionEndDateController, "Description", descriptionController),
-                    buildRowFields("Terms and Conditions", termsAndConditionsController, "Course Fee", courseFeeController),
-                    buildRowFields("Scholarship Fee", scholarshipFeeController, "Education Level", educationLevelController),
-                    buildRowFields("Education Percentage", educationPercentageController, "Academic Test", academicTestController),
-                    buildRowFields("Academic Test Percentage", academicTestPercentageController, "Degree Type", TextEditingController(text: selectedDegree)),
-                    buildRowFields("Course Name", TextEditingController(text: selectedCourse), "Course Duration", TextEditingController(text: selectedDuration)),
-                    buildRowFields("College Rank", TextEditingController(text: selectedRank), "English Test", TextEditingController(text: englishTest)),
-                    buildRowFields("English Test Percentage", TextEditingController(text: englishTestPercentage), "", TextEditingController()),
-                  ],
-                ),
-              ),
-            ],
+              ],
+            ),
           ),
-        ),
-      ),
+
+        );
+      };
+      return SizedBox();
+    },
+),
     );
   }
+
 
   Widget buildRowFields(String label1, TextEditingController controller1, String label2, TextEditingController controller2) {
     return Padding(
