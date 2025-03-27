@@ -3,19 +3,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class Masters_education extends StatefulWidget {
-  const Masters_education({super.key});
-
+  const Masters_education({super.key, required this.selecteddegree});
+  final selecteddegree;
   @override
   State<Masters_education> createState() => _Masters_educationState();
-}
-
-class MyApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Masters_education(),
-    );
-  }
 }
 
 class _Masters_educationState extends State<Masters_education> {
@@ -71,7 +62,7 @@ class _Masters_educationState extends State<Masters_education> {
                 decoration: BoxDecoration(
                   color: Colors.grey, // Change button color to grey
                   borderRadius:
-                  BorderRadius.circular(8), // Optional: Rounded corners
+                      BorderRadius.circular(8), // Optional: Rounded corners
                 ),
               ),
               SizedBox(height: 50),
@@ -94,14 +85,14 @@ class _Masters_educationState extends State<Masters_education> {
               ),
               SizedBox(height: 180),
               InkWell(
-    onTap: () {
-    Navigator.push(
-    context,
-    MaterialPageRoute(
-    builder: (context) => Masters_Courses(),
-    ),
-    );
-    },
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => Masters_Courses(),
+                    ),
+                  );
+                },
                 // onTap: () {
                 //   print("object");
                 child: Container(
@@ -112,12 +103,12 @@ class _Masters_educationState extends State<Masters_education> {
                       borderRadius: BorderRadius.circular(30)),
                   child: Center(
                       child: Text(
-                        "Continue",
-                        style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 22,
-                            fontWeight: FontWeight.bold),
-                      )),
+                    "Continue",
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 22,
+                        fontWeight: FontWeight.bold),
+                  )),
                 ),
               )
             ],
@@ -144,19 +135,13 @@ class _Masters_educationState extends State<Masters_education> {
         margin: const EdgeInsets.symmetric(vertical: 10),
         child: Center(
             child: Text(
-              text,
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-                color: selectedIndex == index ? Colors.white : Colors.black,
-              ),
-            )),
+          text,
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+            color: selectedIndex == index ? Colors.white : Colors.black,
+          ),
+        )),
       ),
     );
   }
 }
-
-
-
-
-
-

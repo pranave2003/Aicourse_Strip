@@ -2,22 +2,14 @@ import 'package:course_connect/User/Ai_course_finder/Bachelors.dart/Bachelors_ac
 import 'package:course_connect/Widget/Constands/colors.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+import '../../../Controller/Bloc/selection_cubit.dart';
 
 class BachelorsEnglish extends StatefulWidget {
-  const BachelorsEnglish(
-      {super.key,
-      required this.Country,
-      required this.selecteddegree,
-      required this.highestEducation,
-      required this.highestEducationpercentage,
-      required this.Course_offered,
-      required this.Board});
-  final Country;
-  final selecteddegree;
-  final highestEducation;
-  final highestEducationpercentage;
-  final Course_offered;
-  final Board;
+  const BachelorsEnglish({
+    super.key,
+  });
 
   @override
   State<BachelorsEnglish> createState() => _BachelorsEnglishState();
@@ -161,20 +153,16 @@ class _BachelorsEnglishState extends State<BachelorsEnglish> {
             InkWell(
               onTap: () {
                 if (selectedTest != null) {
+                  context
+                      .read<SelectionCubit>()
+                      .updateSelection("EnglishTest", selectedTest.toString());
+                  context.read<SelectionCubit>().updateSelection(
+                      "EnglishTest_percentage",
+                      percentageController.text);
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => Bachelors_academictest(
-                        Country: widget.Country,
-                        selecteddegree: widget.selecteddegree,
-                        highestEducation: widget.highestEducation,
-                        highestEducationpercentage:
-                            widget.highestEducationpercentage,
-                        Board: widget.Board,
-                        englishtests: selectedTest,
-                        englishpercentage: percentageController.text,
-                        Course_offered: widget.Course_offered,
-                      ),
+                      builder: (context) => Bachelors_academictest(),
                     ),
                   );
                   print("Selected test: $selectedTest");

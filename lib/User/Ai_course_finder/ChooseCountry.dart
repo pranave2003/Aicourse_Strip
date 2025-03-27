@@ -1,6 +1,9 @@
-import 'package:course_connect/User/Ai_course_finder/Bachelors.dart/Degree.dart';
+import 'package:course_connect/User/Ai_course_finder/Degree.dart';
 import 'package:course_connect/Widget/Constands/colors.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+import '../../Controller/Bloc/selection_cubit.dart';
 
 class ChooseCountry extends StatefulWidget {
   const ChooseCountry({super.key});
@@ -126,29 +129,17 @@ class _ChooseCountryState extends State<ChooseCountry> {
                   ),
                 ),
 
-                // SizedBox(height: 3),
-                // InkWell(
-                //   onTap: (
-                //   {
-                //     Navigator.push(
-                //       context,
-                //       MaterialPageRoute(
-                //         builder: (context) => Degree(),
-                //       ),
-                //     );
-                //   },
-                //   ) {
-                // print("object");
-                //   },
                 InkWell(
                   onTap: () {
+                    context
+                        .read<SelectionCubit>()
+                        .updateSelection("country", selectedcountry.toString());
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => Degree(Country:selectedcountry),
+                        builder: (context) => Degree(),
                       ),
                     );
-                    print("object");
                   },
                   child: Container(
                     height: 51,

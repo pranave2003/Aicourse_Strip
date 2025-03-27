@@ -1,12 +1,6 @@
 import 'package:course_connect/User/Apply/Document_upload.dart';
 import 'package:flutter/material.dart';
 
-void main() {
-  runApp(MaterialApp(
-    home: Personal_details(),
-  ));
-}
-
 class Personal_details extends StatefulWidget {
   @override
   _Personal_detailsState createState() => _Personal_detailsState();

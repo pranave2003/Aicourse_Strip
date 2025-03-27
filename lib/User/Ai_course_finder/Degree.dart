@@ -4,8 +4,10 @@ import 'package:course_connect/User/Ai_course_finder/Masters.dart/Masters_educat
 import 'package:flutter/material.dart';
 
 class Degree extends StatefulWidget {
-  const Degree({super.key, this.Country});
-  final String? Country; // Ensure it's properly typed as String?
+  const Degree({
+    super.key,
+  });
+// Ensure it's properly typed as String?
 
   @override
   State<Degree> createState() => _DegreeState();
@@ -19,18 +21,22 @@ class _DegreeState extends State<Degree> {
     {
       "name": "Bachelors",
       "image": "assets/Country/img_7.png",
-      "page": (String? selectedDegree, String? country) =>
-          BachelorsEducation(selecteddegree: selectedDegree, Country: country),
+      "page": (
+        String? selectedDegree,
+      ) =>
+          BachelorsEducation(
+            selecteddegree: selectedDegree,
+          ),
     },
     {
       "name": "Masters",
       "image": "assets/Country/img_7.png",
-      "page": (String? selectedDegree, String? country) => Masters_education(),
+      "page": (String? selectedDegree,) => Masters_education(selecteddegree:selectedDegree),
     },
     {
       "name": "MBA",
       "image": "assets/Country/img_7.png",
-      "page": (String? selectedDegree, String? country) => MbaEducation(),
+      "page": (String? selectedDegree,) => MbaEducation(),
     },
   ];
 
@@ -84,7 +90,9 @@ class _DegreeState extends State<Degree> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => category[index]["page"](selectedDegree, widget.Country),
+                          builder: (context) => category[index]["page"](
+                            selectedDegree,
+                          ),
                         ),
                       );
                     },
@@ -93,10 +101,14 @@ class _DegreeState extends State<Degree> {
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(15),
                         border: Border.all(
-                          color: isSelected ? const Color(0xff085AA2) : Colors.transparent,
+                          color: isSelected
+                              ? const Color(0xff085AA2)
+                              : Colors.transparent,
                           width: 3,
                         ),
-                        color: isSelected ? const Color(0xff085AA2) : const Color(0xffE4E4E4),
+                        color: isSelected
+                            ? const Color(0xff085AA2)
+                            : const Color(0xffE4E4E4),
                         boxShadow: const [
                           BoxShadow(
                             color: Colors.black26,

@@ -1,38 +1,26 @@
 import 'package:course_connect/User/Ai_course_finder/Bachelors.dart/BachelorsEnglish.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+import '../../../Controller/Bloc/selection_cubit.dart';
 
 class BachelorsCourse extends StatefulWidget {
-  const BachelorsCourse(
-      {super.key,
-      required this.Country,
-      required this.selecteddegree,
-      required this.highestEducationpercentage,
-      required this.highestEducation,
-      required this.Board});
-  final Country;
-  final selecteddegree;
-  final highestEducationpercentage;
-  final highestEducation;
-  final Board;
+  const BachelorsCourse({
+    super.key,
+  });
+
   @override
   State<BachelorsCourse> createState() => _BachelorsCourseState();
 }
 
 class _BachelorsCourseState extends State<BachelorsCourse> {
-  int? selectedIndex; // Track only one selected course index
-  String? selectedCourse; // Store the selected course name
+  Set<int> selectedIndices = {}; // Track selected course indices
+  List<String> selectedCourses = []; // Store selected course names
 
   @override
-  void initState() {
-    print("bc course");
-    print(widget.selecteddegree);
-    print(widget.Country);
-    print(widget.highestEducationpercentage);
-    print(widget.highestEducation);
-    super.initState();
-  }
 
+  // List of available courses
   final List<String> courses = [
     "BBA (Bachelor of Business Administration)",
     "BCom (Bachelor of Commerce)",
@@ -68,16 +56,16 @@ class _BachelorsCourseState extends State<BachelorsCourse> {
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
-          icon: Icon(Icons.arrow_back),
+          icon: Icon(Icons.arrow_back), // Back button icon
           onPressed: () {
-            Navigator.pop(context);
+            Navigator.pop(context); // Navigate back when tapped
           },
         ),
       ),
       body: Container(
         decoration: BoxDecoration(
           image: DecorationImage(
-            image: AssetImage("assets/Country/img_6.png"),
+            image: AssetImage("assets/Country/main.png"),
             fit: BoxFit.cover,
           ),
         ),
@@ -112,20 +100,20 @@ class _BachelorsCourseState extends State<BachelorsCourse> {
             Expanded(
               child: ListView.builder(
                 padding: EdgeInsets.symmetric(horizontal: 20),
-                itemCount: courses.length,
+                itemCount: courses.length, // Number of courses
                 itemBuilder: (context, index) {
-                  bool isSelected = selectedIndex == index;
+                  bool isSelected = selectedIndices.contains(index);
                   return GestureDetector(
                     onTap: () {
                       setState(() {
                         if (isSelected) {
-                          selectedIndex = null;
-                          selectedCourse = null;
+                          selectedIndices.remove(index);
+                          selectedCourses.remove(courses[index]);
                         } else {
-                          selectedIndex = index;
-                          selectedCourse = courses[index];
+                          selectedIndices.add(index);
+                          selectedCourses.add(courses[index]);
                         }
-                        print("Selected Course: $selectedCourse");
+                        print("Selected Courses: $selectedCourses");
                       });
                     },
                     child: Container(
@@ -143,11 +131,11 @@ class _BachelorsCourseState extends State<BachelorsCourse> {
                             onChanged: (value) {
                               setState(() {
                                 if (value == true) {
-                                  selectedIndex = index;
-                                  selectedCourse = courses[index];
+                                  selectedIndices.add(index);
+                                  selectedCourses.add(courses[index]);
                                 } else {
-                                  selectedIndex = null;
-                                  selectedCourse = null;
+                                  selectedIndices.remove(index);
+                                  selectedCourses.remove(courses[index]);
                                 }
                               });
                             },
@@ -172,29 +160,31 @@ class _BachelorsCourseState extends State<BachelorsCourse> {
             const SizedBox(height: 30),
             InkWell(
               onTap: () {
-                if (selectedCourse != null) {
+                if (selectedCourses != null) {
+                  context
+                      .read<SelectionCubit>()
+                      .updateSelection("course", selectedCourses.toString());
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => BachelorsEnglish(
-                        Country: widget.Country,
-                        selecteddegree: widget.selecteddegree,
-                        highestEducation: widget.highestEducation,
-                        Board: widget.Board,
-                        highestEducationpercentage:
-                            widget.highestEducationpercentage,
-                        Course_offered: selectedCourse,
-                      ),
+                      builder: (context) => BachelorsEnglish(),
                     ),
                   );
-                  print("Selected Course: $selectedCourse");
+                  print("Selected Courses: $selectedCourses");
                 } else {
                   print("No course selected");
                   ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(content: Text("Please choose a course")),
+                    SnackBar(content: Text("Please choose courses")),
                   );
                 }
               },
+              // onTap: () {
+              //   if (selectedCourses.isNotEmpty) {
+              //     print("Final Selected Courses: $selectedCourses");
+              //   } else {
+              //     print("Please choose courses");
+              //   }
+              // },
               child: Container(
                 height: 51,
                 width: 231,
@@ -204,7 +194,7 @@ class _BachelorsCourseState extends State<BachelorsCourse> {
                 ),
                 child: Center(
                   child: Text(
-                    selectedCourse == null ? "No Preference" : "Continue",
+                    selectedCourses.isEmpty ? "No Preference" : "Continue",
                     style: TextStyle(
                         color: Colors.white,
                         fontSize: 22,

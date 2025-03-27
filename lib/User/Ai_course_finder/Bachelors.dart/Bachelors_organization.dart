@@ -1,38 +1,16 @@
 import 'package:course_connect/User/Ai_course_finder/Bachelors.dart/Bachelors_Knowledge.dart';
-// import 'package:course_connect/User/Ai_course_finder/BachelorsDetailsOverall.dart';
+// import 'package:course_connect/User/Ai_course_finder/Alldetails.dart';
 // import 'package:course_connect/User/Ai_course_finder/Bachelors_Knowledge.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+import '../../../Controller/Bloc/selection_cubit.dart';
 
 class Bachelors_organization extends StatefulWidget {
   const Bachelors_organization({
     super.key,
-    required this.Country,
-    required this.selecteddegree,
-    required this.highestEducation,
-    required this.highestEducationpercentage,
-    required this.Course_offered,
-    required this.percentageController,
-    required this.activities,
-    required this.englishtests,
-    required this.Board,
-    required this.englishpercentage,
-    required this.selectedacademicTest,
-    this.selectedactivitys,
   });
-  final Country;
-  final selecteddegree;
-  final highestEducation;
-  final highestEducationpercentage;
-  // final selectedTest;
-  final Course_offered;
-  final percentageController;
-  final activities;
-  final Board;
-  final englishpercentage;
-  final selectedacademicTest;
-  final englishtests;
-  final selectedactivitys;
 
   @override
   State<Bachelors_organization> createState() => _Bachelors_organizationState();
@@ -177,24 +155,14 @@ class _Bachelors_organizationState extends State<Bachelors_organization> {
             InkWell(
               onTap: () {
                 if (selectedOrganization != null) {
+                  context.read<SelectionCubit>().updateSelection(
+                      "selectedOrganization", selectedOrganization.toString());
+                  context.read<SelectionCubit>().updateSelection(
+                      "selectedOrganization", selectedIndex.toString());
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => Bachelors_Knowledge(
-                        Country: widget.Country,
-                        selecteddegree: widget.selecteddegree,
-                        highestEducation: widget.highestEducation,
-                        highestEducationpercentage:
-                            widget.highestEducationpercentage,
-                        Board: widget.Board,
-                        englishtests: widget.englishtests,
-                        englishpercentage: widget.percentageController,
-                        Course_offered: widget.Course_offered,
-                        selectedacademicTest: widget.selectedacademicTest,
-                        percentageController: widget.percentageController,
-                        activities: widget.selectedactivitys,
-                        organization: selectedOrganization,
-                      ),
+                      builder: (context) => Bachelors_Knowledge(),
                     ),
                   );
                   print("Selected  Organization: $selectedOrganization");

@@ -59,7 +59,8 @@ class _Bachelors_internshipState extends State<Bachelors_internship> {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Icon(Icons.light_mode_rounded, color: Colors.yellowAccent, size: 24),
+                Icon(Icons.light_mode_rounded,
+                    color: Colors.yellowAccent, size: 24),
                 const SizedBox(width: 10),
                 const Text(
                   "Add value to your profile.",
@@ -87,7 +88,8 @@ class _Bachelors_internshipState extends State<Bachelors_internship> {
                     child: Container(
                       height: 50,
                       width: 150,
-                      margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 50),
+                      margin: const EdgeInsets.symmetric(
+                          vertical: 10, horizontal: 50),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(40),
                         color: isSelected ? Color(0xff0A1F52) : Colors.grey,
@@ -133,9 +135,9 @@ class _Bachelors_internshipState extends State<Bachelors_internship> {
             // SizedBox(height: 10),
             Row(
               children: [
-                SizedBox(width:20),
+                SizedBox(width: 20),
                 Text("0"),
-                SizedBox(width:285),
+                SizedBox(width: 285),
                 Text("18+ months"),
               ],
             ),
@@ -155,15 +157,13 @@ class _Bachelors_internshipState extends State<Bachelors_internship> {
                   //   ),
                   // );
                   print("Selected Internship: $selectedInternship");
-                }
-                else {
+                } else {
                   print("Selected Internship: $selectedInternship");
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(content: Text("No internship selected")),
                   );
                 }
               },
-
               child: Container(
                 height: 51,
                 width: 231,
@@ -191,9 +191,3 @@ class _Bachelors_internshipState extends State<Bachelors_internship> {
     );
   }
 }
-
-
-
-
-
-

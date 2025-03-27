@@ -1,31 +1,14 @@
 import 'package:course_connect/User/Ai_course_finder/Bachelors.dart/Bachelors_organization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+import '../../../Controller/Bloc/selection_cubit.dart';
 
 class Bachelors_activities extends StatefulWidget {
   const Bachelors_activities({
     super.key,
-    required this.Country,
-    required this.selecteddegree,
-    required this.highestEducation,
-    required this.highestEducationpercentage,
-    required this.Course_offered,
-    required this.percentageController,
-    required this.Board,
-    required this.englishtests,
-    required this.englishpercentage,
-    required this.selectedacademicTest,
   });
-  final Country;
-  final selecteddegree;
-  final highestEducation;
-  final highestEducationpercentage;
-  final Course_offered;
-  final englishtests;
-  final percentageController;
-  final Board;
-  final englishpercentage;
-  final selectedacademicTest;
 
   @override
   State<Bachelors_activities> createState() => _Bachelors_activitiesState();
@@ -125,24 +108,12 @@ class _Bachelors_activitiesState extends State<Bachelors_activities> {
             InkWell(
               onTap: () {
                 if (selectedactivitys != null) {
+                  context.read<SelectionCubit>().updateSelection(
+                      "selectedactivity", selectedactivitys.toString());
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => Bachelors_organization(
-                            Country: widget.Country,
-                            selecteddegree: widget.selecteddegree,
-                            highestEducation: widget.highestEducation,
-                            highestEducationpercentage:
-                                widget.highestEducationpercentage,
-                            Board: widget.Board,
-                            englishtests: widget.englishtests,
-                            englishpercentage: widget.englishtests,
-                            Course_offered: widget.Course_offered,
-                            selectedacademicTest: widget.selectedacademicTest,
-                            percentageController: widget.percentageController,
-                            activities: items,
-                            selectedactivitys: selectedactivitys),
-                      ));
+                          builder: (context) => Bachelors_organization()));
                   print("Selected activities: $selectedactivitys");
                 } else {
                   print("No activities selected");

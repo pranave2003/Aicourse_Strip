@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../firebase_options.dart';
 import '../Controller/Bloc/User_Authbloc/auth_bloc.dart';
+import '../Controller/Bloc/selection_cubit.dart';
 import 'Sreens/Authentication/LoginUser.dart';
 import 'Sreens/Authentication/Spashview.dart';
 import 'Sreens/BottomNavigation/Bottom_Nav.dart';
@@ -28,7 +29,10 @@ class MyApp extends StatelessWidget {
         ),
         BlocProvider<UniversityBloc>(
           create: (context) => UniversityBloc(),
-        )
+        ),
+        BlocProvider(
+          create: (context) => SelectionCubit(),
+        ),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,

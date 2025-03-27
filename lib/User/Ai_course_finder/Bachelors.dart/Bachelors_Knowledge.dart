@@ -1,36 +1,15 @@
-import 'package:course_connect/User/Ai_course_finder/Bachelors.dart/BachelorsDetailsOverall.dart';
-// import 'package:course_connect/User/Ai_course_finder/BachelorsDetailsOverall.dart';
+import 'package:course_connect/User/Ai_course_finder/Alldetails.dart';
+// import 'package:course_connect/User/Ai_course_finder/Alldetails.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+import '../../../Controller/Bloc/selection_cubit.dart';
 
 class Bachelors_Knowledge extends StatefulWidget {
   const Bachelors_Knowledge({
     super.key,
-    required this.Country,
-    required this.selecteddegree,
-    required this.highestEducation,
-    required this.highestEducationpercentage,
-    required this.Course_offered,
-    required this.percentageController,
-    required this.activities,
-    required this.Board,
-    required this.englishtests,
-    required this.englishpercentage,
-    required this.selectedacademicTest,
-    required this.organization,
   });
-  final Country;
-  final selecteddegree;
-  final highestEducation;
-  final highestEducationpercentage;
-  final Course_offered;
-  final percentageController;
-  final organization;
-  final activities;
-  final Board;
-  final englishtests;
-  final englishpercentage;
-  final selectedacademicTest;
 
   @override
   State<Bachelors_Knowledge> createState() => _Bachelors_KnowledgeState();
@@ -144,24 +123,13 @@ class _Bachelors_KnowledgeState extends State<Bachelors_Knowledge> {
             InkWell(
               onTap: () {
                 if (selectedOrganization != null) {
+                  context
+                      .read<SelectionCubit>()
+                      .updateSelection("org", selectedIndex.toString());
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => BachelorsDetailsOverall(
-                        Country: widget.Country,
-                        selecteddegree: widget.selecteddegree,
-                        highestEducation: widget.highestEducation,
-                        highestEducationpercentage:
-                            widget.highestEducationpercentage,
-                        Board: widget.Board,
-                        englishtests: widget.englishtests,
-                        englishpercentage: widget.percentageController,
-                        Course_offered: widget.Course_offered,
-                        selectedacademicTest: widget.selectedacademicTest,
-                        percentageController: widget.percentageController,
-                        activities: widget.activities,
-                        organization: widget.organization,
-                      ),
+                      builder: (context) => BachelorsDetailsOverall(),
                     ),
                   );
                 }

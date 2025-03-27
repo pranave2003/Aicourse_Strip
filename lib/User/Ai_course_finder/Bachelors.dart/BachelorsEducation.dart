@@ -3,15 +3,17 @@ import 'package:course_connect/User/Ai_course_finder/Bachelors.dart/BachelorsCou
 import 'package:course_connect/Widget/Constands/colors.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+import '../../../Controller/Bloc/selection_cubit.dart';
 
 class BachelorsEducation extends StatefulWidget {
   const BachelorsEducation({
     super.key,
     required this.selecteddegree,
-    required this.Country,
   });
   final selecteddegree;
-  final Country;
+
   @override
   State<BachelorsEducation> createState() => _BachelorsEducationState();
 }
@@ -163,17 +165,17 @@ class _BachelorsEducationState extends State<BachelorsEducation> {
                 //   },
                 onTap: () {
                   if (seletedEducation != null) {
+                    context.read<SelectionCubit>().updateSelection(
+                        "selectedDegree", widget.selecteddegree.toString());
+                    context.read<SelectionCubit>().updateSelection(
+                        "highestEducation", seletedEducation.toString());
+                    context.read<SelectionCubit>().updateSelection(
+                        "highestEducation_percentage",
+                        highesteducationpercentage.text);
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => BachelorsCourse(
-                          Board: _selectedValue,
-                          Country: widget.Country,
-                          selecteddegree: widget.selecteddegree,
-                          highestEducation: seletedEducation,
-                          highestEducationpercentage:
-                              highesteducationpercentage.text,
-                        ),
+                        builder: (context) => BachelorsCourse(),
                       ),
                     );
                     print("Selected Degree: $seletedEducation");
