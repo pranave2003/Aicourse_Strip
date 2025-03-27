@@ -301,7 +301,8 @@ class Universitymainwrapper extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => UniversityBloc()..add(FetchUniversity(searchQuery: null)),
+      create: (context) =>
+          UniversityBloc()..add(FetchUniversity(searchQuery: null)),
       child: University_main(),
     );
   }
@@ -331,11 +332,15 @@ class _University_mainState extends State<University_main> {
                   children: [
                     Text(
                       "Welcome ",
-                      style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                      style:
+                          TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
                     ),
                     Text(
                       "Admin, ",
-                      style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: Color(0xff0A71CB)),
+                      style: TextStyle(
+                          fontSize: 24,
+                          fontWeight: FontWeight.bold,
+                          color: Color(0xff0A71CB)),
                     ),
                   ],
                 ),
@@ -348,7 +353,8 @@ class _University_mainState extends State<University_main> {
                   ),
                   SizedBox(width: 10),
                   Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 6),
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 14, vertical: 6),
                     decoration: BoxDecoration(
                       color: Colors.white,
                       borderRadius: BorderRadius.circular(20),
@@ -364,7 +370,8 @@ class _University_mainState extends State<University_main> {
                         const SizedBox(width: 10),
                         const Text(
                           "Admin",
-                          style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                          style: TextStyle(
+                              fontSize: 16, fontWeight: FontWeight.bold),
                         ),
                       ],
                     ),
@@ -392,7 +399,9 @@ class _University_mainState extends State<University_main> {
             child: BlocConsumer<UniversityBloc, UniversityState>(
               listener: (context, state) {
                 if (state is RefreshUniversity) {
-                  context.read<UniversityBloc>().add(FetchUniversity(searchQuery: null));
+                  context
+                      .read<UniversityBloc>()
+                      .add(FetchUniversity(searchQuery: null));
                 }
               },
               builder: (context, state) {
@@ -408,7 +417,8 @@ class _University_mainState extends State<University_main> {
                         minWidth: MediaQuery.of(context).size.width,
                       ),
                       child: DataTable(
-                        headingRowColor: MaterialStateColor.resolveWith((states) => Colors.grey.shade300),
+                        headingRowColor: MaterialStateColor.resolveWith(
+                            (states) => Colors.grey.shade300),
                         decoration: BoxDecoration(color: Colors.white),
                         columns: [
                           _buildColumn('College '),
@@ -419,55 +429,109 @@ class _University_mainState extends State<University_main> {
                         ],
                         rows: List.generate(
                           state.University.length,
-                              (index) {
+                          (index) {
                             final student = state.University[index];
                             return DataRow(
                               cells: [
-                                DataCell(Text(student.Collegename ?? '', style: TextStyle(fontWeight: FontWeight.bold))),
-                                DataCell(Text(student.Universityname ?? '', style: TextStyle(fontWeight: FontWeight.bold))),
+                                DataCell(Text(student.Collegename ?? '',
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.bold))),
+                                DataCell(Text(student.Universityname ?? '',
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.bold))),
                                 DataCell(Text(student.Country ?? '')),
                                 DataCell(Text(student.Course_offered ?? '')),
                                 DataCell(Row(
                                   children: <Widget>[
                                     IconButton(
-                                      icon: Icon(Icons.remove_red_eye, color: Colors.green),
+                                      icon: Icon(Icons.remove_red_eye,
+                                          color: Colors.green),
                                       iconSize: 30.0,
                                       onPressed: () {
                                         Navigator.push(
                                           context,
                                           MaterialPageRoute(
-                                            builder: (context) => AdminInfoWrapper(
-                                              universityid: student.Universityid ?? '',
+                                            builder: (context) =>
+                                                AdminInfoWrapper(
+                                              universityid:
+                                                  student.Universityid ?? '',
                                             ),
                                           ),
                                         );
                                       },
                                     ),
                                     IconButton(
-                                      icon: Icon(Icons.edit, color: Colors.black),
+                                      icon:
+                                          Icon(Icons.edit, color: Colors.black),
                                       iconSize: 30.0,
                                       onPressed: () {
                                         Navigator.push(
                                           context,
                                           MaterialPageRoute(
-                                            builder: (context) => EditUniversity(
-                                              universityid: student.Universityid ?? '',
-                                              universityname: student.Universityname ?? '',
+                                            builder: (context) =>
+                                                EditUniversity(
+                                              universityid:
+                                                  student.Universityid ?? '',
+                                              Collegename:
+                                                  student.Collegename ?? '',
+                                              universityname:
+                                                  student.Universityname ?? '',
+                                              Collegecode:
+                                                  student.collagecode ?? '',
+                                              highestEducationpercentage: student
+                                                      .highestEducationpercentage ??
+                                                  '',
+                                              establishedDate:
+                                                  student.Established_date ??
+                                                      '',
+                                              Admission_startdate:
+                                                  student.Admission_startdate ??
+                                                      '',
+                                              admissionEndDate:
+                                                  student.Admission_enddate ??
+                                                      '',
+                                              Discription:
+                                                  student.Description ?? '',
+                                              courseFee:
+                                                  student.Tuition_fees ?? '',
+                                              Terms_and_conditions: student
+                                                      .Terms_and_conditions ??
+                                                  '',
+                                              scholarshipFee: student
+                                                      .Schoolarship_details ??
+                                                  '',
+                                              AcademicTestPercentage: student
+                                                      .AcadamicTestPercentage ??
+                                                  '',
+                                              AcadamicTest:
+                                                  student.AcadamicTest ?? '',
+                                              AcadamicTestPercentage: '',
+                                              highestEducation: student.highestEducation ?? '',
+                                              Englishtest: student.Englishtest??'',
+                                              Englishtestpercentage:student.highestEducationpercentage?? '',
+                                              // AcademicTestPercentage:student.AcadamicTestPercentage??'',
+                                              // AcadamicTest:student.AcadamicTest??'',
+
+                                              // university:student.Country,
                                             ),
                                           ),
                                         );
                                       },
                                     ),
                                     IconButton(
-                                      icon: const Icon(Icons.delete, color: Colors.red),
+                                      icon: const Icon(Icons.delete,
+                                          color: Colors.red),
                                       iconSize: 30.0,
                                       onPressed: () {
-                                        _showDeleteConfirmationDialog(context, () {
+                                        _showDeleteConfirmationDialog(context,
+                                            () {
                                           context.read<UniversityBloc>().add(
-                                            DeleteUniversity(
-                                              Universityid: student.Universityid ?? '',
-                                            ),
-                                          );
+                                                DeleteUniversity(
+                                                  Universityid:
+                                                      student.Universityid ??
+                                                          '',
+                                                ),
+                                              );
                                         });
                                       },
                                     ),
@@ -494,13 +558,17 @@ class _University_mainState extends State<University_main> {
     return DataColumn(
       label: Text(
         title,
-        style: TextStyle(color: Colors.grey.shade900, fontWeight: FontWeight.bold, fontSize: 20),
+        style: TextStyle(
+            color: Colors.grey.shade900,
+            fontWeight: FontWeight.bold,
+            fontSize: 20),
       ),
     );
   }
 }
 
-void _showDeleteConfirmationDialog(BuildContext context, VoidCallback onDeleteConfirmed) {
+void _showDeleteConfirmationDialog(
+    BuildContext context, VoidCallback onDeleteConfirmed) {
   showDialog(
     context: context,
     builder: (BuildContext dialogContext) {
