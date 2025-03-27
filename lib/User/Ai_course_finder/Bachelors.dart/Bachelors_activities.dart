@@ -3,14 +3,36 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class Bachelors_activities extends StatefulWidget {
-  const Bachelors_activities({super.key});
+  const Bachelors_activities({
+    super.key,
+    required this.Country,
+    required this.selecteddegree,
+    required this.highestEducation,
+    required this.highestEducationpercentage,
+    required this.Course_offered,
+    required this.percentageController,
+    required this.Board,
+    required this.englishtests,
+    required this.englishpercentage,
+    required this.selectedacademicTest,
+  });
+  final Country;
+  final selecteddegree;
+  final highestEducation;
+  final highestEducationpercentage;
+  final Course_offered;
+  final englishtests;
+  final percentageController;
+  final Board;
+  final englishpercentage;
+  final selectedacademicTest;
 
   @override
   State<Bachelors_activities> createState() => _Bachelors_activitiesState();
 }
 
 class _Bachelors_activitiesState extends State<Bachelors_activities> {
-  String? _selectedValue; // Selected value
+  String? selectedactivitys; // Selected value
   List<String> items = [
     'National level representation',
     'State level',
@@ -33,7 +55,7 @@ class _Bachelors_activitiesState extends State<Bachelors_activities> {
       body: Container(
         decoration: BoxDecoration(
           image: DecorationImage(
-            image: AssetImage("assets/country/main.png"),
+            image: AssetImage("assets/Country/img_6.png"),
             fit: BoxFit.cover,
           ),
         ),
@@ -58,7 +80,8 @@ class _Bachelors_activitiesState extends State<Bachelors_activities> {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Icon(Icons.light_mode_rounded, color: Colors.yellowAccent, size: 24),
+                Icon(Icons.light_mode_rounded,
+                    color: Colors.yellowAccent, size: 24),
                 SizedBox(width: 10),
                 Text(
                   "Higher the level of representation better \n the impact on your profile.",
@@ -73,11 +96,12 @@ class _Bachelors_activitiesState extends State<Bachelors_activities> {
             Container(
               decoration: BoxDecoration(
                 color: Colors.grey, // Change button color to grey
-                borderRadius: BorderRadius.circular(20), // Optional: Rounded corners
+                borderRadius:
+                    BorderRadius.circular(20), // Optional: Rounded corners
               ),
               padding: EdgeInsets.symmetric(horizontal: 40), // Adds padding
               child: DropdownButton<String>(
-                value: _selectedValue,
+                value: selectedactivitys,
                 hint: Text('Select from list'),
                 dropdownColor: Colors.grey[300], // Dropdown menu color
                 items: items.map((String item) {
@@ -88,7 +112,7 @@ class _Bachelors_activitiesState extends State<Bachelors_activities> {
                 }).toList(),
                 onChanged: (String? newValue) {
                   setState(() {
-                    _selectedValue = newValue; // Update the selected value
+                    selectedactivitys = newValue; // Update the selected value
                   });
                 },
                 underline: SizedBox(), // Removes the default underline
@@ -100,14 +124,26 @@ class _Bachelors_activitiesState extends State<Bachelors_activities> {
             // Continue Button
             InkWell(
               onTap: () {
-                if (_selectedValue != null) {
+                if (selectedactivitys != null) {
                   Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => Bachelors_organization(),
-                    ),
-                  );
-                  print("Selected activities: $_selectedValue");
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => Bachelors_organization(
+                            Country: widget.Country,
+                            selecteddegree: widget.selecteddegree,
+                            highestEducation: widget.highestEducation,
+                            highestEducationpercentage:
+                                widget.highestEducationpercentage,
+                            Board: widget.Board,
+                            englishtests: widget.englishtests,
+                            englishpercentage: widget.englishtests,
+                            Course_offered: widget.Course_offered,
+                            selectedacademicTest: widget.selectedacademicTest,
+                            percentageController: widget.percentageController,
+                            activities: items,
+                            selectedactivitys: selectedactivitys),
+                      ));
+                  print("Selected activities: $selectedactivitys");
                 } else {
                   print("No activities selected");
                   ScaffoldMessenger.of(context).showSnackBar(
@@ -142,146 +178,3 @@ class _Bachelors_activitiesState extends State<Bachelors_activities> {
     );
   }
 }
-
-
-
-
-
-// import 'package:course_connect/User/Ai_course_finder/Bachelors_organization.dart';
-// import 'package:flutter/cupertino.dart';
-// import 'package:flutter/material.dart';
-//
-// class Bachelors_activities extends StatefulWidget {
-//   const Bachelors_activities({super.key});
-//
-//   @override
-//   State<Bachelors_activities> createState() => _Bachelors_activitiesState();
-// }
-// class MyApp extends StatelessWidget {
-//   @override
-//   Widget build(BuildContext context) {
-//     return MaterialApp(
-//       home: Bachelors_activities(),
-//     );
-//   }
-// }
-//
-// class _Bachelors_activitiesState extends State<Bachelors_activities> {
-//   String? _selectedValue; // Selected value
-//   List<String> items = ['National  level representation',
-//     'State level','District level','inter school level','intra-school level'
-//   ];
-//   int selectedIndex = -1; // Track selected container index
-//   String? selectedActivities;
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//         appBar: AppBar(leading: IconButton(
-//           icon: Icon(Icons.arrow_back), // Back button icon
-//           onPressed: () {
-//             Navigator.pop(context); // Navigate back when tapped
-//           },
-//         ),
-//         ),
-//         body: Container(
-//           decoration: BoxDecoration(
-//             image: DecorationImage(
-//               image: AssetImage("assets/country/main.png"),
-//               fit: BoxFit.cover,
-//             ),
-//           ),
-//           child:Column(
-//             children: [
-//               Row(
-//                 mainAxisAlignment: MainAxisAlignment.center,
-//                 children: [
-//                   Text("What is your most relevant level of \ninvolvement in extracurricular activities?",style: TextStyle(color: Color(0xff0A1F52),fontSize:20,fontWeight: FontWeight.bold),),
-//                 ],
-//               ),
-//               SizedBox(height:20,),
-//               Row(
-//                 mainAxisAlignment: MainAxisAlignment.center,
-//                 children: [
-//                   Icon(Icons.light_mode_rounded, color: Colors.yellowAccent, size: 24),
-//                   SizedBox(width: 10),
-//                   Text(
-//                     "Higher the level of representation better \n the impact on your profile.",
-//                     style: TextStyle(fontSize: 18),
-//                   ),
-//                 ],
-//               ),
-//               SizedBox(height:10),
-//
-//
-//               SizedBox(height:20),
-//               Container(
-//                 decoration: BoxDecoration(
-//                   color: Colors.grey, // Change button color to grey
-//                   borderRadius: BorderRadius.circular(20), // Optional: Rounded corners
-//                 ),
-//                 padding: EdgeInsets.symmetric(horizontal: 40), // Adds padding
-//                 child: DropdownButton<String>(
-//                   value: _selectedValue,
-//                   hint: Text('Select from list'),
-//                   dropdownColor: Colors.grey[300], // Dropdown menu color
-//                   items: items.map((String item) {
-//                     return DropdownMenuItem<String>(
-//                       value: item,
-//                       child: Text(item),
-//                     );
-//                   }).toList(),
-//                   onChanged: (String? newValue) {
-//                     setState(() {
-//                       _selectedValue = newValue;
-//                     });
-//                   },
-//                   underline: SizedBox(), // Removes the default underline
-//                 ),
-//               ),
-//
-//               SizedBox(height: 390
-//               ),
-//               InkWell(
-//                 onTap: () {
-//                   if (selectedActivities != null) {
-//                     Navigator.push(
-//                       context,
-//                       MaterialPageRoute(
-//                         builder: (context) => Bachelors_organization(),
-//                       ),
-//                     );
-//                     print("Selected activities: $selectedActivities");
-//                   }
-//                   else {
-//                     print("Selected activities: $selectedActivities");
-//                     // ScaffoldMessenger.of(context).showSnackBar(
-//                     //   SnackBar(content: Text("No activities selected")),
-//                     // );
-//                   }
-//                 },
-//
-//                 child: Container(
-//                   height: 51,
-//                   width: 231,
-//                   decoration: BoxDecoration(
-//                       color: Color(0xff0A71CB),
-//                       borderRadius: BorderRadius.circular(30)),
-//                   child: Center(
-//                       child: Text(
-//                         "Continue",
-//                         style: TextStyle(
-//                             color: Colors.white,
-//                             fontSize: 22,
-//                             fontWeight: FontWeight.bold),
-//                       )),
-//                 ),
-//               )
-//
-//
-//
-//             ],
-//           ),
-//         ));
-//   }
-// }

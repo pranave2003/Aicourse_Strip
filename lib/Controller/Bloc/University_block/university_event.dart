@@ -41,6 +41,12 @@ class DeleteUniversity extends UniversityEvent {
   DeleteUniversity({required this.Universityid});
 }
 
+class University_Edit_Event extends UniversityEvent {
+  final University_model University;
+
+  University_Edit_Event({required this.University});
+}
+
 
 class FetchCourseDetailsById extends UniversityEvent {
 

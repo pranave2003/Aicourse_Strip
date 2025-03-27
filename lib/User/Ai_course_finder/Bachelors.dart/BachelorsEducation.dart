@@ -23,7 +23,6 @@ class _BachelorsEducationState extends State<BachelorsEducation> {
   String? seletedEducation;
   TextEditingController highesteducationpercentage = TextEditingController();
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -168,11 +167,12 @@ class _BachelorsEducationState extends State<BachelorsEducation> {
                       context,
                       MaterialPageRoute(
                         builder: (context) => BachelorsCourse(
-                          Country:widget.Country,
-                          selecteddegree:widget.selecteddegree,
-                            highestEducation:seletedEducation,
-                            highestEducationpercentage:highesteducationpercentage.text
-
+                          Board: _selectedValue,
+                          Country: widget.Country,
+                          selecteddegree: widget.selecteddegree,
+                          highestEducation: seletedEducation,
+                          highestEducationpercentage:
+                              highesteducationpercentage.text,
                         ),
                       ),
                     );

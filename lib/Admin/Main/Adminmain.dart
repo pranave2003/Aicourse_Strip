@@ -118,7 +118,7 @@ class _AdminPageState extends State<AdminPage> {
                     _buildSubListTile(
                         "View Courses", Universitymainwrapper()),
                     _buildSubListTile("Add Courses", AddUniversity()),
-                    _buildSubListTile("Edit Courses", EditUniversity()),
+                    _buildSubListTile("Edit Courses", EditUniversity(universityname: '', universityid: '',)),
                   ],
                 ),
 

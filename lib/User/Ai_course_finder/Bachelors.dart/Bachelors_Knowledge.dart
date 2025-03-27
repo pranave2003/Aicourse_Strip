@@ -4,10 +4,42 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class Bachelors_Knowledge extends StatefulWidget {
-  const Bachelors_Knowledge({super.key});
+  const Bachelors_Knowledge({
+    super.key,
+    required this.Country,
+    required this.selecteddegree,
+    required this.highestEducation,
+    required this.highestEducationpercentage,
+    required this.Course_offered,
+    required this.percentageController,
+    required this.activities,
+    required this.Board,
+    required this.englishtests,
+    required this.englishpercentage,
+    required this.selectedacademicTest,
+    required this.organization,
+  });
+  final Country;
+  final selecteddegree;
+  final highestEducation;
+  final highestEducationpercentage;
+  final Course_offered;
+  final percentageController;
+  final organization;
+  final activities;
+  final Board;
+  final englishtests;
+  final englishpercentage;
+  final selectedacademicTest;
 
   @override
   State<Bachelors_Knowledge> createState() => _Bachelors_KnowledgeState();
+
+  // @override
+  // void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+  //   super.debugFillProperties(properties);
+  //   properties.add(DiagnosticsProperty('organization', organization));
+  // }
 }
 
 class _Bachelors_KnowledgeState extends State<Bachelors_Knowledge> {
@@ -36,7 +68,7 @@ class _Bachelors_KnowledgeState extends State<Bachelors_Knowledge> {
       body: Container(
         decoration: BoxDecoration(
           image: DecorationImage(
-            image: AssetImage("assets/country/main.png"),
+            image: AssetImage("assets/Country/img_6.png"),
             fit: BoxFit.cover,
           ),
         ),
@@ -89,7 +121,8 @@ class _Bachelors_KnowledgeState extends State<Bachelors_Knowledge> {
                     child: Container(
                       height: 50,
                       width: 150,
-                      margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 50),
+                      margin: const EdgeInsets.symmetric(
+                          vertical: 10, horizontal: 50),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(40),
                         color: isSelected ? Color(0xff0A1F52) : Colors.grey,
@@ -108,59 +141,32 @@ class _Bachelors_KnowledgeState extends State<Bachelors_Knowledge> {
                 },
               ),
             ),
-
-            // const SizedBox(height: 30),
-            //
-            // // Age Slider
-            // Column(
-            //   children: [
-            //     const Text(
-            //       "How many months of experience?",
-            //       style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-            //     ),
-            //     Slider(
-            //       value: age.toDouble(),
-            //       onChanged: (value) {
-            //         setState(() {
-            //           age = value.toInt();
-            //         });
-            //       },
-            //       min: 0,
-            //       max: 18,
-            //       divisions: 4,
-            //       label: "$age",
-            //     ),
-            //   ],
-            // ),
-            // // SizedBox(height: 10),
-            // Row(
-            //   children: [
-            //     SizedBox(width:20),
-            //     Text("0"),
-            //     SizedBox(width:285),
-            //     Text("18+ months"),
-            //   ],
-            // ),
-            //
-            // const SizedBox(height: 20),
-            //
-            // // Continue Button
             InkWell(
               onTap: () {
                 if (selectedOrganization != null) {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => BachelorsDetailsOverall(),
+                      builder: (context) => BachelorsDetailsOverall(
+                        Country: widget.Country,
+                        selecteddegree: widget.selecteddegree,
+                        highestEducation: widget.highestEducation,
+                        highestEducationpercentage:
+                            widget.highestEducationpercentage,
+                        Board: widget.Board,
+                        englishtests: widget.englishtests,
+                        englishpercentage: widget.percentageController,
+                        Course_offered: widget.Course_offered,
+                        selectedacademicTest: widget.selectedacademicTest,
+                        percentageController: widget.percentageController,
+                        activities: widget.activities,
+                        organization: widget.organization,
+                      ),
                     ),
                   );
-
                 }
-
               },
-
-
-              child:Container(
+              child: Container(
                 height: 51,
                 width: 231,
                 decoration: BoxDecoration(
@@ -187,8 +193,3 @@ class _Bachelors_KnowledgeState extends State<Bachelors_Knowledge> {
     );
   }
 }
-
-
-
-
-

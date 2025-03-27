@@ -5,7 +5,34 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class Bachelors_organization extends StatefulWidget {
-  const Bachelors_organization({super.key});
+  const Bachelors_organization({
+    super.key,
+    required this.Country,
+    required this.selecteddegree,
+    required this.highestEducation,
+    required this.highestEducationpercentage,
+    required this.Course_offered,
+    required this.percentageController,
+    required this.activities,
+    required this.englishtests,
+    required this.Board,
+    required this.englishpercentage,
+    required this.selectedacademicTest,
+    this.selectedactivitys,
+  });
+  final Country;
+  final selecteddegree;
+  final highestEducation;
+  final highestEducationpercentage;
+  // final selectedTest;
+  final Course_offered;
+  final percentageController;
+  final activities;
+  final Board;
+  final englishpercentage;
+  final selectedacademicTest;
+  final englishtests;
+  final selectedactivitys;
 
   @override
   State<Bachelors_organization> createState() => _Bachelors_organizationState();
@@ -36,7 +63,7 @@ class _Bachelors_organizationState extends State<Bachelors_organization> {
       body: Container(
         decoration: BoxDecoration(
           image: DecorationImage(
-            image: AssetImage("assets/country/main.png"),
+            image: AssetImage("assets/Country/img_6.png"),
             fit: BoxFit.cover,
           ),
         ),
@@ -61,7 +88,8 @@ class _Bachelors_organizationState extends State<Bachelors_organization> {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Icon(Icons.light_mode_rounded, color: Colors.yellowAccent, size: 24),
+                Icon(Icons.light_mode_rounded,
+                    color: Colors.yellowAccent, size: 24),
                 const SizedBox(width: 10),
                 const Text(
                   "Adds value to your profile.",
@@ -89,7 +117,8 @@ class _Bachelors_organizationState extends State<Bachelors_organization> {
                     child: Container(
                       height: 50,
                       width: 150,
-                      margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 50),
+                      margin: const EdgeInsets.symmetric(
+                          vertical: 10, horizontal: 50),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(40),
                         color: isSelected ? Color(0xff0A1F52) : Colors.grey,
@@ -135,9 +164,9 @@ class _Bachelors_organizationState extends State<Bachelors_organization> {
             // SizedBox(height: 10),
             Row(
               children: [
-                SizedBox(width:20),
+                SizedBox(width: 20),
                 Text("0"),
-                SizedBox(width:285),
+                SizedBox(width: 285),
                 Text("18+ months"),
               ],
             ),
@@ -151,20 +180,31 @@ class _Bachelors_organizationState extends State<Bachelors_organization> {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => Bachelors_Knowledge(),
+                      builder: (context) => Bachelors_Knowledge(
+                        Country: widget.Country,
+                        selecteddegree: widget.selecteddegree,
+                        highestEducation: widget.highestEducation,
+                        highestEducationpercentage:
+                            widget.highestEducationpercentage,
+                        Board: widget.Board,
+                        englishtests: widget.englishtests,
+                        englishpercentage: widget.percentageController,
+                        Course_offered: widget.Course_offered,
+                        selectedacademicTest: widget.selectedacademicTest,
+                        percentageController: widget.percentageController,
+                        activities: widget.selectedactivitys,
+                        organization: selectedOrganization,
+                      ),
                     ),
                   );
                   print("Selected  Organization: $selectedOrganization");
-                }
-                else {
+                } else {
                   print("Selected  Organization: $selectedOrganization");
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(content: Text("No Organization selected")),
                   );
                 }
               },
-
-
               child: Container(
                 height: 51,
                 width: 231,
@@ -192,8 +232,3 @@ class _Bachelors_organizationState extends State<Bachelors_organization> {
     );
   }
 }
-
-
-
-
-

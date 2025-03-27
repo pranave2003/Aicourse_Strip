@@ -1,119 +1,98 @@
-
-import 'package:course_connect/User/Ai_course_finder/Result_AICoursefInder.dart';
 import 'package:flutter/material.dart';
 
-void main() {
-  runApp(MaterialApp(
-    home: BachelorsDetailsOverall(),
-  ));
-}
-
 class BachelorsDetailsOverall extends StatelessWidget {
-  final Map<String, String> details = {
-    "Country name": "UK",
-    "Degree Name": "Bachelors",
-    "Education level": "plus two",
-    "Board": "CBSC",
-    "Percentage": "60%",
-    "Course": "Physics",
-    "English test": "IELTS",
-    "Percentage (English test)": "7",
-    "Academic test": "SAT",
-    "Percentage (Academic test)": "7",
-    "Extracurricular activities": "National level",
-    "Organization representation": "Yes",
-    "Months of experience (Org)": "3 months",
-    "knowledge about application \n deadlines":"yes",
-  };
+  final String selecteddegree;
+  final String Country;
+  final String highestEducationpercentage;
+  final String highestEducation;
+  final String Course_offered;
+  final String percentageController;
+  final String activities;
+  final String organization;
+  final String Board;
+  final String englishtests;
+  final String englishpercentage;
+  final String selectedacademicTest;
+
+  BachelorsDetailsOverall({
+    required this.selecteddegree,
+    required this.Country,
+    required this.highestEducation,
+    required this.highestEducationpercentage,
+    required this.Course_offered,
+    required this.percentageController,
+    required this.activities,
+    required this.organization,
+    required this.Board,
+    required this.englishtests,
+    required this.englishpercentage,
+    required this.selectedacademicTest,
+  });
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        title: Text("Bachelors_detailsoverall", style: TextStyle(fontSize: 16)),
-        backgroundColor: Colors.black,
+        title: Text("Bachelors Details", style: TextStyle(fontSize: 18)),
+        backgroundColor: Colors.blue.shade700,
       ),
-      body: Padding(
+      body: SingleChildScrollView(
         padding: EdgeInsets.all(16.0),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Expanded(
-              child: ListView.builder(
-                itemCount: details.length,
-                itemBuilder: (context, index) {
-                  String key = details.keys.elementAt(index);
-                  return Padding(
-                    padding: EdgeInsets.symmetric(vertical: 5.0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(key, style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500)),
-                        Container(
-                          width: 150,
-                          padding: EdgeInsets.all(10),
-                          decoration: BoxDecoration(
-                            color: Colors.grey[200], // Light Grey Fill Color
-                            borderRadius: BorderRadius.circular(8),
-                          ),
-                          child: Text(
-                            details[key]!,
-                            textAlign: TextAlign.center,
-                            style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
-                          ),
-                        ),
-                      ],
-                    ),
-                  );
-                },
-              ),
-            ),
-            SizedBox(height: 20),
-
-            // Corrected GestureDetector with proper closing brackets
-            GestureDetector(
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => ResultAicoursefinder(),
-                  ),
-                );
-              },
-              child: Container(
-                width: 200,
-                height: 50,
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    colors: [Colors.blue.shade300, Colors.blue.shade700],
-                    begin: Alignment.topLeft,
-                    end: Alignment.bottomRight,
-                  ),
-                  borderRadius: BorderRadius.circular(25),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.blue.withOpacity(0.1),
-                      blurRadius: 1,
-                      spreadRadius: 1,
-                      offset: Offset(2, 5),
-                    ),
-                  ],
-                ),
-                child: Center(
-                  child: Text(
-                    "Generate",
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                      letterSpacing: 1.2,
-                    ),
-                  ),
-                ),
-              ),
-            ),
+            buildTitle("Student Details"),
+            buildDetailItem("Country", Country),
+            buildDetailItem("Degree", selecteddegree),
+            buildDetailItem("Education Level", highestEducation),
+            buildDetailItem("Education Percentage", highestEducationpercentage),
+            buildDetailItem("Board", Board),
+            buildDetailItem("English Test", englishtests),
+            buildDetailItem("English Percentage", englishpercentage),
+            buildDetailItem("Academic Test", selectedacademicTest),
+            buildDetailItem("Academic Percentage", percentageController),
+            buildDetailItem("Course Offered", Course_offered),
+            buildDetailItem("Extracurricular Activities", activities),
+            buildDetailItem("Organization", organization),
           ],
         ),
+      ),
+    );
+  }
+
+  Widget buildTitle(String title) {
+    return Padding(
+      padding: EdgeInsets.symmetric(vertical: 10),
+      child: Text(
+        title,
+        style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+      ),
+    );
+  }
+
+  Widget buildDetailItem(String label, String value) {
+    return Padding(
+      padding: EdgeInsets.symmetric(vertical: 6),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text(label,
+              style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500)),
+          Container(
+            width: 160,
+            padding: EdgeInsets.all(10),
+            decoration: BoxDecoration(
+              color: Colors.grey[200],
+              borderRadius: BorderRadius.circular(8),
+            ),
+            child: Text(
+              value.isNotEmpty ? value : "No data found",
+              textAlign: TextAlign.center,
+              style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+            ),
+          ),
+        ],
       ),
     );
   }

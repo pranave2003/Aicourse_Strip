@@ -146,12 +146,14 @@ class _Bachelors_internshipState extends State<Bachelors_internship> {
             InkWell(
               onTap: () {
                 if (selectedInternship != null) {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => Bachelors_activities(),
-                    ),
-                  );
+                  // Navigator.push(
+                  //   context,
+                  //   MaterialPageRoute(
+                  //     builder: (context) => Bachelors_activities(
+                  //
+                  //     ),
+                  //   ),
+                  // );
                   print("Selected Internship: $selectedInternship");
                 }
                 else {

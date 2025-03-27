@@ -1,9 +1,30 @@
+import 'package:course_connect/Admin/View/Screens/Courses/Addcourses.dart';
 import 'package:course_connect/User/Ai_course_finder/Bachelors.dart/Bachelors_activities.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+import '../../../Admin/View/Screens/Courses/Addcourses.dart';
+
 class Bachelors_academictest extends StatefulWidget {
-  const Bachelors_academictest({super.key});
+  const Bachelors_academictest({
+    super.key,
+    required this.highestEducation,
+    required this.highestEducationpercentage,
+    required this.Course_offered,
+    required this.Country,
+    required this.selecteddegree,
+    required this.Board,
+    required this.englishpercentage,
+    this.englishtests,
+  });
+  final highestEducation;
+  final highestEducationpercentage;
+  final Course_offered;
+  final Country;
+  final Board;
+  final selecteddegree;
+  final englishpercentage;
+  final englishtests;
 
   @override
   State<Bachelors_academictest> createState() => _Bachelors_academictestState();
@@ -12,15 +33,16 @@ class Bachelors_academictest extends StatefulWidget {
 class _Bachelors_academictestState extends State<Bachelors_academictest> {
   int? selectedIndex; // Track selected container index
   String? selectedacademicTest; // Selected test name
-  final TextEditingController percentageController = TextEditingController(); // Controller for text input
+  final TextEditingController percentageController =
+      TextEditingController(); // Controller for text input
 
   // List of English language tests
   final List<String> academicTests = [
     "ACT",
     "SAT",
-    "JEE (For Civil Engineering)",
-    "NEET (For Medical courses )",
-    "CUET (For General courses )",
+    "JEE ",
+    "NEET ",
+    "CUET",
     "TEST NOT TAKEN"
   ];
 
@@ -38,7 +60,7 @@ class _Bachelors_academictestState extends State<Bachelors_academictest> {
       body: Container(
         decoration: BoxDecoration(
           image: DecorationImage(
-            image: AssetImage("assets/country/main.png"),
+            image: AssetImage("assets/Country/img_6.png"),
             fit: BoxFit.cover,
           ),
         ),
@@ -63,7 +85,8 @@ class _Bachelors_academictestState extends State<Bachelors_academictest> {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Icon(Icons.light_mode_rounded, color: Colors.yellowAccent, size: 24),
+                Icon(Icons.light_mode_rounded,
+                    color: Colors.yellowAccent, size: 24),
                 SizedBox(width: 10),
                 Text(
                   "Scoring high in language tests \nincreases your options multifold.",
@@ -91,7 +114,8 @@ class _Bachelors_academictestState extends State<Bachelors_academictest> {
                     child: Container(
                       height: 50,
                       width: 150,
-                      margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 50),
+                      margin: const EdgeInsets.symmetric(
+                          vertical: 10, horizontal: 50),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(40),
                         color: isSelected ? Color(0xff0A1F52) : Colors.grey,
@@ -144,19 +168,31 @@ class _Bachelors_academictestState extends State<Bachelors_academictest> {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => Bachelors_activities(),
+                      builder: (context) => Bachelors_activities(
+                        Country: widget.Country,
+                        selecteddegree: widget.selecteddegree,
+                        highestEducation: widget.highestEducation,
+                        highestEducationpercentage:
+                            widget.highestEducationpercentage,
+                        Board: widget.Board,
+
+                        englishtests: widget.englishtests,
+                        englishpercentage: percentageController.text,
+                        Course_offered: widget.Course_offered,
+                        selectedacademicTest: selectedacademicTest,
+                        percentageController: percentageController,
+                        // Englishtest: Widget.selectedTest,
+                      ),
                     ),
                   );
                   print("Selected academic test: $selectedacademicTest");
-                }
-                else {
+                } else {
                   print("Percentage: ${percentageController.text}");
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(content: Text("No academic test selected")),
                   );
                 }
               },
-
               child: Container(
                 height: 51,
                 width: 231,
@@ -184,9 +220,3 @@ class _Bachelors_academictestState extends State<Bachelors_academictest> {
     );
   }
 }
-
-
-
-
-
-

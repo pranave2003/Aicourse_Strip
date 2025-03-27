@@ -1,5 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:course_connect/User/Ai_course_finder/University.md';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:meta/meta.dart';
 
@@ -59,6 +60,7 @@ class UniversityBloc extends Bloc<UniversityEvent, UniversityState> {
         }
       },
     );
+   
 
     on<FetchUniversity>((event, emit) async {
       emit(UniversitysLoading());
@@ -241,5 +243,48 @@ class UniversityBloc extends Bloc<UniversityEvent, UniversityState> {
         }
       },
     );
+on<University_Edit_Event>(
+      (event, emit) async {
+        emit(UniversityLoading());
+        try {
+          FirebaseFirestore.instance
+              .collection("University")
+              .doc(event.University.Universityid)
+              .update({
+            "Universityimage": event.University.UniversityimageURL,
+            "Rank": event.University.Rank,
+            "Established_date": event.University.Established_date,
+            "Universityname": event.University.Universityname,
+            "Description": event.University.Description,
+            "Admission_startdate": event.University.Admission_startdate,
+            "Admission_enddate": event.University.Admission_enddate,
+            "Degree_offered": event.University.Degree_offered,
+            "Course_offered": event.University.Course_offered,
+            "Tuition_fees": event.University.Tuition_fees,
+            "Duration": event.University.Duration,
+            "Schoolarship_details": event.University.Schoolarship_details,
+            "Eligibility_criteria": event.University.Eligibility_criteria,
+            "Terms_and_conditions": event.University.Terms_and_conditions,
+            "Country": event.University.Country,
+            "Ban": "0",
+            "status": "1",
+            "Onesignal_id": "on signal id",
+            "AcadamicTest": event.University.AcadamicTest,
+            "AcadamicTestPercentage": event.University.AcadamicTestPercentage,
+            "Englishtest": event.University.Englishtest,
+            "Englishtestpercentage": event.University.Englishtestpercentage,
+            "highestEducation": event.University.highestEducation,
+            "highestEducationpercentage": event.University.highestEducationpercentage,
+            "collagecode": event.University.collagecode,
+            "Collegename": event.University.Collegename
+          }); // Generate ID
+          emit(UniversityaddSuccess());
+        } catch (e) {
+          emit(Universityfailerror(e.toString().split("]").last));
+          print("Authenticated Error : ${e.toString().split(']').last}");
+        }
+      },
+    );
+
   }
 }

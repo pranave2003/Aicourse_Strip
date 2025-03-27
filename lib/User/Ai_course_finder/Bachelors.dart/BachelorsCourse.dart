@@ -8,22 +8,23 @@ class BachelorsCourse extends StatefulWidget {
       required this.Country,
       required this.selecteddegree,
       required this.highestEducationpercentage,
-      required this.highestEducation});
+      required this.highestEducation,
+      required this.Board});
   final Country;
   final selecteddegree;
   final highestEducationpercentage;
   final highestEducation;
+  final Board;
   @override
   State<BachelorsCourse> createState() => _BachelorsCourseState();
 }
 
 class _BachelorsCourseState extends State<BachelorsCourse> {
-  Set<int> selectedIndices = {}; // Track selected course indices
-  List<String> selectedCourses = []; // Store selected course names
+  int? selectedIndex; // Track only one selected course index
+  String? selectedCourse; // Store the selected course name
 
   @override
   void initState() {
-    // TODO: implement initState
     print("bc course");
     print(widget.selecteddegree);
     print(widget.Country);
@@ -32,7 +33,6 @@ class _BachelorsCourseState extends State<BachelorsCourse> {
     super.initState();
   }
 
-  // List of available courses
   final List<String> courses = [
     "BBA (Bachelor of Business Administration)",
     "BCom (Bachelor of Commerce)",
@@ -68,16 +68,16 @@ class _BachelorsCourseState extends State<BachelorsCourse> {
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
-          icon: Icon(Icons.arrow_back), // Back button icon
+          icon: Icon(Icons.arrow_back),
           onPressed: () {
-            Navigator.pop(context); // Navigate back when tapped
+            Navigator.pop(context);
           },
         ),
       ),
       body: Container(
         decoration: BoxDecoration(
           image: DecorationImage(
-            image: AssetImage("assets/Country/main.png"),
+            image: AssetImage("assets/Country/img_6.png"),
             fit: BoxFit.cover,
           ),
         ),
@@ -112,20 +112,20 @@ class _BachelorsCourseState extends State<BachelorsCourse> {
             Expanded(
               child: ListView.builder(
                 padding: EdgeInsets.symmetric(horizontal: 20),
-                itemCount: courses.length, // Number of courses
+                itemCount: courses.length,
                 itemBuilder: (context, index) {
-                  bool isSelected = selectedIndices.contains(index);
+                  bool isSelected = selectedIndex == index;
                   return GestureDetector(
                     onTap: () {
                       setState(() {
                         if (isSelected) {
-                          selectedIndices.remove(index);
-                          selectedCourses.remove(courses[index]);
+                          selectedIndex = null;
+                          selectedCourse = null;
                         } else {
-                          selectedIndices.add(index);
-                          selectedCourses.add(courses[index]);
+                          selectedIndex = index;
+                          selectedCourse = courses[index];
                         }
-                        print("Selected Courses: $selectedCourses");
+                        print("Selected Course: $selectedCourse");
                       });
                     },
                     child: Container(
@@ -143,11 +143,11 @@ class _BachelorsCourseState extends State<BachelorsCourse> {
                             onChanged: (value) {
                               setState(() {
                                 if (value == true) {
-                                  selectedIndices.add(index);
-                                  selectedCourses.add(courses[index]);
+                                  selectedIndex = index;
+                                  selectedCourse = courses[index];
                                 } else {
-                                  selectedIndices.remove(index);
-                                  selectedCourses.remove(courses[index]);
+                                  selectedIndex = null;
+                                  selectedCourse = null;
                                 }
                               });
                             },
@@ -172,28 +172,29 @@ class _BachelorsCourseState extends State<BachelorsCourse> {
             const SizedBox(height: 30),
             InkWell(
               onTap: () {
-                if (selectedCourses != null) {
+                if (selectedCourse != null) {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => BachelorsEnglish(),
+                      builder: (context) => BachelorsEnglish(
+                        Country: widget.Country,
+                        selecteddegree: widget.selecteddegree,
+                        highestEducation: widget.highestEducation,
+                        Board: widget.Board,
+                        highestEducationpercentage:
+                            widget.highestEducationpercentage,
+                        Course_offered: selectedCourse,
+                      ),
                     ),
                   );
-                  print("Selected Courses: $selectedCourses");
+                  print("Selected Course: $selectedCourse");
                 } else {
                   print("No course selected");
                   ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(content: Text("Please choose courses")),
+                    SnackBar(content: Text("Please choose a course")),
                   );
                 }
               },
-              // onTap: () {
-              //   if (selectedCourses.isNotEmpty) {
-              //     print("Final Selected Courses: $selectedCourses");
-              //   } else {
-              //     print("Please choose courses");
-              //   }
-              // },
               child: Container(
                 height: 51,
                 width: 231,
@@ -203,7 +204,7 @@ class _BachelorsCourseState extends State<BachelorsCourse> {
                 ),
                 child: Center(
                   child: Text(
-                    selectedCourses.isEmpty ? "No Preference" : "Continue",
+                    selectedCourse == null ? "No Preference" : "Continue",
                     style: TextStyle(
                         color: Colors.white,
                         fontSize: 22,
