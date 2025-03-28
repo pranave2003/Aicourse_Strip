@@ -3,6 +3,9 @@ import 'package:course_connect/User/Ai_course_finder/Masters.dart/MastersEnglish
 import 'package:course_connect/User/Ai_course_finder/Masters.dart/Maters_academic.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+import '../../../Controller/Bloc/selection_cubit.dart';
 
 class Masters_Courses extends StatefulWidget {
   const Masters_Courses({super.key});
@@ -162,7 +165,11 @@ class _Masters_CoursesState extends State<Masters_Courses> {
             const SizedBox(height: 30),
             InkWell(
               onTap: () {
-                if (selectedCourses != null) {
+    if (selectedCourses != null) {
+    context
+        .read<SelectionCubit>()
+        .updateSelection("course", selectedCourses.toString());
+
                   Navigator.push(
                     context,
                     MaterialPageRoute(

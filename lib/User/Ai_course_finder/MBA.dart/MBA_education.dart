@@ -3,28 +3,30 @@ import 'package:course_connect/User/Ai_course_finder/MBA.dart/MBA_courses.dart';
 import 'package:course_connect/User/Ai_course_finder/Masters.dart/Masters_courses.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../Controller/Bloc/selection_cubit.dart';
 class MbaEducation extends StatefulWidget {
-  const MbaEducation({super.key});
+  const MbaEducation({
+    super.key,
+    required this.selecteddegree,
+  });
+  final selecteddegree;
 
   @override
   State<MbaEducation> createState() => _MbaEducationState();
 }
 
-class MyApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      home: MbaEducation(),
-    );
-  }
-}
+
+
 
 class _MbaEducationState extends State<MbaEducation> {
   String? _selectedValue; // Selected value
   List<String> items = ['IB', 'ICSE', 'CBSC', 'State'];
   int selectedIndex = -1; // Track selected container index
   String? selectedEducation;
+  TextEditingController highesteducationpercentage = TextEditingController();
+
 
   @override
   Widget build(BuildContext context) {
@@ -80,6 +82,7 @@ class _MbaEducationState extends State<MbaEducation> {
               Container(
                 width: 200, // Adjust this value to control the underline length
                 child: TextFormField(
+                  controller: highesteducationpercentage, // ✅ FIXED: Moved outside InputDecoration
                   decoration: InputDecoration(
                     hintText: "Percentage  %",
                     hintStyle: TextStyle(color: Colors.black, fontSize: 18),
@@ -92,11 +95,40 @@ class _MbaEducationState extends State<MbaEducation> {
                   ),
                   textAlign: TextAlign.center,
                   style: TextStyle(color: Colors.black, fontSize: 18),
+                  keyboardType: TextInputType.number, // Optional: Allow only numbers
                 ),
               ),
+
+              // Container(
+              //   width: 200, // Adjust this value to control the underline length
+              //   child: TextFormField(
+              //     decoration: InputDecoration(
+              //       controller: highesteducationpercentage, // FIXED: Controller Assigned
+              //
+              //       hintText: "Percentage  %",
+              //       hintStyle: TextStyle(color: Colors.black, fontSize: 18),
+              //       enabledBorder: UnderlineInputBorder(
+              //         borderSide: BorderSide(color: Colors.black),
+              //       ),
+              //       focusedBorder: UnderlineInputBorder(
+              //         borderSide: BorderSide(color: Colors.black, width: 1.5),
+              //       ),
+              //     ),
+              //     textAlign: TextAlign.center,
+              //     style: TextStyle(color: Colors.black, fontSize: 18),
+              //   ),
+              // ),
               SizedBox(height: 180),
               InkWell(
                 onTap: () {
+                  context.read<SelectionCubit>().updateSelection(
+                      "selectedDegree", widget.selecteddegree.toString());
+                  context.read<SelectionCubit>().updateSelection(
+                      "highestEducation", selectedEducation.toString());
+                  context.read<SelectionCubit>().updateSelection(
+                      "highestEducation_percentage",
+                      highesteducationpercentage.text);
+
                   Navigator.push(
                     context,
                     MaterialPageRoute(

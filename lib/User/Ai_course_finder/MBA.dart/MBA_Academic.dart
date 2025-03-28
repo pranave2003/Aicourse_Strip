@@ -4,6 +4,9 @@ import 'package:course_connect/User/Ai_course_finder/MBA.dart/MBA_Companytype.da
 // import 'package:course_connect/User/Ai_course_finder/MBA_Companytype.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+import '../../../Controller/Bloc/selection_cubit.dart';
 
 class MbaAcademic extends StatefulWidget {
   const MbaAcademic({super.key});
@@ -22,12 +25,11 @@ class _MbaAcademicState extends State<MbaAcademic> {
     "GMAT",
     "GRE",
     "CAT",
-    "XAT/CMAT/MAT/SNAP",
-    // "XAT ",
-    // "CMAT",
-    // "MAT",
-    // "NMAT ",
-    "TEST NOT TAKEN"
+    "XAT",
+    "CMAT",
+    "MAT",
+    "NMAT ",
+    "TEST NOT TAKEN",
   ];
 
   @override
@@ -146,19 +148,25 @@ class _MbaAcademicState extends State<MbaAcademic> {
             // Continue Button
             InkWell(
               onTap: () {
-                if (selectedacademicTest != null) {
+    if (selectedacademicTest != null) {
+    context.read<SelectionCubit>().updateSelection(
+    "Acadamictest", selectedacademicTest.toString());
+    context.read<SelectionCubit>().updateSelection(
+    "AcadamicTestpercentage",
+        percentageController.text);
+
                   Navigator.push(
                     context,
                     MaterialPageRoute(
                       builder: (context) => MBA_companytype(),
                     ),
                   );
-                  print("Selected Internship: $selectedacademicTest");
+                  print("Selected Academic Test: $selectedacademicTest");
                 }
                 else {
                   print("Percentage: ${percentageController.text}");
                   ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(content: Text("No internship selected")),
+                    SnackBar(content: Text("No Academic Test selected")),
                   );
                 }
               },

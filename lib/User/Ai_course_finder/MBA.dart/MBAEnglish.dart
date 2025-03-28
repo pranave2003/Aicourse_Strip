@@ -1,8 +1,9 @@
-import 'package:course_connect/User/Ai_course_finder/Bachelors.dart/Bachelors_academictest.dart';
 import 'package:course_connect/User/Ai_course_finder/MBA.dart/MBA_Academic.dart';
 import 'package:course_connect/Widget/Constands/colors.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+import '../../../Controller/Bloc/selection_cubit.dart';
 
 class MBAEnglish extends StatefulWidget {
   const MBAEnglish({super.key});
@@ -12,11 +13,10 @@ class MBAEnglish extends StatefulWidget {
 }
 
 class _MBAEnglishState extends State<MBAEnglish> {
-  int? selectedIndex; // Track selected container index
-  String? selectedTest; // Selected test name
-  final TextEditingController percentageController = TextEditingController(); // Controller for text input
+  int? selectedIndex;
+  String? selectedTest;
+  final TextEditingController percentageController = TextEditingController();
 
-  // List of English language tests
   final List<String> englishTests = [
     "TOEFL",
     "IELTS",
@@ -29,9 +29,9 @@ class _MBAEnglishState extends State<MBAEnglish> {
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
-          icon: Icon(Icons.arrow_back), // Back button icon
+          icon: Icon(Icons.arrow_back),
           onPressed: () {
-            Navigator.pop(context); // Navigate back when tapped
+            Navigator.pop(context);
           },
         ),
       ),
@@ -59,12 +59,12 @@ class _MBAEnglishState extends State<MBAEnglish> {
                 ),
               ],
             ),
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Icon(Icons.light_mode_rounded, color: Colors.yellowAccent, size: 24),
-                SizedBox(width: 10),
+                const SizedBox(width: 10),
                 Text(
                   "Scoring high in language tests \nincreases your options multifold.",
                   style: TextStyle(fontSize: 18),
@@ -73,10 +73,10 @@ class _MBAEnglishState extends State<MBAEnglish> {
             ),
             const SizedBox(height: 20),
 
-            // Dynamically generated list of test options
-            Expanded(
+            // List of Test Options (Fixed with SizedBox)
+            SizedBox(
+              height: 250, // ✅ Prevents UI overflow
               child: ListView.builder(
-                shrinkWrap: true,
                 itemCount: englishTests.length,
                 itemBuilder: (context, index) {
                   bool isSelected = selectedIndex == index;
@@ -102,21 +102,21 @@ class _MBAEnglishState extends State<MBAEnglish> {
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
                             color: isSelected ? Colors.white : Colors.black,
-
                           ),
                         ),
                       ),
                     ),
-
                   );
                 },
-
               ),
-
             ),
-            Text("Enter your score",style: TextStyle(color: Colors.blueAccent,fontSize:25,fontWeight: FontWeight.w600)),
-            //
-            // Percentage Input Field (Placed directly below ListView)
+
+            const Text(
+              "Enter your score",
+              style: TextStyle(color: Colors.blueAccent, fontSize: 25, fontWeight: FontWeight.w600),
+            ),
+
+            // Score Input
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 10),
               child: Container(
@@ -140,12 +140,18 @@ class _MBAEnglishState extends State<MBAEnglish> {
               ),
             ),
 
-            SizedBox(height: 30),
+            const SizedBox(height: 30),
 
             // Continue Button
             InkWell(
               onTap: () {
                 if (selectedTest != null) {
+                  context
+                      .read<SelectionCubit>()
+                      .updateSelection("EnglishTest", selectedTest.toString());
+                  context.read<SelectionCubit>().updateSelection(
+                      "EnglishTest_percentage",
+                      percentageController.text);
                   Navigator.push(
                     context,
                     MaterialPageRoute(
@@ -153,23 +159,17 @@ class _MBAEnglishState extends State<MBAEnglish> {
                     ),
                   );
                   print("Selected test: $selectedTest");
-                }
-                else {
-                  print("Selected Test: $selectedTest");
+                } else {
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(content: Text("No Test selected")),
                   );
                 }
               },
-              // onTap: () {
-              //   print("Selected Test: $selectedTest");
-              //   print("Percentage: ${percentageController.text}");
-              // },
               child: Container(
                 height: 51,
                 width: 231,
                 decoration: BoxDecoration(
-                  color: blueColor,
+                  color: blueColor ?? Color(0xff0A71CB), // ✅ Fix in case `blueColor` is undefined
                   borderRadius: BorderRadius.circular(30),
                 ),
                 child: const Center(
@@ -185,16 +185,10 @@ class _MBAEnglishState extends State<MBAEnglish> {
               ),
             ),
 
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
           ],
         ),
       ),
     );
   }
 }
-
-
-
-
-
-

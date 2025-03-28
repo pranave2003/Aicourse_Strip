@@ -4,6 +4,9 @@ import 'package:course_connect/User/Ai_course_finder/Masters.dart/Masters_work.d
 import 'package:course_connect/Widget/Constands/colors.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+import '../../../Controller/Bloc/selection_cubit.dart';
 
 class MastersEnglishtest extends StatefulWidget {
   const MastersEnglishtest({super.key});
@@ -146,7 +149,14 @@ class _MastersEnglishtestState extends State<MastersEnglishtest> {
             // Continue Button
             InkWell(
               onTap: () {
-                if (selectedTest != null) {
+    if (selectedTest != null) {
+    context
+        .read<SelectionCubit>()
+        .updateSelection("EnglishTest", selectedTest.toString());
+    context.read<SelectionCubit>().updateSelection(
+    "EnglishTest_percentage",
+        percentageController.text);
+
                   Navigator.push(
                     context,
                     MaterialPageRoute(

@@ -1,9 +1,13 @@
 
+import 'package:course_connect/User/Ai_course_finder/Alldetails.dart';
 import 'package:course_connect/User/Ai_course_finder/MBA.dart/MBA_DetailsOverall.dart';
 // import 'package:course_connect/User/Ai_course_finder/MBA_DetailsOverall.dart';
 import 'package:course_connect/User/Ai_course_finder/Masters.dart/Maters_academic.dart';
 import 'package:flutter/material.dart';
 import 'package:course_connect/User/Ai_course_finder/Masters.dart/MastersEnglishtest.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+import '../../../Controller/Bloc/selection_cubit.dart';
 
 class MBA_work extends StatefulWidget {
   const MBA_work({super.key});
@@ -130,11 +134,16 @@ class _MBA_workState extends State<MBA_work> {
 
             InkWell(
               onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => MBA_DetailsOverall()),
-                );
-              },
+    if (selectedTest != null) {
+    context.read<SelectionCubit>().updateSelection("Work", selectedTest.toString());
+    context.read<SelectionCubit>().updateSelection("Month", experienceMonths.toString());
+
+    Navigator.push(
+    context,
+    MaterialPageRoute(builder: (context) => BachelorsDetailsOverall()),
+    );
+    }
+    },
               child: Container(
                 height: 51,
                 width: 231,

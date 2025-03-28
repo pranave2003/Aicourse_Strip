@@ -122,10 +122,10 @@ class _Bachelors_KnowledgeState extends State<Bachelors_Knowledge> {
             ),
             InkWell(
               onTap: () {
-                if (selectedOrganization != null) {
+                if (testOptions != null) {
                   context
                       .read<SelectionCubit>()
-                      .updateSelection("org", selectedIndex.toString());
+                      .updateSelection("Options", testOptions.toString());
                   Navigator.push(
                     context,
                     MaterialPageRoute(

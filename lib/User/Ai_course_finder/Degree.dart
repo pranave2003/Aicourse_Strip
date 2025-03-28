@@ -36,7 +36,7 @@ class _DegreeState extends State<Degree> {
     {
       "name": "MBA",
       "image": "assets/Country/img_7.png",
-      "page": (String? selectedDegree,) => MbaEducation(),
+      "page": (String? selectedDegree,) => MbaEducation(selecteddegree:selectedDegree),
     },
   ];
 

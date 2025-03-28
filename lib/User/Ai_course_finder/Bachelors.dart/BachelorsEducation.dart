@@ -172,6 +172,8 @@ class _BachelorsEducationState extends State<BachelorsEducation> {
                     context.read<SelectionCubit>().updateSelection(
                         "highestEducation_percentage",
                         highesteducationpercentage.text);
+
+
                     Navigator.push(
                       context,
                       MaterialPageRoute(

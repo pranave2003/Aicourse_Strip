@@ -1,8 +1,12 @@
 // import 'package:course_connect/User/Ai_course_finder/MBA_Academic.dart';
 // import 'package:course_connect/User/Ai_course_finder/MBA_Companytype.dart';
+import 'package:course_connect/User/Ai_course_finder/MBA.dart/MBAEnglish.dart';
 import 'package:course_connect/User/Ai_course_finder/MBA.dart/MBA_Academic.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+import '../../../Controller/Bloc/selection_cubit.dart';
 
 class MBA_Courses extends StatefulWidget {
   const MBA_Courses({super.key});
@@ -151,11 +155,15 @@ class _MBA_CoursesState extends State<MBA_Courses> {
             const SizedBox(height: 30),
             InkWell(
               onTap: () {
-                if (selectedCourses != null) {
+
+    if (selectedCourses != null) {
+    context
+        .read<SelectionCubit>()
+        .updateSelection("course", selectedCourses.toString());
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => MbaAcademic(),
+                      builder: (context) => MBAEnglish(),
                     ),
                   );
                   print("Final Selected Courses: $selectedCourses");

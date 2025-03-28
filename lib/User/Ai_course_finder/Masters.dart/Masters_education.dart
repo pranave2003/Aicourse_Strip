@@ -1,6 +1,9 @@
 import 'package:course_connect/User/Ai_course_finder/Masters.dart/Masters_courses.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+import '../../../Controller/Bloc/selection_cubit.dart';
 
 class Masters_education extends StatefulWidget {
   const Masters_education({super.key, required this.selecteddegree});
@@ -14,6 +17,7 @@ class _Masters_educationState extends State<Masters_education> {
   List<String> items = ['IB', 'ICSE', 'CBSC', 'State'];
   int selectedIndex = -1; // Track selected container index
   String? selectedEducation;
+  TextEditingController highesteducationpercentage = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -56,19 +60,13 @@ class _Masters_educationState extends State<Masters_education> {
               Text(
                 "What is your expected or gained \n percentage?",
                 style: TextStyle(color: Color(0xff0B1F50), fontSize: 20),
+                textAlign: TextAlign.center,
               ),
               SizedBox(height: 20),
               Container(
-                decoration: BoxDecoration(
-                  color: Colors.grey, // Change button color to grey
-                  borderRadius:
-                      BorderRadius.circular(8), // Optional: Rounded corners
-                ),
-              ),
-              SizedBox(height: 50),
-              Container(
                 width: 200, // Adjust this value to control the underline length
                 child: TextFormField(
+                  controller: highesteducationpercentage, // FIXED: Controller Assigned
                   decoration: InputDecoration(
                     hintText: "Percentage  %",
                     hintStyle: TextStyle(color: Colors.black, fontSize: 18),
@@ -81,11 +79,19 @@ class _Masters_educationState extends State<Masters_education> {
                   ),
                   textAlign: TextAlign.center,
                   style: TextStyle(color: Colors.black, fontSize: 18),
+                  keyboardType: TextInputType.number, // Optional: Allow only numbers
                 ),
               ),
               SizedBox(height: 180),
               InkWell(
                 onTap: () {
+                  context.read<SelectionCubit>().updateSelection(
+                      "selectedDegree", widget.selecteddegree.toString());
+                  context.read<SelectionCubit>().updateSelection(
+                      "highestEducation", selectedEducation.toString());
+                  context.read<SelectionCubit>().updateSelection(
+                      "highestEducation_percentage",
+                      highesteducationpercentage.text);
                   Navigator.push(
                     context,
                     MaterialPageRoute(
@@ -93,8 +99,6 @@ class _Masters_educationState extends State<Masters_education> {
                     ),
                   );
                 },
-                // onTap: () {
-                //   print("object");
                 child: Container(
                   height: 51,
                   width: 231,
@@ -103,12 +107,12 @@ class _Masters_educationState extends State<Masters_education> {
                       borderRadius: BorderRadius.circular(30)),
                   child: Center(
                       child: Text(
-                    "Continue",
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 22,
-                        fontWeight: FontWeight.bold),
-                  )),
+                        "Continue",
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 22,
+                            fontWeight: FontWeight.bold),
+                      )),
                 ),
               )
             ],
@@ -135,12 +139,12 @@ class _Masters_educationState extends State<Masters_education> {
         margin: const EdgeInsets.symmetric(vertical: 10),
         child: Center(
             child: Text(
-          text,
-          style: TextStyle(
-            fontWeight: FontWeight.bold,
-            color: selectedIndex == index ? Colors.white : Colors.black,
-          ),
-        )),
+              text,
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                color: selectedIndex == index ? Colors.white : Colors.black,
+              ),
+            )),
       ),
     );
   }

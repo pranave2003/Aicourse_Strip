@@ -157,8 +157,8 @@ class _Bachelors_organizationState extends State<Bachelors_organization> {
                 if (selectedOrganization != null) {
                   context.read<SelectionCubit>().updateSelection(
                       "selectedOrganization", selectedOrganization.toString());
-                  context.read<SelectionCubit>().updateSelection(
-                      "selectedOrganization", selectedIndex.toString());
+                  // context.read<SelectionCubit>().updateSelection(
+                  //     "selectedOrganization", selectedIndex.toString());
                   Navigator.push(
                     context,
                     MaterialPageRoute(

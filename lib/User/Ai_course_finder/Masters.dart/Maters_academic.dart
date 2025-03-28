@@ -1,6 +1,9 @@
 import 'package:course_connect/User/Ai_course_finder/Masters.dart/MastersReaserch.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+import '../../../Controller/Bloc/selection_cubit.dart';
 
 class Maters_academic extends StatefulWidget {
   const Maters_academic({super.key});
@@ -11,9 +14,9 @@ class Maters_academic extends StatefulWidget {
 
 class _Maters_academicState extends State<Maters_academic> {
   int? selectedIndex; // Track selected container index
-  String? selectedTest; // Selected test name
-  final TextEditingController verbalScoreController = TextEditingController();
-  final TextEditingController quantScoreController = TextEditingController();
+  String? selectedAcademic; // Selected test name
+  final TextEditingController percentageController = TextEditingController();
+  // final TextEditingController quantScoreController = TextEditingController();
 
   // List of English language tests
   final List<String> englishTests = ["GRE", "GMAT"," GATE","IIT JAM ","NEET","LSAT", "TEST NOT TAKEN"];
@@ -74,7 +77,7 @@ class _Maters_academicState extends State<Maters_academic> {
                     onTap: () {
                       setState(() {
                         selectedIndex = index;
-                        selectedTest = englishTests[index];
+                        selectedAcademic = englishTests[index];
                       });
                     },
                     child: Container(
@@ -101,7 +104,7 @@ class _Maters_academicState extends State<Maters_academic> {
               ),
             ),
 
-            if (selectedTest == "GRE")
+            if (selectedAcademic == "GRE")
               Column(
                 children: [
                   const Text(
@@ -119,7 +122,7 @@ class _Maters_academicState extends State<Maters_academic> {
                         SizedBox(
                           width: 150,
                           child: TextFormField(
-                            controller: verbalScoreController,
+                            controller: percentageController,
                             keyboardType: TextInputType.number,
                             decoration: const InputDecoration(
                               hintText: "Verbal score",
@@ -139,34 +142,34 @@ class _Maters_academicState extends State<Maters_academic> {
                           ),
                         ),
                         const SizedBox(width: 30),
-                        SizedBox(
-                          width: 150,
-                          child: TextFormField(
-                            controller: quantScoreController,
-                            keyboardType: TextInputType.number,
-                            decoration: const InputDecoration(
-                              hintText: "Quant score",
-                              hintStyle:
-                              TextStyle(color: Colors.black, fontSize: 18),
-                              enabledBorder: UnderlineInputBorder(
-                                borderSide: BorderSide(color: Colors.black),
-                              ),
-                              focusedBorder: UnderlineInputBorder(
-                                borderSide:
-                                BorderSide(color: Colors.black, width: 1.5),
-                              ),
-                            ),
-                            textAlign: TextAlign.center,
-                            style: const TextStyle(
-                                color: Colors.black, fontSize: 18),
-                          ),
-                        ),
+                        // SizedBox(
+                        //   width: 150,
+                        //   child: TextFormField(
+                        //     controller: quantScoreController,
+                        //     keyboardType: TextInputType.number,
+                        //     decoration: const InputDecoration(
+                        //       hintText: "Quant score",
+                        //       hintStyle:
+                        //       TextStyle(color: Colors.black, fontSize: 18),
+                        //       enabledBorder: UnderlineInputBorder(
+                        //         borderSide: BorderSide(color: Colors.black),
+                        //       ),
+                        //       focusedBorder: UnderlineInputBorder(
+                        //         borderSide:
+                        //         BorderSide(color: Colors.black, width: 1.5),
+                        //       ),
+                        //     ),
+                        //     textAlign: TextAlign.center,
+                        //     style: const TextStyle(
+                        //         color: Colors.black, fontSize: 18),
+                        //   ),
+                        // ),
                       ],
                     ),
                   ),
                 ],
               ),
-         selectedTest == "GMAT"
+            selectedAcademic == "GMAT"
     ? Column(
            children: [
              const Text(
@@ -198,7 +201,7 @@ class _Maters_academicState extends State<Maters_academic> {
            ],
          )
 
-             : selectedTest == "TEST NOT TAKEN"
+             : selectedAcademic == "TEST NOT TAKEN"
     ? Text("Test nOt taken")
         : Text(""),
 
@@ -207,12 +210,20 @@ class _Maters_academicState extends State<Maters_academic> {
             // Continue Button
             InkWell(
               onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => MastersResearch(),
-                  ),
-                );
+    if (selectedAcademic != null) {
+      context.read<SelectionCubit>().updateSelection(
+          "Acadamictest", selectedAcademic.toString());
+      context.read<SelectionCubit>().updateSelection(
+          "AcadamicTestpercentage",
+          percentageController.text);
+
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => MastersResearch(),
+        ),
+      );
+    }
               },
               // onTap: () {
 
