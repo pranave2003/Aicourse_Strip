@@ -1,8 +1,4 @@
-import 'package:course_connect/User/Ai_course_finder/Bachelors.dart/Bachelors_activities.dart';
-import 'package:course_connect/User/Ai_course_finder/MBA.dart/MBAEnglish.dart';
 import 'package:course_connect/User/Ai_course_finder/MBA.dart/MBA_Companytype.dart';
-// import 'package:course_connect/User/Ai_course_finder/MBA_Companytype.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -16,11 +12,11 @@ class MbaAcademic extends StatefulWidget {
 }
 
 class _MbaAcademicState extends State<MbaAcademic> {
-  int? selectedIndex; // Track selected container index
-  String? selectedacademicTest; // Selected test name
-  final TextEditingController percentageController = TextEditingController(); // Controller for text input
+  int? selectedIndex;
+  String? selectedacademicTest;
+  String? selectedTestRange;
+  final TextEditingController percentageController = TextEditingController();
 
-  // List of English language tests
   final List<String> englishTests = [
     "GMAT",
     "GRE",
@@ -28,18 +24,29 @@ class _MbaAcademicState extends State<MbaAcademic> {
     "XAT",
     "CMAT",
     "MAT",
-    "NMAT ",
+    "NMAT",
     "TEST NOT TAKEN",
   ];
+
+  final Map<String, String> testRanges = {
+    "GMAT": "200 - 800",
+    "GRE": "260 - 340",
+    "CAT": "0 - 100",
+    "XAT": "0 - 100",
+    "CMAT": "0 - 100",
+    "MAT": "0 - 100",
+    "NMAT": "0 - 360",
+    "TEST NOT TAKEN": "No Score Required",
+  };
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
-          icon: Icon(Icons.arrow_back), // Back button icon
+          icon: Icon(Icons.arrow_back),
           onPressed: () {
-            Navigator.pop(context); // Navigate back when tapped
+            Navigator.pop(context);
           },
         ),
       ),
@@ -53,22 +60,17 @@ class _MbaAcademicState extends State<MbaAcademic> {
         child: Column(
           children: [
             const SizedBox(height: 20),
-            const Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  "Which Standardized MBA entrance \n exams have you  taken OR planning to take?",
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    color: Color(0xff0A1F52),
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ],
+            const Text(
+              "Which Standardized MBA entrance \n exams have you taken OR planning to take?",
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                color: Color(0xff0A1F52),
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+              ),
             ),
-            SizedBox(height: 10),
-            Row(
+            const SizedBox(height: 10),
+            const Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Icon(Icons.light_mode_rounded, color: Colors.yellowAccent, size: 24),
@@ -81,96 +83,130 @@ class _MbaAcademicState extends State<MbaAcademic> {
             ),
             const SizedBox(height: 20),
 
-            // Dynamically generated list of test options
             Expanded(
               child: ListView.builder(
-                shrinkWrap: true,
                 itemCount: englishTests.length,
                 itemBuilder: (context, index) {
                   bool isSelected = selectedIndex == index;
-                  return GestureDetector(
-                    onTap: () {
-                      setState(() {
-                        selectedIndex = index;
-                        selectedacademicTest = englishTests[index];
-                        print(selectedacademicTest);
-                      });
-                    },
-                    child: Container(
-                      height: 50,
-                      width: 150,
-                      margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 50),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(40),
-                        color: isSelected ? Color(0xff0A1F52) : Colors.grey,
-                      ),
-                      child: Center(
-                        child: Text(
-                          englishTests[index],
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            color: isSelected ? Colors.white : Colors.black,
+                  return Column(
+                    children: [
+                      GestureDetector(
+                        onTap: () {
+                          setState(() {
+                            selectedIndex = index;
+                            selectedacademicTest = englishTests[index];
+                            selectedTestRange = testRanges[selectedacademicTest]!;
+                          });
+                        },
+                        child: Container(
+                          height: 50,
+                          width: 200,
+                          margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 50),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(40),
+                            color: isSelected ? Color(0xff0A1F52) : Colors.grey,
+                          ),
+                          child: Center(
+                            child: Text(
+                              englishTests[index],
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                color: isSelected ? Colors.white : Colors.black,
+                              ),
+                            ),
                           ),
                         ),
                       ),
-                    ),
+                      if (isSelected)
+                        Padding(
+                          padding: const EdgeInsets.only(top: 5),
+                          child: Text(
+                            "Score Range: $selectedTestRange",
+                            style: TextStyle(fontSize: 16, color: Colors.black),
+                          ),
+                        ),
+                    ],
                   );
                 },
               ),
             ),
 
-            // Percentage Input Field (Placed directly below ListView)
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 10),
-              child: Container(
-                width: 200,
-                child: TextFormField(
-                  controller: percentageController,
-                  keyboardType: TextInputType.number,
-                  decoration: InputDecoration(
-                    hintText: "Percentage  %",
-                    hintStyle: TextStyle(color: Colors.black, fontSize: 18),
-                    enabledBorder: UnderlineInputBorder(
-                      borderSide: BorderSide(color: Colors.black),
+            if (selectedacademicTest != "TEST NOT TAKEN") ...[
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 10),
+                child: Container(
+                  width: 200,
+                  child: TextFormField(
+                    controller: percentageController,
+                    keyboardType: TextInputType.number,
+                    decoration: InputDecoration(
+                      hintText: "Enter Score",
+                      hintStyle: TextStyle(color: Colors.black, fontSize: 18),
+                      enabledBorder: UnderlineInputBorder(
+                        borderSide: BorderSide(color: Colors.black),
+                      ),
+                      focusedBorder: UnderlineInputBorder(
+                        borderSide: BorderSide(color: Colors.black, width: 1.5),
+                      ),
                     ),
-                    focusedBorder: UnderlineInputBorder(
-                      borderSide: BorderSide(color: Colors.black, width: 1.5),
-                    ),
+                    textAlign: TextAlign.center,
+                    style: TextStyle(color: Colors.black, fontSize: 18),
                   ),
-                  textAlign: TextAlign.center,
-                  style: TextStyle(color: Colors.black, fontSize: 18),
                 ),
               ),
-            ),
+            ],
 
             SizedBox(height: 30),
 
-            // Continue Button
             InkWell(
               onTap: () {
-    if (selectedacademicTest != null) {
-    context.read<SelectionCubit>().updateSelection(
-    "Acadamictest", selectedacademicTest.toString());
-    context.read<SelectionCubit>().updateSelection(
-    "AcadamicTestpercentage",
-        percentageController.text);
+                if (selectedacademicTest != null) {
+                  bool isValid = selectedacademicTest == "TEST NOT TAKEN";
+                  int? score = int.tryParse(percentageController.text);
 
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => MBA_companytype(),
-                    ),
-                  );
-                  print("Selected Academic Test: $selectedacademicTest");
-                }
-                else {
-                  print("Percentage: ${percentageController.text}");
+                  if (!isValid) {
+                    switch (selectedacademicTest) {
+                      case "GMAT":
+                        isValid = score != null && score >= 200 && score <= 800;
+                        break;
+                      case "GRE":
+                        isValid = score != null && score >= 260 && score <= 340;
+                        break;
+                      case "CAT":
+                      case "XAT":
+                      case "CMAT":
+                      case "MAT":
+                        isValid = score != null && score >= 0 && score <= 100;
+                        break;
+                      case "NMAT":
+                        isValid = score != null && score >= 0 && score <= 360;
+                        break;
+                    }
+                  }
+
+                  if (isValid) {
+                    context.read<SelectionCubit>().updateSelection(
+                        "Acadamictest", selectedacademicTest.toString());
+                    context.read<SelectionCubit>().updateSelection(
+                        "AcadamicTestpercentage", percentageController.text);
+
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => MBA_companytype(),
+                      ),
+                    );
+                  } else {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(content: Text("Invalid score for the selected test")),
+                    );
+                  }
+                } else {
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(content: Text("No Academic Test selected")),
                   );
                 }
               },
-
               child: Container(
                 height: 51,
                 width: 231,
@@ -198,9 +234,3 @@ class _MbaAcademicState extends State<MbaAcademic> {
     );
   }
 }
-
-
-
-
-
-

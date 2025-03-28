@@ -1,21 +1,18 @@
 import 'package:course_connect/User/Ai_course_finder/Bachelors.dart/Bachelors_organization.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../Controller/Bloc/selection_cubit.dart';
 
 class Bachelors_activities extends StatefulWidget {
-  const Bachelors_activities({
-    super.key,
-  });
+  const Bachelors_activities({super.key});
 
   @override
   State<Bachelors_activities> createState() => _Bachelors_activitiesState();
 }
 
 class _Bachelors_activitiesState extends State<Bachelors_activities> {
-  String? selectedactivitys; // Selected value
+  String? selectedactivitys;
   List<String> items = [
     'National level representation',
     'State level',
@@ -29,10 +26,8 @@ class _Bachelors_activitiesState extends State<Bachelors_activities> {
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
-          icon: Icon(Icons.arrow_back), // Back button icon
-          onPressed: () {
-            Navigator.pop(context); // Navigate back when tapped
-          },
+          icon: Icon(Icons.arrow_back),
+          onPressed: () => Navigator.pop(context),
         ),
       ),
       body: Container(
@@ -44,9 +39,9 @@ class _Bachelors_activitiesState extends State<Bachelors_activities> {
         ),
         child: Column(
           children: [
-            // Title
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20.0),
+            const SizedBox(height: 20),
+            const Padding(
+              padding: EdgeInsets.symmetric(horizontal: 20.0),
               child: Text(
                 "What is your most relevant level of \ninvolvement in extracurricular activities?",
                 textAlign: TextAlign.center,
@@ -57,36 +52,30 @@ class _Bachelors_activitiesState extends State<Bachelors_activities> {
                 ),
               ),
             ),
-            SizedBox(height: 20),
-
-            // Info row
+            const SizedBox(height: 20),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Icon(Icons.light_mode_rounded,
-                    color: Colors.yellowAccent, size: 24),
-                SizedBox(width: 10),
-                Text(
-                  "Higher the level of representation better \n the impact on your profile.",
+                const Icon(Icons.light_mode_rounded, color: Colors.yellowAccent, size: 24),
+                const SizedBox(width: 10),
+                const Text(
+                  "Higher the level of representation, better \nthe impact on your profile.",
                   textAlign: TextAlign.center,
                   style: TextStyle(fontSize: 18),
                 ),
               ],
             ),
-            SizedBox(height: 20),
-
-            // Dropdown Menu
+            const SizedBox(height: 20),
             Container(
               decoration: BoxDecoration(
-                color: Colors.grey, // Change button color to grey
-                borderRadius:
-                    BorderRadius.circular(20), // Optional: Rounded corners
+                color: Colors.grey,
+                borderRadius: BorderRadius.circular(20),
               ),
-              padding: EdgeInsets.symmetric(horizontal: 40), // Adds padding
+              padding: const EdgeInsets.symmetric(horizontal: 40),
               child: DropdownButton<String>(
                 value: selectedactivitys,
-                hint: Text('Select from list'),
-                dropdownColor: Colors.grey[300], // Dropdown menu color
+                hint: const Text('Select from list'),
+                dropdownColor: Colors.grey[300],
                 items: items.map((String item) {
                   return DropdownMenuItem<String>(
                     value: item,
@@ -95,30 +84,22 @@ class _Bachelors_activitiesState extends State<Bachelors_activities> {
                 }).toList(),
                 onChanged: (String? newValue) {
                   setState(() {
-                    selectedactivitys = newValue; // Update the selected value
+                    selectedactivitys = newValue;
                   });
                 },
-                underline: SizedBox(), // Removes the default underline
+                underline: const SizedBox(),
               ),
             ),
-
-            Spacer(), // Pushes the button to the bottom
-
-            // Continue Button
+            const Spacer(),
             InkWell(
               onTap: () {
                 if (selectedactivitys != null) {
-                  context.read<SelectionCubit>().updateSelection(
-                      "selectedactivity", selectedactivitys.toString());
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => Bachelors_organization()));
+                  context.read<SelectionCubit>().updateSelection("selectedactivity", selectedactivitys.toString());
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => Bachelors_organization()));
                   print("Selected activities: $selectedactivitys");
                 } else {
-                  print("No activities selected");
                   ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(content: Text("Please select an activity level")),
+                    const SnackBar(content: Text("Please select an activity level")),
                   );
                 }
               },
@@ -126,10 +107,10 @@ class _Bachelors_activitiesState extends State<Bachelors_activities> {
                 height: 51,
                 width: 231,
                 decoration: BoxDecoration(
-                  color: Color(0xff0A71CB),
+                  color: const Color(0xff0A71CB),
                   borderRadius: BorderRadius.circular(30),
                 ),
-                child: Center(
+                child: const Center(
                   child: Text(
                     "Continue",
                     style: TextStyle(
@@ -141,8 +122,7 @@ class _Bachelors_activitiesState extends State<Bachelors_activities> {
                 ),
               ),
             ),
-
-            SizedBox(height: 20), // Bottom padding
+            const SizedBox(height: 20),
           ],
         ),
       ),

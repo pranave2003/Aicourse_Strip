@@ -1,4 +1,3 @@
-
 import 'package:course_connect/User/Ai_course_finder/Masters.dart/Maters_academic.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -130,15 +129,27 @@ class _MastersWorkState extends State<MastersWork> {
 
             InkWell(
               onTap: () {
-                if (selectedWork != null) {
-                  context.read<SelectionCubit>().updateSelection("Work", selectedWork.toString());
-                  context.read<SelectionCubit>().updateSelection("Month", experienceMonths.toString());
-
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => Maters_academic()),
+                if (selectedWork == null) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(content: Text("Please select if you have work experience.")),
                   );
+                  return;
                 }
+
+                if (selectedWork == "Yes" && experienceMonths == 0) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(content: Text("Please select valid work experience duration.")),
+                  );
+                  return;
+                }
+
+                context.read<SelectionCubit>().updateSelection("Work", selectedWork.toString());
+                context.read<SelectionCubit>().updateSelection("Month", experienceMonths.toString());
+
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => Maters_academic()),
+                );
               },
               child: Container(
                 height: 51,
@@ -167,6 +178,7 @@ class _MastersWorkState extends State<MastersWork> {
     );
   }
 }
+
 
 
 

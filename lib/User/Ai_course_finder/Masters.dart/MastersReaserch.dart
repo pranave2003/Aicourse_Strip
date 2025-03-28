@@ -1,4 +1,3 @@
-
 import 'package:course_connect/User/Ai_course_finder/Masters.dart/MatersDetailsOverall.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -102,42 +101,31 @@ class _MastersResearchState extends State<MastersResearch> {
               const Spacer(),
               InkWell(
                 onTap: () {
-                //   if (selectedOption != null) {
-                //     context.read<SelectionCubit>().updateSelection(
-                //         "Research paper", selectedOption.toString());
-                //
-                //
-                //     ScaffoldMessenger.of(context).showSnackBar(
-                //       const SnackBar(content: Text(
-                //           "Please select Indexed or Non-Indexed Journal.")),
-                //     );
-                //   }
-                //    else {
-                //     Navigator.push(
-                //       context,
-                //       MaterialPageRoute(builder: (context) => BachelorsDetailsOverall()),
-                //     );
-                //   }
-                // },
-                if (selectedOption == "Yes" && selectedJournal == null) {
-                ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(content: Text("Please select Indexed or Non-Indexed Journal.")),
-                );
-                return; // Stop execution here
-                }
+                  if (selectedOption == null) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(content: Text("Please select Yes or No for research publication.")),
+                    );
+                    return;
+                  }
 
-                if (selectedOption != null) {
-                context.read<SelectionCubit>().updateSelection(
-                "Research paper", selectedOption.toString());
-                }
+                  if (selectedOption == "Yes" && selectedJournal == null) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(content: Text("Please select Indexed or Non-Indexed Journal.")),
+                    );
+                    return;
+                  }
 
-                Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => BachelorsDetailsOverall()),
-                );
+                  if (selectedOption != null) {
+                    context.read<SelectionCubit>().updateSelection(
+                        "Research paper", selectedOption.toString());
+                  }
+
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => BachelorsDetailsOverall()),
+                  );
                 },
-
-                 child:Container(
+                child: Container(
                   padding: const EdgeInsets.symmetric(vertical: 15),
                   width: double.infinity,
                   decoration: BoxDecoration(
@@ -211,4 +199,3 @@ class _MastersResearchState extends State<MastersResearch> {
     );
   }
 }
-

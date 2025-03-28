@@ -1,5 +1,4 @@
 import 'package:course_connect/User/Ai_course_finder/Masters.dart/MastersReaserch.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -13,22 +12,22 @@ class Maters_academic extends StatefulWidget {
 }
 
 class _Maters_academicState extends State<Maters_academic> {
-  int? selectedIndex; // Track selected container index
-  String? selectedAcademic; // Selected test name
-  final TextEditingController percentageController = TextEditingController();
-  // final TextEditingController quantScoreController = TextEditingController();
+  int? selectedIndex;
+  String? selectedAcademic;
+  final TextEditingController scoreController = TextEditingController();
 
-  // List of English language tests
-  final List<String> englishTests = ["GRE", "GMAT"," GATE","IIT JAM ","NEET","LSAT", "TEST NOT TAKEN"];
+  final List<String> englishTests = [
+    "GRE", "GMAT", "GATE", "IIT JAM", "NEET", "LSAT", "TEST NOT TAKEN"
+  ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back), // Back button icon
+          icon: const Icon(Icons.arrow_back),
           onPressed: () {
-            Navigator.pop(context); // Navigate back when tapped
+            Navigator.pop(context);
           },
         ),
       ),
@@ -55,21 +54,18 @@ class _Maters_academicState extends State<Maters_academic> {
             const Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Icon(Icons.light_mode_rounded,
-                    color: Colors.yellowAccent, size: 24),
+                Icon(Icons.light_mode_rounded, color: Colors.yellowAccent, size: 24),
                 SizedBox(width: 10),
                 Text(
-                  "Scoring high in language tests \nincreases your options multifold.",
+                  "Scoring high in tests increases your options.",
                   style: TextStyle(fontSize: 18),
                 ),
               ],
             ),
             const SizedBox(height: 20),
 
-            // Dynamically generated list of test options
             Expanded(
               child: ListView.builder(
-                shrinkWrap: true,
                 itemCount: englishTests.length,
                 itemBuilder: (context, index) {
                   bool isSelected = selectedIndex == index;
@@ -78,13 +74,13 @@ class _Maters_academicState extends State<Maters_academic> {
                       setState(() {
                         selectedIndex = index;
                         selectedAcademic = englishTests[index];
+                        scoreController.clear(); // Clear input on selection change
                       });
                     },
                     child: Container(
                       height: 50,
                       width: 150,
-                      margin: const EdgeInsets.symmetric(
-                          vertical: 10, horizontal: 50),
+                      margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 50),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(40),
                         color: isSelected ? const Color(0xff0A1F52) : Colors.grey,
@@ -104,133 +100,109 @@ class _Maters_academicState extends State<Maters_academic> {
               ),
             ),
 
-            if (selectedAcademic == "GRE")
+            if (selectedAcademic != "TEST NOT TAKEN" && selectedAcademic != null)
               Column(
                 children: [
-                  const Text(
-                    "Enter Your GRE scores",
-                    style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.blue),
+                  Text(
+                    "Enter Your ${selectedAcademic} Score",
+                    style: const TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.blue,
+                    ),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 10),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        SizedBox(
-                          width: 150,
-                          child: TextFormField(
-                            controller: percentageController,
-                            keyboardType: TextInputType.number,
-                            decoration: const InputDecoration(
-                              hintText: "Verbal score",
-                              hintStyle:
-                              TextStyle(color: Colors.black, fontSize: 18),
-                              enabledBorder: UnderlineInputBorder(
-                                borderSide: BorderSide(color: Colors.black),
-                              ),
-                              focusedBorder: UnderlineInputBorder(
-                                borderSide:
-                                BorderSide(color: Colors.black, width: 1.5),
-                              ),
-                            ),
-                            textAlign: TextAlign.center,
-                            style: const TextStyle(
-                                color: Colors.black, fontSize: 18),
-                          ),
+                  const SizedBox(height: 10),
+                  SizedBox(
+                    width: 200,
+                    child: TextFormField(
+                      controller: scoreController,
+                      keyboardType: TextInputType.number,
+                      decoration: InputDecoration(
+                        hintText: "Score",
+                        hintStyle: const TextStyle(color: Colors.black, fontSize: 18),
+                        enabledBorder: const UnderlineInputBorder(
+                          borderSide: BorderSide(color: Colors.black),
                         ),
-                        const SizedBox(width: 30),
-                        // SizedBox(
-                        //   width: 150,
-                        //   child: TextFormField(
-                        //     controller: quantScoreController,
-                        //     keyboardType: TextInputType.number,
-                        //     decoration: const InputDecoration(
-                        //       hintText: "Quant score",
-                        //       hintStyle:
-                        //       TextStyle(color: Colors.black, fontSize: 18),
-                        //       enabledBorder: UnderlineInputBorder(
-                        //         borderSide: BorderSide(color: Colors.black),
-                        //       ),
-                        //       focusedBorder: UnderlineInputBorder(
-                        //         borderSide:
-                        //         BorderSide(color: Colors.black, width: 1.5),
-                        //       ),
-                        //     ),
-                        //     textAlign: TextAlign.center,
-                        //     style: const TextStyle(
-                        //         color: Colors.black, fontSize: 18),
-                        //   ),
-                        // ),
-                      ],
+                        focusedBorder: const UnderlineInputBorder(
+                          borderSide: BorderSide(color: Colors.black, width: 1.5),
+                        ),
+                      ),
+                      textAlign: TextAlign.center,
+                      style: const TextStyle(color: Colors.black, fontSize: 18),
                     ),
                   ),
                 ],
               ),
-            selectedAcademic == "GMAT"
-    ? Column(
-           children: [
-             const Text(
-               "Enter Your Score",
-               style: TextStyle(
-                 fontSize: 20,
-                 fontWeight: FontWeight.bold,
-                 color: Colors.blue,
-               ),
-             ),
-             SizedBox(height: 10,),
-             Container(
-               width: 200, // Adjust this value to control the underline length
-               child: TextFormField(
-                 decoration: InputDecoration(
-                   hintText: "Score",
-                   hintStyle: TextStyle(color: Colors.black, fontSize: 18),
-                   enabledBorder: UnderlineInputBorder(
-                     borderSide: BorderSide(color: Colors.black),
-                   ),
-                   focusedBorder: UnderlineInputBorder(
-                     borderSide: BorderSide(color: Colors.black, width: 1.5),
-                   ),
-                 ),
-                 textAlign: TextAlign.center,
-                 style: TextStyle(color: Colors.black, fontSize: 18),
-               ),
-             ),
-           ],
-         )
-
-             : selectedAcademic == "TEST NOT TAKEN"
-    ? Text("Test nOt taken")
-        : Text(""),
 
             const SizedBox(height: 30),
 
-            // Continue Button
             InkWell(
               onTap: () {
-    if (selectedAcademic != null) {
-      context.read<SelectionCubit>().updateSelection(
-          "Acadamictest", selectedAcademic.toString());
-      context.read<SelectionCubit>().updateSelection(
-          "AcadamicTestpercentage",
-          percentageController.text);
+                if (selectedAcademic == null) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(content: Text("Please select an academic test.")),
+                  );
+                  return;
+                }
 
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) => MastersResearch(),
-        ),
-      );
-    }
+                if (selectedAcademic != "TEST NOT TAKEN") {
+                  if (scoreController.text.isEmpty) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(content: Text("Please enter your test score.")),
+                    );
+                    return;
+                  }
+
+                  int? score = int.tryParse(scoreController.text);
+                  if (score == null) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(content: Text("Please enter a valid numeric score.")),
+                    );
+                    return;
+                  }
+
+                  // Validation for each test
+                  if (selectedAcademic == "GRE" && (score < 130 || score > 170)) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(content: Text("GRE score must be between 130 - 170.")),
+                    );
+                    return;
+                  }
+                  if (selectedAcademic == "GMAT" && (score < 200 || score > 800)) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(content: Text("GMAT score must be between 200 - 800.")),
+                    );
+                    return;
+                  }
+                  if ((selectedAcademic == "GATE" || selectedAcademic == "IIT JAM") &&
+                      (score < 0 || score > 100)) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(content: Text("Score must be between 0 - 100.")),
+                    );
+                    return;
+                  }
+                  if (selectedAcademic == "NEET" && (score < 0 || score > 720)) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(content: Text("NEET score must be between 0 - 720.")),
+                    );
+                    return;
+                  }
+                  if (selectedAcademic == "LSAT" && (score < 120 || score > 180)) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(content: Text("LSAT score must be between 120 - 180.")),
+                    );
+                    return;
+                  }
+                }
+
+                context.read<SelectionCubit>().updateSelection("Acadamictest", selectedAcademic.toString());
+                context.read<SelectionCubit>().updateSelection("AcadamicTestpercentage", scoreController.text);
+
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => MastersResearch()),
+                );
               },
-              // onTap: () {
-
-                // print("Selected Test: $selectedTest");
-                // print("Verbal Score: ${verbalScoreController.text}");
-              //   // print("Quant Score: ${quantScoreController.text}");
-              // },
               child: Container(
                 height: 51,
                 width: 231,

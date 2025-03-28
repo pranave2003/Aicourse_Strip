@@ -1,26 +1,20 @@
 import 'package:course_connect/User/Ai_course_finder/Bachelors.dart/BachelorsEnglish.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../Controller/Bloc/selection_cubit.dart';
 
 class BachelorsCourse extends StatefulWidget {
-  const BachelorsCourse({
-    super.key,
-  });
+  const BachelorsCourse({super.key});
 
   @override
   State<BachelorsCourse> createState() => _BachelorsCourseState();
 }
 
 class _BachelorsCourseState extends State<BachelorsCourse> {
-  Set<int> selectedIndices = {}; // Track selected course indices
-  List<String> selectedCourses = []; // Store selected course names
+  int? selectedIndex; // Track selected course index
+  String? selectedCourse; // Store selected course name
 
-  @override
-
-  // List of available courses
   final List<String> courses = [
     "BBA (Bachelor of Business Administration)",
     "BCom (Bachelor of Commerce)",
@@ -56,14 +50,14 @@ class _BachelorsCourseState extends State<BachelorsCourse> {
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
-          icon: Icon(Icons.arrow_back), // Back button icon
+          icon: const Icon(Icons.arrow_back),
           onPressed: () {
-            Navigator.pop(context); // Navigate back when tapped
+            Navigator.pop(context);
           },
         ),
       ),
       body: Container(
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           image: DecorationImage(
             image: AssetImage("assets/Country/main.png"),
             fit: BoxFit.cover,
@@ -78,9 +72,10 @@ class _BachelorsCourseState extends State<BachelorsCourse> {
                 Text(
                   "What major do you want to pursue?",
                   style: TextStyle(
-                      color: Color(0xff0A1F52),
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold),
+                    color: Color(0xff0A1F52),
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
               ],
             ),
@@ -88,32 +83,32 @@ class _BachelorsCourseState extends State<BachelorsCourse> {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16),
               child: TextFormField(
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   hintText: "Search Course",
                   prefixIcon: Icon(Icons.search),
                   border: OutlineInputBorder(
-                      borderSide: BorderSide(width: 1, color: Colors.black)),
+                    borderSide: BorderSide(width: 1, color: Colors.black),
+                  ),
                 ),
               ),
             ),
             const SizedBox(height: 20),
             Expanded(
               child: ListView.builder(
-                padding: EdgeInsets.symmetric(horizontal: 20),
-                itemCount: courses.length, // Number of courses
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                itemCount: courses.length,
                 itemBuilder: (context, index) {
-                  bool isSelected = selectedIndices.contains(index);
+                  bool isSelected = selectedIndex == index;
                   return GestureDetector(
                     onTap: () {
                       setState(() {
                         if (isSelected) {
-                          selectedIndices.remove(index);
-                          selectedCourses.remove(courses[index]);
+                          selectedIndex = null;
+                          selectedCourse = null;
                         } else {
-                          selectedIndices.add(index);
-                          selectedCourses.add(courses[index]);
+                          selectedIndex = index;
+                          selectedCourse = courses[index];
                         }
-                        print("Selected Courses: $selectedCourses");
                       });
                     },
                     child: Container(
@@ -122,7 +117,7 @@ class _BachelorsCourseState extends State<BachelorsCourse> {
                       padding: const EdgeInsets.symmetric(horizontal: 15),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(40),
-                        color: isSelected ? Color(0xff0A1F52) : Colors.grey,
+                        color: isSelected ? const Color(0xff0A1F52) : Colors.grey,
                       ),
                       child: Row(
                         children: [
@@ -131,23 +126,26 @@ class _BachelorsCourseState extends State<BachelorsCourse> {
                             onChanged: (value) {
                               setState(() {
                                 if (value == true) {
-                                  selectedIndices.add(index);
-                                  selectedCourses.add(courses[index]);
+                                  selectedIndex = index;
+                                  selectedCourse = courses[index];
                                 } else {
-                                  selectedIndices.remove(index);
-                                  selectedCourses.remove(courses[index]);
+                                  selectedIndex = null;
+                                  selectedCourse = null;
                                 }
                               });
                             },
                             activeColor: Colors.white,
                             checkColor: Colors.black,
                           ),
-                          SizedBox(width: 10),
-                          Text(
-                            courses[index],
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              color: isSelected ? Colors.white : Colors.black,
+                          const SizedBox(width: 10),
+                          Expanded(
+                            child: Text(
+                              courses[index],
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                color: isSelected ? Colors.white : Colors.black,
+                              ),
+                              overflow: TextOverflow.ellipsis,
                             ),
                           ),
                         ],
@@ -160,45 +158,35 @@ class _BachelorsCourseState extends State<BachelorsCourse> {
             const SizedBox(height: 30),
             InkWell(
               onTap: () {
-                if (selectedCourses != null) {
-                  context
-                      .read<SelectionCubit>()
-                      .updateSelection("course", selectedCourses.toString());
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => BachelorsEnglish(),
-                    ),
-                  );
-                  print("Selected Courses: $selectedCourses");
-                } else {
-                  print("No course selected");
+                if (selectedCourse == null) {
                   ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(content: Text("Please choose courses")),
+                    const SnackBar(content: Text("Please choose a course")),
                   );
+                  return;
                 }
+                context.read<SelectionCubit>().updateSelection("course", selectedCourse.toString());
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => BachelorsEnglish(),
+                  ),
+                );
               },
-              // onTap: () {
-              //   if (selectedCourses.isNotEmpty) {
-              //     print("Final Selected Courses: $selectedCourses");
-              //   } else {
-              //     print("Please choose courses");
-              //   }
-              // },
               child: Container(
                 height: 51,
                 width: 231,
                 decoration: BoxDecoration(
-                  color: Color(0xff0A71CB),
+                  color: const Color(0xff0A71CB),
                   borderRadius: BorderRadius.circular(30),
                 ),
-                child: Center(
+                child: const Center(
                   child: Text(
-                    selectedCourses.isEmpty ? "No Preference" : "Continue",
+                    "Continue",
                     style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 22,
-                        fontWeight: FontWeight.bold),
+                      color: Colors.white,
+                      fontSize: 22,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 ),
               ),

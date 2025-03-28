@@ -1,7 +1,5 @@
 import 'package:course_connect/User/Ai_course_finder/Bachelors.dart/BachelorsCourse.dart';
-// import 'package:course_connect/User/Ai_course_finder/BachelorsCourse.dart';
 import 'package:course_connect/Widget/Constands/colors.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -30,14 +28,14 @@ class _BachelorsEducationState extends State<BachelorsEducation> {
     return Scaffold(
         appBar: AppBar(
           leading: IconButton(
-            icon: Icon(Icons.arrow_back), // Back button icon
+            icon: const Icon(Icons.arrow_back),
             onPressed: () {
-              Navigator.pop(context); // Navigate back when tapped
+              Navigator.pop(context);
             },
           ),
         ),
         body: Container(
-          decoration: BoxDecoration(
+          decoration: const BoxDecoration(
             image: DecorationImage(
               image: AssetImage("assets/country/img_6.png"),
               fit: BoxFit.cover,
@@ -45,7 +43,7 @@ class _BachelorsEducationState extends State<BachelorsEducation> {
           ),
           child: Column(
             children: [
-              Row(
+              const Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
@@ -57,13 +55,12 @@ class _BachelorsEducationState extends State<BachelorsEducation> {
                   ),
                 ],
               ),
-              SizedBox(height: 10),
+              const SizedBox(height: 10),
               GestureDetector(
                 onTap: () {
                   setState(() {
                     selectedIndex = 0;
                     seletedEducation = "Grade 12";
-                    print(seletedEducation);
                   });
                 },
                 child: Container(
@@ -71,17 +68,17 @@ class _BachelorsEducationState extends State<BachelorsEducation> {
                   width: 300,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(40),
-                    color: selectedIndex == 0 ? Color(0xff0A1F52) : Colors.grey,
+                    color: selectedIndex == 0 ? const Color(0xff0A1F52) : Colors.grey,
                   ),
                   margin: const EdgeInsets.symmetric(vertical: 10),
                   child: Center(
                       child: Text(
-                    "Grade 12",
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      color: selectedIndex == 0 ? Colors.white : Colors.black,
-                    ),
-                  )),
+                        "Grade 12",
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: selectedIndex == 0 ? Colors.white : Colors.black,
+                        ),
+                      )),
                 ),
               ),
               GestureDetector(
@@ -89,7 +86,6 @@ class _BachelorsEducationState extends State<BachelorsEducation> {
                   setState(() {
                     selectedIndex = 1;
                     seletedEducation = "Undergraduate diploma";
-                    print(seletedEducation);
                   });
                 },
                 child: Container(
@@ -97,34 +93,33 @@ class _BachelorsEducationState extends State<BachelorsEducation> {
                   width: 300,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(40),
-                    color: selectedIndex == 1 ? Color(0xff0A1F52) : Colors.grey,
+                    color: selectedIndex == 1 ? const Color(0xff0A1F52) : Colors.grey,
                   ),
                   margin: const EdgeInsets.symmetric(vertical: 10),
                   child: Center(
                       child: Text(
-                    "Undergraduate diploma",
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      color: selectedIndex == 1 ? Colors.white : Colors.black,
-                    ),
-                  )),
+                        "Undergraduate diploma",
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: selectedIndex == 1 ? Colors.white : Colors.black,
+                        ),
+                      )),
                 ),
               ),
-              SizedBox(height: 30),
-              Text("What is your expected or gained \n percentage?",
+              const SizedBox(height: 30),
+              const Text("What is your expected or gained \n percentage?",
                   style: TextStyle(color: Color(0xff0B1F50), fontSize: 20)),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
               Container(
                 decoration: BoxDecoration(
-                  color: Colors.grey, // Change button color to grey
-                  borderRadius:
-                      BorderRadius.circular(8), // Optional: Rounded corners
+                  color: Colors.grey,
+                  borderRadius: BorderRadius.circular(8),
                 ),
-                padding: EdgeInsets.symmetric(horizontal: 12), // Adds padding
+                padding: const EdgeInsets.symmetric(horizontal: 12),
                 child: DropdownButton<String>(
                   value: _selectedValue,
-                  hint: Text('Select Board'),
-                  dropdownColor: Colors.grey[300], // Dropdown menu color
+                  hint: const Text('Select Board'),
+                  dropdownColor: Colors.grey[300],
                   items: items.map((String item) {
                     return DropdownMenuItem<String>(
                       value: item,
@@ -136,15 +131,16 @@ class _BachelorsEducationState extends State<BachelorsEducation> {
                       _selectedValue = newValue;
                     });
                   },
-                  underline: SizedBox(), // Removes the default underline
+                  underline: const SizedBox(),
                 ),
               ),
-              SizedBox(height: 180),
-              Container(
-                width: 200, // Adjust this value to control the underline length
+              const SizedBox(height: 180),
+              SizedBox(
+                width: 200,
                 child: TextFormField(
                   controller: highesteducationpercentage,
-                  decoration: InputDecoration(
+                  keyboardType: TextInputType.number,
+                  decoration: const InputDecoration(
                     hintText: "Percentage  %",
                     hintStyle: TextStyle(color: Colors.black, fontSize: 18),
                     enabledBorder: UnderlineInputBorder(
@@ -155,54 +151,89 @@ class _BachelorsEducationState extends State<BachelorsEducation> {
                     ),
                   ),
                   textAlign: TextAlign.center,
-                  style: TextStyle(color: Colors.black, fontSize: 18),
+                  style: const TextStyle(color: Colors.black, fontSize: 18),
                 ),
               ),
-              SizedBox(height: 50),
+              const SizedBox(height: 50),
               InkWell(
-                //   onTap: () {
-                //     print("object");
-                //   },
                 onTap: () {
-                  if (seletedEducation != null) {
-                    context.read<SelectionCubit>().updateSelection(
-                        "selectedDegree", widget.selecteddegree.toString());
-                    context.read<SelectionCubit>().updateSelection(
-                        "highestEducation", seletedEducation.toString());
-                    context.read<SelectionCubit>().updateSelection(
-                        "highestEducation_percentage",
-                        highesteducationpercentage.text);
+                  double? percentage = double.tryParse(highesteducationpercentage.text);
 
-
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => BachelorsCourse(),
+                  if (seletedEducation == null) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(
+                        content: Text("Please select a degree first"),
+                        backgroundColor: Colors.red,
                       ),
                     );
-                    print("Selected Degree: $seletedEducation");
-                  } else {
-                    print("No educational qualification selected");
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(content: Text("Please select a degree first")),
-                    );
+                    return;
                   }
-                },
 
+                  if (percentage == null) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(
+                        content: Text("Please enter a valid percentage"),
+                        backgroundColor: Colors.red,
+                      ),
+                    );
+                    return;
+                  }
+
+                  // Validation based on selected degree
+                  if (seletedEducation == "Grade 12" &&
+                      (percentage < 0 || percentage > 100)) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(
+                        content: Text("Percentage must be between 0-100 for Grade 12"),
+                        backgroundColor: Colors.red,
+                      ),
+                    );
+                    return;
+                  }
+
+                  if (seletedEducation == "Undergraduate diploma" &&
+                      (percentage < 30 || percentage > 100)) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(
+                        content: Text(
+                            "Percentage must be between 30-100 for Undergraduate diploma"),
+                        backgroundColor: Colors.red,
+                      ),
+                    );
+                    return;
+                  }
+
+                  // Save selection
+                  context.read<SelectionCubit>().updateSelection(
+                      "selectedDegree", widget.selecteddegree.toString());
+                  context.read<SelectionCubit>().updateSelection(
+                      "highestEducation", seletedEducation.toString());
+                  context.read<SelectionCubit>().updateSelection(
+                      "highestEducation_percentage",
+                      highesteducationpercentage.text);
+
+                  // Navigate to the next page
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => BachelorsCourse(),
+                    ),
+                  );
+                },
                 child: Container(
                   height: 51,
                   width: 231,
                   decoration: BoxDecoration(
                       color: blueColor,
                       borderRadius: BorderRadius.circular(30)),
-                  child: Center(
+                  child: const Center(
                       child: Text(
-                    "Continue",
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 22,
-                        fontWeight: FontWeight.bold),
-                  )),
+                        "Continue",
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 22,
+                            fontWeight: FontWeight.bold),
+                      )),
                 ),
               )
             ],

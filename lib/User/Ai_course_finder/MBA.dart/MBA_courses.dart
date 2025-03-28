@@ -1,7 +1,4 @@
-// import 'package:course_connect/User/Ai_course_finder/MBA_Academic.dart';
-// import 'package:course_connect/User/Ai_course_finder/MBA_Companytype.dart';
 import 'package:course_connect/User/Ai_course_finder/MBA.dart/MBAEnglish.dart';
-import 'package:course_connect/User/Ai_course_finder/MBA.dart/MBA_Academic.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -16,8 +13,8 @@ class MBA_Courses extends StatefulWidget {
 }
 
 class _MBA_CoursesState extends State<MBA_Courses> {
-  Set<int> selectedIndices = {}; // Track selected course indices
-  List<String> selectedCourses = []; // Store selected course names
+  int? selectedIndex; // Track selected course index
+  String? selectedCourse; // Store selected course name
 
   // List of available courses
   final List<String> courses = [
@@ -97,18 +94,13 @@ class _MBA_CoursesState extends State<MBA_Courses> {
                 padding: EdgeInsets.symmetric(horizontal: 20),
                 itemCount: courses.length, // Number of courses
                 itemBuilder: (context, index) {
-                  bool isSelected = selectedIndices.contains(index);
+                  bool isSelected = selectedIndex == index;
                   return GestureDetector(
                     onTap: () {
                       setState(() {
-                        if (isSelected) {
-                          selectedIndices.remove(index);
-                          selectedCourses.remove(courses[index]);
-                        } else {
-                          selectedIndices.add(index);
-                          selectedCourses.add(courses[index]);
-                        }
-                        print("Selected Courses: $selectedCourses");
+                        selectedIndex = index; // Set the selected index
+                        selectedCourse = courses[index]; // Set the selected course
+                        print("Selected Course: $selectedCourse");
                       });
                     },
                     child: Container(
@@ -125,13 +117,8 @@ class _MBA_CoursesState extends State<MBA_Courses> {
                             value: isSelected,
                             onChanged: (value) {
                               setState(() {
-                                if (value == true) {
-                                  selectedIndices.add(index);
-                                  selectedCourses.add(courses[index]);
-                                } else {
-                                  selectedIndices.remove(index);
-                                  selectedCourses.remove(courses[index]);
-                                }
+                                selectedIndex = index; // Set the selected index
+                                selectedCourse = courses[index]; // Set the selected course
                               });
                             },
                             activeColor: Colors.white,
@@ -155,23 +142,22 @@ class _MBA_CoursesState extends State<MBA_Courses> {
             const SizedBox(height: 30),
             InkWell(
               onTap: () {
-
-    if (selectedCourses != null) {
-    context
-        .read<SelectionCubit>()
-        .updateSelection("course", selectedCourses.toString());
+                // Validation logic to check if a course is selected
+                if (selectedCourse != null) {
+                  context
+                      .read<SelectionCubit>()
+                      .updateSelection("course", selectedCourse!);
                   Navigator.push(
                     context,
                     MaterialPageRoute(
                       builder: (context) => MBAEnglish(),
                     ),
                   );
-                  print("Final Selected Courses: $selectedCourses");
-                }
-                else {
-                  print("Please choose courses");
+                  print("Final Selected Course: $selectedCourse");
+                } else {
+                  print("Please choose a course");
                   ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(content: Text("Please choose courses")),
+                    SnackBar(content: Text("Please choose a course")),
                   );
                 }
               },
@@ -184,7 +170,7 @@ class _MBA_CoursesState extends State<MBA_Courses> {
                 ),
                 child: Center(
                   child: Text(
-                    selectedCourses.isEmpty ? "No Preference" : "Continue",
+                    selectedCourse == null ? "No Preference" : "Continue",
                     style: TextStyle(
                         color: Colors.white,
                         fontSize: 22,
@@ -200,9 +186,3 @@ class _MBA_CoursesState extends State<MBA_Courses> {
     );
   }
 }
-
-
-
-
-
-

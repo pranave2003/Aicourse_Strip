@@ -15,8 +15,8 @@ class Masters_Courses extends StatefulWidget {
 }
 
 class _Masters_CoursesState extends State<Masters_Courses> {
-  Set<int> selectedIndices = {}; // Track selected course indices
-  List<String> selectedCourses = []; // Store selected course names
+  int? selectedIndex; // Track selected course index
+  String? selectedCourse; // Store selected course name
 
   // List of available courses
   final List<String> courses = [
@@ -33,8 +33,8 @@ class _Masters_CoursesState extends State<Masters_Courses> {
     "MSc in Cybersecurity",
     "MSc in Information Technology",
     "MSc in Biotechnology",
-    "MSc in Physics" ,
-    "MSc in Chemistry ",
+    "MSc in Physics",
+    "MSc in Chemistry",
     "MSc in Mathematics",
     "MA in Psychology",
     "MA in Sociology",
@@ -102,23 +102,17 @@ class _Masters_CoursesState extends State<Masters_Courses> {
                 padding: EdgeInsets.symmetric(horizontal: 20),
                 itemCount: courses.length, // Number of courses
                 itemBuilder: (context, index) {
-                  bool isSelected = selectedIndices.contains(index);
+                  bool isSelected = selectedIndex == index;
                   return GestureDetector(
-
                     onTap: () {
                       setState(() {
                         if (isSelected) {
-                          selectedIndices.remove(index);
-                          selectedCourses.remove(courses[index]);
-                          MaterialPageRoute(
-                            builder: (context) => Maters_academic(),
-
-                        );
+                          selectedIndex = null;
+                          selectedCourse = null;
                         } else {
-                          selectedIndices.add(index);
-                          selectedCourses.add(courses[index]);
+                          selectedIndex = index;
+                          selectedCourse = courses[index];
                         }
-                        print("Selected Courses: $selectedCourses");
                       });
                     },
                     child: Container(
@@ -136,11 +130,11 @@ class _Masters_CoursesState extends State<Masters_Courses> {
                             onChanged: (value) {
                               setState(() {
                                 if (value == true) {
-                                  selectedIndices.add(index);
-                                  selectedCourses.add(courses[index]);
+                                  selectedIndex = index;
+                                  selectedCourse = courses[index];
                                 } else {
-                                  selectedIndices.remove(index);
-                                  selectedCourses.remove(courses[index]);
+                                  selectedIndex = null;
+                                  selectedCourse = null;
                                 }
                               });
                             },
@@ -165,10 +159,10 @@ class _Masters_CoursesState extends State<Masters_Courses> {
             const SizedBox(height: 30),
             InkWell(
               onTap: () {
-    if (selectedCourses != null) {
-    context
-        .read<SelectionCubit>()
-        .updateSelection("course", selectedCourses.toString());
+                if (selectedCourse != null) {
+                  context
+                      .read<SelectionCubit>()
+                      .updateSelection("course", selectedCourse.toString());
 
                   Navigator.push(
                     context,
@@ -176,16 +170,14 @@ class _Masters_CoursesState extends State<Masters_Courses> {
                       builder: (context) => MastersEnglishtest(),
                     ),
                   );
-                  print("Final Selected Courses: $selectedCourses");
-                }
-                else {
-                  print("Please choose courses");
+                  print("Final Selected Course: $selectedCourse");
+                } else {
+                  print("Please choose a course");
                   ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(content: Text("Please choose courses")),
+                    SnackBar(content: Text("Please choose a course")),
                   );
                 }
               },
-
               child: Container(
                 height: 51,
                 width: 231,
@@ -195,7 +187,7 @@ class _Masters_CoursesState extends State<Masters_Courses> {
                 ),
                 child: Center(
                   child: Text(
-                    selectedCourses.isEmpty ? "No Preference" : "Continue",
+                    selectedCourse == null ? "No Preference" : "Continue",
                     style: TextStyle(
                         color: Colors.white,
                         fontSize: 22,
@@ -211,9 +203,3 @@ class _Masters_CoursesState extends State<Masters_Courses> {
     );
   }
 }
-
-
-
-
-
-

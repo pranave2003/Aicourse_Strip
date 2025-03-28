@@ -1,4 +1,3 @@
-// import 'package:course_connect/User/Ai_course_finder/MBA_courses.dart';
 import 'package:course_connect/User/Ai_course_finder/MBA.dart/MBA_courses.dart';
 import 'package:course_connect/User/Ai_course_finder/Masters.dart/Masters_courses.dart';
 import 'package:flutter/cupertino.dart';
@@ -6,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../Controller/Bloc/selection_cubit.dart';
+
 class MbaEducation extends StatefulWidget {
   const MbaEducation({
     super.key,
@@ -17,9 +17,6 @@ class MbaEducation extends StatefulWidget {
   State<MbaEducation> createState() => _MbaEducationState();
 }
 
-
-
-
 class _MbaEducationState extends State<MbaEducation> {
   String? _selectedValue; // Selected value
   List<String> items = ['IB', 'ICSE', 'CBSC', 'State'];
@@ -27,6 +24,13 @@ class _MbaEducationState extends State<MbaEducation> {
   String? selectedEducation;
   TextEditingController highesteducationpercentage = TextEditingController();
 
+  // Percentage ranges for each education level
+  final Map<String, String> educationRanges = {
+    "Undergraduate Degree": "50 - 100%",
+    "Undergraduate Diploma": "45 - 100%",
+    "Postgraduate Degree": "55 - 100%",
+    "Postgraduate Diploma": "50 - 100%",
+  };
 
   @override
   Widget build(BuildContext context) {
@@ -65,6 +69,17 @@ class _MbaEducationState extends State<MbaEducation> {
               _buildEducationOption("Undergraduate Diploma", 1),
               _buildEducationOption("Postgraduate Degree", 2),
               _buildEducationOption("Postgraduate Diploma", 3),
+
+              // Display percentage range dynamically
+              if (selectedEducation != null)
+                Padding(
+                  padding: const EdgeInsets.only(top: 5),
+                  child: Text(
+                    "Percentage Range: ${educationRanges[selectedEducation]}",
+                    style: TextStyle(fontSize: 16, color: Colors.black),
+                  ),
+                ),
+
               SizedBox(height: 30),
               Text(
                 "What is your expected or gained \n percentage?",
@@ -98,29 +113,52 @@ class _MbaEducationState extends State<MbaEducation> {
                   keyboardType: TextInputType.number, // Optional: Allow only numbers
                 ),
               ),
-
-              // Container(
-              //   width: 200, // Adjust this value to control the underline length
-              //   child: TextFormField(
-              //     decoration: InputDecoration(
-              //       controller: highesteducationpercentage, // FIXED: Controller Assigned
-              //
-              //       hintText: "Percentage  %",
-              //       hintStyle: TextStyle(color: Colors.black, fontSize: 18),
-              //       enabledBorder: UnderlineInputBorder(
-              //         borderSide: BorderSide(color: Colors.black),
-              //       ),
-              //       focusedBorder: UnderlineInputBorder(
-              //         borderSide: BorderSide(color: Colors.black, width: 1.5),
-              //       ),
-              //     ),
-              //     textAlign: TextAlign.center,
-              //     style: TextStyle(color: Colors.black, fontSize: 18),
-              //   ),
-              // ),
               SizedBox(height: 180),
               InkWell(
                 onTap: () {
+                  // Validation logic based on selected education level
+                  if (selectedEducation == null) {
+                    // No education level selected
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(content: Text("Please select your education level.")),
+                    );
+                    return;
+                  }
+
+                  double? percentage = double.tryParse(highesteducationpercentage.text);
+                  if (percentage == null) {
+                    // Invalid percentage input
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(content: Text("Please enter a valid percentage.")),
+                    );
+                    return;
+                  }
+
+                  // Define percentage ranges based on education level
+                  bool isValid = false;
+                  switch (selectedEducation) {
+                    case "Undergraduate Degree":
+                      isValid = percentage >= 50 && percentage <= 100; // Example range
+                      break;
+                    case "Undergraduate Diploma":
+                      isValid = percentage >= 45 && percentage <= 100; // Example range
+                      break;
+                    case "Postgraduate Degree":
+                      isValid = percentage >= 55 && percentage <= 100; // Example range
+                      break;
+                    case "Postgraduate Diploma":
+                      isValid = percentage >= 50 && percentage <= 100; // Example range
+                      break;
+                  }
+
+                  if (!isValid) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(content: Text("Percentage is not valid for the selected education level.")),
+                    );
+                    return;
+                  }
+
+                  // If all validations pass, proceed to the next screen
                   context.read<SelectionCubit>().updateSelection(
                       "selectedDegree", widget.selecteddegree.toString());
                   context.read<SelectionCubit>().updateSelection(
@@ -136,8 +174,6 @@ class _MbaEducationState extends State<MbaEducation> {
                     ),
                   );
                 },
-                // onTap: () {
-                //   print("object");
                 child: Container(
                   height: 51,
                   width: 231,
@@ -188,9 +224,3 @@ class _MbaEducationState extends State<MbaEducation> {
     );
   }
 }
-
-
-
-
-
-

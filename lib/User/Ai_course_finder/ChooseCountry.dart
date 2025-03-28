@@ -39,8 +39,7 @@ class _ChooseCountryState extends State<ChooseCountry> {
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                const SizedBox(height: 50), //
-                // Top spacing
+                const SizedBox(height: 50),
                 Text(
                     "Which country do you wish to \n  pursue your education in?",
                     style: TextStyle(
@@ -51,12 +50,11 @@ class _ChooseCountryState extends State<ChooseCountry> {
                 Expanded(
                   child: GridView.builder(
                     padding: const EdgeInsets.all(16),
-                    scrollDirection:
-                        Axis.vertical, // Changed to vertical for better UX
+                    scrollDirection: Axis.vertical,
                     gridDelegate:
-                        const SliverGridDelegateWithMaxCrossAxisExtent(
-                      maxCrossAxisExtent: 200, // Adjust for responsiveness
-                      childAspectRatio: 0.9, // Height/Width ratio
+                    const SliverGridDelegateWithMaxCrossAxisExtent(
+                      maxCrossAxisExtent: 200,
+                      childAspectRatio: 0.9,
                       crossAxisSpacing: 15,
                       mainAxisSpacing: 15,
                     ),
@@ -66,9 +64,8 @@ class _ChooseCountryState extends State<ChooseCountry> {
                       return GestureDetector(
                         onTap: () {
                           setState(() {
-                            selectedIndex = index; // Update selected index
+                            selectedIndex = index;
                             selectedcountry = category[index]["name"];
-                            print(selectedcountry);
                           });
                         },
                         child: Container(
@@ -105,7 +102,7 @@ class _ChooseCountryState extends State<ChooseCountry> {
                                     color: Colors.white,
                                     image: DecorationImage(
                                       image:
-                                          AssetImage(category[index]["image"]!),
+                                      AssetImage(category[index]["image"]!),
                                       fit: BoxFit.cover,
                                     ),
                                   ),
@@ -116,7 +113,7 @@ class _ChooseCountryState extends State<ChooseCountry> {
                                 category[index]["name"]!,
                                 style: TextStyle(
                                   color:
-                                      isSelected ? Colors.white : Colors.black,
+                                  isSelected ? Colors.white : Colors.black,
                                   fontSize: 20,
                                   fontWeight: FontWeight.bold,
                                 ),
@@ -131,15 +128,24 @@ class _ChooseCountryState extends State<ChooseCountry> {
 
                 InkWell(
                   onTap: () {
-                    context
-                        .read<SelectionCubit>()
-                        .updateSelection("country", selectedcountry.toString());
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => Degree(),
-                      ),
-                    );
+                    if (selectedcountry != null) {
+                      context
+                          .read<SelectionCubit>()
+                          .updateSelection("country", selectedcountry.toString());
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => Degree(),
+                        ),
+                      );
+                    } else {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text("Please select a country before proceeding."),
+                          backgroundColor: Colors.red,
+                        ),
+                      );
+                    }
                   },
                   child: Container(
                     height: 51,
@@ -149,12 +155,12 @@ class _ChooseCountryState extends State<ChooseCountry> {
                         borderRadius: BorderRadius.circular(30)),
                     child: Center(
                         child: Text(
-                      "Continue",
-                      style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 22,
-                          fontWeight: FontWeight.bold),
-                    )),
+                          "Continue",
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 22,
+                              fontWeight: FontWeight.bold),
+                        )),
                   ),
                 ),
               ],

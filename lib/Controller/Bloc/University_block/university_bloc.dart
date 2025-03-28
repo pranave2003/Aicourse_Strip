@@ -60,7 +60,6 @@ class UniversityBloc extends Bloc<UniversityEvent, UniversityState> {
         }
       },
     );
-   
 
     on<FetchUniversity>((event, emit) async {
       emit(UniversitysLoading());
@@ -243,7 +242,7 @@ class UniversityBloc extends Bloc<UniversityEvent, UniversityState> {
         }
       },
     );
-on<University_Edit_Event>(
+    on<University_Edit_Event>(
       (event, emit) async {
         emit(UniversityLoading());
         try {
@@ -274,7 +273,8 @@ on<University_Edit_Event>(
             "Englishtest": event.University.Englishtest,
             "Englishtestpercentage": event.University.Englishtestpercentage,
             "highestEducation": event.University.highestEducation,
-            "highestEducationpercentage": event.University.highestEducationpercentage,
+            "highestEducationpercentage":
+                event.University.highestEducationpercentage,
             "collagecode": event.University.collagecode,
             "Collegename": event.University.Collegename
           }); // Generate ID
@@ -285,6 +285,5 @@ on<University_Edit_Event>(
         }
       },
     );
-
   }
 }

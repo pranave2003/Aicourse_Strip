@@ -1,36 +1,21 @@
 import 'package:course_connect/User/Ai_course_finder/Alldetails.dart';
-// import 'package:course_connect/User/Ai_course_finder/Alldetails.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../Controller/Bloc/selection_cubit.dart';
 
 class Bachelors_Knowledge extends StatefulWidget {
-  const Bachelors_Knowledge({
-    super.key,
-  });
+  const Bachelors_Knowledge({super.key});
 
   @override
   State<Bachelors_Knowledge> createState() => _Bachelors_KnowledgeState();
-
-  // @override
-  // void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-  //   super.debugFillProperties(properties);
-  //   properties.add(DiagnosticsProperty('organization', organization));
-  // }
 }
 
 class _Bachelors_KnowledgeState extends State<Bachelors_Knowledge> {
-  int? selectedIndex; // Track selected container index
-  String? selectedOrganization; // Selected test name
-  int age = 10; // Initialize age variable
+  int? selectedIndex;
+  String? selectedAnswer;
 
-  // List of test options
-  final List<String> testOptions = [
-    "Yes",
-    "No",
-  ];
+  final List<String> testOptions = ["Yes", "No"];
 
   @override
   Widget build(BuildContext context) {
@@ -38,14 +23,12 @@ class _Bachelors_KnowledgeState extends State<Bachelors_Knowledge> {
       appBar: AppBar(
         backgroundColor: Colors.white,
         leading: IconButton(
-          icon: Icon(Icons.arrow_back), // Back button icon
-          onPressed: () {
-            Navigator.pop(context); // Navigate back when tapped
-          },
+          icon: const Icon(Icons.arrow_back),
+          onPressed: () => Navigator.pop(context),
         ),
       ),
       body: Container(
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           image: DecorationImage(
             image: AssetImage("assets/Country/img_6.png"),
             fit: BoxFit.cover,
@@ -54,35 +37,20 @@ class _Bachelors_KnowledgeState extends State<Bachelors_Knowledge> {
         child: Column(
           children: [
             const SizedBox(height: 20),
-            const Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  "Do you know the application deadlines for \n the universities you're interested in?",
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    color: Color(0xff0A1F52),
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                  ),
+            const Padding(
+              padding: EdgeInsets.symmetric(horizontal: 20.0),
+              child: Text(
+                "Do you know the application deadlines for \n the universities you're interested in?",
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  color: Color(0xff0A1F52),
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
                 ),
-              ],
+              ),
             ),
             const SizedBox(height: 30),
-            // Row(
-            //   mainAxisAlignment: MainAxisAlignment.center,
-            //   children: [
-            //     Icon(Icons.light_mode_rounded, color: Colors.yellowAccent, size: 24),
-            //     const SizedBox(width: 10),
-            //     const Text(
-            //       "Adds value to your profile.",
-            //       style: TextStyle(fontSize: 18),
-            //     ),
-            //   ],
-            // ),
-            const SizedBox(height: 30),
 
-            // Dynamically generated list of test options
             Expanded(
               child: ListView.builder(
                 shrinkWrap: true,
@@ -93,18 +61,16 @@ class _Bachelors_KnowledgeState extends State<Bachelors_Knowledge> {
                     onTap: () {
                       setState(() {
                         selectedIndex = index;
-                        selectedOrganization = testOptions[index];
-                        print(selectedOrganization);
+                        selectedAnswer = testOptions[index];
                       });
                     },
                     child: Container(
                       height: 50,
                       width: 150,
-                      margin: const EdgeInsets.symmetric(
-                          vertical: 10, horizontal: 50),
+                      margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 50),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(40),
-                        color: isSelected ? Color(0xff0A1F52) : Colors.grey,
+                        color: isSelected ? const Color(0xff0A1F52) : Colors.grey,
                       ),
                       child: Center(
                         child: Text(
@@ -120,17 +86,20 @@ class _Bachelors_KnowledgeState extends State<Bachelors_Knowledge> {
                 },
               ),
             ),
+
             InkWell(
               onTap: () {
-                if (testOptions != null) {
-                  context
-                      .read<SelectionCubit>()
-                      .updateSelection("Options", testOptions.toString());
+                if (selectedAnswer != null) {
+                  context.read<SelectionCubit>().updateSelection("selectedAnswer", selectedAnswer.toString());
                   Navigator.push(
                     context,
                     MaterialPageRoute(
                       builder: (context) => BachelorsDetailsOverall(),
                     ),
+                  );
+                } else {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(content: Text("Please select an option")),
                   );
                 }
               },
@@ -138,7 +107,7 @@ class _Bachelors_KnowledgeState extends State<Bachelors_Knowledge> {
                 height: 51,
                 width: 231,
                 decoration: BoxDecoration(
-                  color: Color(0xff0A71CB),
+                  color: const Color(0xff0A71CB),
                   borderRadius: BorderRadius.circular(30),
                 ),
                 child: const Center(

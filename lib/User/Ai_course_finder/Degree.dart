@@ -4,10 +4,7 @@ import 'package:course_connect/User/Ai_course_finder/Masters.dart/Masters_educat
 import 'package:flutter/material.dart';
 
 class Degree extends StatefulWidget {
-  const Degree({
-    super.key,
-  });
-// Ensure it's properly typed as String?
+  const Degree({super.key});
 
   @override
   State<Degree> createState() => _DegreeState();
@@ -21,22 +18,17 @@ class _DegreeState extends State<Degree> {
     {
       "name": "Bachelors",
       "image": "assets/Country/img_7.png",
-      "page": (
-        String? selectedDegree,
-      ) =>
-          BachelorsEducation(
-            selecteddegree: selectedDegree,
-          ),
+      "page": (String? selectedDegree) => BachelorsEducation(selecteddegree: selectedDegree),
     },
     {
       "name": "Masters",
       "image": "assets/Country/img_7.png",
-      "page": (String? selectedDegree,) => Masters_education(selecteddegree:selectedDegree),
+      "page": (String? selectedDegree) => Masters_education(selecteddegree: selectedDegree),
     },
     {
       "name": "MBA",
       "image": "assets/Country/img_7.png",
-      "page": (String? selectedDegree,) => MbaEducation(selecteddegree:selectedDegree),
+      "page": (String? selectedDegree) => MbaEducation(selecteddegree: selectedDegree),
     },
   ];
 
@@ -45,9 +37,9 @@ class _DegreeState extends State<Degree> {
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back), // Back button icon
+          icon: const Icon(Icons.arrow_back),
           onPressed: () {
-            Navigator.pop(context); // Navigate back when tapped
+            Navigator.pop(context);
           },
         ),
       ),
@@ -85,30 +77,16 @@ class _DegreeState extends State<Degree> {
                         selectedIndex = index;
                         selectedDegree = category[index]["name"];
                       });
-
-                      // Navigate with parameters
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => category[index]["page"](
-                            selectedDegree,
-                          ),
-                        ),
-                      );
                     },
                     child: Container(
-                      width: 160, // Fixed width for alignment
+                      width: 160,
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(15),
                         border: Border.all(
-                          color: isSelected
-                              ? const Color(0xff085AA2)
-                              : Colors.transparent,
+                          color: isSelected ? const Color(0xff085AA2) : Colors.transparent,
                           width: 3,
                         ),
-                        color: isSelected
-                            ? const Color(0xff085AA2)
-                            : const Color(0xffE4E4E4),
+                        color: isSelected ? const Color(0xff085AA2) : const Color(0xffE4E4E4),
                         boxShadow: const [
                           BoxShadow(
                             color: Colors.black26,
@@ -146,6 +124,46 @@ class _DegreeState extends State<Degree> {
                     ),
                   );
                 }),
+              ),
+              const SizedBox(height: 30),
+
+              // Continue Button with Validation
+              InkWell(
+                onTap: () {
+                  if (selectedDegree != null) {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => category[selectedIndex!]["page"](selectedDegree),
+                      ),
+                    );
+                  } else {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(
+                        content: Text("Please select a degree before proceeding."),
+                        backgroundColor: Colors.red,
+                      ),
+                    );
+                  }
+                },
+                child: Container(
+                  height: 50,
+                  width: 200,
+                  decoration: BoxDecoration(
+                    color: Colors.blue,
+                    borderRadius: BorderRadius.circular(30),
+                  ),
+                  child: const Center(
+                    child: Text(
+                      "Continue",
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                ),
               ),
             ],
           ),

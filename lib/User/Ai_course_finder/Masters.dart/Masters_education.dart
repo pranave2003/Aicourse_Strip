@@ -8,6 +8,7 @@ import '../../../Controller/Bloc/selection_cubit.dart';
 class Masters_education extends StatefulWidget {
   const Masters_education({super.key, required this.selecteddegree});
   final selecteddegree;
+
   @override
   State<Masters_education> createState() => _Masters_educationState();
 }
@@ -19,19 +20,39 @@ class _Masters_educationState extends State<Masters_education> {
   String? selectedEducation;
   TextEditingController highesteducationpercentage = TextEditingController();
 
+  // Function to validate the entered percentage based on selected education
+  bool isValidPercentage(String education, String percentage) {
+    if (percentage.isEmpty) return false;
+
+    double? value = double.tryParse(percentage);
+    if (value == null) return false;
+
+    // Different validation ranges based on education level
+    switch (education) {
+      case "Undergraduate Degree":
+      case "Undergraduate Diploma":
+        return value >= 30 && value <= 100; // Typical range for undergraduate
+      case "Postgraduate Degree":
+      case "Postgraduate Diploma":
+        return value >= 40 && value <= 100; // Higher cut-off for postgraduates
+      default:
+        return false;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
           leading: IconButton(
-            icon: Icon(Icons.arrow_back), // Back button icon
+            icon: const Icon(Icons.arrow_back), // Back button icon
             onPressed: () {
               Navigator.pop(context); // Navigate back when tapped
             },
           ),
         ),
         body: Container(
-          decoration: BoxDecoration(
+          decoration: const BoxDecoration(
             image: DecorationImage(
               image: AssetImage("assets/country/main.png"),
               fit: BoxFit.cover,
@@ -39,7 +60,7 @@ class _Masters_educationState extends State<Masters_education> {
           ),
           child: Column(
             children: [
-              Row(
+              const Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
@@ -51,23 +72,23 @@ class _Masters_educationState extends State<Masters_education> {
                   ),
                 ],
               ),
-              SizedBox(height: 10),
+              const SizedBox(height: 10),
               _buildEducationOption("Undergraduate Degree", 0),
               _buildEducationOption("Undergraduate Diploma", 1),
               _buildEducationOption("Postgraduate Degree", 2),
               _buildEducationOption("Postgraduate Diploma", 3),
-              SizedBox(height: 30),
-              Text(
+              const SizedBox(height: 30),
+              const Text(
                 "What is your expected or gained \n percentage?",
                 style: TextStyle(color: Color(0xff0B1F50), fontSize: 20),
                 textAlign: TextAlign.center,
               ),
-              SizedBox(height: 20),
-              Container(
+              const SizedBox(height: 20),
+              SizedBox(
                 width: 200, // Adjust this value to control the underline length
                 child: TextFormField(
                   controller: highesteducationpercentage, // FIXED: Controller Assigned
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                     hintText: "Percentage  %",
                     hintStyle: TextStyle(color: Colors.black, fontSize: 18),
                     enabledBorder: UnderlineInputBorder(
@@ -78,13 +99,45 @@ class _Masters_educationState extends State<Masters_education> {
                     ),
                   ),
                   textAlign: TextAlign.center,
-                  style: TextStyle(color: Colors.black, fontSize: 18),
-                  keyboardType: TextInputType.number, // Optional: Allow only numbers
+                  style: const TextStyle(color: Colors.black, fontSize: 18),
+                  keyboardType: TextInputType.number, // Allow only numbers
                 ),
               ),
-              SizedBox(height: 180),
+              if (selectedEducation != null)
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 5),
+                  child: Text(
+                    "Valid percentage range: ${selectedEducation!.contains("Postgraduate") ? "40 - 100" : "30 - 100"}",
+                    style: const TextStyle(
+                        color: Colors.red,
+                        fontSize: 16,
+                        fontWeight: FontWeight.w500),
+                  ),
+                ),
+              const SizedBox(height: 180),
               InkWell(
                 onTap: () {
+                  if (selectedEducation == null) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(
+                          content: Text("Please select an education level")),
+                    );
+                    return;
+                  }
+
+                  if (!isValidPercentage(
+                      selectedEducation!, highesteducationpercentage.text)) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text(
+                          "Invalid percentage for $selectedEducation. "
+                              "Valid range: ${selectedEducation!.contains("Postgraduate") ? "40 - 100" : "30 - 100"}",
+                        ),
+                      ),
+                    );
+                    return;
+                  }
+
                   context.read<SelectionCubit>().updateSelection(
                       "selectedDegree", widget.selecteddegree.toString());
                   context.read<SelectionCubit>().updateSelection(
@@ -103,9 +156,9 @@ class _Masters_educationState extends State<Masters_education> {
                   height: 51,
                   width: 231,
                   decoration: BoxDecoration(
-                      color: Color(0xff0A71CB),
+                      color: const Color(0xff0A71CB),
                       borderRadius: BorderRadius.circular(30)),
-                  child: Center(
+                  child: const Center(
                       child: Text(
                         "Continue",
                         style: TextStyle(
@@ -126,7 +179,6 @@ class _Masters_educationState extends State<Masters_education> {
         setState(() {
           selectedIndex = index;
           selectedEducation = text;
-          print(selectedEducation);
         });
       },
       child: Container(
@@ -134,7 +186,7 @@ class _Masters_educationState extends State<Masters_education> {
         width: 300,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(40),
-          color: selectedIndex == index ? Color(0xff0A1F52) : Colors.grey,
+          color: selectedIndex == index ? const Color(0xff0A1F52) : Colors.grey,
         ),
         margin: const EdgeInsets.symmetric(vertical: 10),
         child: Center(

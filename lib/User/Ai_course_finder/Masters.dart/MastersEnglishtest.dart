@@ -1,8 +1,5 @@
-import 'package:course_connect/User/Ai_course_finder/Bachelors.dart/Bachelors_academictest.dart';
-import 'package:course_connect/User/Ai_course_finder/Masters.dart/MastersReaserch.dart';
 import 'package:course_connect/User/Ai_course_finder/Masters.dart/Masters_work.dart';
 import 'package:course_connect/Widget/Constands/colors.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -16,26 +13,45 @@ class MastersEnglishtest extends StatefulWidget {
 }
 
 class _MastersEnglishtestState extends State<MastersEnglishtest> {
-  int? selectedIndex; // Track selected container index
+  int? selectedIndex; // Track selected test index
   String? selectedTest; // Selected test name
-  final TextEditingController percentageController = TextEditingController(); // Controller for text input
+  final TextEditingController percentageController = TextEditingController(); // Score input
 
-  // List of English language tests
   final List<String> englishTests = [
-    "TOEFL",
-    "IELTS",
-    "PTE",
+    "TOEFL (0 - 120)",
+    "IELTS (0 - 9)",
+    "PTE (10 - 90)",
     "Test Not Taken Yet"
   ];
+
+  // Function to validate score
+  bool isValidScore(String score) {
+    if (selectedTest == "Test Not Taken Yet") return true;
+    if (score.isEmpty) return false;
+
+    double? scoreValue = double.tryParse(score);
+    if (scoreValue == null) return false;
+
+    switch (selectedTest) {
+      case "TOEFL (0 - 120)":
+        return scoreValue >= 0 && scoreValue <= 120;
+      case "IELTS (0 - 9)":
+        return scoreValue >= 0 && scoreValue <= 9;
+      case "PTE (10 - 90)":
+        return scoreValue >= 10 && scoreValue <= 90;
+      default:
+        return false;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
-          icon: Icon(Icons.arrow_back), // Back button icon
+          icon: Icon(Icons.arrow_back),
           onPressed: () {
-            Navigator.pop(context); // Navigate back when tapped
+            Navigator.pop(context);
           },
         ),
       ),
@@ -49,38 +65,31 @@ class _MastersEnglishtestState extends State<MastersEnglishtest> {
         child: Column(
           children: [
             const SizedBox(height: 20),
-            const Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  "What English language test have\n you taken OR planning to take?",
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    color: Color(0xff0A1F52),
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ],
+            const Text(
+              "What English language test have\nyou taken OR planning to take?",
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                color: Color(0xff0A1F52),
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+              ),
             ),
-            SizedBox(height: 10),
-            Row(
+            const SizedBox(height: 10),
+            const Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Icon(Icons.light_mode_rounded, color: Colors.yellowAccent, size: 24),
                 SizedBox(width: 10),
                 Text(
-                  "Scoring high in language tests \nincreases your options multifold.",
+                  "Scoring high in language tests\nincreases your options multifold.",
                   style: TextStyle(fontSize: 18),
                 ),
               ],
             ),
             const SizedBox(height: 20),
 
-            // Dynamically generated list of test options
             Expanded(
               child: ListView.builder(
-                shrinkWrap: true,
                 itemCount: englishTests.length,
                 itemBuilder: (context, index) {
                   bool isSelected = selectedIndex == index;
@@ -89,7 +98,6 @@ class _MastersEnglishtestState extends State<MastersEnglishtest> {
                       setState(() {
                         selectedIndex = index;
                         selectedTest = englishTests[index];
-                        print(selectedTest);
                       });
                     },
                     child: Container(
@@ -106,21 +114,20 @@ class _MastersEnglishtestState extends State<MastersEnglishtest> {
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
                             color: isSelected ? Colors.white : Colors.black,
-
                           ),
                         ),
                       ),
                     ),
-
                   );
                 },
-
               ),
-
             ),
-            Text("Enter your score",style: TextStyle(color: Colors.blueAccent,fontSize:25,fontWeight: FontWeight.w600)),
-            //
-            // Percentage Input Field (Placed directly below ListView)
+
+            const Text(
+              "Enter your score",
+              style: TextStyle(color: Colors.blueAccent, fontSize: 25, fontWeight: FontWeight.w600),
+            ),
+
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 10),
               child: Container(
@@ -144,38 +151,31 @@ class _MastersEnglishtestState extends State<MastersEnglishtest> {
               ),
             ),
 
-            SizedBox(height: 30),
+            const SizedBox(height: 30),
 
-            // Continue Button
             InkWell(
               onTap: () {
-    if (selectedTest != null) {
-    context
-        .read<SelectionCubit>()
-        .updateSelection("EnglishTest", selectedTest.toString());
-    context.read<SelectionCubit>().updateSelection(
-    "EnglishTest_percentage",
-        percentageController.text);
+                if (selectedTest != null) {
+                  if (!isValidScore(percentageController.text)) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(content: Text("Invalid score for $selectedTest")),
+                    );
+                    return;
+                  }
+
+                  context.read<SelectionCubit>().updateSelection("EnglishTest", selectedTest.toString());
+                  context.read<SelectionCubit>().updateSelection("EnglishTest_percentage", percentageController.text);
 
                   Navigator.push(
                     context,
-                    MaterialPageRoute(
-                      builder: (context) => MastersWork(),
-                    ),
+                    MaterialPageRoute(builder: (context) => MastersWork()),
                   );
-                  print("Selected test: $selectedTest");
-                }
-                else {
-                  print("Selected Test: $selectedTest");
+                } else {
                   ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(content: Text("No Test selected")),
+                    SnackBar(content: Text("No test selected")),
                   );
                 }
               },
-              // onTap: () {
-              //   print("Selected Test: $selectedTest");
-              //   print("Percentage: ${percentageController.text}");
-              // },
               child: Container(
                 height: 51,
                 width: 231,
@@ -196,16 +196,10 @@ class _MastersEnglishtestState extends State<MastersEnglishtest> {
               ),
             ),
 
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
           ],
         ),
       ),
     );
   }
 }
-
-
-
-
-
-
