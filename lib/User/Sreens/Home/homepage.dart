@@ -130,6 +130,20 @@ class _HomepageState extends State<Homepage> {
                                 images[index],
                                 fit: BoxFit.cover,
                                 width: double.infinity,
+                                errorBuilder: (context, error, stackTrace) {
+                                  return Container(
+                                    width: double.infinity,
+                                    height:
+                                        100, // Set a fixed height to match the image
+                                    color: Colors
+                                        .grey[300], // Placeholder background
+                                    child: Icon(
+                                      Icons.image_not_supported,
+                                      size: 50,
+                                      color: Colors.grey[600],
+                                    ),
+                                  );
+                                },
                               ),
                             );
                           },

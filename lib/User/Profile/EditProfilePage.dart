@@ -50,35 +50,51 @@ class _EditProfilePageState extends State<EditProfilePage> {
           ),
         ],
       ),
-      body: Padding(
-        padding: EdgeInsets.all(16.0),
-        child: ListView(
-          children: [
-            // Profile Picture with Edit Icon
-            Center(
-              child: Stack(
-                children: [
-                  Image.network(
-                    widget.image,
-                    width: 100, // Adjusted width
-                    height: 100, // Adjusted height
-                    fit: BoxFit.cover,
-                    errorBuilder: (context, error, stackTrace) {
-                      return Container(
-                        width: 130,
-                        height: 100,
-                        color: Colors.grey[300], // Placeholder background
-                        child: Icon(
-                          Icons.image_not_supported,
-                          size: 50,
-                          color: Colors.grey[600],
+      body: BlocConsumer<AuthBloc, AuthState>(
+        listener: (context, state) {
+          if (state is ProfileImageSuccess) {
+            Navigator.of(context).pop();
+          }
+        },
+        builder: (context, state) {
+          return Padding(
+            padding: EdgeInsets.all(16.0),
+            child: ListView(
+              children: [
+                // Profile Picture with Edit Icon
+                Center(
+                  child: Stack(
+                    children: [
+                      ClipRRect(
+                        borderRadius: BorderRadius.circular(
+                            60), // Ensures a rectangular shape
+                        child: Image.network(
+                          widget.image,
+                          width: 100, // Adjusted width
+                          height: 100, // Adjusted height
+                          fit: BoxFit.cover,
+                          errorBuilder: (context, error, stackTrace) {
+                            return state is ProfileImageLoading
+                                ? Loading_Widget()
+                                : Container(
+                                    width: 100,
+                                    height: 100,
+                                    decoration: BoxDecoration(
+                                      color: Colors
+                                          .grey[300], // Placeholder background
+                                      borderRadius: BorderRadius
+                                          .zero, // Ensures rectangle shape
+                                    ),
+                                    child: Icon(
+                                      Icons.image_not_supported,
+                                      size: 50,
+                                      color: Colors.grey[600],
+                                    ),
+                                  );
+                          },
                         ),
-                      );
-                    },
-                  ),
-                  BlocBuilder<AuthBloc, AuthState>(
-                    builder: (context, state) {
-                      return Positioned(
+                      ),
+                      Positioned(
                         bottom: 0,
                         right: 0,
                         child: GestureDetector(
@@ -89,26 +105,35 @@ class _EditProfilePageState extends State<EditProfilePage> {
                           child: CircleAvatar(
                             radius: 15,
                             backgroundColor: Colors.blue,
-                            child: state is ProfileImageLoading
-                                ? Loading_Widget()
-                                : Icon(Icons.camera_alt,
-                                    color: Colors.white, size: 15),
+                            child: Icon(Icons.camera_alt,
+                                color: Colors.white, size: 15),
                           ),
                         ),
-                      );
-                    },
+                      ),
+                    ],
                   ),
-                ],
-              ),
-            ),
-            SizedBox(height: 20),
+                ),
 
-            // Editable Fields inside Containers
-            buildEditableField("Name", nameController, false),
-            buildEditableField("E-mail Address", emailController, false),
-            buildEditableField("Phone Number", phoneController, false),
-          ],
-        ),
+                SizedBox(
+                  child: state is ProfileImageLoading
+                      ? Column(
+                          children: [
+                            Loading_Widget(),
+                            Text("Profile Updating.....")
+                          ],
+                        )
+                      : Text(""),
+                ),
+                SizedBox(height: 20),
+
+                // Editable Fields inside Containers
+                buildEditableField("Name", nameController, false),
+                buildEditableField("E-mail Address", emailController, false),
+                buildEditableField("Phone Number", phoneController, false),
+              ],
+            ),
+          );
+        },
       ),
     );
   }

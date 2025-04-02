@@ -255,9 +255,9 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         print(downloadUrl);
         if (user != null) {
           FirebaseFirestore.instance
-              .collection("Laundry_Users")
+              .collection("Users")
               .doc(user.uid)
-              .update({"imageUrl": downloadUrl});
+              .update({"image": downloadUrl});
         }
         emit(ProfileImageSuccess());
       } catch (e) {

@@ -1,3 +1,4 @@
+import 'package:course_connect/Widget/Constands/Loading.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -20,18 +21,21 @@ class Profile extends StatefulWidget {
 
 class _ProfileState extends State<Profile> {
   @override
+  void initState() {
+    // TODO: implement initState
+
+    context.read<AuthBloc>()..add(FetchUserDetailsById());
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         backgroundColor: Colors.white,
         elevation: 0,
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back, color: Colors.black),
-          onPressed: () {
-            Navigator.pop(context);
-          },
-        ),
         title: Text(
           "My Profile",
           style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black),
@@ -44,30 +48,34 @@ class _ProfileState extends State<Profile> {
           BlocBuilder<AuthBloc, AuthState>(
             builder: (context, state) {
               if (state is Userloading) {
-                return const Center(child: CircularProgressIndicator());
+                return const Center(child: Loading_Widget());
               } else if (state is UserByidLoaded) {
                 final user = state.Userdata;
                 return Padding(
                   padding: EdgeInsets.all(16.0),
                   child: Column(
                     children: [
-                      Image.network(
-                        user.image.toString(),
-                        width: 100, // Adjusted width
-                        height: 100, // Adjusted height
-                        fit: BoxFit.cover,
-                        errorBuilder: (context, error, stackTrace) {
-                          return Container(
-                            width: 130,
-                            height: 100,
-                            color: Colors.grey[300], // Placeholder background
-                            child: Icon(
-                              Icons.image_not_supported,
-                              size: 50,
-                              color: Colors.grey[600],
-                            ),
-                          );
-                        },
+                      ClipRRect(
+                        borderRadius: BorderRadius.circular(60),
+                        child: Image.network(
+                          user.image.toString(),
+
+                          width: 100, // Adjusted width
+                          height: 100, // Adjusted height
+                          fit: BoxFit.cover,
+                          errorBuilder: (context, error, stackTrace) {
+                            return Container(
+                              width: 130,
+                              height: 100,
+                              color: Colors.grey[300], // Placeholder background
+                              child: Icon(
+                                Icons.image_not_supported,
+                                size: 50,
+                                color: Colors.grey[600],
+                              ),
+                            );
+                          },
+                        ),
                       ),
                       SizedBox(height: 10),
                       Text(
