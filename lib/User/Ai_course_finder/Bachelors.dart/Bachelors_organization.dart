@@ -101,35 +101,36 @@ class _Bachelors_organizationState extends State<Bachelors_organization> {
 
             const SizedBox(height: 30),
 
-            Column(
-              children: [
-                const Text(
-                  "How many months of experience?",
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                ),
-                Slider(
-                  value: experienceMonths.toDouble(),
-                  onChanged: (value) {
-                    setState(() {
-                      experienceMonths = value.toInt();
-                    });
-                  },
-                  min: 0,
-                  max: 18,
-                  divisions: 4,
-                  label: "$experienceMonths",
-                ),
-              ],
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: const [
-                SizedBox(width: 20),
-                Text("0"),
-                Text("18+ months"),
-                SizedBox(width: 20),
-              ],
-            ),
+            // Show the experience section only if "Yes" is selected
+            if (selectedOrganization == "Yes") ...[
+              Column(
+                children: [
+                  const Text(
+                    "How many months of experience?",
+                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                  ),
+                  Slider(
+                    value: experienceMonths.toDouble(),
+                    onChanged: (value) {
+                      setState(() {
+                        experienceMonths = value.toInt();
+                      });
+                    },
+                    min: 0,
+                    max: 18,
+                    divisions: 18, // Change divisions to 18 for better granularity
+                    label: "$experienceMonths",
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: const [
+                      Text("     0"), // Left side text
+                      Text("18+ months"), // Right side text
+                    ],
+                  ),
+                ],
+              ),
+            ],
 
             const SizedBox(height: 20),
 
@@ -137,7 +138,7 @@ class _Bachelors_organizationState extends State<Bachelors_organization> {
               onTap: () {
                 if (selectedOrganization != null) {
                   context.read<SelectionCubit>().updateSelection("selectedOrganization", selectedOrganization.toString());
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => Bachelors_Knowledge()));
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => const Bachelors_Knowledge()));
                 } else {
                   ScaffoldMessenger.of(context).showSnackBar(
                     const SnackBar(content: Text("Please select an option")),

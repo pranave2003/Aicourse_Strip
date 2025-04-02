@@ -22,6 +22,7 @@ class _BachelorsEducationState extends State<BachelorsEducation> {
   int selectedIndex = -1; // Track selected container index
   String? seletedEducation;
   TextEditingController highesteducationpercentage = TextEditingController();
+  String percentageRangeMessage = ""; // Message for percentage range
 
   @override
   Widget build(BuildContext context) {
@@ -61,6 +62,7 @@ class _BachelorsEducationState extends State<BachelorsEducation> {
                   setState(() {
                     selectedIndex = 0;
                     seletedEducation = "Grade 12";
+                    percentageRangeMessage = "Percentage must be between 0-100";
                   });
                 },
                 child: Container(
@@ -86,6 +88,7 @@ class _BachelorsEducationState extends State<BachelorsEducation> {
                   setState(() {
                     selectedIndex = 1;
                     seletedEducation = "Undergraduate diploma";
+                    percentageRangeMessage = "Percentage must be between 30-100";
                   });
                 },
                 child: Container(
@@ -134,7 +137,13 @@ class _BachelorsEducationState extends State<BachelorsEducation> {
                   underline: const SizedBox(),
                 ),
               ),
-              const SizedBox(height: 180),
+              const SizedBox(height: 10),
+              // Display the percentage range message
+              Text(
+                percentageRangeMessage,
+                style: const TextStyle(color: Colors.red, fontSize: 16),
+              ),
+              const SizedBox(height: 20),
               SizedBox(
                 width: 200,
                 child: TextFormField(

@@ -51,14 +51,23 @@ class _ProfileState extends State<Profile> {
                   padding: EdgeInsets.all(16.0),
                   child: Column(
                     children: [
-                      Column(
-                        children: [
-                          CircleAvatar(
-                            radius: 50,
-                            backgroundImage:
-                                AssetImage("assets/Profile/img_3.png"),
-                          ),
-                        ],
+                      Image.network(
+                        user.image.toString(),
+                        width: 100, // Adjusted width
+                        height: 100, // Adjusted height
+                        fit: BoxFit.cover,
+                        errorBuilder: (context, error, stackTrace) {
+                          return Container(
+                            width: 130,
+                            height: 100,
+                            color: Colors.grey[300], // Placeholder background
+                            child: Icon(
+                              Icons.image_not_supported,
+                              size: 50,
+                              color: Colors.grey[600],
+                            ),
+                          );
+                        },
                       ),
                       SizedBox(height: 10),
                       Text(
@@ -76,7 +85,8 @@ class _ProfileState extends State<Profile> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => EditProfilePage()),
+                                builder: (context) => EditProfilePage(
+                                    image: state.Userdata.image)),
                           );
                         },
                         style: ElevatedButton.styleFrom(

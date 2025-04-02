@@ -1,5 +1,4 @@
 import 'package:course_connect/User/Ai_course_finder/MBA.dart/MBA_courses.dart';
-import 'package:course_connect/User/Ai_course_finder/Masters.dart/Masters_courses.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -23,6 +22,7 @@ class _MbaEducationState extends State<MbaEducation> {
   int selectedIndex = -1; // Track selected container index
   String? selectedEducation;
   TextEditingController highesteducationpercentage = TextEditingController();
+  String? scoreRangeMessage; // Variable to hold the score range message
 
   // Percentage ranges for each education level
   final Map<String, String> educationRanges = {
@@ -86,14 +86,18 @@ class _MbaEducationState extends State<MbaEducation> {
                 style: TextStyle(color: Color(0xff0B1F50), fontSize: 20),
               ),
               SizedBox(height: 20),
-              Container(
-                decoration: BoxDecoration(
-                  color: Colors.grey, // Change button color to grey
-                  borderRadius:
-                  BorderRadius.circular(8), // Optional: Rounded corners
+
+              // Display the score range message in red font
+              if (selectedEducation != null)
+                Padding(
+                  padding: const EdgeInsets.only(top: 5),
+                  child: Text(
+                    "Valid Score Range: ${educationRanges[selectedEducation]}",
+                    style: TextStyle(fontSize: 16, color: Colors.red), // Red font
+                  ),
                 ),
-              ),
-              SizedBox(height: 50),
+
+              SizedBox(height: 20),
               Container(
                 width: 200, // Adjust this value to control the underline length
                 child: TextFormField(

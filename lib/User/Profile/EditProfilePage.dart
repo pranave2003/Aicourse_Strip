@@ -1,14 +1,24 @@
+import 'package:course_connect/Controller/Bloc/User_Authbloc/auth_bloc.dart';
+import 'package:course_connect/Widget/Constands/Loading.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class EditProfilePage extends StatefulWidget {
+  EditProfilePage({required this.image});
+
+  final image;
+
   @override
   _EditProfilePageState createState() => _EditProfilePageState();
 }
 
 class _EditProfilePageState extends State<EditProfilePage> {
-  TextEditingController nameController = TextEditingController(text: "Charlotte King");
-  TextEditingController emailController = TextEditingController(text: "johnkinggraphics@gmail.com");
-  TextEditingController phoneController = TextEditingController(text: "+91 6895312");
+  TextEditingController nameController =
+      TextEditingController(text: "Charlotte King");
+  TextEditingController emailController =
+      TextEditingController(text: "johnkinggraphics@gmail.com");
+  TextEditingController phoneController =
+      TextEditingController(text: "+91 6895312");
 
   bool isPasswordVisible = false;
 
@@ -48,23 +58,45 @@ class _EditProfilePageState extends State<EditProfilePage> {
             Center(
               child: Stack(
                 children: [
-                  CircleAvatar(
-                    radius: 50,
-                    backgroundImage: AssetImage("assets/profile.jpg"),
+                  Image.network(
+                    widget.image,
+                    width: 100, // Adjusted width
+                    height: 100, // Adjusted height
+                    fit: BoxFit.cover,
+                    errorBuilder: (context, error, stackTrace) {
+                      return Container(
+                        width: 130,
+                        height: 100,
+                        color: Colors.grey[300], // Placeholder background
+                        child: Icon(
+                          Icons.image_not_supported,
+                          size: 50,
+                          color: Colors.grey[600],
+                        ),
+                      );
+                    },
                   ),
-                  Positioned(
-                    bottom: 0,
-                    right: 0,
-                    child: GestureDetector(
-                      onTap: () {
-                        // Handle profile picture update
-                      },
-                      child: CircleAvatar(
-                        radius: 15,
-                        backgroundColor: Colors.blue,
-                        child: Icon(Icons.camera_alt, color: Colors.white, size: 15),
-                      ),
-                    ),
+                  BlocBuilder<AuthBloc, AuthState>(
+                    builder: (context, state) {
+                      return Positioned(
+                        bottom: 0,
+                        right: 0,
+                        child: GestureDetector(
+                          onTap: () {
+                            context.read<AuthBloc>()
+                              ..add(PickAndUploadImageEvent());
+                          },
+                          child: CircleAvatar(
+                            radius: 15,
+                            backgroundColor: Colors.blue,
+                            child: state is ProfileImageLoading
+                                ? Loading_Widget()
+                                : Icon(Icons.camera_alt,
+                                    color: Colors.white, size: 15),
+                          ),
+                        ),
+                      );
+                    },
                   ),
                 ],
               ),
@@ -74,7 +106,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
             // Editable Fields inside Containers
             buildEditableField("Name", nameController, false),
             buildEditableField("E-mail Address", emailController, false),
-         buildEditableField("Phone Number", phoneController, false),
+            buildEditableField("Phone Number", phoneController, false),
           ],
         ),
       ),
@@ -82,7 +114,8 @@ class _EditProfilePageState extends State<EditProfilePage> {
   }
 
   // Custom Widget for Editable Fields
-  Widget buildEditableField(String label, TextEditingController controller, bool isPassword) {
+  Widget buildEditableField(
+      String label, TextEditingController controller, bool isPassword) {
     return Container(
       margin: EdgeInsets.symmetric(vertical: 8),
       padding: EdgeInsets.symmetric(horizontal: 12, vertical: 5),
@@ -104,13 +137,15 @@ class _EditProfilePageState extends State<EditProfilePage> {
           border: InputBorder.none,
           suffixIcon: isPassword
               ? IconButton(
-            icon: Icon(isPasswordVisible ? Icons.visibility : Icons.visibility_off),
-            onPressed: () {
-              setState(() {
-                isPasswordVisible = !isPasswordVisible;
-              });
-            },
-          )
+                  icon: Icon(isPasswordVisible
+                      ? Icons.visibility
+                      : Icons.visibility_off),
+                  onPressed: () {
+                    setState(() {
+                      isPasswordVisible = !isPasswordVisible;
+                    });
+                  },
+                )
               : null,
         ),
       ),

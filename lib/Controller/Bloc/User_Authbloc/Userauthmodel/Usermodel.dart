@@ -11,6 +11,7 @@ class UserModel {
   String? City;
   String? Onesignal_id;
   String? District;
+  String? image;
 
   UserModel(
       {this.email,
@@ -24,7 +25,7 @@ class UserModel {
       this.Country,
       this.City,
       this.Onesignal_id,
-        this.District
+        this.District,this.image
 
       });
 
@@ -41,7 +42,8 @@ class UserModel {
       Country: data['Country'],
       state: data['state'],
       City: data['City'],
-      District: data['District']
+      District: data['District'],
+      image: data['image'],
     );
   }
 }

@@ -287,10 +287,8 @@ class _AddUniversityState extends State<AddUniversity> {
                         [
                           "United States",
                           "United Kingdom",
-                          "New Zealand",
                           "Canada",
-                          "Australia",
-                          "India"
+                          "India",
                         ],
                         selectedCountry, (value) {
                       setState(() => selectedCountry = value);
@@ -346,14 +344,13 @@ class _AddUniversityState extends State<AddUniversity> {
               ),
 
               // Dropdown for Degree Type
-              buildDropdown(
-                  "Degree Type", ["Bachelor", "Master", "MBA"], selectedDegree,
-                  (value) {
+              buildDropdown("Degree Type", ["Bachelors", "Masters", "MBA"],
+                  selectedDegree, (value) {
                 setState(() => selectedDegree = value);
               }, required: true),
 
               // Dropdown for Bachelor's Courses
-              if (selectedDegree == "Bachelor")
+              if (selectedDegree == "Bachelors")
                 Column(
                   children: [
                     buildDropdown(
@@ -370,7 +367,6 @@ class _AddUniversityState extends State<AddUniversity> {
                           "BBA in Supply Chain Management",
                           "BSc in Computer Science",
                           "BSc in Information Technology (IT)",
-                          "BTech / BE",
                           "BSc in Data Science",
                           "BSc in AI & Machine Learning",
                           "BSc in Biotechnology",
@@ -381,7 +377,6 @@ class _AddUniversityState extends State<AddUniversity> {
                           "BA in English Literature",
                           "BA in Journalism & Mass Communication",
                           "BA in Fine Arts",
-                          "LLB (Bachelor of Laws)",
                           "BA in Criminology",
                           "BA in Public Administration",
                           "BA in Economics",
@@ -433,11 +428,20 @@ class _AddUniversityState extends State<AddUniversity> {
                         print(AcadamicTestPercentage);
                       });
                     }),
+                    buildDropdown(
+                        "AcademicTestPercentage minimum",
+                        ["50", "60", "70", "80", "90", "100"],
+                        AcadamicTestPercentage, (value) {
+                      setState(() {
+                        AcadamicTestPercentage = value;
+                        print(AcadamicTestPercentage);
+                      });
+                    }),
                   ],
                 ),
 
               // Dropdown for Master's Courses
-              if (selectedDegree == "Master")
+              if (selectedDegree == "Masters")
                 Column(
                   children: [
                     buildDropdown(
@@ -456,8 +460,8 @@ class _AddUniversityState extends State<AddUniversity> {
                           "MSc in Cybersecurity",
                           "MSc in Information Technology",
                           "MSc in Biotechnology",
-                          "MSc in Physics" ,
-                          "MSc in Chemistry ", 
+                          "MSc in Physics",
+                          "MSc in Chemistry ",
                           "MSc in Mathematics",
                           "MA in Psychology",
                           "MA in Sociology",
@@ -588,7 +592,7 @@ class _AddUniversityState extends State<AddUniversity> {
                       });
                     }),
                     buildDropdown(
-                        "AcademicTest",
+                        "AcadamicTest",
                         [
                           "GRE",
                           "GMAT",
@@ -648,7 +652,7 @@ class _AddUniversityState extends State<AddUniversity> {
                 children: [
                   Expanded(
                     child: buildDropdown(
-                        "English Test",
+                        "EnglishTest",
                         ["PTE", "IELTS", "TOEFL", "Not Required"],
                         Englishtest, (value) {
                       setState(() {

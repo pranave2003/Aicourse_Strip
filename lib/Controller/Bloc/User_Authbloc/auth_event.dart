@@ -33,3 +33,4 @@ class FetchUsers extends AuthEvent {
   final String? searchQuery;
   FetchUsers({required this.searchQuery});
 }
+class PickAndUploadImageEvent extends AuthEvent {}

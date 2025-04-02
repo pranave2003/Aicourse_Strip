@@ -17,11 +17,9 @@ class _ChooseCountryState extends State<ChooseCountry> {
   String? selectedcountry;
 
   final List<Map<String, String>> category = [
-    {"name": "United States ", "image": "assets/Country/img_1.png"},
-    {"name": "United Kingdom ", "image": "assets/Country/img.png"},
-    {"name": "Australia", "image": "assets/Country/img_2.png"},
+    {"name": "United States", "image": "assets/Country/img_1.png"},
+    {"name": "United Kingdom", "image": "assets/Country/img.png"},
     {"name": "Canada", "image": "assets/Country/img_3.png"},
-    {"name": "Europe", "image": "assets/Country/img_5.png"},
     {"name": "India", "image": "assets/Country/img_4.png"},
   ];
 

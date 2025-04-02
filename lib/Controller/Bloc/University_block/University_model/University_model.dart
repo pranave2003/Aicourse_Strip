@@ -84,4 +84,6 @@ class University_model {
       Collegename: data['Collegename'],
     );
   }
+
+
 }

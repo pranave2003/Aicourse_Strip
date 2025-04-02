@@ -15,6 +15,7 @@ class BachelorsEnglish extends StatefulWidget {
 class _BachelorsEnglishState extends State<BachelorsEnglish> {
   int? selectedIndex;
   String? selectedTest;
+  String? scoreRangeMessage; // New variable for score range message
   final TextEditingController percentageController = TextEditingController();
 
   final List<String> englishTests = ["TOEFL", "IELTS", "PTE", "Test Not Taken Yet"];
@@ -73,6 +74,17 @@ class _BachelorsEnglishState extends State<BachelorsEnglish> {
                       setState(() {
                         selectedIndex = index;
                         selectedTest = englishTests[index];
+
+                        // Update score range message based on selected test
+                        if (selectedTest == "TOEFL") {
+                          scoreRangeMessage = "Valid score range: 0 - 120";
+                        } else if (selectedTest == "IELTS") {
+                          scoreRangeMessage = "Valid score range: 0 - 9";
+                        } else if (selectedTest == "PTE") {
+                          scoreRangeMessage = "Valid score range: 10 - 90";
+                        } else {
+                          scoreRangeMessage = null; // No score range for "Test Not Taken Yet"
+                        }
                       });
                     },
                     child: Container(
@@ -97,7 +109,18 @@ class _BachelorsEnglishState extends State<BachelorsEnglish> {
                 },
               ),
             ),
-            if (selectedTest != "Test Not Taken Yet") ...[
+            if (selectedTest != "Test Not Taken Yet" && selectedTest != null) ...[
+              if (scoreRangeMessage != null) ...[
+                Text(
+                  scoreRangeMessage!, // Display the score range message
+                  style: const TextStyle(
+                    color: Colors.red,
+                    fontSize: 18,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+                const SizedBox(height: 10),
+              ],
               const Text(
                 "Enter your score",
                 style: TextStyle(
@@ -176,7 +199,7 @@ class _BachelorsEnglishState extends State<BachelorsEnglish> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => Bachelors_academictest(),
+                    builder: (context) => const Bachelors_academictest(),
                   ),
                 );
               },

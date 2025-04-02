@@ -18,11 +18,25 @@ class _MastersEnglishtestState extends State<MastersEnglishtest> {
   final TextEditingController percentageController = TextEditingController(); // Score input
 
   final List<String> englishTests = [
-    "TOEFL (0 - 120)",
-    "IELTS (0 - 9)",
-    "PTE (10 - 90)",
+    "TOEFL",
+    "IELTS",
+    "PTE",
     "Test Not Taken Yet"
   ];
+
+  // Function to get valid score range
+  String getScoreRange() {
+    switch (selectedTest) {
+      case "TOEFL":
+        return "Valid Score: 0 - 120";
+      case "IELTS":
+        return "Valid Score: 0 - 9";
+      case "PTE":
+        return "Valid Score: 10 - 90";
+      default:
+        return "";
+    }
+  }
 
   // Function to validate score
   bool isValidScore(String score) {
@@ -33,11 +47,11 @@ class _MastersEnglishtestState extends State<MastersEnglishtest> {
     if (scoreValue == null) return false;
 
     switch (selectedTest) {
-      case "TOEFL (0 - 120)":
+      case "TOEFL":
         return scoreValue >= 0 && scoreValue <= 120;
-      case "IELTS (0 - 9)":
+      case "IELTS":
         return scoreValue >= 0 && scoreValue <= 9;
-      case "PTE (10 - 90)":
+      case "PTE":
         return scoreValue >= 10 && scoreValue <= 90;
       default:
         return false;
@@ -122,6 +136,19 @@ class _MastersEnglishtestState extends State<MastersEnglishtest> {
                 },
               ),
             ),
+
+            if (selectedTest != null && selectedTest != "Test Not Taken Yet")
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 5),
+                child: Text(
+                  getScoreRange(),
+                  style: const TextStyle(
+                    color: Colors.redAccent,
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
 
             const Text(
               "Enter your score",

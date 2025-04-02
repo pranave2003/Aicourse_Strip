@@ -76,7 +76,7 @@ class _MbaAcademicState extends State<MbaAcademic> {
                 Icon(Icons.light_mode_rounded, color: Colors.yellowAccent, size: 24),
                 SizedBox(width: 10),
                 Text(
-                  "Scoring high in language tests \nincreases your options multifold.",
+                  "Scoring high in language tests \nincreases your options multi fold.",
                   style: TextStyle(fontSize: 18),
                 ),
               ],
@@ -88,50 +88,46 @@ class _MbaAcademicState extends State<MbaAcademic> {
                 itemCount: englishTests.length,
                 itemBuilder: (context, index) {
                   bool isSelected = selectedIndex == index;
-                  return Column(
-                    children: [
-                      GestureDetector(
-                        onTap: () {
-                          setState(() {
-                            selectedIndex = index;
-                            selectedacademicTest = englishTests[index];
-                            selectedTestRange = testRanges[selectedacademicTest]!;
-                          });
-                        },
-                        child: Container(
-                          height: 50,
-                          width: 200,
-                          margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 50),
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(40),
-                            color: isSelected ? Color(0xff0A1F52) : Colors.grey,
-                          ),
-                          child: Center(
-                            child: Text(
-                              englishTests[index],
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                color: isSelected ? Colors.white : Colors.black,
-                              ),
-                            ),
+                  return GestureDetector(
+                    onTap: () {
+                      setState(() {
+                        selectedIndex = index;
+                        selectedacademicTest = englishTests[index];
+                        selectedTestRange = testRanges[selectedacademicTest]!;
+                      });
+                    },
+                    child: Container(
+                      height: 50,
+                      width: 200,
+                      margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 50),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(40),
+                        color: isSelected ? Color(0xff0A1F52) : Colors.grey,
+                      ),
+                      child: Center(
+                        child: Text(
+                          englishTests[index],
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            color: isSelected ? Colors.white : Colors.black,
                           ),
                         ),
                       ),
-                      if (isSelected)
-                        Padding(
-                          padding: const EdgeInsets.only(top: 5),
-                          child: Text(
-                            "Score Range: $selectedTestRange",
-                            style: TextStyle(fontSize: 16, color: Colors.black),
-                          ),
-                        ),
-                    ],
+                    ),
                   );
                 },
               ),
             ),
 
+            // Display score range in red above the score input field
             if (selectedacademicTest != "TEST NOT TAKEN") ...[
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 10),
+                child: Text(
+                  "Score Range: ${selectedTestRange ?? ''}",
+                  style: TextStyle(fontSize: 16, color: Colors.red),
+                ),
+              ),
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 10),
                 child: Container(

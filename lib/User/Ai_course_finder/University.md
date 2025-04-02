@@ -5,7 +5,7 @@ import '../../Widget/Constands/colors.dart';
 
 
 class University extends StatelessWidget {
-  const University({super.key, required Map<String, String> university});
+  const University({super.key, required Map<String, String> university,});
   @override
   @override
   Widget build(BuildContext context) {

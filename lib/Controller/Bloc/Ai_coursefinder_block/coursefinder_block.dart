@@ -1,4 +1,3 @@
-
 import 'package:bloc/bloc.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -13,7 +12,30 @@ abstract class CoursefinderEvent {}
 
 class FetchAllUniversites extends CoursefinderEvent {
   final String? searchQuery;
-  FetchAllUniversites({this.searchQuery});
+  final String? Country;
+  final String? Course_offered;
+  final String? Degree_offered;
+  final String? AcadamicTest;
+  final String? AcadamicTestPercentage;
+  final String? Englishtest;
+  final String? Englishtestpercentage;
+  final String? highestEducation;
+  final String? highestEducationpercentage;
+  final String? Rank;
+
+  FetchAllUniversites({
+    this.searchQuery,
+    this.Country,
+    this.Course_offered,
+    this.Degree_offered,
+    this.AcadamicTest,
+    this.AcadamicTestPercentage,
+    this.Englishtest,
+    this.Englishtestpercentage,
+    this.highestEducation,
+    this.highestEducationpercentage,
+    this.Rank,
+  });
 }
 
 // Define Coursefinder States
@@ -39,38 +61,54 @@ class CoursefinderBlock extends Bloc<CoursefinderEvent, CoursefinderState> {
     on<FetchAllUniversites>((event, emit) async {
       emit(CoursefinderLoading());
       try {
-        CollectionReference universityCollection =
-        FirebaseFirestore.instance.collection('University');
+        CollectionReference driversCollection =
+            FirebaseFirestore.instance.collection('University');
 
-        Query query = universityCollection;
+        Query query = driversCollection;
+        if (event.Country != null) {
+          query = query.where('Country', isEqualTo: event.Country);
+        }
+        if (event.Degree_offered != null) {
+          query =
+              query.where('Degree_offered', isEqualTo: event.Degree_offered);
+        }
+        if (event.highestEducation != null) {
+          query = query.where('highestEducation',
+              isEqualTo: event.highestEducation);
+        }
+        if (event.Course_offered != null) {
+          query =
+              query.where('Course_offered', isEqualTo: event.Course_offered);
+        }
+        if (event.Englishtest != null) {
+          query = query.where('Englishtest', isEqualTo: event.Englishtest);
+        }
+        if (event.AcadamicTest != null) {
+          query = query.where('AcadamicTest', isEqualTo: event.AcadamicTest);
+        }
+        if (event.Rank != null) {
+          query = query.where('Rank', isEqualTo: event.Rank);
+        }
+        // if (event.highestEducationpercentage != null) {
+        //   query = query.where('highestEducationpercentage',
+        //       isGreaterThanOrEqualTo: event.highestEducationpercentage);
+        // }
+
         QuerySnapshot snapshot = await query.get();
 
-        // Use a map to store unique university names
-        Map<String, University_model> uniqueUniversities = {};
-
-        for (var doc in snapshot.docs) {
-          University_model university =
-          University_model.fromMap(doc.data() as Map<String, dynamic>);
-
-          // If the university name is not in the map, add it
-          if (!uniqueUniversities.containsKey(university.Universityname)) {
-            uniqueUniversities[university.Universityname!] = university;
-          }
-        }
-
-        // Convert the map values back to a list
-        List<University_model> universityList =
-        uniqueUniversities.values.toList();
+        List<University_model> userss = snapshot.docs.map((doc) {
+          return University_model.fromMap(doc.data() as Map<String, dynamic>);
+        }).toList();
 
         if (event.searchQuery != null && event.searchQuery!.isNotEmpty) {
-          universityList = universityList.where((university) {
-            return university.Universityname!
+          userss = userss.where((driver) {
+            return driver.Country!
                 .toLowerCase()
                 .contains(event.searchQuery!.toLowerCase());
           }).toList();
         }
 
-        emit(CoursefinderLoaded(universityList));
+        emit(CoursefinderLoaded(userss));
       } catch (e) {
         emit(CoursefinderFailError(e.toString()));
       }

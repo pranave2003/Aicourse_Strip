@@ -1,6 +1,10 @@
+import 'dart:io';
+
 import 'package:bloc/bloc.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:meta/meta.dart';
 import 'Userauthmodel/Usermodel.dart';
 part 'auth_event.dart';
@@ -8,14 +12,17 @@ part 'auth_state.dart';
 
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
   final FirebaseAuth _auth = FirebaseAuth.instance;
+  final FirebaseStorage _firebaseStorage = FirebaseStorage.instance;
+  final ImagePicker _imagePicker = ImagePicker();
   AuthBloc() : super(AuthInitial()) {
     // check Auth or Not
+    User? user;
+    user = _auth.currentUser;
     on<checkloginstateevent>(
       (event, emit) async {
-        User? user;
         try {
           await Future.delayed(Duration(seconds: 3));
-          user = _auth.currentUser;
+
           if (user != null) {
             emit(Authenticated(user));
           } else {
@@ -54,7 +61,9 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
               "District": event.user.District,
               "role": "User",
               "ban": "1",
-              "status": "1"
+              "status": "1",
+              "image":
+                  "https://img.freepik.com/premium-vector/avatar-profile-icon-flat-style-female-user-profile-vector-illustration-isolated-background-women-profile-sign-business-concept_157943-38866.jpg"
             });
             emit(Authenticated(user));
           } else {
@@ -218,6 +227,42 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         emit(Usersloaded(userss));
       } catch (e) {
         emit(Usersfailerror(e.toString()));
+      }
+    });
+
+    on<PickAndUploadImageEvent>((event, emit) async {
+      try {
+        // Pick Image from Gallery
+        final pickedFile =
+            await _imagePicker.pickImage(source: ImageSource.gallery);
+        if (pickedFile == null) {
+          return; // User canceled image selection
+        }
+
+        emit(ProfileImageLoading());
+
+        File imageFile = File(pickedFile.path);
+        String fileName =
+            "Userprofile/${DateTime.now().millisecondsSinceEpoch}.jpg";
+
+        // Upload to Firebase Storage
+        UploadTask uploadTask =
+            _firebaseStorage.ref(fileName).putFile(imageFile);
+        TaskSnapshot snapshot = await uploadTask;
+
+        // Get Download URL
+        String downloadUrl = await snapshot.ref.getDownloadURL();
+        print(downloadUrl);
+        if (user != null) {
+          FirebaseFirestore.instance
+              .collection("Laundry_Users")
+              .doc(user.uid)
+              .update({"imageUrl": downloadUrl});
+        }
+        emit(ProfileImageSuccess());
+      } catch (e) {
+        print(e);
+        emit(ProfileImageFailure("Failed to upload image"));
       }
     });
   }

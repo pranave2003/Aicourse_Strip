@@ -1,3 +1,4 @@
+import 'package:course_connect/Controller/Bloc/Ai_coursefinder_block/coursefinder_block.dart';
 import 'package:course_connect/Controller/Bloc/University_block/university_bloc.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -26,6 +27,9 @@ class MyApp extends StatelessWidget {
       providers: [
         BlocProvider<AuthBloc>(
           create: (context) => AuthBloc(),
+        ),
+        BlocProvider<CoursefinderBlock>(
+          create: (context) => CoursefinderBlock(),
         ),
         BlocProvider<UniversityBloc>(
           create: (context) => UniversityBloc(),

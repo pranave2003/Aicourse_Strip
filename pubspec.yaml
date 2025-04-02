@@ -43,6 +43,8 @@ dependencies:
   lottie: ^3.3.1
   google_fonts: ^6.2.1
   cached_network_image: ^3.4.1
+  image_picker: ^1.1.2
+  firebase_storage: ^12.4.5
 
 dev_dependencies:
   flutter_test:

@@ -40,7 +40,8 @@ class _Bachelors_KnowledgeState extends State<Bachelors_Knowledge> {
             const Padding(
               padding: EdgeInsets.symmetric(horizontal: 20.0),
               child: Text(
-                "Do you know the application deadlines for \n the universities you're interested in?",
+                "Are you aware of your colleges application deadlines?",
+                // "Do you know the application deadlines for the universities you're interested in?",
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   color: Color(0xff0A1F52),
