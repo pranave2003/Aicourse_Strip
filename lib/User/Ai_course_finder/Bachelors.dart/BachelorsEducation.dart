@@ -70,17 +70,19 @@ class _BachelorsEducationState extends State<BachelorsEducation> {
                   width: 300,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(40),
-                    color: selectedIndex == 0 ? const Color(0xff0A1F52) : Colors.grey,
+                    color: selectedIndex == 0
+                        ? const Color(0xff0A1F52)
+                        : Colors.grey,
                   ),
                   margin: const EdgeInsets.symmetric(vertical: 10),
                   child: Center(
                       child: Text(
-                        "Grade 12",
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          color: selectedIndex == 0 ? Colors.white : Colors.black,
-                        ),
-                      )),
+                    "Grade 12",
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      color: selectedIndex == 0 ? Colors.white : Colors.black,
+                    ),
+                  )),
                 ),
               ),
               GestureDetector(
@@ -88,7 +90,8 @@ class _BachelorsEducationState extends State<BachelorsEducation> {
                   setState(() {
                     selectedIndex = 1;
                     seletedEducation = "Undergraduate diploma";
-                    percentageRangeMessage = "Percentage must be between 30-100";
+                    percentageRangeMessage =
+                        "Percentage must be between 30-100";
                   });
                 },
                 child: Container(
@@ -96,17 +99,19 @@ class _BachelorsEducationState extends State<BachelorsEducation> {
                   width: 300,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(40),
-                    color: selectedIndex == 1 ? const Color(0xff0A1F52) : Colors.grey,
+                    color: selectedIndex == 1
+                        ? const Color(0xff0A1F52)
+                        : Colors.grey,
                   ),
                   margin: const EdgeInsets.symmetric(vertical: 10),
                   child: Center(
                       child: Text(
-                        "Undergraduate diploma",
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          color: selectedIndex == 1 ? Colors.white : Colors.black,
-                        ),
-                      )),
+                    "Undergraduate diploma",
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      color: selectedIndex == 1 ? Colors.white : Colors.black,
+                    ),
+                  )),
                 ),
               ),
               const SizedBox(height: 30),
@@ -166,7 +171,8 @@ class _BachelorsEducationState extends State<BachelorsEducation> {
               const SizedBox(height: 50),
               InkWell(
                 onTap: () {
-                  double? percentage = double.tryParse(highesteducationpercentage.text);
+                  double? percentage =
+                      double.tryParse(highesteducationpercentage.text);
 
                   if (seletedEducation == null) {
                     ScaffoldMessenger.of(context).showSnackBar(
@@ -193,7 +199,8 @@ class _BachelorsEducationState extends State<BachelorsEducation> {
                       (percentage < 0 || percentage > 100)) {
                     ScaffoldMessenger.of(context).showSnackBar(
                       const SnackBar(
-                        content: Text("Percentage must be between 0-100 for Grade 12"),
+                        content: Text(
+                            "Percentage must be between 0-100 for Grade 12"),
                         backgroundColor: Colors.red,
                       ),
                     );
@@ -237,12 +244,12 @@ class _BachelorsEducationState extends State<BachelorsEducation> {
                       borderRadius: BorderRadius.circular(30)),
                   child: const Center(
                       child: Text(
-                        "Continue",
-                        style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 22,
-                            fontWeight: FontWeight.bold),
-                      )),
+                    "Continue",
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 22,
+                        fontWeight: FontWeight.bold),
+                  )),
                 ),
               )
             ],
