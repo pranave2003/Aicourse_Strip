@@ -15,7 +15,7 @@ part 'auth_state.dart';
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final FirebaseStorage _firebaseStorage = FirebaseStorage.instance;
-  final ImagePicker _imagePicker = ImagePicker();
+
   AuthBloc() : super(AuthInitial()) {
     // check Auth or Not
     User? user;

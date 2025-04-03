@@ -45,3 +45,19 @@ final class UniversityModel extends UniversityState {
   final University_model university;
   UniversityModel(this.university);
 }
+
+//photo upload
+
+final class ImageuploadLoading extends UniversityState {}
+
+final class Imageuploadedurl extends UniversityState {
+  String Imageurl;
+  Imageuploadedurl(this.Imageurl);
+}
+
+final class ProfileImageFailure extends UniversityState {
+  String error;
+  ProfileImageFailure(this.error);
+}
+
+final class Imageuploadsuccss extends UniversityState {}

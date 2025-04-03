@@ -42,35 +42,6 @@ class CourseFinderScreen extends StatelessWidget {
                               color: Color(0xff0A71CB))),
                     ],
                   ),
-              //     Row(
-              //       children: [
-              //         Container(
-              //           height: 40,
-              //           width: 300,
-              //           child: TextField(
-              //             decoration: InputDecoration(
-              //               filled: true,
-              //               fillColor: Colors.white,
-              //               hintText: "Search University or courses",
-              //               prefixIcon: Icon(Icons.search,
-              //                   color: Colors.grey, size: 21),
-              //               border: OutlineInputBorder(
-              //                   borderRadius: BorderRadius.circular(18)),
-              //             ),
-              //           ),
-              //         ),
-              //         SizedBox(width: 10),
-              //         CircleAvatar(
-              //             backgroundColor: Color(0xffD9D9D9),
-              //             child: Icon(Icons.person)),
-              //         SizedBox(width: 10),
-              //         CircleAvatar(
-              //             backgroundColor: Color(0xffD9D9D9),
-              //             child: Icon(Icons.notification_add)),
-              //       ],
-              //     ),
-              //   ],
-              // ),
                   Row(
                     children: [
                       CircleAvatar(backgroundColor: Color(0xffD9D9D9), child: Icon(Icons.notification_add)),

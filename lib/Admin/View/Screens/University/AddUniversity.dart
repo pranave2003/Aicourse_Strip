@@ -51,14 +51,7 @@ class _AddUniversityState extends State<AddUniversity> {
   final TextEditingController collegenamectrl = TextEditingController();
   final TextEditingController collegecodectrl = TextEditingController();
 
-  // @override
-  // void dispose() {
-  //   establishedDateController.dispose();
-  //   admissionStartDateController.dispose();
-  //   admissionEndDateController.dispose();
-  //   super.dispose();
-  // }
-
+  String? university_image;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -110,7 +103,7 @@ class _AddUniversityState extends State<AddUniversity> {
                                   'assets/Profile/img.png'), // Corrected Path
                             ),
                             const SizedBox(width: 10),
-                            const Text(
+                            Text(
                               "Admin",
                               style: TextStyle(
                                   fontSize: 16, fontWeight: FontWeight.bold),
@@ -126,19 +119,20 @@ class _AddUniversityState extends State<AddUniversity> {
               SizedBox(height: 20),
               BlocConsumer<UniversityBloc, UniversityState>(
                 listener: (context, state) {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(
-                      content: Text("University added successfully!"),
-                      backgroundColor: Colors.green,
-                      duration: Duration(seconds: 2),
-                    ),
-                  );
                   if (state is RefreshUniversity) {
                     Navigator.push(context, MaterialPageRoute(
                       builder: (context) {
                         return AdminPage();
                       },
                     ));
+
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text("University added successfully!"),
+                        backgroundColor: Colors.green,
+                        duration: Duration(seconds: 2),
+                      ),
+                    );
                   }
                 },
                 builder: (context, state) {
@@ -156,40 +150,53 @@ class _AddUniversityState extends State<AddUniversity> {
                         InkWell(
                           onTap: () {
                             if (_formKey.currentState!.validate()) {
-                              University_model university = University_model(
-                                  UniversityimageURL:
-                                      "https://content.jdmagicbox.com/v2/comp/malappuram/m9/9999px483.x483.221229222631.k6m9/catalogue/calicut-university-malappuram-universities-ez2kcrhfsj.jpg",
-                                  Country: selectedCountry,
-                                  Admission_enddate:
-                                      admissionEndDateController.text,
-                                  Admission_startdate:
-                                      admissionStartDateController.text,
-                                  Course_offered: selectedCourse,
-                                  Degree_offered: selectedDegree,
-                                  Description: DiscriptionController.text,
-                                  Duration: selectedDuration,
-                                  Eligibility_criteria: selectedEligibility,
-                                  Established_date:
-                                      establishedDateController.text,
-                                  Schoolarship_details:
-                                      scholarshipFeeController.text,
-                                  Terms_and_conditions:
-                                      Terms_and_conditions.text,
-                                  Tuition_fees: courseFeeController.text,
-                                  Universityname: UniversitynameController.text,
-                                  Rank: selectedRank,
-                                  highestEducationpercentage:
-                                      highestEducationpercentage,
-                                  highestEducation: highestEducation,
-                                  Englishtestpercentage: Englishtestpercentage,
-                                  Englishtest: Englishtest,
-                                  AcadamicTestPercentage:
-                                      AcadamicTestPercentage,
-                                  AcadamicTest: AcadamicTest,
-                                  Collegename: collegenamectrl.text,
-                                  collagecode: collegecodectrl.text);
-                              context.read<UniversityBloc>().add(
-                                  University_Add_Event(University: university));
+                              if (university_image != null) {
+                                University_model university = University_model(
+                                    UniversityimageURL: university_image,
+                                    Country: selectedCountry,
+                                    Admission_enddate:
+                                        admissionEndDateController.text,
+                                    Admission_startdate:
+                                        admissionStartDateController.text,
+                                    Course_offered: selectedCourse,
+                                    Degree_offered: selectedDegree,
+                                    Description: DiscriptionController.text,
+                                    Duration: selectedDuration,
+                                    Eligibility_criteria: selectedEligibility,
+                                    Established_date:
+                                        establishedDateController.text,
+                                    Schoolarship_details:
+                                        scholarshipFeeController.text,
+                                    Terms_and_conditions:
+                                        Terms_and_conditions.text,
+                                    Tuition_fees: courseFeeController.text,
+                                    Universityname:
+                                        UniversitynameController.text,
+                                    Rank: selectedRank,
+                                    highestEducationpercentage:
+                                        highestEducationpercentage,
+                                    highestEducation: highestEducation,
+                                    Englishtestpercentage:
+                                        Englishtestpercentage,
+                                    Englishtest: Englishtest,
+                                    AcadamicTestPercentage:
+                                        AcadamicTestPercentage,
+                                    AcadamicTest: AcadamicTest,
+                                    Collegename: collegenamectrl.text,
+                                    collagecode: collegecodectrl.text);
+                                context.read<UniversityBloc>().add(
+                                    University_Add_Event(
+                                        University: university));
+                              } else {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(
+                                    content: Text(
+                                        "Please Upload the university image!"),
+                                    backgroundColor: Colors.red,
+                                    duration: Duration(seconds: 2),
+                                  ),
+                                );
+                              }
                             }
                           },
                           borderRadius: BorderRadius.circular(
@@ -224,19 +231,116 @@ class _AddUniversityState extends State<AddUniversity> {
               Divider(thickness: 2, color: Colors.grey),
 
               SizedBox(height: 20),
-              Padding(
-                padding:
-                    const EdgeInsets.symmetric(vertical: 8, horizontal: 25),
-                child: TextFormField(
-                  controller: UniversitynameController,
-                  maxLines: 1,
-                  decoration: InputDecoration(
-                      labelText: "University Name",
-                      border: OutlineInputBorder()),
-                  validator: (value) => true && (value == null || value.isEmpty)
-                      ? 'University Name is required'
-                      : null,
-                ),
+              Row(
+                children: [
+                  Expanded(
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 8, horizontal: 25),
+                      child: TextFormField(
+                        controller: UniversitynameController,
+                        maxLines: 1,
+                        decoration: InputDecoration(
+                            labelText: "University Name",
+                            border: OutlineInputBorder()),
+                        validator: (value) =>
+                            true && (value == null || value.isEmpty)
+                                ? 'University Name is required'
+                                : null,
+                      ),
+                    ),
+                  ),
+                  BlocConsumer<UniversityBloc, UniversityState>(
+                    listener: (context, state) {
+                      // TODO: implement listener
+                    },
+                    builder: (context, state) {
+                      String? imageUrl;
+
+                      if (state is Imageuploadedurl) {
+                        imageUrl = state.Imageurl;
+                        university_image = imageUrl;
+
+                        print(" University name :${university_image}");
+                      }
+
+                      return Card(
+                        child: Container(
+                          height: 100,
+                          width: 300,
+                          decoration: BoxDecoration(
+                              border: Border.all(
+                                color: state is Imageuploadedurl
+                                    ? Colors.green
+                                    : Colors.red,
+                              ),
+                              color: Colors.white),
+                          child: Row(
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(10),
+                                  child: imageUrl != null && imageUrl.isNotEmpty
+                                      ? Image.network(
+                                          imageUrl,
+                                          width: 100,
+                                          height: 100,
+                                          fit: BoxFit.fill,
+                                          errorBuilder:
+                                              (context, error, stackTrace) {
+                                            return Container(
+                                              width: 100,
+                                              height: 100,
+                                              decoration: BoxDecoration(
+                                                color: Colors.grey[300],
+                                              ),
+                                              child: Icon(
+                                                Icons.image_not_supported,
+                                                size: 50,
+                                                color: Colors.grey[600],
+                                              ),
+                                            );
+                                          },
+                                        )
+                                      : Container(
+                                          width: 100,
+                                          height: 100,
+                                          decoration: BoxDecoration(
+                                            color: Colors.grey[300],
+                                          ),
+                                          child: Icon(
+                                            Icons.image,
+                                            size: 10,
+                                            color: Colors.grey[600],
+                                          ),
+                                        ),
+                                ),
+                              ),
+                              TextButton(
+                                onPressed: () {
+                                  context
+                                      .read<UniversityBloc>()
+                                      .add(UploadUniversityphoto());
+                                },
+                                child: state is ImageuploadLoading
+                                    ? Loading_Widget()
+                                    : (state is Imageuploadedurl
+                                        ? Text(
+                                            "Uploaded ✅",
+                                            style:
+                                                TextStyle(color: Colors.green),
+                                          )
+                                        : Text("Upload image")),
+                              )
+                            ],
+                          ),
+                        ),
+                      );
+                    },
+                  ),
+                  SizedBox(width: 10),
+                ],
               ),
               Row(
                 children: [

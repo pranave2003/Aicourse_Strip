@@ -47,9 +47,11 @@ class University_Edit_Event extends UniversityEvent {
   University_Edit_Event({required this.University});
 }
 
-
 class FetchCourseDetailsById extends UniversityEvent {
-
   final String? CourseUniversity_id;
-  FetchCourseDetailsById({ required this.CourseUniversity_id});
+  FetchCourseDetailsById({required this.CourseUniversity_id});
 }
+
+/**/
+
+class UploadUniversityphoto extends UniversityEvent {}

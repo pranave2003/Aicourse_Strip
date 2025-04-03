@@ -1,7 +1,12 @@
+import 'dart:io';
+
 import 'package:bloc/bloc.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:course_connect/User/Ai_course_finder/University.md';
+import 'package:file_picker/file_picker.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
+import 'package:flutter/foundation.dart';
 import 'package:meta/meta.dart';
 
 import 'University_model/University_model.dart';
@@ -10,6 +15,7 @@ part 'university_event.dart';
 part 'university_state.dart';
 
 class UniversityBloc extends Bloc<UniversityEvent, UniversityState> {
+  final FirebaseStorage _firebaseStorage = FirebaseStorage.instance;
   UniversityBloc() : super(UniversityInitial()) {
     on<UniversityEvent>((event, emit) {});
 
@@ -285,5 +291,51 @@ class UniversityBloc extends Bloc<UniversityEvent, UniversityState> {
         }
       },
     );
+
+    //   upload image
+
+    on<UploadUniversityphoto>((event, emit) async {
+      try {
+        emit(ImageuploadLoading());
+
+        // ✅ Open file picker
+        FilePickerResult? result = await FilePicker.platform.pickFiles(
+          type: FileType.image, // Pick only image files
+          withData: true, // Required for web
+        );
+
+        if (result == null) {
+          emit(ProfileImageFailure("No picked the image"));
+
+          print("No image selected.");
+          return; // User canceled selection
+        }
+
+        String fileName =
+            "University/${DateTime.now().millisecondsSinceEpoch}.jpg";
+        Reference storageRef = _firebaseStorage.ref().child(fileName);
+        UploadTask uploadTask;
+
+        if (kIsWeb) {
+          // ✅ Web: Upload image as bytes
+          Uint8List imageData = result.files.first.bytes!;
+          uploadTask = storageRef.putData(imageData);
+        } else {
+          // ✅ Mobile: Upload image as a File
+          File imageFile = File(result.files.first.path!);
+          uploadTask = storageRef.putFile(imageFile);
+        }
+
+        // ✅ Wait for the upload to complete
+        TaskSnapshot snapshot = await uploadTask;
+        String downloadUrl = await snapshot.ref.getDownloadURL();
+        print("Uploaded Image URL: $downloadUrl");
+
+        emit(Imageuploadedurl(downloadUrl));
+      } catch (e) {
+        print("Error: $e");
+        emit(ProfileImageFailure("Failed to upload image"));
+      }
+    });
   }
 }
