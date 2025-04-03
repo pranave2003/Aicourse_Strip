@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:course_connect/Widget/Constands/Loading.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -75,14 +76,23 @@ class _ProfileState extends State<Profile> {
                       //   ),
                       // ),
                       ClipRRect(
-                        borderRadius: BorderRadius.circular(60),
-                        child: Image.network(
-                          "${user.image}?alt=media", // Ensures Firebase returns a direct link
-                          width: 100,
-                          height: 100,
-                          fit: BoxFit.cover,
-                          errorBuilder: (context, error, stackTrace) {
-                            return Container(
+                        borderRadius: BorderRadius.circular(
+                            30), // Rounded corners for image
+                        child: Center(
+                          child: CachedNetworkImage(
+                            imageUrl: user.image.toString(),
+                            width: 100, // Adjusted width
+                            height: 100, // Adjusted height
+                            fit: BoxFit.fill,
+                            placeholder: (context, url) => Container(
+                              width: 100,
+                              height: 100,
+                              color: Colors.grey[300], // Placeholder background
+                              child: Center(
+                                child: Loading_Widget(), // Loading indicator
+                              ),
+                            ),
+                            errorWidget: (context, url, error) => Container(
                               width: 100,
                               height: 100,
                               color: Colors.grey[300], // Placeholder background
@@ -91,8 +101,8 @@ class _ProfileState extends State<Profile> {
                                 size: 50,
                                 color: Colors.grey[600],
                               ),
-                            );
-                          },
+                            ),
+                          ),
                         ),
                       ),
 
