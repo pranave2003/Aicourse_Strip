@@ -72,7 +72,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                           widget.image,
                           width: 100, // Adjusted width
                           height: 100, // Adjusted height
-                          fit: BoxFit.cover,
+                          fit: BoxFit.fill,
                           errorBuilder: (context, error, stackTrace) {
                             return state is ProfileImageLoading
                                 ? Loading_Widget()
