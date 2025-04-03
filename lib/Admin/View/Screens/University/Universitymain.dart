@@ -136,6 +136,7 @@ class _University_mainState extends State<University_main> {
                           _buildColumn('College '),
                           _buildColumn('University '),
                           _buildColumn('Country'),
+                          _buildColumn('Image'),
                           _buildColumn('Course'),
                           _buildColumn('Action'),
                         ],
@@ -152,6 +153,32 @@ class _University_mainState extends State<University_main> {
                                     style: TextStyle(
                                         fontWeight: FontWeight.bold))),
                                 DataCell(Text(student.Country ?? '')),
+                                // DataCell(Text(student. UniversityimageURL.toString())),
+                                DataCell(Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Container(
+                                    height:100,
+                                    child: Image.network(
+                                                                student. UniversityimageURL.toString(),
+                                      width: 100, // Adjusted width
+                                      height: 160, // Adjusted height
+                                      fit: BoxFit.cover,
+                                      errorBuilder: (context, error, stackTrace) {
+                                        return Container(
+                                          width: 130,
+                                          height: 300,
+                                          color: Colors.grey[300], // Placeholder background
+                                          child: Icon(
+                                            Icons.image_not_supported,
+                                            size: 50,
+                                            color: Colors.grey[600],
+                                          ),
+                                        );
+                                      },
+                                    ),
+                                  ),
+                                ),
+                                ),
                                 DataCell(Text(student.Course_offered ?? '')),
                                 DataCell(Row(
                                   children: <Widget>[
