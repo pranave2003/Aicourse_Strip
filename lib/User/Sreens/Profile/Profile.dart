@@ -1,15 +1,12 @@
 import 'package:course_connect/Widget/Constands/Loading.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../Controller/Bloc/User_Authbloc/auth_bloc.dart';
-
 import '../../Profile/AboutUs.dart';
 import '../../Profile/ContactUs.dart';
 import '../../Profile/EditProfilePage.dart';
 import '../../Profile/TermsandConditions.dart';
 import '../Authentication/LoginUser.dart';
-
 import 'PrivacyPolicy.dart';
 
 class Profile extends StatefulWidget {
@@ -55,17 +52,38 @@ class _ProfileState extends State<Profile> {
                   padding: EdgeInsets.all(16.0),
                   child: Column(
                     children: [
+                      // ClipRRect(
+                      //   borderRadius: BorderRadius.circular(60),
+                      //   child: Image.network(
+                      //     user.image.toString(),
+                      //
+                      //     width: 100, // Adjusted width
+                      //     height: 100, // Adjusted height
+                      //     fit: BoxFit.cover,
+                      //     errorBuilder: (context, error, stackTrace) {
+                      //       return Container(
+                      //         width: 130,
+                      //         height: 100,
+                      //         color: Colors.grey[300], // Placeholder background
+                      //         child: Icon(
+                      //           Icons.image_not_supported,
+                      //           size: 50,
+                      //           color: Colors.grey[600],
+                      //         ),
+                      //       );
+                      //     },
+                      //   ),
+                      // ),
                       ClipRRect(
                         borderRadius: BorderRadius.circular(60),
                         child: Image.network(
-                          user.image.toString(),
-
-                          width: 100, // Adjusted width
-                          height: 100, // Adjusted height
+                          "${user.image}?alt=media", // Ensures Firebase returns a direct link
+                          width: 100,
+                          height: 100,
                           fit: BoxFit.cover,
                           errorBuilder: (context, error, stackTrace) {
                             return Container(
-                              width: 130,
+                              width: 100,
                               height: 100,
                               color: Colors.grey[300], // Placeholder background
                               child: Icon(
@@ -77,6 +95,7 @@ class _ProfileState extends State<Profile> {
                           },
                         ),
                       ),
+
                       SizedBox(height: 10),
                       Text(
                         '${user.name ?? ''}',
