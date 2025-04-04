@@ -65,6 +65,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                 Center(
                   child: Stack(
                     children: [
+
                       ClipRRect(
                         borderRadius: BorderRadius.circular(
                             60), // Ensures a rectangular shape
@@ -72,7 +73,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                           widget.image,
                           width: 100, // Adjusted width
                           height: 100, // Adjusted height
-                          fit: BoxFit.fill,
+                          fit: BoxFit.cover,
                           errorBuilder: (context, error, stackTrace) {
                             return state is ProfileImageLoading
                                 ? Loading_Widget()
