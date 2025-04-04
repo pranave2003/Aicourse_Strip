@@ -25,9 +25,8 @@ class UserModel {
       this.Country,
       this.City,
       this.Onesignal_id,
-        this.District,this.image
-
-      });
+      this.District,
+      this.image});
 
   factory UserModel.fromMap(Map<String, dynamic> data) {
     return UserModel(
@@ -47,4 +46,3 @@ class UserModel {
     );
   }
 }
-

@@ -1,5 +1,6 @@
 
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:course_connect/Admin/View/Screens/University/EditUniversity.dart';
 import 'package:course_connect/Widget/Constands/Loading.dart';
 import 'package:flutter/material.dart';
@@ -136,6 +137,7 @@ class _University_mainState extends State<University_main> {
                           _buildColumn('College '),
                           _buildColumn('University '),
                           _buildColumn('Country'),
+                          _buildColumn('Image'),
                           _buildColumn('Course'),
                           _buildColumn('Action'),
                         ],
@@ -145,13 +147,76 @@ class _University_mainState extends State<University_main> {
                             final student = state.University[index];
                             return DataRow(
                               cells: [
-                                DataCell(Text(student.Collegename ?? '',
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.bold))),
-                                DataCell(Text(student.Universityname ?? '',
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.bold))),
-                                DataCell(Text(student.Country ?? '')),
+                                DataCell(Padding(
+                                  padding: const EdgeInsets.symmetric(vertical: 10.0),
+                                  child: Text(student.Collegename ?? '',
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold)),
+                                )),
+                                DataCell(Padding(
+                                  padding: const EdgeInsets.symmetric(vertical: 10.0),
+                                  child: Text(student.Universityname ?? '',
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold)),
+                                )),
+                                DataCell(Padding(
+                                  padding: const EdgeInsets.symmetric(vertical: 0.0),
+                                  child: Text(student.Country ?? ''),
+                                )),
+                                // DataCell(Text(student. UniversityimageURL.toString())),
+                                DataCell(Padding(
+                                  padding: const EdgeInsets.symmetric(vertical: 10.0),
+                                  child: Container(
+                                    height:80,
+                                   child: ClipRRect(
+                                      borderRadius: BorderRadius.circular(
+                                          5), // Rounded corners for image
+                                      child: CachedNetworkImage(
+                                        imageUrl: student. UniversityimageURL.toString(),
+                                        width: 100, // Adjusted width
+                                        height: 50, // Adjusted height
+                                        fit: BoxFit.cover,
+                                        placeholder: (context, url) => Container(
+                                          width: 50,
+                                          height: 50,
+                                          color: Colors.grey[300], // Placeholder background
+                                          child: Center(
+                                            child: Loading_Widget(), // Loading indicator
+                                          ),
+                                        ),
+                                        errorWidget: (context, url, error) => Container(
+                                          width: 50,
+                                          height: 50,
+                                          color: Colors.grey[300], // Placeholder background
+                                          child: Icon(
+                                            Icons.image_not_supported,
+                                            size: 50,
+                                            color: Colors.grey[600],
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                    // child: Image.network(
+                                    //                             student. UniversityimageURL.toString(),
+                                    //   width: 100, // Adjusted width
+                                    //   height: 160, // Adjusted height
+                                    //   fit: BoxFit.cover,
+                                    //   errorBuilder: (context, error, stackTrace) {
+                                    //     return Container(
+                                    //       width: 130,
+                                    //       height: 300,
+                                    //       color: Colors.grey[300], // Placeholder background
+                                    //       child: Icon(
+                                    //         Icons.image_not_supported,
+                                    //         size: 50,
+                                    //         color: Colors.grey[600],
+                                    //       ),
+                                    //     );
+                                    //   },
+                                    // ),
+                                  ),
+                                ),
+                                ),
                                 DataCell(Text(student.Course_offered ?? '')),
                                 DataCell(Row(
                                   children: <Widget>[

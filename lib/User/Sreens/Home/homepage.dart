@@ -410,9 +410,11 @@ class _HomepageState extends State<Homepage> {
                                                       BorderRadius.circular(
                                                           10), // Uncomment if needed
                                                   child: CachedNetworkImage(
-                                                    imageUrl: university
-                                                            .UniversityimageURL
-                                                        .toString(),
+                                                    imageUrl: university.UniversityimageURL.toString(),
+
+                                                    // imageUrl: university
+                                                    //         .UniversityimageURL
+                                                    //     .toString(),
                                                     height: 140,
                                                     width: 160,
                                                     fit: BoxFit.cover,

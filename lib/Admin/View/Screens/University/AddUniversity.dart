@@ -49,7 +49,7 @@ class _AddUniversityState extends State<AddUniversity> {
   final TextEditingController collegenamectrl = TextEditingController();
   final TextEditingController collegecodectrl = TextEditingController();
 
-  String? university_image;
+  String university_image = '1';
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -147,54 +147,60 @@ class _AddUniversityState extends State<AddUniversity> {
                         SizedBox(width: 20),
                         InkWell(
                           onTap: () {
-                            if (_formKey.currentState!.validate()) {
-                              if (university_image != null) {
-                                University_model university = University_model(
-                                    UniversityimageURL: university_image,
-                                    Country: selectedCountry,
-                                    Admission_enddate:
-                                        admissionEndDateController.text,
-                                    Admission_startdate:
-                                        admissionStartDateController.text,
-                                    Course_offered: selectedCourse,
-                                    Degree_offered: selectedDegree,
-                                    Description: DiscriptionController.text,
-                                    Duration: selectedDuration,
-                                    Eligibility_criteria: selectedEligibility,
-                                    Established_date:
-                                        establishedDateController.text,
-                                    Schoolarship_details:
-                                        scholarshipFeeController.text,
-                                    Terms_and_conditions:
-                                        Terms_and_conditions.text,
-                                    Tuition_fees: courseFeeController.text,
-                                    Universityname:
-                                        UniversitynameController.text,
-                                    Rank: selectedRank,
-                                    highestEducationpercentage:
-                                        highestEducationpercentage,
-                                    highestEducation: highestEducation,
-                                    Englishtestpercentage:
-                                        Englishtestpercentage,
-                                    Englishtest: Englishtest,
-                                    AcadamicTestPercentage:
-                                        AcadamicTestPercentage,
-                                    AcadamicTest: AcadamicTest,
-                                    Collegename: collegenamectrl.text,
-                                    collagecode: collegecodectrl.text);
-                                context.read<UniversityBloc>().add(
-                                    University_Add_Event(
-                                        University: university));
-                              } else {
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                  SnackBar(
-                                    content: Text(
-                                        "Please Upload the university image!"),
-                                    backgroundColor: Colors.red,
-                                    duration: Duration(seconds: 2),
-                                  ),
-                                );
+                            if (university_image =="1") {
+                              if (_formKey.currentState!.validate()) {
+                                {
+                                  University_model university =
+                                      University_model(
+                                          UniversityimageURL: university_image,
+                                          Country: selectedCountry,
+                                          Admission_enddate:
+                                              admissionEndDateController.text,
+                                          Admission_startdate:
+                                              admissionStartDateController.text,
+                                          Course_offered: selectedCourse,
+                                          Degree_offered: selectedDegree,
+                                          Description:
+                                              DiscriptionController.text,
+                                          Duration: selectedDuration,
+                                          Eligibility_criteria:
+                                              selectedEligibility,
+                                          Established_date:
+                                              establishedDateController.text,
+                                          Schoolarship_details:
+                                              scholarshipFeeController.text,
+                                          Terms_and_conditions:
+                                              Terms_and_conditions.text,
+                                          Tuition_fees:
+                                              courseFeeController.text,
+                                          Universityname:
+                                              UniversitynameController.text,
+                                          Rank: selectedRank,
+                                          highestEducationpercentage:
+                                              highestEducationpercentage,
+                                          highestEducation: highestEducation,
+                                          Englishtestpercentage:
+                                              Englishtestpercentage,
+                                          Englishtest: Englishtest,
+                                          AcadamicTestPercentage:
+                                              AcadamicTestPercentage,
+                                          AcadamicTest: AcadamicTest,
+                                          Collegename: collegenamectrl.text,
+                                          collagecode: collegecodectrl.text);
+                                  context.read<UniversityBloc>().add(
+                                      University_Add_Event(
+                                          University: university));
+                                }
                               }
+                            } else {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(
+                                  content: Text(
+                                      "Please Upload the university image!"),
+                                  backgroundColor: Colors.red,
+                                  duration: Duration(seconds: 2),
+                                ),
+                              );
                             }
                           },
                           borderRadius: BorderRadius.circular(

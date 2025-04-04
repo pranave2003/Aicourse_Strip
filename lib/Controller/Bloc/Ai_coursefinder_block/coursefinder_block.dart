@@ -70,7 +70,7 @@ class CoursefinderBlock extends Bloc<CoursefinderEvent, CoursefinderState> {
         }
         if (event.Degree_offered != null) {
           query =
-              query.where('Degree_offered', isEqualTo: event.Degree_offered);
+              query.where('Degree offered', isEqualTo: event.Degree_offered);
         }
         if (event.highestEducation != null) {
           query = query.where('highestEducation',
@@ -78,21 +78,18 @@ class CoursefinderBlock extends Bloc<CoursefinderEvent, CoursefinderState> {
         }
         if (event.Course_offered != null) {
           query =
-              query.where('Course_offered', isEqualTo: event.Course_offered);
+              query.where('Course offered', isEqualTo: event.Course_offered);
         }
         if (event.Englishtest != null) {
-          query = query.where('Englishtest', isEqualTo: event.Englishtest);
+          query = query.where('English test', isEqualTo: event.Englishtest);
         }
         if (event.AcadamicTest != null) {
-          query = query.where('AcadamicTest', isEqualTo: event.AcadamicTest);
+          query = query.where('AcademicTest', isEqualTo: event.AcadamicTest);
         }
         if (event.Rank != null) {
           query = query.where('Rank', isEqualTo: event.Rank);
         }
-        // if (event.highestEducationpercentage != null) {
-        //   query = query.where('highestEducationpercentage',
-        //       isGreaterThanOrEqualTo: event.highestEducationpercentage);
-        // }
+
 
         QuerySnapshot snapshot = await query.get();
 
