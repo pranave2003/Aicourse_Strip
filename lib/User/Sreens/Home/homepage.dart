@@ -422,7 +422,7 @@ class _HomepageState extends State<Homepage> {
                                                         (context, url) =>
                                                             Center(
                                                       child:
-                                                          CircularProgressIndicator(),
+                                                          Loading_Widget(),
                                                     ),
 
                                                     // Show an error icon if the image fails to load

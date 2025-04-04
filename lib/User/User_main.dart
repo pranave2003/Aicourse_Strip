@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../firebase_options.dart';
+import '../Controller/Bloc/Applycourse/application_bloc.dart';
 import '../Controller/Bloc/User_Authbloc/auth_bloc.dart';
 import '../Controller/Bloc/selection_cubit.dart';
 import 'Sreens/Authentication/LoginUser.dart';
@@ -27,6 +28,9 @@ class MyApp extends StatelessWidget {
       providers: [
         BlocProvider<AuthBloc>(
           create: (context) => AuthBloc(),
+        ),
+        BlocProvider<ApplicationBloc>(
+          create: (context) => ApplicationBloc(),
         ),
         BlocProvider<CoursefinderBlock>(
           create: (context) => CoursefinderBlock(),

@@ -19,11 +19,9 @@ class _AddUniversityState extends State<AddUniversity> {
   String? selectedDuration;
   String? selectedEligibility;
   String? selectedRank;
-
   DateTime? establishedDate;
   DateTime? admissionStartDate;
   DateTime? admissionEndDate;
-
   // education
   String? highestEducation;
   String? highestEducationpercentage;

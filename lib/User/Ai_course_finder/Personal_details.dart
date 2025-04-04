@@ -22,15 +22,14 @@ class _Personal_detailsState extends State<Personal_details> {
         _dateController.text = "${picked.toLocal()}".split(' ')[0];
       });
   }
+
   // class _Personal_detailsState extends State<Personal_details> {
   bool isChecked = false;
   @override
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-
         elevation: 0,
         leading: IconButton(
           icon: Icon(Icons.arrow_back, color: Colors.black),
@@ -45,7 +44,11 @@ class _Personal_detailsState extends State<Personal_details> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text("Personal Details", style: TextStyle(color: Colors.blue, fontWeight: FontWeight.bold,fontSize:27)),
+                Text("Personal Details",
+                    style: TextStyle(
+                        color: Colors.blue,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 27)),
                 buildContainer("Your Full Name", TextFormField()),
                 Row(
                   children: [
@@ -66,14 +69,23 @@ class _Personal_detailsState extends State<Personal_details> {
                       ),
                     ),
                     SizedBox(width: 10),
-                    Expanded(flex: 2, child: buildDropdownContainer("Gender", ["Male", "Female", "Other"])),
+                    Expanded(
+                        flex: 2,
+                        child: buildDropdownContainer(
+                            "Gender", ["Male", "Female", "Other"])),
                   ],
                 ),
                 Row(
                   children: [
-                    Expanded(flex: 1, child: buildContainer("Code", TextFormField(initialValue: "+91"))),
+                    Expanded(
+                        flex: 1,
+                        child: buildContainer(
+                            "Code", TextFormField(initialValue: "+91"))),
                     SizedBox(width: 10),
-                    Expanded(flex: 3, child: buildContainer("Mobile Number", TextFormField())),
+                    Expanded(
+                        flex: 3,
+                        child:
+                            buildContainer("Mobile Number", TextFormField())),
                   ],
                 ),
                 buildContainer("Your Email Address", TextFormField()),
@@ -81,22 +93,32 @@ class _Personal_detailsState extends State<Personal_details> {
                 buildContainer("Your Full Address", TextFormField()),
                 Row(
                   children: [
-                    Expanded(flex: 2, child: buildDropdownContainer("Country of Residence", ["India", "Other"])),
+                    Expanded(
+                        flex: 2,
+                        child: buildDropdownContainer(
+                            "Country of Residence", ["India", "Other"])),
                     SizedBox(width: 10),
-                    Expanded(flex: 2, child: buildContainer("State/Province", TextFormField())),
+                    Expanded(
+                        flex: 2,
+                        child:
+                            buildContainer("State/Province", TextFormField())),
                   ],
                 ),
                 Row(
                   children: [
-                    Expanded(flex: 2, child: buildContainer("City", TextFormField())),
+                    Expanded(
+                        flex: 2,
+                        child: buildContainer("City", TextFormField())),
                     SizedBox(width: 10),
-                    Expanded(flex: 2, child: buildContainer("Pincode/Zipcode", TextFormField())),
+                    Expanded(
+                        flex: 2,
+                        child:
+                            buildContainer("Pincode/Zipcode", TextFormField())),
                   ],
                 ),
                 Row(
                   children: [
                     Checkbox(
-
                         activeColor: Colors.blue,
                         value: isChecked,
                         onChanged: (value) {
@@ -113,47 +135,39 @@ class _Personal_detailsState extends State<Personal_details> {
                     Text("I have some medical conditions")
                   ],
                 ),
-              SizedBox(height: 180),
-              Row(
-                mainAxisAlignment:MainAxisAlignment.center,
-                children: [
-
-                  InkWell(
-
-    onTap: () {
-    // if (selectedOrganization != null) {
-    Navigator.push(
-    context,
-    MaterialPageRoute(
-    builder: (context) => Document_upload(),
-    ),
-    );
-    // print("fill all fields");
-
-                    },
-
-                    child:
-
-                    Container(
-
-                      height: 51,
-                      width: 231,
-                      decoration: BoxDecoration(
-                          color: Color(0xff0A71CB),
-                          borderRadius: BorderRadius.circular(30)),
-                      child: Center(
-                          child: Text(
-                            "Continue",
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 22,
-                                fontWeight: FontWeight.bold),
-                          )),
+                SizedBox(height: 180),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    InkWell(
+                      onTap: () {
+                        // if (selectedOrganization != null) {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => Document_upload(),
+                          ),
+                        );
+                        // print("fill all fields");
+                      },
+                      child: Container(
+                        height: 51,
+                        width: 231,
+                        decoration: BoxDecoration(
+                            color: Color(0xff0A71CB),
+                            borderRadius: BorderRadius.circular(30)),
+                        child: Center(
+                            child: Text(
+                          "Continue",
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 22,
+                              fontWeight: FontWeight.bold),
+                        )),
+                      ),
                     ),
-                  ),
-                ],
-              )
-
+                  ],
+                )
               ],
             ),
           ),
@@ -196,7 +210,6 @@ class _Personal_detailsState extends State<Personal_details> {
         onChanged: (value) {},
         decoration: InputDecoration(border: InputBorder.none),
       ),
-
     );
   }
 }

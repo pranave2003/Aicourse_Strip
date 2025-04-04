@@ -38,6 +38,7 @@ class _CollegesState extends State<Colleges> {
       appBar: AppBar(
         // backgroundColor: Colors.yellowAccent,
         toolbarHeight: 80,
+        automaticallyImplyLeading: false,
         title: Text(
           "Colleges",
           style: TextStyle(
@@ -158,20 +159,27 @@ class _CollegesState extends State<Colleges> {
                                         children: [
                                           SizedBox(height: 10),
                                           ClipRRect(
-                                              borderRadius: BorderRadius.circular(10), // Uncomment if needed
+                                              borderRadius:
+                                                  BorderRadius.circular(
+                                                      10), // Uncomment if needed
                                               child: CachedNetworkImage(
-                                                imageUrl: university.UniversityimageURL.toString(),
+                                                imageUrl: university
+                                                        .UniversityimageURL
+                                                    .toString(),
                                                 height: 140,
                                                 width: 160,
                                                 fit: BoxFit.cover,
 
                                                 // Show a loading indicator while fetching the image
-                                                placeholder: (context, url) => Center(
-                                                  child: CircularProgressIndicator(),
+                                                placeholder: (context, url) =>
+                                                    Center(
+                                                  child: Loading_Widget(),
                                                 ),
 
                                                 // Show an error icon if the image fails to load
-                                                errorWidget: (context, url, error) => Icon(
+                                                errorWidget:
+                                                    (context, url, error) =>
+                                                        Icon(
                                                   Icons.image_not_supported,
                                                   size: 50,
                                                   color: Colors.grey,
