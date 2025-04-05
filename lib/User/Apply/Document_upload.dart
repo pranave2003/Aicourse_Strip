@@ -1,14 +1,33 @@
+import 'package:course_connect/Controller/Bloc/Applycourse/ApplicationModel/ApplicationModel.dart';
+import 'package:course_connect/Controller/Bloc/Applycourse/application_bloc.dart';
 import 'package:course_connect/Controller/Bloc/University_block/University_model/University_model.dart';
+import 'package:course_connect/Widget/Constands/Loading.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 
 import '../../Controller/Bloc/Applycourse/document_bloc.dart';
+import '../../Controller/Bloc/User_Authbloc/auth_bloc.dart';
+import 'SuccessScreen.dart';
+
+class Uploaddocumentwrapper extends StatelessWidget {
+  const Uploaddocumentwrapper({super.key, required this.university});
+  final University_model university;
+  @override
+  Widget build(BuildContext context) {
+    return BlocProvider(
+      create: (context) => AuthBloc()..add(FetchUserDetailsById()),
+      child: Document_upload(
+        university: university,
+      ),
+    );
+  }
+}
 
 class Document_upload extends StatelessWidget {
-  const Document_upload( {super.key});
-
+  const Document_upload({super.key, required this.university});
+  final University_model university;
   Future<String?> _uploadFile(String fileType) async {
     final result = await FilePicker.platform.pickFiles();
     if (result != null && result.files.single.path != null) {
@@ -31,14 +50,14 @@ class Document_upload extends StatelessWidget {
             builder: (context, state) {
               String? transcriptUrl;
               String? sopUrl;
-              String? lorUrl;
-              String? englishTestUrl;
+              String? Education;
+              String? TravelandEmigration;
 
               if (state is DocumentsUploaded) {
                 transcriptUrl = state.transcriptUrl;
                 sopUrl = state.sopUrl;
-                lorUrl = state.lorUrl;
-                englishTestUrl = state.englishTestUrl;
+                Education = state.lorUrl;
+                TravelandEmigration = state.englishTestUrl;
               }
 
               return Padding(
@@ -71,54 +90,101 @@ class Document_upload extends StatelessWidget {
                         },
                       ),
                       UploadTile(
-                        title: "LOR",
-                        uploaded: lorUrl != null,
-                        fileUrl: lorUrl,
+                        title: "Education",
+                        uploaded: Education != null,
+                        fileUrl: Education,
                         onTap: () async {
-                          final url = await _uploadFile("lor");
+                          final url = await _uploadFile("Education");
                           if (url != null) {
                             context.read<DocumentBloc>().add(UploadLOR(url));
                           }
                         },
                       ),
-                      UploadTile(
-                        title: "English Test",
-                        uploaded: englishTestUrl != null,
-                        fileUrl: englishTestUrl,
-                        onTap: () async {
-                          final url = await _uploadFile("englishTest");
-                          if (url != null) {
-                            context
-                                .read<DocumentBloc>()
-                                .add(UploadEnglishTest(url));
-                          }
-                        },
-                      ),
+                      university.Country != "India"
+                          ? UploadTile(
+                              title: "Travel @Emigration",
+                              uploaded: TravelandEmigration != null,
+                              fileUrl: TravelandEmigration,
+                              onTap: () async {
+                                final url = await _uploadFile("englishTest");
+                                if (url != null) {
+                                  context
+                                      .read<DocumentBloc>()
+                                      .add(UploadEnglishTest(url));
+                                }
+                              },
+                            )
+                          : SizedBox(),
                       const SizedBox(height: 20),
-                      ElevatedButton(
-                        onPressed: (transcriptUrl != null &&
-                                sopUrl != null &&
-                                lorUrl != null &&
-                                englishTestUrl != null)
-                            ? () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (_) => const SuccessPage()),
+                      BlocBuilder<AuthBloc, AuthState>(
+                        builder: (context, state) {
+                          if (state is Userloading) {
+                            return const Center(child: Loading_Widget());
+                          } else if (state is UserByidLoaded) {
+                            final userData = state.Userdata;
+                            return BlocConsumer<ApplicationBloc,
+                                ApplicationState>(
+                              listener: (context, state) {
+                                if (state is addapplicationAddSuccessstate) {
+                                  Navigator.push(context, MaterialPageRoute(
+                                    builder: (context) {
+                                      return SuccessScreen();
+                                    },
+                                  ));
+                                }
+                              },
+                              builder: (context, state) {
+                                return ElevatedButton(
+                                  onPressed: () {
+                                    Applicationmodel application =
+                                        Applicationmodel(
+                                      Universityname: university.Universityname,
+                                      UniversityDescription:
+                                          university.Description,
+                                      collagename: university.Collegename,
+                                      Coursename: university.Course_offered,
+                                      status: "0",
+                                      Ban: "0",
+                                      Country: university.Country,
+                                      Degree_offered: university.Degree_offered,
+                                      collagecode: university.collagecode,
+                                      uaser_uid: userData.uid,
+                                      username: userData.name,
+                                      userphone: userData.phone,
+                                      userstate: userData.state,
+                                      usercountry: userData.Country,
+                                      userprofilephoto: userData.image,
+                                      userphone_number: userData.phone,
+                                      useremail: userData.email,
+                                      Universityid: university.Universityid,
+                                      Education_doc_url: Education,
+                                      Sop_doc_url: sopUrl,
+                                      Transcript_doc_Url: transcriptUrl,
+                                      Travel_doc_url: TravelandEmigration,
+                                    );
+                                    context.read<ApplicationBloc>().add(
+                                        Applicationaddevent(
+                                            application: application));
+                                  },
+                                  style: ElevatedButton.styleFrom(
+                                    backgroundColor: Colors.blue,
+                                    minimumSize: Size(double.infinity, 50),
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(8),
+                                    ),
+                                  ),
+                                  child: state is addapplicationloadingstate
+                                      ? Loading_Widget()
+                                      : Text(
+                                          'Apply Now',
+                                          style: TextStyle(color: Colors.white),
+                                        ),
                                 );
-                              }
-                            : null,
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.blue,
-                          minimumSize: Size(double.infinity, 50),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(8),
-                          ),
-                        ),
-                        child: const Text(
-                          'Apply Now',
-                          style: TextStyle(color: Colors.white),
-                        ),
+                              },
+                            );
+                          }
+                          return SizedBox();
+                        },
                       ),
                       const SizedBox(height: 20),
                     ],

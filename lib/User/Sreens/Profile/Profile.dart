@@ -53,28 +53,7 @@ class _ProfileState extends State<Profile> {
                   padding: EdgeInsets.all(16.0),
                   child: Column(
                     children: [
-                      // ClipRRect(
-                      //   borderRadius: BorderRadius.circular(60),
-                      //   child: Image.network(
-                      //     user.image.toString(),
-                      //
-                      //     width: 100, // Adjusted width
-                      //     height: 100, // Adjusted height
-                      //     fit: BoxFit.cover,
-                      //     errorBuilder: (context, error, stackTrace) {
-                      //       return Container(
-                      //         width: 130,
-                      //         height: 100,
-                      //         color: Colors.grey[300], // Placeholder background
-                      //         child: Icon(
-                      //           Icons.image_not_supported,
-                      //           size: 50,
-                      //           color: Colors.grey[600],
-                      //         ),
-                      //       );
-                      //     },
-                      //   ),
-                      // ),
+
                       ClipRRect(
                         borderRadius: BorderRadius.circular(
                             30), // Rounded corners for image
@@ -87,7 +66,8 @@ class _ProfileState extends State<Profile> {
                             placeholder: (context, url) => Container(
                               width: 100,
                               height: 100,
-                              color: Colors.grey[300], // Placeholder background
+                              color:
+                                  Colors.transparent, // Placeholder background
                               child: Center(
                                 child: Loading_Widget(), // Loading indicator
                               ),

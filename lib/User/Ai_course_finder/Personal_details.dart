@@ -142,12 +142,12 @@ class _Personal_detailsState extends State<Personal_details> {
                     InkWell(
                       onTap: () {
                         // if (selectedOrganization != null) {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => Document_upload(),
-                          ),
-                        );
+                        // Navigator.push(
+                        //   context,
+                        //   MaterialPageRoute(
+                        //     builder: (context) => Document_upload(),
+                        //   ),
+                        // );
                         // print("fill all fields");
                       },
                       child: Container(

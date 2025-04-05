@@ -17,6 +17,12 @@ class Applicationmodel {
   String? userprofilephoto;
   String? userphone_number;
   String? useremail;
+  String? userstate;
+  String? usercountry;
+  String? Transcript_doc_Url;
+  String? Sop_doc_url;
+  String? Education_doc_url;
+  String? Travel_doc_url;
 
   Applicationmodel({
     required this.Universityname,
@@ -28,13 +34,19 @@ class Applicationmodel {
     required this.Country,
     required this.Degree_offered,
     required this.collagecode,
+    required this.Universityid,
     required this.uaser_uid,
     required this.username,
     required this.userphone,
-    required this.gender,
+    required this.userstate,
+    required this.usercountry,
     required this.userprofilephoto,
     required this.userphone_number,
     required this.useremail,
+    required this.Education_doc_url,
+    required this.Transcript_doc_Url,
+    required this.Sop_doc_url,
+    required this.Travel_doc_url,
   });
   factory Applicationmodel.fromMap(Map<String, dynamic> data) {
     return Applicationmodel(
@@ -50,9 +62,17 @@ class Applicationmodel {
         uaser_uid: data["uaser_uid"],
         username: data["username"],
         userphone: data["userphone"],
-        gender: data["gender"],
+        usercountry: data["usercountry"],
+        userstate: data["userstate"],
         userprofilephoto: data["userprofilephoto"],
         userphone_number: data["userphone_number"],
-        useremail: data["useremail"]);
+        useremail: data["useremail"],
+        Education_doc_url: data["Education_doc_url"],
+        Transcript_doc_Url: data["Transcript_doc_Url"],
+        Sop_doc_url: data["Sop_doc_url"],
+        Travel_doc_url: data["Travel_doc_url"],
+      Universityid: data["Universityid"]
+
+    );
   }
 }

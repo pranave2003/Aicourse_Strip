@@ -1,8 +1,49 @@
+import 'dart:async';
+import 'package:flutter/material.dart';
 import 'package:course_connect/User/Sreens/Home/homepage.dart';
 import 'package:course_connect/Widget/Constands/colors.dart';
-import 'package:flutter/material.dart';
 
-class SuccessScreen extends StatelessWidget {
+import '../Sreens/BottomNavigation/Bottom_Nav.dart';
+
+class SuccessScreen extends StatefulWidget {
+  @override
+  _SuccessScreenState createState() => _SuccessScreenState();
+}
+
+class _SuccessScreenState extends State<SuccessScreen> {
+  int _seconds = 10;
+  Timer? _timer;
+
+  @override
+  void initState() {
+    super.initState();
+    startCountdown();
+  }
+
+  void startCountdown() {
+    _timer = Timer.periodic(Duration(seconds: 1), (timer) {
+      if (_seconds > 1) {
+        setState(() {
+          _seconds--;
+        });
+      } else {
+        _timer?.cancel();
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+              builder: (context) =>
+                  BottomNavWrapper()), // Replace with Page1() if needed
+        );
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    _timer?.cancel();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -41,48 +82,39 @@ class SuccessScreen extends StatelessWidget {
                   color: Colors.black54,
                 ),
               ),
-              SizedBox(height: 220),
+              SizedBox(height: 30),
+              Text(
+                "Redirecting in $_seconds seconds...",
+                style: TextStyle(fontSize: 16, color: Colors.red),
+              ),
+              SizedBox(height: 180),
               SizedBox(
                 width: 350,
                 height: 50,
-                // child: ElevatedButton(
-                //   style: ElevatedButton.styleFrom(
-                //     backgroundColor: Colors.blue,
-                //     shape: RoundedRectangleBorder(
-                //       borderRadius: BorderRadius.circular(25),
-                //     ),
-                //   ),
-                //   onPressed: () {
-                //     // Navigate to home screen
-                //   },
-                //   child: Text(
-                //     "Go to Home",
-                //     style: TextStyle(fontSize: 18, color: Colors.white),
-                //   ),
-                // ),
                 child: InkWell(
                   onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => Homepage(),
-                      ),
-                    );
+                    _timer?.cancel();
+                    Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => BottomNavWrapper())); // R
                   },
                   child: Container(
                     height: 51,
                     width: 231,
                     decoration: BoxDecoration(
-                        color: blueColor,
-                        borderRadius: BorderRadius.circular(30)),
+                      color: blueColor,
+                      borderRadius: BorderRadius.circular(30),
+                    ),
                     child: Center(
-                        child: Text(
-                      "Go to Home",
-                      style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 22,
-                          fontWeight: FontWeight.bold),
-                    )),
+                      child: Text(
+                        "Go to Home",
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 22,
+                            fontWeight: FontWeight.bold),
+                      ),
+                    ),
                   ),
                 ),
               ),

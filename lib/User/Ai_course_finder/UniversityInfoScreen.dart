@@ -1,4 +1,3 @@
-
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:course_connect/Controller/Bloc/University_block/university_bloc.dart';
 import 'package:course_connect/User/Ai_course_finder/Personal_details.dart';
@@ -7,15 +6,19 @@ import 'package:course_connect/Widget/Constands/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../Apply/Document_upload.dart';
+
 class UniversityInfoScreenWrapper extends StatelessWidget {
-  const UniversityInfoScreenWrapper({super.key, required this.universityid, this.Established_date});
+  const UniversityInfoScreenWrapper(
+      {super.key, required this.universityid, this.Established_date});
   final universityid;
   final Established_date;
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider<UniversityBloc>(
-      create: (context) => UniversityBloc()..add(FetchCourseDetailsById(CourseUniversity_id: universityid)),
+      create: (context) => UniversityBloc()
+        ..add(FetchCourseDetailsById(CourseUniversity_id: universityid)),
       child: UniversityInfoScreen(),
     );
   }
@@ -33,15 +36,14 @@ class _UniversityInfoScreenState extends State<UniversityInfoScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: AppBar(
-        backgroundColor: Colors.white,
-        // title: Text('University', style: TextStyle(color: Colors.black)),
-        iconTheme: IconThemeData(color: Colors.black),
-        elevation: 1,
-      ),
+      // appBar: AppBar(
+      //   backgroundColor: Colors.white,
+      //   // title: Text('University', style: TextStyle(color: Colors.black)),
+      //   iconTheme: IconThemeData(color: Colors.black),
+      //   elevation: 1,
+      // ),
       body: BlocConsumer<UniversityBloc, UniversityState>(
-        listener: (context, state) {
-        },
+        listener: (context, state) {},
         builder: (context, state) {
           if (state is Coursesgetloading) {
             return Loading_Widget();
@@ -51,9 +53,15 @@ class _UniversityInfoScreenState extends State<UniversityInfoScreen> {
 
             // Define the serviceList here after university is available
             List<Map<String, dynamic>> serviceList = [
-              {"icon": Icons.flag, "name": "Established: ${university.Established_date}"},
+              {
+                "icon": Icons.flag,
+                "name": "Established: ${university.Established_date}"
+              },
               {"icon": Icons.star, "name": "QS Ranking: ${university.Rank}"},
-              {"icon": Icons.lock_clock, "name": "Course Length: ${university.Duration}"},
+              {
+                "icon": Icons.lock_clock,
+                "name": "Length: ${university.Duration}"
+              },
               // Add more services as needed
             ];
 
@@ -68,10 +76,14 @@ class _UniversityInfoScreenState extends State<UniversityInfoScreen> {
                         child: CachedNetworkImage(
                           imageUrl: university.UniversityimageURL.toString(),
                           height: 200,
-                          width: 400,
+                          width: double.infinity,
                           fit: BoxFit.cover,
-                          placeholder: (context, url) => Center(child: CircularProgressIndicator()),
-                          errorWidget: (context, url, error) => Icon(Icons.image_not_supported, size: 50, color: Colors.grey),
+                          placeholder: (context, url) =>
+                              Center(child: CircularProgressIndicator()),
+                          errorWidget: (context, url, error) => Icon(
+                              Icons.image_not_supported,
+                              size: 50,
+                              color: Colors.grey),
                         ),
                       ),
                       Positioned(
@@ -82,11 +94,18 @@ class _UniversityInfoScreenState extends State<UniversityInfoScreen> {
                           children: [
                             Text(
                               university.Collegename.toString(),
-                              style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: Colors.white),
+                              style: TextStyle(
+                                  backgroundColor: Colors.black45,
+                                  fontSize: 22,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.white),
                             ),
                             Text(
                               university.Country.toString(),
-                              style: TextStyle(color: Colors.white70),
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.white,
+                                  backgroundColor: Colors.black45),
                             ),
                           ],
                         ),
@@ -98,15 +117,25 @@ class _UniversityInfoScreenState extends State<UniversityInfoScreen> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text('Description', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.black)),
+                        Text('Description',
+                            style: TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.black)),
                         SizedBox(height: 8),
-                        Text(university.Description.toString(), style: TextStyle(fontSize: 14, color: Colors.black87)),
+                        Text(university.Description.toString(),
+                            style:
+                                TextStyle(fontSize: 14, color: Colors.black87)),
                         SizedBox(height: 16),
                         GridView(
                           physics: NeverScrollableScrollPhysics(),
                           shrinkWrap: true,
-                          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 3),
-                          children: serviceList.map((service) => _buildInfoCard(service)).toList(),
+                          gridDelegate:
+                              SliverGridDelegateWithFixedCrossAxisCount(
+                                  crossAxisCount: 3),
+                          children: serviceList
+                              .map((service) => _buildInfoCard(service))
+                              .toList(),
                         ),
 
                         SizedBox(height: 16),
@@ -115,7 +144,8 @@ class _UniversityInfoScreenState extends State<UniversityInfoScreen> {
                         Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center, // Center the Row content
+                            mainAxisAlignment: MainAxisAlignment
+                                .center, // Center the Row content
                             children: [
                               Column(
                                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -138,15 +168,20 @@ class _UniversityInfoScreenState extends State<UniversityInfoScreen> {
                                   ),
                                 ],
                               ),
-                              SizedBox(width:10,),
+                              SizedBox(
+                                width: 10,
+                              ),
                               Container(
                                 height: 30,
                                 width: 1,
                                 color: Colors.black,
-                                margin: EdgeInsets.symmetric(horizontal: 8), // Optional: Adjust horizontal spacing
+                                margin: EdgeInsets.symmetric(
+                                    horizontal:
+                                        8), // Optional: Adjust horizontal spacing
                               ),
-                              SizedBox(width:10,),
-
+                              SizedBox(
+                                width: 10,
+                              ),
                               Column(
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
@@ -184,37 +219,37 @@ class _UniversityInfoScreenState extends State<UniversityInfoScreen> {
                           'Academic Test: ${university.AcadamicTest}',
                           'Minimum Required Percentage: ${university.AcadamicTestPercentage}%'
                         ]),
-                        _infoSection('Terms and Conditions', [university.Terms_and_conditions.toString()]),
+                        _infoSection('Terms and Conditions',
+                            [university.Terms_and_conditions.toString()]),
                         Row(
                           children: [
-                            Checkbox(value: _isAgreed, onChanged: (value) {
-                              setState(() {
-                                _isAgreed = value ?? false;
-                              });
-                            }),
+                            Checkbox(
+                                value: _isAgreed,
+                                onChanged: (value) {
+                                  setState(() {
+                                    _isAgreed = value ?? false;
+                                  });
+                                }),
                             Expanded(
-                              child: Text('I agree with the terms and conditions', style: TextStyle(color: Colors.black87)),
+                              child: Text(
+                                  'I agree with the terms and conditions',
+                                  style: TextStyle(color: Colors.black87)),
                             ),
                           ],
                         ),
                         InkWell(
-
                           onTap: () {
                             // if (selectedOrganization != null) {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => Personal_details(),
+                                builder: (context) => Uploaddocumentwrapper(
+                                    university: university),
                               ),
                             );
                             // print("fill all fields");
-
                           },
-
-                          child:
-
-                          Container(
-
+                          child: Container(
                             height: 51,
                             width: double.infinity,
                             decoration: BoxDecoration(
@@ -222,12 +257,12 @@ class _UniversityInfoScreenState extends State<UniversityInfoScreen> {
                                 borderRadius: BorderRadius.circular(30)),
                             child: Center(
                                 child: Text(
-                                  "Apply Now",
-                                  style: TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 22,
-                                      fontWeight: FontWeight.bold),
-                                )),
+                              "Apply Now",
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 22,
+                                  fontWeight: FontWeight.bold),
+                            )),
                           ),
                         ),
                       ],
@@ -249,8 +284,13 @@ class _UniversityInfoScreenState extends State<UniversityInfoScreen> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(title, style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.black)),
-          ...details.map((detail) => Text(detail, style: TextStyle(fontSize: 14, color: Colors.black87))),
+          Text(title,
+              style: TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black)),
+          ...details.map((detail) => Text(detail,
+              style: TextStyle(fontSize: 14, color: Colors.black87))),
         ],
       ),
     );
