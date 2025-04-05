@@ -1,16 +1,21 @@
 
+
+import 'package:course_connect/Landlord/Controller2/Property/Property_Auth/Property_Model/PropertyModel.dart';
+import 'package:course_connect/Landlord/Controller2/Property/Property_auth_block.dart';
+import 'package:course_connect/Landlord/Controller2/Property/Property_auth_state.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import '../../../../Widget/Constands/CustomTextfield.dart';
+import '../../../../Widget/Constands/Loading.dart';
+import '../../../Lanlordmain.dart';
 
 class PropertyAdd extends StatefulWidget {
   @override
   _PropertyAddState createState() => _PropertyAddState();
 }
-bool parking = false;
-bool billsIncluded = false;
-bool petsAllowed = false;
-bool smokingAllowed = false;
 
 class _PropertyAddState extends State<PropertyAdd> {
+  final _formKey = GlobalKey<FormState>(); // Form key for validation
   final TextEditingController _propertyNameController = TextEditingController();
   final TextEditingController _addressController = TextEditingController();
   final TextEditingController _areaController = TextEditingController();
@@ -18,10 +23,20 @@ class _PropertyAddState extends State<PropertyAdd> {
   final TextEditingController _amountMonthController = TextEditingController();
   final TextEditingController _ownerNameController = TextEditingController();
   final TextEditingController _phoneController = TextEditingController();
+  final TextEditingController _aboutPropertyController = TextEditingController();
+  final TextEditingController _selectedCityController = TextEditingController();
+  final TextEditingController _availableFromController = TextEditingController();
+  final TextEditingController _moveInController = TextEditingController();
+  final TextEditingController _tokenAmountController = TextEditingController();
+  void dispose() {
+    _phoneController.dispose();
+    _addressController.dispose();
+
+    super.dispose();
+  }
 
   String? _selectedCountry;
   String? _selectedState;
-  String? _selectedCity;
   String? _selectedRoomType;
   String? _selectedRoomSize;
   String? _selectedFurnishing;
@@ -32,28 +47,17 @@ class _PropertyAddState extends State<PropertyAdd> {
   String? _selectedMinStay;
   String? _selectedMaxStay;
   String? _selectedSexualOrientation;
-  String? _selectedParking = "No";
-  String? _selectedBillsIncluded = "No";
-  String? _selectedPetsAllowed = "No";
-  String? _selectedSmokingAllowed = "No";
-
-  final List<String> countries = ['USA', 'UK', 'India', 'Canada'];
-  final List<String> states = ['New York', 'California', 'Texas'];
-  final List<String> cities = ['Los Angeles', 'San Francisco', 'Houston'];
-  final List<String> roomTypes = ['House', 'Apartment'];
-  final List<String> roomSizes = ['Small', 'Medium', 'Large'];
-  final List<String> furnishingOptions = ['Fully Furnished', 'Semi Furnished', 'Unfurnished'];
-  final List<String> tokenAmounts = ['\$500', '\$1000', '\$1500'];
-  final List<String> stayDurations = ['1 month', '3 months', '6 months', '1 year'];
-  final List<String> sexualOrientations = ['Any', 'LGBTQ+ Friendly', 'Male Only', 'Female Only'];
-  final List<String> Bedroom = ['1', '2', '3', '4','5','6 and above'];
-  final List<String> Bathroom = ['1', '2', '3', '4','5','6 and above'];
-  final List<String> Kitchen = ['1', '2', '3', '4','5','6 and above'];
 
   DateTime? availableFrom;
   DateTime? moveInDate;
 
-  Future<void> _selectDate(BuildContext context, Function(DateTime) onDateSelected) async {
+  bool _parkingAvailable = false;
+  bool _billsIncluded = false;
+  bool _petsAllowed = false;
+  bool _smokingAllowed = false;
+
+  Future<void> _selectDate(BuildContext context,
+      Function(DateTime) onDateSelected) async {
     DateTime? picked = await showDatePicker(
       context: context,
       initialDate: DateTime.now(),
@@ -68,10 +72,9 @@ class _PropertyAddState extends State<PropertyAdd> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: SingleChildScrollView(
-        padding: const EdgeInsets.all(20),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+      body: Form(
+        key: _formKey, // Wrap the form fields in a Form widget
+        child: ListView(
           children: [
             // Top Row (Welcome Text + Notification Icon)
             Row(
@@ -82,11 +85,14 @@ class _PropertyAddState extends State<PropertyAdd> {
                   children: [
                     Text(
                       "Welcome ",
-                      style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                      style: TextStyle(
+                          fontSize: 24, fontWeight: FontWeight.bold),
                     ),
                     Text(
                       "Landlord,",
-                      style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: Color(0xff0A71CB)),
+                      style: TextStyle(fontSize: 24,
+                          fontWeight: FontWeight.bold,
+                          color: Color(0xff0A71CB)),
                     ),
                   ],
                 ),
@@ -99,7 +105,8 @@ class _PropertyAddState extends State<PropertyAdd> {
                     ),
                     SizedBox(width: 10),
                     Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 6),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 14, vertical: 6),
                       decoration: BoxDecoration(
                         color: Colors.white,
                         borderRadius: BorderRadius.circular(20),
@@ -110,12 +117,14 @@ class _PropertyAddState extends State<PropertyAdd> {
                           CircleAvatar(
                             radius: 20,
                             backgroundColor: Colors.grey,
-                            backgroundImage: AssetImage('assets/Profile/img_3.png'),
+                            backgroundImage: AssetImage(
+                                'assets/Profile/img_3.png'),
                           ),
                           SizedBox(width: 10),
                           Text(
                             "Landlord",
-                            style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                            style: TextStyle(fontSize: 16,
+                                fontWeight: FontWeight.bold),
                           ),
                         ],
                       ),
@@ -124,327 +133,480 @@ class _PropertyAddState extends State<PropertyAdd> {
                 ),
               ],
             ),
-            SizedBox(
-              height: 30,
-            ),
 
-            Padding(
-              padding: const EdgeInsets.only(left: 25, right: 25),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    "Property Adding Page",
-                    style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-                  ),
-                  SizedBox(width: 20),
-                  InkWell(
-                    onTap: () {
-                      // Add action here
+            SizedBox(height: 20),
+
+            BlocConsumer<PropertyAuthBlock, PropertyAuthState>(
+              listener: (context, state) {
+                if (state is RefreshProperty) {
+                  Navigator.push(context, MaterialPageRoute(
+                    builder: (context) {
+                      return LandlordPage();
                     },
-                    borderRadius: BorderRadius.circular(8), // Smooth border effect on tap
-                    child: Container(
+                  ));
+
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text("Property added successfully!"),
+                      backgroundColor: Colors.green,
+                      duration: Duration(seconds: 2),
+                    ),
+                  );
+                }
+              },
+              builder: (context, state) {
+                return Padding(
+                  padding: const EdgeInsets.only(left: 25, right: 25),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        "Property Adding Page",
+                        style: TextStyle(
+                            fontSize: 24, fontWeight: FontWeight.bold),
+                      ),
+                      SizedBox(width: 20),
+                      InkWell(
+                        onTap: () {
+                          if (_formKey.currentState!.validate()) {
+                            {
+                              PropertyModel Property =
+                              PropertyModel(
+                                propertyName: _propertyNameController.text,
+                                propertyAddress: _addressController.text,
+                                propertyArea: _areaController.text,
+                                country: _selectedCountry,
+                                state: _selectedState,
+                                city: _selectedCityController.text,
+                                roomTypes: _selectedRoomType,
+                                roomSizes: _selectedRoomSize,
+                                availableFrom: _availableFromController
+                                    .toString(),
+                                moveInDate: _moveInController.toString(),
+                                propertyImageURL: "",
+                                aboutProperty: _aboutPropertyController.text,
+                                bedroom: _selectedBedroom,
+                                bathroom: _selectedBathroom,
+                                kitchen: _selectedKitchen,
+                                furnishingOptions: _selectedFurnishing,
+                                propertyAmountWeek: _amountWeekController.text,
+                                propertyAmountMonth: _amountMonthController
+                                    .text,
+                                tokenAmount: _tokenAmountController
+                                    .text,
+                                stayDurations: _selectedMinStay,
+                                sexualOrientations: _selectedSexualOrientation,
+                                minimumStay: _selectedMinStay,
+                                maximumStay: _selectedMaxStay,
+                                ownerName: _ownerNameController.text,
+                                ownerPhone: _phoneController.text,
+                                ownershipProof: "",
+                                parking: _parkingAvailable ? "Yes" : "No",
+                                billStatus: _billsIncluded ? "Yes" : "No",
+                                pets: _petsAllowed ? "Yes" : "No",
+                                smoking: _smokingAllowed ? "Yes" : "No",
+
+
+                              );
+                              context.read<PropertyAuthBlock>().add(
+                                  Property_Add_Event(
+                                      Property: Property));
+                            }
+                          }
+                        },
+
+                        borderRadius: BorderRadius.circular(8),
+                        // Smooth border effect on tap
+                        child: Container(
                       padding: EdgeInsets.symmetric(vertical: 8, horizontal: 36),
-                      decoration: BoxDecoration(
-                        color: Colors.blue, // Blue background
-                        borderRadius: BorderRadius.circular(8), // Rounded corners
-                      ),
-                      child: Text(
-                        "+Add",
-                        style: TextStyle(fontSize: 18, color: Colors.white, fontWeight: FontWeight.bold),
-                      ),
-                    ),
+                  decoration: BoxDecoration(
+                    color: Colors.blue,
+                    borderRadius: BorderRadius.circular(8),
                   ),
-                ],
-              ),
+                  child: state is PropertyaddSuccess
+                      ? Loading_Widget()
+                      : Text(
+                    "+Add",
+                    style: TextStyle(fontSize: 18, color: Colors.white, fontWeight: FontWeight.bold),
+                  ),
+                  // ), Container(
+                  //         padding: EdgeInsets.symmetric(
+                  //             vertical: 8, horizontal: 36),
+                  //         decoration: BoxDecoration(
+                  //           color: Colors.blue, // Blue background
+                  //           borderRadius:
+                  //           BorderRadius.circular(8), // Rounded corners
+                  //         ),
+                  //         child: PropertyAuthState is PropertyaddSuccess
+                  //             ? Loading_Widget()
+                  //             : Text(
+                  //           "+Add",
+                  //           style: TextStyle(
+                  //               fontSize: 18,
+                  //               color: Colors.white,
+                  //               fontWeight: FontWeight.bold),
+                  //         ),
+                  //       ),
+                        // child: Container(
+                        //   padding: EdgeInsets.symmetric(vertical: 8, horizontal: 36),
+                        //   decoration: BoxDecoration(
+                        //     color: Colors.blue, // Blue background
+                        //     borderRadius: BorderRadius.circular(8), // Rounded corners
+                        //   ),
+                        //   child: Text(
+                        //     "+Add",
+                        //     style: TextStyle(fontSize: 18, color: Colors.white, fontWeight: FontWeight.bold),
+                        //   ),
+                        // ),
+                      ),
+                      ),
+                    ],
+                  ),
+                );
+              },
             ),
 
-            SizedBox(height:5),
+            SizedBox(height: 5),
+            Divider(thickness: 2, color: Colors.black),
 
-Divider(thickness:2,color:Colors.black,),
+            _buildSectionTitle("Property Details"),
+            SizedBox(height: 5),
 
-            SingleChildScrollView(
-              child: Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    // Property Details
-                    _buildSectionTitle("Property Details"),
-                    SizedBox(height: 5),
+            Row(
+              children: [
+                Expanded(child: _buildTextField(
+                    "Property Name", _propertyNameController, true)),
+                SizedBox(width: 10),
+                Expanded(child: _buildTextField(
+                    "Address", _addressController, true)),
+              ],
+            ),
+            SizedBox(height: 10),
+            _buildDropdown("Country",
+                ["India", "Canada", "United States", "United Kingdom"],
+                _selectedCountry, (value) {
+                  setState(() {
+                    _selectedCountry = value;
+                    _selectedState = null; // Reset state when country changes
+                  });
+                }, true),
+            const SizedBox(height: 10),
 
-                    Row(
-                      children: [
-                        Expanded(child: _buildTextField("Property Name", _propertyNameController)),
-                        SizedBox(width: 10),
-                        Expanded(child: _buildTextField("Address", _addressController)),
-                      ],
-                    ),
-                    SizedBox(height: 10),
-                    _buildTextField("Area", _areaController),
-                    SizedBox(height: 10),
-                    Row(
-                      children: [
-                        Expanded(child: _buildDropdown("Country", countries, _selectedCountry, (value) => setState(() => _selectedCountry = value))),
-                        SizedBox(width: 10),
-                        Expanded(child: _buildDropdown("State", states, _selectedState, (value) => setState(() => _selectedState = value))),
-                      ],
-                    ),
-                    SizedBox(height: 10),
-                    _buildDropdown("City", cities, _selectedCity, (value) => setState(() => _selectedCity = value)),
+            // State Dropdown
+            if (_selectedCountry != null)
+              _buildDropdown("State", _getStatesForCountry(_selectedCountry!),
+                  _selectedState, (value) {
+                    setState(() {
+                      _selectedState = value;
+                    });
+                  }, true),
+            const SizedBox(height: 15),
+            Row(
+              children: [
+                Expanded(child: _buildTextField(
+                    "City", _selectedCityController, true)),
+                SizedBox(width: 10),
+                Expanded(child: _buildTextField("Area", _areaController, true)),
+              ],
+            ),
 
-                    Divider(thickness: 2),
-                    SizedBox(height: 10),
+            Divider(thickness: 2),
+            SizedBox(height: 10),
 
-                    // Room Details
-                    _buildSectionTitle("Room Details"),
-                    SizedBox(height: 5),
+            // Room Details
+            _buildSectionTitle("Room Details"),
+            SizedBox(height: 5),
 
-                    Row(
-                      children: [
-                        Expanded(child: _buildDropdown("Room Type", roomTypes, _selectedRoomType, (value) => setState(() => _selectedRoomType = value))),
-                        SizedBox(width: 10),
-                        Expanded(child: _buildDropdown("Room Size", roomSizes, _selectedRoomSize, (value) => setState(() => _selectedRoomSize = value))),
-                      ],
-                    ),
-                    SizedBox(height: 10),
-                    Row(
-                      children: [
-                        Expanded(child: _buildDatePicker("Available From", availableFrom, (date) => setState(() => availableFrom = date))),
-                        SizedBox(width: 10),
-                        Expanded(child: _buildDatePicker("Move-in Date", moveInDate, (date) => setState(() => moveInDate = date))),
-                      ],
-                    ),
-
-                    Divider(thickness: 2),
-                    SizedBox(height: 10),
-                    Text(" Images:", style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
-
-                    SizedBox(height: 20),
-                    _buildImageContainer(),
-                    SizedBox(height: 10),
-
-                    _buildTextField("Description", _areaController),
-
-Divider(thickness: 2,),
-                    // Pricing Details
-                    _buildSectionTitle(" Pricing Details"),
-                    SizedBox(height: 5),
-
-                    Row(
-                      children: [
-                        Expanded(child: _buildTextField("Amount /Week", _amountWeekController)),
-                        SizedBox(width: 10),
-                        Expanded(child: _buildTextField("Amount /Month", _amountMonthController)),
-                      ],
-                    ),
-                    SizedBox(height: 10),
-                    Row(
-                      children: [
-                        Expanded(child: _buildDropdown("Token Amount", tokenAmounts, _selectedTokenAmount, (value) => setState(() => _selectedTokenAmount = value))),
-                        SizedBox(width: 10),
-                        Expanded(child: _buildDropdown("Sexual Orientation", sexualOrientations, _selectedSexualOrientation, (value) => setState(() => _selectedSexualOrientation = value))),
-                      ],
-                    ),
-                    SizedBox(height: 10),
-                    Row(
-                      children: [
-                        Expanded(child: _buildDropdown("Minimum Stay", stayDurations, _selectedMinStay, (value) => setState(() => _selectedMinStay = value))),
-                        SizedBox(width: 10),
-                        Expanded(child: _buildDropdown("Maximum Stay", stayDurations, _selectedMaxStay, (value) => setState(() => _selectedMaxStay = value))),
-                      ],
-                    ),
-
-                    Divider(thickness: 2),
-                    SizedBox(height: 10),
-
-                    // Features (Radio Buttons)
-                    _buildSectionTitle("Features"),
-                    SizedBox(height: 5),
-
-// First Row (Furnishing & Bedroom)
-                    Row(
-                      children: [
-                        Expanded(
-                          child: _buildDropdown("Furnishing", furnishingOptions, _selectedFurnishing,
-                                  (value) => setState(() => _selectedFurnishing = value)),
-                        ),
-                        SizedBox(width: 10), // Adds spacing
-                        Expanded(
-                          child: _buildDropdown("Bedroom", Bedroom, _selectedBedroom,
-                                  (value) => setState(() => _selectedBedroom = value)),
-                        ),
-                      ],
-                    ),
-
-                    SizedBox(height: 10),
-
-// Second Row (Bathroom & Kitchen)
-                    Row(
-                      children: [
-                        Expanded(
-                          child: _buildDropdown("Bathroom", Bathroom, _selectedBathroom,
-                                  (value) => setState(() => _selectedBathroom = value)),
-                        ),
-                        SizedBox(width: 10), // Adds spacing
-                        Expanded(
-                          child: _buildDropdown("Kitchen", Kitchen, _selectedKitchen,
-                                  (value) => setState(() => _selectedKitchen = value)),
-                        ),
-                      ],
-                    ),
-
-
-                    SizedBox(height: 10),
-
-
-                    Text(
-                      "Additional Preferences",
-                      style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                    ),
-
-                    SizedBox(height: 10),
-
-// First Row (Parking & Bills Included)
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Expanded(
-                          child: _buildCheckbox("Parking Available", parking,
-                                  (value) => setState(() => parking = value!)),
-                        ),
-                        SizedBox(width: 10), // Adds spacing
-                        Expanded(
-                          child: _buildCheckbox("Bills Included", billsIncluded,
-                                  (value) => setState(() => billsIncluded = value!)),
-                        ),
-                      ],
-                    ),
-
-                    SizedBox(height: 10),
-
-// Second Row (Pets Allowed & Smoking Allowed)
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Expanded(
-                          child: _buildCheckbox("Pets Allowed", petsAllowed,
-                                  (value) => setState(() => petsAllowed = value!)),
-                        ),
-                        SizedBox(width: 10), // Adds spacing
-                        Expanded(
-                          child: _buildCheckbox("Smoking Allowed", smokingAllowed,
-                                  (value) => setState(() => smokingAllowed = value!)),
-                        ),
-                      ],
-                    ),
-
-                    SizedBox(height: 15),
-
-
-                    Divider(thickness: 2),
-                    SizedBox(height: 10),
-
-                    // Owner Details
-                    _buildSectionTitle(" Owner Details"),
-                    SizedBox(height: 5),
-
-                    Row(
-                      children: [
-                        Expanded(child: _buildTextField("Owner Name", _ownerNameController)),
-                        SizedBox(width: 10),
-                        Expanded(child: _buildTextField("Phone Number", _phoneController)),
-                      ],
-                    ),
-
-                    SizedBox(height: 10),
-
-                    Text(" Upload Ownership Proof:", style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
-                    SizedBox(height: 20),
-                    ElevatedButton(onPressed: () {}, child: Text("Upload Document")),
-
-                    SizedBox(height: 10),
-
-
-
-                    SizedBox(height: 20),
-
-                    // Submit Button
-
-
-                    SizedBox(height: 20),
-                  ],
+            Row(
+              children: [
+                Expanded(child: _buildDropdown(
+                    "Room Type", ["House", "Apartment", "Townhouse"],
+                    _selectedRoomType, (value) {
+                  setState(() {
+                    _selectedRoomType = value;
+                  });
+                }, true)),
+                SizedBox(width: 10),
+                Expanded(child: _buildDropdown(
+                    "Room Size", ['Small', 'Medium', 'Large'],
+                    _selectedRoomSize, (value) {
+                  setState(() {
+                    _selectedRoomSize = value;
+                  });
+                }, true)),
+              ],
+            ),
+            SizedBox(height: 10),
+            Row(
+              children: [
+                Expanded(
+                  child: _buildDatePicker(
+                      "Available From", availableFrom, (date) {
+                    setState(() {
+                      availableFrom = date;
+                      _availableFromController.text = "${date?.toLocal()}"
+                          .split(' ')[0];
+                    });
+                  }, _availableFromController),
                 ),
-              ),
+                SizedBox(width: 10),
+                Expanded(
+                  child: _buildDatePicker("Move-in Date", moveInDate, (date) {
+                    setState(() {
+                      moveInDate = date;
+                      _moveInController.text = "${date?.toLocal()}"
+                          .split(' ')[0];
+                    });
+                  }, _moveInController),
+                ),
+              ],
             ),
 
+            Divider(thickness: 2),
+            SizedBox(height: 10),
+            Text("Images:",
+                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+            SizedBox(height: 20),
+            // _buildImageContainer(),
+            SizedBox(height: 10),
+            Row(
+              children: [
+                Expanded(child: _buildTextField(
+                    "About Property", _aboutPropertyController, true)),
+              ],
+            ),
+
+            Divider(thickness: 2),
+            // Pricing Details
+            _buildSectionTitle("Pricing Details"),
+            SizedBox(height: 5),
+
+            Row(
+              children: [
+                Expanded(child: _buildTextField(
+                    "Amount /Week", _amountWeekController, true)),
+                SizedBox(width: 10),
+                Expanded(child: _buildTextField(
+                    "Amount /Month", _amountMonthController, true)),
+              ],
+            ),
+            SizedBox(height: 10),
+            Row(
+              children: [
+                Expanded(child: _buildTextField(
+                    "Token Amount", _tokenAmountController, true)),
+                SizedBox(width: 10),
+                Expanded(child: _buildDropdown("Sexual Orientation",
+                    ['Any', 'LGBTQ+ Friendly', 'Male Only', 'Female Only'],
+                    _selectedSexualOrientation, (value) {
+                      setState(() {
+                        _selectedSexualOrientation = value;
+                      });
+                    }, true)),
+              ],
+            ),
+            SizedBox(height: 10),
+            Row(
+              children: [
+                Expanded(child: _buildDropdown("Minimum Stay",
+                    ['1', "2", "3", "4", "5", "6", "7", "8", "9", "10"],
+                    _selectedMinStay, (value) {
+                      setState(() {
+                        _selectedMinStay = value;
+                      });
+                    }, true)),
+                SizedBox(width: 10),
+                Expanded(child: _buildDropdown(
+                    "Maximum Stay", [ "6", "7", "8", "9", "10"],
+                    _selectedMaxStay, (value) {
+                  setState(() {
+                    _selectedMaxStay = value;
+                  });
+                }, true)),
+              ],
+            ),
+
+            Divider(thickness: 2),
+            SizedBox(height: 10),
+
+            // Features (Radio Buttons)
+            _buildSectionTitle("Features"),
+            SizedBox(height: 5),
+
+            // First Row (Furnishing & Bedroom)
+            Row(
+              children: [
+                Expanded(child: _buildDropdown("Furnishing",
+                    ["Furnished", "Unfurnished", "Semi-furnished"],
+                    _selectedFurnishing, (value) {
+                      setState(() {
+                        _selectedFurnishing = value;
+                      });
+                    }, true)),
+                SizedBox(width: 10), // Adds spacing
+                Expanded(child: _buildDropdown(
+                    "Bedroom", ['1', '2', '3', '4', '5', '6 and above'],
+                    _selectedBedroom, (value) {
+                  setState(() {
+                    _selectedBedroom = value;
+                  });
+                }, true)),
+              ],
+            ),
+
+            SizedBox(height: 10),
+
+            // Second Row (Bathroom & Kitchen)
+            Row(
+              children: [
+                Expanded(child: _buildDropdown(
+                    "Bathroom", ['1', '2', '3', '4', '5', '6 and above'],
+                    _selectedBathroom, (value) {
+                  setState(() {
+                    _selectedBathroom = value;
+                  });
+                }, true)),
+                SizedBox(width: 10),
+                Expanded(child: _buildDropdown(
+                    "Kitchen", ['1', '2', '3', '4', '5', '6 and above'],
+                    _selectedKitchen, (value) {
+                  setState(() {
+                    _selectedKitchen = value;
+                  });
+                }, true)),
+              ],
+            ),
+
+            SizedBox(height: 10),
+
+            Text("Additional Preferences",
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+            SizedBox(height: 10),
+
+            // First Row (Parking & Bills Included)
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Expanded(child: _buildCheckbox(
+                    "Parking Available", _parkingAvailable, (value) {
+                  setState(() {
+                    _parkingAvailable = value!;
+                  });
+                }, required: true)),
+                SizedBox(width: 10), // Adds spacing
+                Expanded(child: _buildCheckbox(
+                    "Bills Included", _billsIncluded, (value) {
+                  setState(() {
+                    _billsIncluded = value!;
+                  });
+                }, required: true)),
+              ],
+            ),
+
+            SizedBox(height: 10),
+
+            // Second Row (Pets Allowed & Smoking Allowed)
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Expanded(child: _buildCheckbox(
+                    "Pets Allowed", _petsAllowed, (value) {
+                  setState(() {
+                    _petsAllowed = value!;
+                  });
+                }, required: true)),
+                SizedBox(width: 10), // Adds spacing
+                Expanded(child: _buildCheckbox(
+                    "Smoking Allowed", _smokingAllowed, (value) {
+                  setState(() {
+                    _smokingAllowed = value!;
+                  });
+                }, required: true)),
+              ],
+            ),
+            SizedBox(height: 15),
+
+            Divider(thickness: 2),
+            SizedBox(height: 10),
+
+            // Owner Details
+            _buildSectionTitle("Owner Details"),
+            SizedBox(height: 5),
+
+            Row(
+              children: [
+                Expanded(child: _buildTextField(
+                    "Owner Name", _ownerNameController, true)),
+                SizedBox(width: 10),
+                Expanded(child: _buildTextField(
+                    "Phone Number", _phoneController, true)),
+              ],
+            ),
+
+            SizedBox(height: 10),
+
+            Text("Upload Ownership Proof:",
+                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+            SizedBox(height: 20),
+            ElevatedButton(onPressed: () {}, child: Text("Upload Document")),
+
+            SizedBox(height: 20),
           ],
         ),
       ),
     );
   }
 
-  Widget _buildTextField(String label, TextEditingController controller) {
+  Widget _buildTextField(String label, TextEditingController controller,
+      bool isRequired) {
     return Padding(
       padding: EdgeInsets.only(bottom: 15),
       child: TextFormField(
         controller: controller,
-        decoration: InputDecoration(labelText: label, border: OutlineInputBorder()),
+        decoration: InputDecoration(
+            labelText: label, border: OutlineInputBorder()),
+        validator: (value) {
+          if (isRequired && (value == null || value.isEmpty)) {
+            return "$label cannot be empty";
+          }
+          if (label == "Phone Number" &&
+              !RegExp(r'^\+?[0-9]{10,15}$').hasMatch(value!)) {
+            return "Enter a valid phone number";
+          }
+          if ((label == "Amount /Week" || label == "Amount /Month" ||
+              label == "Token Amount") && double.tryParse(value!) == null) {
+            return "Enter a valid amount";
+          }
+          return null;
+        },
       ),
     );
   }
 
-  Widget _buildDropdown(String label, List<String> items, String? selectedValue, Function(String?) onChanged) {
+  Widget _buildDropdown(String label, List<String> items, String? selectedValue,
+      Function(String?) onChanged, bool isRequired) {
     return Padding(
       padding: EdgeInsets.only(bottom: 15),
       child: DropdownButtonFormField<String>(
-        decoration: InputDecoration(labelText: label, border: OutlineInputBorder()),
+        decoration: InputDecoration(
+            labelText: label, border: OutlineInputBorder()),
         value: selectedValue,
-        items: items.map((item) => DropdownMenuItem(value: item, child: Text(item))).toList(),
+        items: items.map((item) =>
+            DropdownMenuItem(value: item, child: Text(item))).toList(),
         onChanged: onChanged,
+        validator: (value) {
+          if (isRequired && value == null) {
+            return "$label cannot be empty";
+          }
+          return null;
+        },
       ),
     );
   }
-  Widget _buildImageContainer() {
-    return Row(
-      children: [
-        for (int i = 0; i < 3; i++)
-          Padding(
-            padding: EdgeInsets.only(right: 10),
-            child: Container(
-              width: 80,
-              height: 80,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10),
-                color: Colors.grey[300],
-                image: DecorationImage(
-                  image: AssetImage("assets/Property/img.png"), // Replace with actual images
-                  fit: BoxFit.cover,
-                ),
-              ),
-            ),
-          ),
-        Container(
-          width: 80,
-          height: 80,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(10),
-            color: Colors.grey[300],
-          ),
-          child: Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Icon(Icons.add, size: 24, color: Colors.black),
-                Text("Add up to 9 images", textAlign: TextAlign.center, style: TextStyle(fontSize: 10)),
-              ],
-            ),
-          ),
-        ),
-      ],
-    );
-  }
-  Widget _buildCheckbox(String label, bool value, Function(bool?) onChanged) {
+
+
+  Widget _buildCheckbox(String label, bool value, Function(bool?) onChanged,
+      { bool required = true}) {
     return CheckboxListTile(
       title: Text(label),
       value: value,
@@ -452,33 +614,173 @@ Divider(thickness: 2,),
     );
   }
 
-  Widget _buildDatePicker(String label, DateTime? date, Function(DateTime) onDateSelected) {
+
+
+  Widget _buildDatePicker(String label, DateTime? date, Function(DateTime) onDateSelected, TextEditingController controller) {
     return Padding(
       padding: EdgeInsets.only(bottom: 15),
       child: TextFormField(
+        controller: controller,
         readOnly: true,
         decoration: InputDecoration(
-          labelText: date == null ? label : "$label: \${date.toLocal()}".split(' ')[0],
+          labelText: date == null ? label : "${date?.toLocal()}"
+              .split(' ')[0],
           border: OutlineInputBorder(),
           suffixIcon: IconButton(
             icon: Icon(Icons.calendar_today),
             onPressed: () => _selectDate(context, onDateSelected),
           ),
         ),
+        validator: (value) {
+          if (date == null) {
+            return "$label cannot be empty";
+          }
+          return null;
+        },
       ),
     );
   }
 }
 
-Widget _buildSectionTitle(String title) {
-  return Padding(
-    padding: const EdgeInsets.symmetric(vertical: 8.0),
-    child: Text(
-      title,
-      style: TextStyle(
-        fontSize: 18,
-        fontWeight: FontWeight.bold,
+  Widget _buildSectionTitle(String title) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 8.0),
+      child: Text(
+        title,
+        style: TextStyle(
+          fontSize: 18,
+          fontWeight: FontWeight.bold,
+        ),
       ),
-    ),
-  );
+    );
+  }
+
+List<String> _getStatesForCountry(String country) {
+  switch (country) {
+    case "India":
+      return [
+        "Andhra Pradesh",
+        "Arunachal Pradesh",
+        "Assam",
+        "Bihar",
+        "Chhattisgarh",
+        "Goa",
+        "Gujarat",
+        "Haryana",
+        "Himachal Pradesh",
+        "Jharkhand",
+        "Karnataka",
+        "Kerala",
+        "Madhya Pradesh",
+        "Maharashtra",
+        "Manipur",
+        "Meghalaya",
+        "Mizoram",
+        "Nagaland",
+        "Odisha",
+        "Punjab",
+        "Rajasthan",
+        "Sikkim",
+        "Tamil Nadu",
+        "Telangana",
+        "Tripura",
+        "Uttar Pradesh",
+        "Uttarakhand",
+        "West Bengal"
+      ];
+    case "Canada":
+      return [
+        "Alberta",
+        "British Columbia",
+        "Manitoba",
+        "New Brunswick",
+        "Newfoundland and Labrador",
+        "Nova Scotia",
+        "Ontario",
+        "Prince Edward Island",
+        "Quebec",
+        "Saskatchewan",
+        "Northwest Territories",
+        "Nunavut",
+        "Yukon"
+      ];
+    case "United States":
+      return [
+        "Alabama",
+        "Alaska",
+        "Arizona",
+        "Arkansas",
+        "California",
+        "Colorado",
+        "Connecticut",
+        "Delaware",
+        "Florida",
+        "Georgia",
+        "Hawaii",
+        "Idaho",
+        "Illinois",
+        "Indiana",
+        "Iowa",
+        "Kansas",
+        "Kentucky",
+        "Louisiana",
+        "Maine",
+        "Maryland",
+        "Massachusetts",
+        "Michigan",
+        "Minnesota",
+        "Mississippi",
+        "Missouri",
+        "Montana",
+        "Nebraska",
+        "Nevada",
+        "New Hampshire",
+        "New Jersey",
+        "New Mexico",
+        "New York",
+        "North Carolina",
+        "North Dakota",
+        "Ohio",
+        "Oklahoma",
+        "Oregon",
+        "Pennsylvania",
+        "Rhode Island",
+        "South Carolina",
+        "South Dakota",
+        "Tennessee",
+        "Texas",
+        "Utah",
+        "Vermont",
+        "Virginia",
+        "Washington",
+        "West Virginia",
+        "Wisconsin",
+        "Wyoming"
+      ];
+    case "UK":
+      return [
+        "England",
+        "Scotland",
+        "Wales",
+        "Northern Ireland",
+        "Guernsey",
+        "Jersey",
+        "Isle of Man",
+        "Anguilla",
+        "Bermuda",
+        "British Antarctic Territory",
+        "British Indian Ocean Territory",
+        "British Virgin Islands",
+        "Cayman Islands",
+        "Falkland Islands",
+        "Montserrat",
+        "Pitcairn Islands",
+        "Saint Helena, Ascension and Tristan da Cunha",
+        "South Georgia and the South Sandwich Islands",
+        "Sovereign Base Areas of Akrotiri and Dhekelia",
+        "Turks and Caicos Islands"
+      ];
+    default:
+      return [];
+  }
 }

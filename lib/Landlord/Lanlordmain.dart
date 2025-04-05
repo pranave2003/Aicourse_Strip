@@ -1,4 +1,5 @@
 import 'package:course_connect/Controller/Bloc/Landloard_auth/landloard_auth_bloc.dart';
+import 'package:course_connect/Landlord/Controller2/Property/Property_auth_block.dart';
 import 'package:course_connect/Landlord/Views/Screens/ProfileLandlord/LandlordProfile.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -29,17 +30,23 @@ class MyApp extends StatelessWidget {
       providers: [
         BlocProvider<LandloardAuthBloc>(
           create: (context) => LandloardAuthBloc(),
+        ),
+    BlocProvider<PropertyAuthBlock>(
+          create: (context) => PropertyAuthBlock(),
         )
+
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         initialRoute: '/',
         theme: ThemeData(scaffoldBackgroundColor: Colors.white),
         routes: {
+          '/':(context) => PropertyAdd(),
           '/': (context) => Landloard_Splashpagewrapper(),
           '/home': (context) => LandlordPageWrapper(),
           '/login': (context) => Landloardlogin(),
         },
+
       ),
     );
   }
