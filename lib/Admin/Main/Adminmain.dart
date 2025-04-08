@@ -1,3 +1,4 @@
+import 'package:course_connect/Admin/View/Screens/ApplicationView/ViewApplications.dart';
 import 'package:course_connect/Admin/View/Screens/Feedback/FeedbackView.dart';
 import 'package:course_connect/Controller/Bloc/University_block/university_bloc.dart';
 import 'package:course_connect/Widget/Constands/colors.dart';
@@ -129,6 +130,8 @@ class _AdminPageState extends State<AdminPage> {
                     _buildSubListTile("New Landlords", Landlord()),
                   ],
                 ),
+                _buildMainListTile('Applications', ViewApplications(),
+                    icon: Icons.book_online),
                 _buildMainListTile('Houses', ViewHouses(),
                     icon: Icons.maps_home_work_outlined),
                 _buildMainListTile('Payment', PaymentView(),
