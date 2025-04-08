@@ -1,12 +1,10 @@
-
-import 'package:course_connect/Landlord/Controller2/Property/Property_Auth/Property_Model/PropertyModel.dart';
-import 'package:course_connect/Landlord/Controller2/Property/Property_auth_block.dart';
 import 'package:course_connect/Landlord/Lanlordmain.dart';
 import 'package:course_connect/Widget/Constands/Loading.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
-import '../../../Controller2/Property/Property_auth_state.dart';
+import '../../../../Controller/Bloc/Property/Property/Property_Auth/Property_Model/PropertyModel.dart';
+import '../../../../Controller/Bloc/Property/Property/Property_auth_block.dart';
+import '../../../../Controller/Bloc/Property/Property/Property_auth_state.dart';
 
 class PropertyEdit extends StatefulWidget {
   const PropertyEdit({
@@ -87,11 +85,13 @@ class _PropertyEditState extends State<PropertyEdit> {
   final TextEditingController _amountMonthController = TextEditingController();
   final TextEditingController _ownerNameController = TextEditingController();
   final TextEditingController _phoneController = TextEditingController();
-  final TextEditingController _availableFromController = TextEditingController();
+  final TextEditingController _availableFromController =
+      TextEditingController();
   final TextEditingController _moveinDateController = TextEditingController();
   final TextEditingController _selectedCityController = TextEditingController();
   final TextEditingController _moveInController = TextEditingController();
-  final TextEditingController _aboutPropertyController = TextEditingController();
+  final TextEditingController _aboutPropertyController =
+      TextEditingController();
   final TextEditingController _tokenAmountController = TextEditingController();
 
   String? _selectedCountry;
@@ -149,10 +149,10 @@ class _PropertyEditState extends State<PropertyEdit> {
     billsIncluded = widget.billStatus == "Yes";
     petsAllowed = widget.pets == "Yes";
     smokingAllowed = widget.smoking == "Yes";
-
   }
 
-  Future<void> _selectDate(BuildContext context, Function(DateTime) onDateSelected) async {
+  Future<void> _selectDate(
+      BuildContext context, Function(DateTime) onDateSelected) async {
     DateTime? picked = await showDatePicker(
       context: context,
       initialDate: DateTime.now(),
@@ -167,7 +167,8 @@ class _PropertyEditState extends State<PropertyEdit> {
   void _submitForm() {
     if (_formKey.currentState!.validate()) {
       // Process the data
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Processing Data')));
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text('Processing Data')));
     }
   }
 
@@ -190,11 +191,15 @@ class _PropertyEditState extends State<PropertyEdit> {
                     children: [
                       Text(
                         "Welcome ",
-                        style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                        style: TextStyle(
+                            fontSize: 24, fontWeight: FontWeight.bold),
                       ),
                       Text(
                         "Landlord,",
-                        style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: Color(0xff0A71CB)),
+                        style: TextStyle(
+                            fontSize: 24,
+                            fontWeight: FontWeight.bold,
+                            color: Color(0xff0A71CB)),
                       ),
                     ],
                   ),
@@ -207,7 +212,8 @@ class _PropertyEditState extends State<PropertyEdit> {
                       ),
                       SizedBox(width: 10),
                       Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 6),
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 14, vertical: 6),
                         decoration: BoxDecoration(
                           color: Colors.white,
                           borderRadius: BorderRadius.circular(20),
@@ -218,12 +224,14 @@ class _PropertyEditState extends State<PropertyEdit> {
                             CircleAvatar(
                               radius: 20,
                               backgroundColor: Colors.grey,
-                              backgroundImage: AssetImage('assets/Profile/img_3.png'),
+                              backgroundImage:
+                                  AssetImage('assets/Profile/img_3.png'),
                             ),
                             SizedBox(width: 10),
                             Text(
                               "Landlord",
-                              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                              style: TextStyle(
+                                  fontSize: 16, fontWeight: FontWeight.bold),
                             ),
                           ],
                         ),
@@ -252,79 +260,81 @@ class _PropertyEditState extends State<PropertyEdit> {
                 },
                 builder: (context, state) {
                   return Padding(
-                padding: const EdgeInsets.only(left: 25, right: 25),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      "Property Editing Page",
-                      style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-                    ),
-                    SizedBox(width: 20),
-                    InkWell(
-                      onTap: () {
-                        if (_formKey.currentState!.validate()) {
-                          Property_Model property = Property_Model(
-
-                            propertyName: _propertyNameController.text,
-                            propertyAddress: _addressController.text,
-                            propertyArea: _areaController.text,
-                            country: _selectedCountry,
-                            state: _selectedState,
-                            city: _selectedCityController.text,
-                            roomTypes: _selectedRoomType,
-                            roomSizes: _selectedRoomSize,
-                            availableFrom: _availableFromController.text,
-                            moveInDate: _moveInController.text,
-                            propertyImageURL: "",
-                            aboutProperty: _aboutPropertyController.text,
-                            bedroom: _selectedBedroom,
-                            bathroom: _selectedBathroom,
-                            kitchen: _selectedKitchen,
-                            furnishingOptions: _selectedFurnishing,
-                            propertyAmountWeek: _amountWeekController.text,
-                            propertyAmountMonth: _amountMonthController.text,
-                            tokenAmount: _tokenAmountController.text,
-                            stayDurations: _selectedMinStay,
-                            sexualOrientations: _selectedSexualOrientation,
-                            minimumStay: _selectedMinStay,
-                            maximumStay: _selectedMaxStay,
-                            ownerName: _ownerNameController.text,
-                            ownerPhone: _phoneController.text,
-                            ownershipProof: "",
-                            parking: parking ? "Yes" : "No",
-                            billStatus: billsIncluded ? "Yes" : "No",
-                            pets: petsAllowed ? "Yes" : "No",
-                            smoking: smokingAllowed ? "Yes" : "No",
-                          );
-
-                          context.read<PropertyAuthBlock>().add(
-                              Property_Edit_Event( Property: property));
-                        }
-                      },
-                      borderRadius: BorderRadius.circular(8),
-                      child: Container(
-                        padding: EdgeInsets.symmetric(vertical: 8, horizontal: 36),
-                        decoration: BoxDecoration(
-                          color: Colors.blue,
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                        child: state is PropertyaddSuccess
-                            ? Loading_Widget()
-                            : Text(
-                          "+Update",
+                    padding: const EdgeInsets.only(left: 25, right: 25),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          "Property Editing Page",
                           style: TextStyle(
-                              fontSize: 18,
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold),
+                              fontSize: 24, fontWeight: FontWeight.bold),
                         ),
-                      ),
+                        SizedBox(width: 20),
+                        InkWell(
+                          onTap: () {
+                            if (_formKey.currentState!.validate()) {
+                              Property_Model property = Property_Model(
+                                propertyName: _propertyNameController.text,
+                                propertyAddress: _addressController.text,
+                                propertyArea: _areaController.text,
+                                country: _selectedCountry,
+                                state: _selectedState,
+                                city: _selectedCityController.text,
+                                roomTypes: _selectedRoomType,
+                                roomSizes: _selectedRoomSize,
+                                availableFrom: _availableFromController.text,
+                                moveInDate: _moveInController.text,
+                                aboutProperty: _aboutPropertyController.text,
+                                bedroom: _selectedBedroom,
+                                bathroom: _selectedBathroom,
+                                kitchen: _selectedKitchen,
+                                furnishingOptions: _selectedFurnishing,
+                                propertyAmountWeek: _amountWeekController.text,
+                                propertyAmountMonth:
+                                    _amountMonthController.text,
+                                tokenAmount: _tokenAmountController.text,
+                                stayDurations: _selectedMinStay,
+                                sexualOrientations: _selectedSexualOrientation,
+                                minimumStay: _selectedMinStay,
+                                maximumStay: _selectedMaxStay,
+                                ownerName: _ownerNameController.text,
+                                ownerPhone: _phoneController.text,
+                                ownershipProof: "",
+                                parking: parking ? "Yes" : "No",
+                                billStatus: billsIncluded ? "Yes" : "No",
+                                pets: petsAllowed ? "Yes" : "No",
+                                smoking: smokingAllowed ? "Yes" : "No",
+                              );
+
+                              context
+                                  .read<PropertyAuthBlock>()
+                                  .add(Property_Edit_Event(Property: property));
+                            }
+                          },
+                          borderRadius: BorderRadius.circular(8),
+                          child: Container(
+                            padding: EdgeInsets.symmetric(
+                                vertical: 8, horizontal: 36),
+                            decoration: BoxDecoration(
+                              color: Colors.blue,
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                            child: state is PropertyaddSuccess
+                                ? Loading_Widget()
+                                : Text(
+                                    "+Update",
+                                    style: TextStyle(
+                                        fontSize: 18,
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                          ),
+                        ),
+                      ],
                     ),
-                  ],
-                ),
-              );
-  },
-),
+                  );
+                },
+              ),
               SizedBox(height: 5),
               Divider(thickness: 2, color: Colors.black),
               SingleChildScrollView(
@@ -338,14 +348,19 @@ class _PropertyEditState extends State<PropertyEdit> {
                       SizedBox(height: 5),
                       Row(
                         children: [
-                          Expanded(child: _buildTextField("Property Name", _propertyNameController, (value) {
+                          Expanded(
+                              child: _buildTextField(
+                                  "Property Name", _propertyNameController,
+                                  (value) {
                             if (value!.isEmpty) {
                               return 'Please enter property name';
                             }
                             return null;
                           })),
                           SizedBox(width: 10),
-                          Expanded(child: _buildTextField("Address", _addressController, (value) {
+                          Expanded(
+                              child: _buildTextField(
+                                  "Address", _addressController, (value) {
                             if (value!.isEmpty) {
                               return 'Please enter address';
                             }
@@ -361,28 +376,42 @@ class _PropertyEditState extends State<PropertyEdit> {
                         return null;
                       }),
                       SizedBox(height: 10),
-                      _buildDropdown("Country", ["India", "Canada", "United States", "United Kingdom"], _selectedCountry, (value) {
+                      _buildDropdown(
+                          "Country",
+                          [
+                            "India",
+                            "Canada",
+                            "United States",
+                            "United Kingdom"
+                          ],
+                          _selectedCountry, (value) {
                         setState(() {
                           _selectedCountry = value;
-                          _selectedState = null; // Reset state when country changes
-                          _selectedCity = null; // Reset city when country changes
+                          _selectedState =
+                              null; // Reset state when country changes
+                          _selectedCity =
+                              null; // Reset city when country changes
                         });
                       }, required: true),
                       SizedBox(height: 10),
-                      _buildDropdown("State", _getStates(), _selectedState, (value) {
+                      _buildDropdown("State", _getStates(), _selectedState,
+                          (value) {
                         setState(() {
                           _selectedState = value;
                           _selectedCity = null; // Reset city when state changes
                         });
                       }, required: true),
                       SizedBox(height: 10),
-                  Row(
-                    children: [
-                      Expanded(child: _buildDropdown("City", widget.city.split(','), _selectedCity, (value) {
-                        setState(() => _selectedCity = value);
-                      }, required: true)),
-                ],
-              ),
+                      Row(
+                        children: [
+                          Expanded(
+                              child: _buildDropdown(
+                                  "City", widget.city.split(','), _selectedCity,
+                                  (value) {
+                            setState(() => _selectedCity = value);
+                          }, required: true)),
+                        ],
+                      ),
                       Divider(thickness: 2),
                       SizedBox(height: 10),
 
@@ -391,30 +420,44 @@ class _PropertyEditState extends State<PropertyEdit> {
                       SizedBox(height: 5),
                       Row(
                         children: [
-                          Expanded(child: _buildDropdown("Room Type",["House", "Apartment", "Townhouse"], _selectedRoomType, (value) {
+                          Expanded(
+                              child: _buildDropdown(
+                                  "Room Type",
+                                  ["House", "Apartment", "Townhouse"],
+                                  _selectedRoomType, (value) {
                             setState(() => _selectedRoomType = value);
                           }, required: true)),
                           SizedBox(width: 10),
-                          Expanded(child: _buildDropdown("Room Size", ['Small', 'Medium', 'Large'], _selectedRoomSize, (value) {
+                          Expanded(
+                              child: _buildDropdown(
+                                  "Room Size",
+                                  ['Small', 'Medium', 'Large'],
+                                  _selectedRoomSize, (value) {
                             setState(() => _selectedRoomSize = value);
-                          },required: true)),
+                          }, required: true)),
                         ],
                       ),
                       SizedBox(height: 10),
                       Row(
                         children: [
-                          Expanded(child: _buildDatePicker("Available From", availableFrom, (date) {
+                          Expanded(
+                              child: _buildDatePicker(
+                                  "Available From", availableFrom, (date) {
                             setState(() => availableFrom = date);
                           })),
                           SizedBox(width: 10),
-                          Expanded(child: _buildDatePicker("Move-in Date", moveInDate, (date) {
+                          Expanded(
+                              child: _buildDatePicker(
+                                  "Move-in Date", moveInDate, (date) {
                             setState(() => moveInDate = date);
                           })),
                         ],
                       ),
                       Divider(thickness: 2),
                       SizedBox(height: 10),
-                      Text("Images:", style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+                      Text("Images:",
+                          style: TextStyle(
+                              fontSize: 16, fontWeight: FontWeight.bold)),
                       SizedBox(height: 20),
                       _buildImageContainer(),
                       SizedBox(height: 10),
@@ -430,14 +473,20 @@ class _PropertyEditState extends State<PropertyEdit> {
                       SizedBox(height: 5),
                       Row(
                         children: [
-                          Expanded(child: _buildTextField("Amount /Week", _amountWeekController, (value) {
+                          Expanded(
+                              child: _buildTextField(
+                                  "Amount /Week", _amountWeekController,
+                                  (value) {
                             if (value!.isEmpty) {
                               return 'Please enter amount per week';
                             }
                             return null;
                           })),
                           SizedBox(width: 10),
-                          Expanded(child: _buildTextField("Amount /Month", _amountMonthController, (value) {
+                          Expanded(
+                              child: _buildTextField(
+                                  "Amount /Month", _amountMonthController,
+                                  (value) {
                             if (value!.isEmpty) {
                               return 'Please enter amount per month';
                             }
@@ -448,28 +497,59 @@ class _PropertyEditState extends State<PropertyEdit> {
                       SizedBox(height: 10),
                       Row(
                         children: [
-                          Expanded(child: _buildTextField("Token Amount", _tokenAmountController, (value) {
+                          Expanded(
+                              child: _buildTextField(
+                                  "Token Amount", _tokenAmountController,
+                                  (value) {
                             if (value!.isEmpty) {
                               return 'Please enter amount per month';
                             }
                             return null;
                           })),
                           SizedBox(width: 10),
-                          Expanded(child: _buildDropdown("Sexual Orientation", ['Any', 'LGBTQ+ Friendly', 'Male Only', 'Female Only'], _selectedSexualOrientation, (value) {
+                          Expanded(
+                              child: _buildDropdown(
+                                  "Sexual Orientation",
+                                  [
+                                    'Any',
+                                    'LGBTQ+ Friendly',
+                                    'Male Only',
+                                    'Female Only'
+                                  ],
+                                  _selectedSexualOrientation, (value) {
                             setState(() => _selectedSexualOrientation = value);
-                          },required:true)),
+                          }, required: true)),
                         ],
                       ),
                       SizedBox(height: 10),
                       Row(
                         children: [
-                          Expanded(child: _buildDropdown("Minimum Stay", ['1', "2", "3", "4", "5", "6", "7", "8", "9", "10"], _selectedMinStay, (value) {
+                          Expanded(
+                              child: _buildDropdown(
+                                  "Minimum Stay",
+                                  [
+                                    '1',
+                                    "2",
+                                    "3",
+                                    "4",
+                                    "5",
+                                    "6",
+                                    "7",
+                                    "8",
+                                    "9",
+                                    "10"
+                                  ],
+                                  _selectedMinStay, (value) {
                             setState(() => _selectedMinStay = value);
-                          },required:true)),
+                          }, required: true)),
                           SizedBox(width: 10),
-                          Expanded(child: _buildDropdown("Maximum Stay", ["6", "7", "8", "9", "10"], _selectedMaxStay, (value) {
+                          Expanded(
+                              child: _buildDropdown(
+                                  "Maximum Stay",
+                                  ["6", "7", "8", "9", "10"],
+                                  _selectedMaxStay, (value) {
                             setState(() => _selectedMaxStay = value);
-                          },required:true)),
+                          }, required: true)),
                         ],
                       ),
                       Divider(thickness: 2),
@@ -481,15 +561,21 @@ class _PropertyEditState extends State<PropertyEdit> {
                       Row(
                         children: [
                           Expanded(
-                            child: _buildDropdown("Furnishing", ["Furnished", "Semi-Furnished", "Unfurnished"], _selectedFurnishing, (value) {
+                            child: _buildDropdown(
+                                "Furnishing",
+                                ["Furnished", "Semi-Furnished", "Unfurnished"],
+                                _selectedFurnishing, (value) {
                               setState(() => _selectedFurnishing = value);
-                            },required:true),
+                            }, required: true),
                           ),
                           SizedBox(width: 10),
                           Expanded(
-                            child: _buildDropdown("Bedroom", ['1', '2', '3', '4', '5', '6 and above'], _selectedBedroom, (value) {
+                            child: _buildDropdown(
+                                "Bedroom",
+                                ['1', '2', '3', '4', '5', '6 and above'],
+                                _selectedBedroom, (value) {
                               setState(() => _selectedBedroom = value);
-                            },required:true),
+                            }, required: true),
                           ),
                         ],
                       ),
@@ -497,35 +583,44 @@ class _PropertyEditState extends State<PropertyEdit> {
                       Row(
                         children: [
                           Expanded(
-                            child: _buildDropdown("Bathroom", ['1', '2', '3', '4', '5', '6 and above'], _selectedBathroom, (value) {
+                            child: _buildDropdown(
+                                "Bathroom",
+                                ['1', '2', '3', '4', '5', '6 and above'],
+                                _selectedBathroom, (value) {
                               setState(() => _selectedBathroom = value);
-                            },required:true),
+                            }, required: true),
                           ),
                           SizedBox(width: 10),
                           Expanded(
-                            child: _buildDropdown("Kitchen", ['1', '2', '3', '4', '5', '6 and above'], _selectedKitchen, (value) {
+                            child: _buildDropdown(
+                                "Kitchen",
+                                ['1', '2', '3', '4', '5', '6 and above'],
+                                _selectedKitchen, (value) {
                               setState(() => _selectedKitchen = value);
-                            },required:true),
+                            }, required: true),
                           ),
                         ],
                       ),
                       SizedBox(height: 10),
                       Text(
                         "Additional Preferences",
-                        style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                        style: TextStyle(
+                            fontSize: 18, fontWeight: FontWeight.bold),
                       ),
                       SizedBox(height: 10),
                       Row(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Expanded(
-                            child: _buildCheckbox("Parking Available", parking, (value) {
+                            child: _buildCheckbox("Parking Available", parking,
+                                (value) {
                               setState(() => parking = value!);
                             }),
                           ),
                           SizedBox(width: 10),
                           Expanded(
-                            child: _buildCheckbox("Bills Included", billsIncluded, (value) {
+                            child: _buildCheckbox(
+                                "Bills Included", billsIncluded, (value) {
                               setState(() => billsIncluded = value!);
                             }),
                           ),
@@ -536,13 +631,15 @@ class _PropertyEditState extends State<PropertyEdit> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Expanded(
-                            child: _buildCheckbox("Pets Allowed", petsAllowed, (value) {
+                            child: _buildCheckbox("Pets Allowed", petsAllowed,
+                                (value) {
                               setState(() => petsAllowed = value!);
                             }),
                           ),
                           SizedBox(width: 10),
                           Expanded(
-                            child: _buildCheckbox("Smoking Allowed", smokingAllowed, (value) {
+                            child: _buildCheckbox(
+                                "Smoking Allowed", smokingAllowed, (value) {
                               setState(() => smokingAllowed = value!);
                             }),
                           ),
@@ -557,14 +654,18 @@ class _PropertyEditState extends State<PropertyEdit> {
                       SizedBox(height: 5),
                       Row(
                         children: [
-                          Expanded(child: _buildTextField("Owner Name", _ownerNameController, (value) {
+                          Expanded(
+                              child: _buildTextField(
+                                  "Owner Name", _ownerNameController, (value) {
                             if (value!.isEmpty) {
                               return 'Please enter owner name';
                             }
                             return null;
                           })),
                           SizedBox(width: 10),
-                          Expanded(child: _buildTextField("Phone Number", _phoneController, (value) {
+                          Expanded(
+                              child: _buildTextField(
+                                  "Phone Number", _phoneController, (value) {
                             if (value!.isEmpty) {
                               return 'Please enter phone number';
                             }
@@ -573,9 +674,12 @@ class _PropertyEditState extends State<PropertyEdit> {
                         ],
                       ),
                       SizedBox(height: 10),
-                      Text("Upload Ownership Proof:", style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+                      Text("Upload Ownership Proof:",
+                          style: TextStyle(
+                              fontSize: 16, fontWeight: FontWeight.bold)),
                       SizedBox(height: 20),
-                      ElevatedButton(onPressed: () {}, child: Text("Upload Document")),
+                      ElevatedButton(
+                          onPressed: () {}, child: Text("Upload Document")),
                       SizedBox(height: 10),
                       SizedBox(height: 20),
                     ],
@@ -589,26 +693,34 @@ class _PropertyEditState extends State<PropertyEdit> {
     );
   }
 
-  Widget _buildTextField(String label, TextEditingController controller, String? Function(String?)? validator) {
+  Widget _buildTextField(String label, TextEditingController controller,
+      String? Function(String?)? validator) {
     return Padding(
       padding: EdgeInsets.only(bottom: 15),
       child: TextFormField(
         controller: controller,
-        decoration: InputDecoration(labelText: label, border: OutlineInputBorder()),
+        decoration:
+            InputDecoration(labelText: label, border: OutlineInputBorder()),
         validator: validator,
       ),
     );
   }
 
-  Widget _buildDropdown(String label, List<String> items, String? selectedValue, Function(String?) onChanged, {required bool required}) {
+  Widget _buildDropdown(String label, List<String> items, String? selectedValue,
+      Function(String?) onChanged,
+      {required bool required}) {
     return Padding(
       padding: EdgeInsets.only(bottom: 15),
       child: DropdownButtonFormField<String>(
-        decoration: InputDecoration(labelText: label, border: OutlineInputBorder()),
+        decoration:
+            InputDecoration(labelText: label, border: OutlineInputBorder()),
         value: selectedValue,
-        items: items.map((item) => DropdownMenuItem(value: item, child: Text(item))).toList(),
+        items: items
+            .map((item) => DropdownMenuItem(value: item, child: Text(item)))
+            .toList(),
         onChanged: onChanged,
-        validator: (value) => required && value == null ? 'Please select $label' : null,
+        validator: (value) =>
+            required && value == null ? 'Please select $label' : null,
       ),
     );
   }
@@ -626,7 +738,8 @@ class _PropertyEditState extends State<PropertyEdit> {
                 borderRadius: BorderRadius.circular(10),
                 color: Colors.grey[300],
                 image: DecorationImage(
-                  image: AssetImage("assets/Property/img.png"), // Replace with actual images
+                  image: AssetImage(
+                      "assets/Property/img.png"), // Replace with actual images
                   fit: BoxFit.cover,
                 ),
               ),
@@ -644,7 +757,9 @@ class _PropertyEditState extends State<PropertyEdit> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Icon(Icons.edit, size: 24, color: Colors.black),
-                Text("Edit images", textAlign: TextAlign.center, style: TextStyle(fontSize: 10)),
+                Text("Edit images",
+                    textAlign: TextAlign.center,
+                    style: TextStyle(fontSize: 10)),
               ],
             ),
           ),
@@ -661,13 +776,15 @@ class _PropertyEditState extends State<PropertyEdit> {
     );
   }
 
-  Widget _buildDatePicker(String label, DateTime? date, Function(DateTime) onDateSelected) {
+  Widget _buildDatePicker(
+      String label, DateTime? date, Function(DateTime) onDateSelected) {
     return Padding(
       padding: EdgeInsets.only(bottom: 15),
       child: TextFormField(
         readOnly: true,
         decoration: InputDecoration(
-          labelText: date == null ? label : "$label: ${date.toLocal()}".split(' ')[0],
+          labelText:
+              date == null ? label : "$label: ${date.toLocal()}".split(' ')[0],
           border: OutlineInputBorder(),
           suffixIcon: IconButton(
             icon: Icon(Icons.calendar_today),

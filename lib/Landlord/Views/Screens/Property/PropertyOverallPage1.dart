@@ -1,10 +1,11 @@
-
-import 'package:course_connect/Landlord/Controller2/Property/Property_auth_block.dart';
-import 'package:course_connect/Landlord/Controller2/Property/Property_auth_state.dart';
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../../../Widget/Constands/Loading.dart';
 
+import '../../../../Controller/Bloc/Property/Property/Property_auth_block.dart';
+import '../../../../Controller/Bloc/Property/Property/Property_auth_state.dart';
+import '../../../../Widget/Constands/Loading.dart';
 
 class LandlordInfoWrapper extends StatelessWidget {
   const LandlordInfoWrapper({super.key, required this.propertyId});
@@ -30,7 +31,9 @@ class Propertyoverallpage1 extends StatelessWidget {
       body: BlocConsumer<PropertyAuthBlock, PropertyAuthState>(
         listener: (context, state) {
           if (state is RefreshProperty) {
-            context.read<PropertyAuthBlock>().add(FetchProperty(searchQuery: null));
+            context
+                .read<PropertyAuthBlock>()
+                .add(FetchProperty(searchQuery: null));
           }
         },
         builder: (context, state) {
@@ -50,7 +53,8 @@ class Propertyoverallpage1 extends StatelessWidget {
                       padding: EdgeInsets.only(left: 25),
                       child: Text(
                         "View Property Details",
-                        style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
+                        style: TextStyle(
+                            fontSize: 25, fontWeight: FontWeight.bold),
                       ),
                     ),
                     const SizedBox(height: 20),
@@ -71,7 +75,49 @@ class Propertyoverallpage1 extends StatelessWidget {
                       ),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
-                        children:[
+                        children: [
+                          Row(mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.symmetric(vertical: 10.0),
+                                child: Container(
+                                  height: 100,
+                                  width: 250,
+                                  child: CarouselSlider(
+
+                                    options: CarouselOptions(
+                                      autoPlay: true,
+                                      height: 100,
+                                      viewportFraction: 1.0,
+                                      enableInfiniteScroll: false,
+                                      enlargeCenterPage: true,
+                                    ),
+                                    items: PropertyAuthState.propertyImageURL!.map((imageUrl) {
+                                      return CachedNetworkImage(
+                                        imageUrl: imageUrl,
+                                        width: 500,
+                                        height: 500,
+                                        fit: BoxFit.fill,
+                                        placeholder: (context, url) => Container(
+                                          width: 50,
+                                          height: 50,
+                                          color: Colors.grey[50],
+                                          child: Center(child: Loading_Widget()),
+                                        ),
+                                        errorWidget: (context, url, error) => Container(
+                                          width: 50,
+                                          height: 50,
+                                          color: Colors.grey[300],
+                                          child: Icon(Icons.image_not_supported,
+                                              size: 50, color: Colors.grey[600]),
+                                        ),
+                                      );
+                                    }).toList(),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
                           buildRowFields(
                             "Property Name",
                             PropertyAuthState.propertyName.toString(),
@@ -90,34 +136,7 @@ class Propertyoverallpage1 extends StatelessWidget {
                             "Area",
                             PropertyAuthState.propertyArea.toString(),
                           ),
-                          Column(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                "Image",
-                                style: TextStyle(color: Colors.black, fontSize: 18, fontWeight: FontWeight.bold),
-                              ),
-                              Image.network(
-                                PropertyAuthState.propertyImageURL.toString(),
-                                width: 100,
-                                height: 100,
-                                fit: BoxFit.cover,
-                                errorBuilder: (context, error, stackTrace) {
-                                  return Container(
-                                    width: 280,
-                                    height: 100,
-                                    color: Colors.grey[300],
-                                    child: Icon(
-                                      Icons.image_not_supported,
-                                      size: 50,
-                                      color: Colors.grey[600],
-                                    ),
-                                  );
-                                },
-                              ),
-                            ],
-                          ),
+
                           buildRowFields(
                             "About Property",
                             PropertyAuthState.aboutProperty.toString(),
@@ -195,9 +214,9 @@ class Propertyoverallpage1 extends StatelessWidget {
                             PropertyAuthState.oneSignalId.toString(),
                           ),
                         ],
-                ),
-              ),
-            ],
+                      ),
+                    ),
+                  ],
                 ),
               ),
             );
@@ -208,7 +227,8 @@ class Propertyoverallpage1 extends StatelessWidget {
     );
   }
 
-  Widget buildRowFields(String label1, String value1, String label2, String value2) {
+  Widget buildRowFields(
+      String label1, String value1, String label2, String value2) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 10),
       child: Row(
@@ -227,7 +247,7 @@ class Propertyoverallpage1 extends StatelessWidget {
       children: [
         Text(
           label,
-          style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+          style: const TextStyle(fontSize: 10, fontWeight: FontWeight.bold),
         ),
         const SizedBox(height: 5),
         TextField(

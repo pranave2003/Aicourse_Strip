@@ -1,12 +1,13 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:course_connect/Landlord/Controller2/Property/Property_auth_block.dart';
-import 'package:course_connect/Landlord/Controller2/Property/Property_auth_state.dart';
+import 'package:carousel_slider/carousel_slider.dart';
+
 import 'package:course_connect/Landlord/Views/Screens/Property/PropertyEdit.dart';
 import 'package:course_connect/Landlord/Views/Screens/Property/PropertyOverallPage1.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../../Controller/Bloc/Ai_coursefinder_block/coursefinder_state.dart';
+import '../../../../Controller/Bloc/Property/Property/Property_auth_block.dart';
+import '../../../../Controller/Bloc/Property/Property/Property_auth_state.dart';
 import '../../../../Widget/Constands/Loading.dart';
 
 class Propertymainwrapper extends StatelessWidget {
@@ -116,7 +117,7 @@ class _PropertyState extends State<Property> {
                   return Center(child: Text(state.error.toString()));
                 } else if (state is PropertyLoaded) {
                   return SingleChildScrollView(
-                    scrollDirection: Axis.vertical,
+                    scrollDirection: Axis.horizontal,
                     child: DataTable(
                       horizontalMargin: 2.0,
                       columnSpacing: 75,
@@ -174,37 +175,46 @@ class _PropertyState extends State<Property> {
                                     style: const TextStyle(
                                         fontWeight: FontWeight.bold)),
                               )),
-                              DataCell(Padding(
-                                padding:
-                                    const EdgeInsets.symmetric(vertical: 10.0),
-                                child: Container(
-                                  height: 80,
-                                  child: ClipRRect(
-                                    borderRadius: BorderRadius.circular(5),
-                                    child: CachedNetworkImage(
-                                      imageUrl:
-                                          property.propertyImageURL.toString(),
-                                      width: 100,
-                                      height: 50,
-                                      fit: BoxFit.cover,
-                                      placeholder: (context, url) => Container(
-                                        width: 50,
-                                        height: 50,
-                                        color: Colors.grey[300],
-                                        child: Center(child: Loading_Widget()),
+                              DataCell(
+                                Padding(
+                                  padding: const EdgeInsets.symmetric(vertical: 10.0),
+                                  child: Container(
+                                    height: 100,
+                                    width: 250,
+                                    child: CarouselSlider(
+
+                                      options: CarouselOptions(
+                                        autoPlay: true,
+                                        height: 100,
+                                        viewportFraction: 1.0,
+                                        enableInfiniteScroll: false,
+                                        enlargeCenterPage: true,
                                       ),
-                                      errorWidget: (context, url, error) =>
-                                          Container(
-                                        width: 50,
-                                        height: 50,
-                                        color: Colors.grey[300],
-                                        child: Icon(Icons.image_not_supported,
-                                            size: 50, color: Colors.grey[600]),
-                                      ),
+                                      items: property.propertyImageURL!.map((imageUrl) {
+                                        return CachedNetworkImage(
+                                          imageUrl: imageUrl,
+                                          width: 200,
+                                          height: 100,
+                                          fit: BoxFit.cover,
+                                          placeholder: (context, url) => Container(
+                                            width: 50,
+                                            height: 50,
+                                            color: Colors.grey[50],
+                                            child: Center(child: Loading_Widget()),
+                                          ),
+                                          errorWidget: (context, url, error) => Container(
+                                            width: 50,
+                                            height: 50,
+                                            color: Colors.grey[300],
+                                            child: Icon(Icons.image_not_supported,
+                                                size: 50, color: Colors.grey[600]),
+                                          ),
+                                        );
+                                      }).toList(),
                                     ),
                                   ),
                                 ),
-                              )),
+                              ),
                               DataCell(Row(
                                 children: [
                                   IconButton(
@@ -236,35 +246,57 @@ class _PropertyState extends State<Property> {
                                           builder: (context) => PropertyEdit(
                                             propertyName:
                                                 property.propertyName ?? '',
-                                            propertyAddress:property.propertyAddress ?? '',
-                                            propertyArea:property.propertyArea ??  '',
+                                            propertyAddress:
+                                                property.propertyAddress ?? '',
+                                            propertyArea:
+                                                property.propertyArea ?? '',
                                             country: property.country ?? '',
-                                            state: property.state??'',
-                                            city: property.city??'',
-                                            roomTypes:property.roomTypes?? '',
-
-                                            roomSizes:property.roomSizes?? '',
-                                            availableFrom:property.availableFrom?? '',
-                                            moveInDate: property.moveInDate ?? '',
-                                            propertyImageURL:property.propertyImageURL??  '',
-                                            aboutProperty:property.aboutProperty??  '',
+                                            state: property.state ?? '',
+                                            city: property.city ?? '',
+                                            roomTypes: property.roomTypes ?? '',
+                                            roomSizes: property.roomSizes ?? '',
+                                            availableFrom:
+                                                property.availableFrom ?? '',
+                                            moveInDate:
+                                                property.moveInDate ?? '',
+                                            propertyImageURL: property
+                                                .propertyImageURL
+                                                .toString(),
+                                            aboutProperty:
+                                                property.aboutProperty ?? '',
                                             bedroom: property.bedroom ?? '',
-                                            bathroom:property.bathroom?? '',
-                                            kitchen:property.kitchen?? '',
-                                            propertyAmountWeek:property.propertyAmountWeek?? '',
-                                            propertyAmountMonth:property.propertyAmountMonth??  '',
-                                            tokenAmount:property.tokenAmount??  '',
-                                            minimumStay:property.minimumStay?? '',
-                                            maximumStay: property.maximumStay ??'' ,
+                                            bathroom: property.bathroom ?? '',
+                                            kitchen: property.kitchen ?? '',
+                                            propertyAmountWeek:
+                                                property.propertyAmountWeek ??
+                                                    '',
+                                            propertyAmountMonth:
+                                                property.propertyAmountMonth ??
+                                                    '',
+                                            tokenAmount:
+                                                property.tokenAmount ?? '',
+                                            minimumStay:
+                                                property.minimumStay ?? '',
+                                            maximumStay:
+                                                property.maximumStay ?? '',
                                             ownerName: property.ownerName ?? '',
-                                            ownerPhone:property.ownerPhone?? '',
-                                            ownershipProof:property.ownershipProof??  '',
-                                            parking:property.parking??  '',
-                                            billStatus:property.billStatus??   '',
+                                            ownerPhone:
+                                                property.ownerPhone ?? '',
+                                            ownershipProof:
+                                                property.ownershipProof ?? '',
+                                            parking: property.parking ?? '',
+                                            billStatus:
+                                                property.billStatus ?? '',
                                             pets: property.pets ?? '',
-                                            oneSignalId: property.oneSignalId ?? '', furnishingOptions:property.furnishingOptions?? '',
-                                              smoking:property.smoking?? '', sexualOrientations: property.sexualOrientations ?? '',
-
+                                            oneSignalId:
+                                                property.oneSignalId ?? '',
+                                            furnishingOptions:
+                                                property.furnishingOptions ??
+                                                    '',
+                                            smoking: property.smoking ?? '',
+                                            sexualOrientations:
+                                                property.sexualOrientations ??
+                                                    '',
                                           ),
                                         ),
                                       );
@@ -276,14 +308,14 @@ class _PropertyState extends State<Property> {
                                     iconSize: 30.0,
                                     onPressed: () {
                                       _showDeleteConfirmationDialog(context,
-                                              () {
-                                            context.read<PropertyAuthBlock>().add(
+                                          () {
+                                        context.read<PropertyAuthBlock>().add(
                                               DeleteProperty(
                                                 Property_id:
-                                                property.propertyId ?? '',
+                                                    property.propertyId ?? '',
                                               ),
                                             );
-                                          });
+                                      });
                                     },
                                   ),
                                 ],
@@ -311,18 +343,20 @@ class _PropertyState extends State<Property> {
         style: TextStyle(
             color: Colors.grey.shade900,
             fontWeight: FontWeight.bold,
-            fontSize: 20),
+            fontSize: 15),
       ),
     );
   }
 
-  void _showDeleteConfirmationDialog(BuildContext context, VoidCallback onConfirm) {
+  void _showDeleteConfirmationDialog(
+      BuildContext context, VoidCallback onConfirm) {
     showDialog(
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
           title: const Text("Delete Property"),
-          content: const Text("Are you sure you want to delete this property? This action cannot be undone."),
+          content: const Text(
+              "Are you sure you want to delete this property? This action cannot be undone."),
           actions: <Widget>[
             TextButton(
               child: const Text("Cancel"),
@@ -342,7 +376,4 @@ class _PropertyState extends State<Property> {
       },
     );
   }
-
-
-  }
-
+}

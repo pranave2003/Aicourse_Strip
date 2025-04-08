@@ -159,8 +159,10 @@ class _LandloardloginState extends State<Landloardlogin> {
                             ],
                           ),
                           SizedBox(height: 30),
-                          Image.asset("assets/Background/img_4.png",
-                              height: 180, width: 250),
+                          Expanded(
+                            child: Image.asset("assets/Background/img_4.png",
+                                height: 180, width: 250),
+                          ),
                         ],
                       ),
                     ),

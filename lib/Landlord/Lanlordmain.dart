@@ -1,5 +1,4 @@
 import 'package:course_connect/Controller/Bloc/Landloard_auth/landloard_auth_bloc.dart';
-import 'package:course_connect/Landlord/Controller2/Property/Property_auth_block.dart';
 import 'package:course_connect/Landlord/Views/Screens/ProfileLandlord/LandlordProfile.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -7,9 +6,8 @@ import 'package:course_connect/Landlord/Views/Screens/Bookings/AllBookings.dart'
 import 'package:course_connect/Landlord/Views/Screens/Payments/ViewPayment.dart';
 import 'package:course_connect/Landlord/Views/Screens/Property/Property.dart';
 import 'package:course_connect/Landlord/Views/Screens/Property/PropertyAdd.dart';
-import 'package:course_connect/Landlord/Views/Screens/Property/PropertyEdit.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
+import '../Controller/Bloc/Property/Property/Property_auth_block.dart';
 import '../firebase_options.dart';
 import 'Views/Screens/Auth/LandloardSplash.dart';
 import 'Views/Screens/Auth/Landloard_Login.dart';
@@ -31,22 +29,20 @@ class MyApp extends StatelessWidget {
         BlocProvider<LandloardAuthBloc>(
           create: (context) => LandloardAuthBloc(),
         ),
-    BlocProvider<PropertyAuthBlock>(
+        BlocProvider<PropertyAuthBlock>(
           create: (context) => PropertyAuthBlock(),
         )
-
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         initialRoute: '/',
         theme: ThemeData(scaffoldBackgroundColor: Colors.white),
         routes: {
-          '/':(context) => PropertyAdd(),
+          '/': (context) => PropertyAdd(),
           '/': (context) => Landloard_Splashpagewrapper(),
           '/home': (context) => LandlordPageWrapper(),
           '/login': (context) => Landloardlogin(),
         },
-
       ),
     );
   }

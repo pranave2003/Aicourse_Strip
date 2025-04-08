@@ -11,7 +11,7 @@ class Property_Model {
   String? roomSizes;
   String? availableFrom;
   String? moveInDate;
-  String? propertyImageURL;
+  List<String>? propertyImageURL;
   String? aboutProperty;
   String? bedroom;
   String? bathroom;
@@ -85,7 +85,8 @@ class Property_Model {
       roomSizes: data['roomSizes'],
       availableFrom: data['availableFrom'],
       moveInDate: data['moveInDate'],
-      propertyImageURL: data['propertyImageURL'],
+      propertyImageURL:
+          List<String>.from(data['propertyImageURL'] ?? []), // ✅ casting array
       aboutProperty: data['aboutProperty'],
       bedroom: data['bedroom'],
       bathroom: data['bathroom'],

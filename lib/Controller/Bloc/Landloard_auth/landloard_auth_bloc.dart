@@ -7,8 +7,11 @@ import 'LandloardModel/LandloardModel.dart';
 part 'landloard_auth_event.dart';
 part 'landloard_auth_state.dart';
 
+final Lanloardid_global=FirebaseAuth.instance.currentUser!.uid;
+
 class LandloardAuthBloc extends Bloc<LandloardAuthEvent, LandloardAuthState> {
   final FirebaseAuth _auth = FirebaseAuth.instance;
+
   LandloardAuthBloc() : super(LandloardAuthInitial()) {
     // check Auth or Not
     on<checkloginLandloardstateevent>(
@@ -95,7 +98,7 @@ class LandloardAuthBloc extends Bloc<LandloardAuthEvent, LandloardAuthState> {
               final userData = userDoc.data() as Map<String, dynamic>;
 
               // Check if the 'Ban' field is 1
-              if (userData['ban'] == "1") {
+              if (userData['ban'] == "0") {
                 // Update OneSignal ID
                 await FirebaseFirestore.instance
                     .collection("Landloard")

@@ -1,8 +1,14 @@
+import 'dart:io';
+
 import 'package:bloc/bloc.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:course_connect/Landlord/Controller2/Property/Property_auth_state.dart';
+import 'package:file_picker/file_picker.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:uuid/uuid.dart';
+import '../../Landloard_auth/landloard_auth_bloc.dart';
 import 'Property_Auth/Property_Model/PropertyModel.dart';
+import 'Property_auth_state.dart';
 part 'Property_auth_event.dart';
 
 class PropertyAuthBlock extends Bloc<PropertyAuthEvent, PropertyAuthState> {
@@ -20,13 +26,14 @@ class PropertyAuthBlock extends Bloc<PropertyAuthEvent, PropertyAuthState> {
 
           await orderRef.set({
             "propertyId": PropertyId, // ✅ Fixed
-            "LandlordId": event.Property.LandlordId, // ✅ Fixed
+            "LandlordId": Lanloardid_global, // ✅ Fixed
             "propertyName": event.Property.propertyName, // ✅ Fixed
             "propertyAddress": event.Property.propertyAddress, // ✅ Fixed
             "propertyArea": event.Property.propertyArea, // ✅ Fixed
             "country": event.Property.country,
             "state": event.Property.state,
-            "ban": event.Property.ban, // ✅ Fixed
+            "ban": "0", // ✅ Fixed
+            "status": "0",
             "oneSignalId": event.Property.oneSignalId, // ✅ Fixed
             "city": event.Property.city,
             "roomTypes": event.Property.roomTypes,
@@ -112,7 +119,7 @@ class PropertyAuthBlock extends Bloc<PropertyAuthEvent, PropertyAuthState> {
       }
     });
     on<DeleteProperty>(
-          (event, emit) async {
+      (event, emit) async {
         emit(Propertygetloading());
         try {
           FirebaseFirestore.instance
@@ -127,7 +134,7 @@ class PropertyAuthBlock extends Bloc<PropertyAuthEvent, PropertyAuthState> {
       },
     );
     on<Property_Edit_Event>(
-          (event, emit) async {
+      (event, emit) async {
         emit(PropertyLoading());
         try {
           FirebaseFirestore.instance
@@ -155,7 +162,7 @@ class PropertyAuthBlock extends Bloc<PropertyAuthEvent, PropertyAuthState> {
             "furnishingOptions": event.Property.furnishingOptions,
             "propertyAmountWeek": event.Property.propertyAmountWeek, // ✅ Fixed
             "propertyAmountMonth":
-            event.Property.propertyAmountMonth, // ✅ Fixed
+                event.Property.propertyAmountMonth, // ✅ Fixed
             "tokenAmount": event.Property.tokenAmount,
             "sexualOrientations": event.Property.sexualOrientations,
             "minimumStay": event.Property.minimumStay,
@@ -172,6 +179,40 @@ class PropertyAuthBlock extends Bloc<PropertyAuthEvent, PropertyAuthState> {
         } catch (e) {
           emit(Propertyfailerror(e.toString().split("]").last));
           print("Authenticated Error : ${e.toString().split(']').last}");
+        }
+      },
+    );
+
+    on<UploadImagesEvent>(
+      (event, emit) async {
+        emit(UploadLoading());
+        try {
+          List<String> downloadUrls = [];
+
+          for (PlatformFile file in event.files) {
+            final ref = FirebaseStorage.instance
+                .ref()
+                .child('uploads/${const Uuid().v4()}_${file.name}');
+
+            UploadTask uploadTask;
+            if (file.bytes != null) {
+              // For Web or picked from memory
+              uploadTask = ref.putData(file.bytes!);
+            } else if (file.path != null) {
+              // For Mobile
+              uploadTask = ref.putFile(File(file.path!));
+            } else {
+              continue;
+            }
+
+            final snapshot = await uploadTask;
+            final url = await snapshot.ref.getDownloadURL();
+            downloadUrls.add(url);
+          }
+
+          emit(UploadSuccess(downloadUrls));
+        } catch (e) {
+          emit(UploadFailure(e.toString()));
         }
       },
     );

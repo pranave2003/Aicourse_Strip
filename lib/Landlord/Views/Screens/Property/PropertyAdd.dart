@@ -1,11 +1,12 @@
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
+import '../../../../Controller/Bloc/Property/Property/Property_Auth/Property_Model/PropertyModel.dart';
+import '../../../../Controller/Bloc/Property/Property/Property_auth_block.dart';
+import '../../../../Controller/Bloc/Property/Property/Property_auth_state.dart';
 import '../../../../Widget/Constands/Loading.dart';
-import '../../../Controller2/Property/Property_Auth/Property_Model/PropertyModel.dart';
-import '../../../Controller2/Property/Property_auth_block.dart';
-import '../../../Controller2/Property/Property_auth_state.dart';
+
 import '../../../Lanlordmain.dart';
 
 class PropertyAdd extends StatefulWidget {
@@ -54,10 +55,11 @@ class _PropertyAddState extends State<PropertyAdd> {
   String? _selectedBedroom;
   String? _selectedBathroom;
   String? _selectedKitchen;
-  String? _selectedTokenAmount;
   String? _selectedMinStay;
   String? _selectedMaxStay;
   String? _selectedSexualOrientation;
+
+  List<String> photos_Url = [];
 
   DateTime? availableFrom;
   DateTime? moveInDate;
@@ -66,6 +68,18 @@ class _PropertyAddState extends State<PropertyAdd> {
   bool _billsIncluded = false;
   bool _petsAllowed = false;
   bool _smokingAllowed = false;
+
+  Future<void> pickAndUpload(BuildContext context) async {
+    final result = await FilePicker.platform.pickFiles(
+      allowMultiple: true,
+      type: FileType.image,
+      withData: true, // Required for web
+    );
+
+    if (result != null && result.files.isNotEmpty) {
+      context.read<PropertyAuthBlock>().add(UploadImagesEvent(result.files));
+    }
+  }
 
   Future<void> _selectDate(
       BuildContext context, Function(DateTime) onDateSelected) async {
@@ -180,42 +194,51 @@ class _PropertyAddState extends State<PropertyAdd> {
                       SizedBox(width: 20),
                       InkWell(
                         onTap: () {
-                          if (_formKey.currentState!.validate()) {
-                            Property_Model property = Property_Model(
-                              propertyName: _propertyNameController.text,
-                              propertyAddress: _addressController.text,
-                              propertyArea: _areaController.text,
-                              country: _selectedCountry,
-                              state: _selectedState,
-                              city: _selectedCityController.text,
-                              roomTypes: _selectedRoomType,
-                              roomSizes: _selectedRoomSize,
-                              availableFrom: _availableFromController.text,
-                              moveInDate: _moveInController.text,
-                              propertyImageURL: "",
-                              aboutProperty: _aboutPropertyController.text,
-                              bedroom: _selectedBedroom,
-                              bathroom: _selectedBathroom,
-                              kitchen: _selectedKitchen,
-                              furnishingOptions: _selectedFurnishing,
-                              propertyAmountWeek: _amountWeekController.text,
-                              propertyAmountMonth: _amountMonthController.text,
-                              tokenAmount: _tokenAmountController.text,
-                              stayDurations: _selectedMinStay,
-                              sexualOrientations: _selectedSexualOrientation,
-                              minimumStay: _selectedMinStay,
-                              maximumStay: _selectedMaxStay,
-                              ownerName: _ownerNameController.text,
-                              ownerPhone: _phoneController.text,
-                              ownershipProof: "",
-                              parking: _parkingAvailable ? "Yes" : "No",
-                              billStatus: _billsIncluded ? "Yes" : "No",
-                              pets: _petsAllowed ? "Yes" : "No",
-                              smoking: _smokingAllowed ? "Yes" : "No",
+                          if (photos_Url.isEmpty) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                content: Text('Please upload photo'),
+                              ),
                             );
-                            context
-                                .read<PropertyAuthBlock>()
-                                .add(Property_Add_Event(Property: property));
+                          } else {
+                            if (_formKey.currentState!.validate()) {
+                              Property_Model property = Property_Model(
+                                propertyName: _propertyNameController.text,
+                                propertyAddress: _addressController.text,
+                                propertyArea: _areaController.text,
+                                country: _selectedCountry,
+                                state: _selectedState,
+                                city: _selectedCityController.text,
+                                roomTypes: _selectedRoomType,
+                                roomSizes: _selectedRoomSize,
+                                availableFrom: _availableFromController.text,
+                                moveInDate: _moveInController.text,
+                                propertyImageURL: photos_Url,
+                                aboutProperty: _aboutPropertyController.text,
+                                bedroom: _selectedBedroom,
+                                bathroom: _selectedBathroom,
+                                kitchen: _selectedKitchen,
+                                furnishingOptions: _selectedFurnishing,
+                                propertyAmountWeek: _amountWeekController.text,
+                                propertyAmountMonth:
+                                    _amountMonthController.text,
+                                tokenAmount: _tokenAmountController.text,
+                                stayDurations: _selectedMinStay,
+                                sexualOrientations: _selectedSexualOrientation,
+                                minimumStay: _selectedMinStay,
+                                maximumStay: _selectedMaxStay,
+                                ownerName: _ownerNameController.text,
+                                ownerPhone: _phoneController.text,
+                                ownershipProof: "",
+                                parking: _parkingAvailable ? "Yes" : "No",
+                                billStatus: _billsIncluded ? "Yes" : "No",
+                                pets: _petsAllowed ? "Yes" : "No",
+                                smoking: _smokingAllowed ? "Yes" : "No",
+                              );
+                              context
+                                  .read<PropertyAuthBlock>()
+                                  .add(Property_Add_Event(Property: property));
+                            }
                           }
                         },
                         borderRadius: BorderRadius.circular(8),
@@ -555,9 +578,59 @@ class _PropertyAddState extends State<PropertyAdd> {
             Text("Upload Ownership Proof:",
                 style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
             SizedBox(height: 20),
-            ElevatedButton(onPressed: () {}, child: Text("Upload Document")),
 
-            SizedBox(height: 20),
+            BlocConsumer<PropertyAuthBlock, PropertyAuthState>(
+              listener: (context, state) {
+                if (state is UploadSuccess) {
+                  photos_Url = state.downloadUrls;
+                  print("my photos : $photos_Url");
+                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                    content:
+                        Text("Uploaded: ${state.downloadUrls.length} files"),
+                  ));
+                } else if (state is UploadFailure) {
+                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                    content: Text("Upload failed: ${state.error}"),
+                  ));
+                }
+              },
+              builder: (context, state) {
+                if (state is UploadLoading) {
+                  return const Center(child: CircularProgressIndicator());
+                }
+
+                return Container(
+                  height: 100,
+                  decoration: BoxDecoration(
+                      border: Border.all(
+                          color: state is UploadSuccess
+                              ? Colors.green
+                              : Colors.red)),
+                  child: ElevatedButton.icon(
+                    style:
+                        ElevatedButton.styleFrom(backgroundColor: Colors.white),
+                    onPressed: () => pickAndUpload(context),
+                    icon: state is UploadSuccess
+                        ? Icon(
+                            Icons.image,
+                            color: Colors.green,
+                          )
+                        : Icon(Icons.upload_file),
+                    label: state is UploadSuccess
+                        ? Text(
+                            "Uploaded",
+                            style: TextStyle(
+                                color: Colors.green,
+                                fontWeight: FontWeight.bold),
+                          )
+                        : Text("Pick & Upload Images"),
+                  ),
+                );
+              },
+            ),
+            SizedBox(
+              height: 50,
+            )
           ],
         ),
       ),
