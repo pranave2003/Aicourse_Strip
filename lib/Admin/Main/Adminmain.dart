@@ -1,5 +1,6 @@
 import 'package:course_connect/Admin/View/Screens/ApplicationView/ViewApplications.dart';
 import 'package:course_connect/Admin/View/Screens/Feedback/FeedbackView.dart';
+import 'package:course_connect/Controller/Bloc/Applycourse/application_bloc.dart';
 import 'package:course_connect/Controller/Bloc/University_block/university_bloc.dart';
 import 'package:course_connect/Widget/Constands/colors.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -42,6 +43,10 @@ class MyApp extends StatelessWidget {
             ..add(FetchLandloards(searchQuery: null, status: "0")),
         ),
         BlocProvider<UniversityBloc>(create: (context) => UniversityBloc()),
+        BlocProvider<ApplicationBloc>(
+          create: (context) => ApplicationBloc()..add(FetchApplication(searchQuery: null)),
+          
+        ),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
@@ -130,7 +135,7 @@ class _AdminPageState extends State<AdminPage> {
                     _buildSubListTile("New Landlords", Landlord()),
                   ],
                 ),
-                _buildMainListTile('Applications', ViewApplications(),
+                _buildMainListTile('Applications', Viewapplicationsmainwrapper(),
                     icon: Icons.book_online),
                 _buildMainListTile('Houses', ViewHouses(),
                     icon: Icons.maps_home_work_outlined),

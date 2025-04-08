@@ -15,3 +15,7 @@ class Applicationaddevent extends ApplicationEvent {
   final Applicationmodel application;
   Applicationaddevent({required this.application});
 }
+class FetchApplication extends ApplicationEvent {
+  final String? searchQuery;
+  FetchApplication({required this.searchQuery});
+}

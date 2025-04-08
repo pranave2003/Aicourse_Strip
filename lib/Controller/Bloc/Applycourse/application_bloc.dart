@@ -54,5 +54,31 @@ class ApplicationBloc extends Bloc<ApplicationEvent, ApplicationState> {
         }
       },
     );
+    on<FetchApplication>((event, emit) async {
+      emit(ApplicationLoading());
+      try {
+        CollectionReference Applicationcollection =
+        FirebaseFirestore.instance.collection('Applications');
+
+        Query query = Applicationcollection;
+        QuerySnapshot snapshot = await query.get();
+
+        List<Applicationmodel> userss = snapshot.docs.map((doc) {
+          return Applicationmodel.fromMap(doc.data() as Map<String, dynamic>);
+        }).toList();
+
+        if (event.searchQuery != null && event.searchQuery!.isNotEmpty) {
+          userss = userss.where((Application) {
+            return Application.Universityname!
+                .toLowerCase()
+                .contains(event.searchQuery!.toLowerCase());
+          }).toList();
+        }
+
+        emit(Application_loaded(userss));
+      } catch (e) {
+        emit(Applicationfailerror(e.toString()));
+      }
+    });
   }
 }
