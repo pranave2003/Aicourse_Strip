@@ -279,54 +279,80 @@ class _HomepageState extends State<Homepage> {
                           )
                         ],
                       ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Expanded(
-                            flex: 5,
-                            child: TextFormField(
-                              decoration: InputDecoration(
-                                  hintText: "search university or course",
-                                  prefixIcon: Icon(Icons.search),
-                                  border: OutlineInputBorder(
-                                      borderSide: BorderSide(
-                                          width: 1, color: Colors.black))),
+                      SizedBox(height: 20,),
+                      //search query
+                      Container(
+                        height: 40,
+                        width: 400,
+                        decoration: BoxDecoration(borderRadius: BorderRadius.circular(18)),
+                        child: TextField(
+                          onChanged: (value) {
+                            context.read<UniversityBloc>().add(FetchUniversity(searchQuery: value));
+                          },
+                          decoration: InputDecoration(
+                            filled: true,
+                            fillColor: Colors.white,
+                            enabledBorder: OutlineInputBorder(
+                              borderSide: BorderSide(color: Colors.grey),
                             ),
-                          ),
-                          SizedBox(
-                            width: 10,
-                          ),
-                          Expanded(
-                            flex: 1,
-                            child: GestureDetector(
-                              onTap: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) =>
-                                          FilterPage()), // Correct Navigation
-                                );
-                              },
-                              child: Container(
-                                height: 50,
-                                width: 50,
-                                decoration: BoxDecoration(
-                                  color:
-                                      Colors.grey[100], // Soft pink background
-                                  borderRadius: BorderRadius.circular(12),
-                                ),
-                                child: Center(
-                                  // Ensuring proper alignment
-                                  child: Icon(
-                                    Icons.tune,
-                                    color: Colors.brown,
-                                  ),
-                                ),
-                              ),
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(18),
+                              borderSide: BorderSide(
+                                  width: 1, color: Colors.black,)
                             ),
+                            hintText: 'Search Universities',
+                            prefixIcon: Icon(Icons.search, color: Colors.grey),
                           ),
-                        ],
+                        ),
                       ),
+                      // Row(
+                      //   mainAxisAlignment: MainAxisAlignment.center,
+                      //   children: [
+                      //     Expanded(
+                      //       flex: 5,
+                      //       child: TextFormField(
+                      //         decoration: InputDecoration(
+                      //             hintText: "search university or course",
+                      //             prefixIcon: Icon(Icons.search),
+                      //             border: OutlineInputBorder(
+                      //                 borderSide: BorderSide(
+                      //                     width: 1, color: Colors.black))),
+                      //       ),
+                      //     ),
+                      //     SizedBox(
+                      //       width: 10,
+                      //     ),
+                      //     Expanded(
+                      //       flex: 1,
+                      //       child: GestureDetector(
+                      //         onTap: () {
+                      //           Navigator.push(
+                      //             context,
+                      //             MaterialPageRoute(
+                      //                 builder: (context) =>
+                      //                     FilterPage()), // Correct Navigation
+                      //           );
+                      //         },
+                      //         child: Container(
+                      //           height: 50,
+                      //           width: 50,
+                      //           decoration: BoxDecoration(
+                      //             color:
+                      //                 Colors.grey[100], // Soft pink background
+                      //             borderRadius: BorderRadius.circular(12),
+                      //           ),
+                      //           child: Center(
+                      //             // Ensuring proper alignment
+                      //             child: Icon(
+                      //               Icons.tune,
+                      //               color: Colors.brown,
+                      //             ),
+                      //           ),
+                      //         ),
+                      //       ),
+                      //     ),
+                      //   ],
+                      // ),
                       Row(
                         children: [
                           Expanded(
