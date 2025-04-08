@@ -1,5 +1,6 @@
-class PropertyModel {
+class Property_Model {
   String? propertyId;
+  String? LandlordId;
   String? propertyName;
   String? propertyAddress;
   String? propertyArea;
@@ -33,8 +34,9 @@ class PropertyModel {
   String? ban;
   String? oneSignalId;
 
-  PropertyModel({
+  Property_Model({
     this.propertyId,
+    this.LandlordId,
     this.propertyName,
     this.propertyAddress,
     this.propertyArea,
@@ -69,9 +71,10 @@ class PropertyModel {
     this.oneSignalId,
   });
 
-  factory PropertyModel.fromMap(Map<String, dynamic> data) {
-    return PropertyModel(
+  factory Property_Model.fromMap(Map<String, dynamic> data) {
+    return Property_Model(
       propertyId: data['propertyId'],
+      LandlordId: data['LandlordId'],
       propertyName: data['propertyName'],
       propertyAddress: data['propertyAddress'],
       propertyArea: data['propertyArea'],

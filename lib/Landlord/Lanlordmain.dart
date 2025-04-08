@@ -129,9 +129,9 @@ class _LandlordPageState extends State<LandlordPage> {
                   title: 'Property',
                   icon: Icons.apartment,
                   children: [
-                    _buildSubListTile("View Property", Property()),
+                    _buildSubListTile("View Property", Propertymainwrapper()),
                     _buildSubListTile("Add Property", PropertyAdd()),
-                    _buildSubListTile("Edit Property", PropertyEdit()),
+                    // _buildSubListTile("Edit Property", PropertyEdit()),
                   ],
                 ),
 

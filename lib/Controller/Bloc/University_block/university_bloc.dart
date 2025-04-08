@@ -225,7 +225,7 @@ class UniversityBloc extends Bloc<UniversityEvent, UniversityState> {
             University_model userData = University_model.fromMap(doc.data()!);
             emit(UniversityModel(userData));
           } else {
-            emit(UniversitysCoursefailerror("User profile not found"));
+            emit(UniversitysCoursefailerror("Course not found"));
           }
         } catch (e) {
           emit(UniversitysCoursefailerror(e.toString()));

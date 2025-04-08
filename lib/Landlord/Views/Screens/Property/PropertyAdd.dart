@@ -1,12 +1,11 @@
-
-
-import 'package:course_connect/Landlord/Controller2/Property/Property_Auth/Property_Model/PropertyModel.dart';
-import 'package:course_connect/Landlord/Controller2/Property/Property_auth_block.dart';
-import 'package:course_connect/Landlord/Controller2/Property/Property_auth_state.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../../../Widget/Constands/CustomTextfield.dart';
+
 import '../../../../Widget/Constands/Loading.dart';
+import '../../../Controller2/Property/Property_Auth/Property_Model/PropertyModel.dart';
+import '../../../Controller2/Property/Property_auth_block.dart';
+import '../../../Controller2/Property/Property_auth_state.dart';
 import '../../../Lanlordmain.dart';
 
 class PropertyAdd extends StatefulWidget {
@@ -23,15 +22,27 @@ class _PropertyAddState extends State<PropertyAdd> {
   final TextEditingController _amountMonthController = TextEditingController();
   final TextEditingController _ownerNameController = TextEditingController();
   final TextEditingController _phoneController = TextEditingController();
-  final TextEditingController _aboutPropertyController = TextEditingController();
+  final TextEditingController _aboutPropertyController =
+      TextEditingController();
   final TextEditingController _selectedCityController = TextEditingController();
-  final TextEditingController _availableFromController = TextEditingController();
+  final TextEditingController _availableFromController =
+      TextEditingController();
   final TextEditingController _moveInController = TextEditingController();
   final TextEditingController _tokenAmountController = TextEditingController();
-  void dispose() {
-    _phoneController.dispose();
-    _addressController.dispose();
 
+  void dispose() {
+    _propertyNameController.dispose();
+    _addressController.dispose();
+    _areaController.dispose();
+    _amountWeekController.dispose();
+    _amountMonthController.dispose();
+    _ownerNameController.dispose();
+    _phoneController.dispose();
+    _aboutPropertyController.dispose();
+    _selectedCityController.dispose();
+    _availableFromController.dispose();
+    _moveInController.dispose();
+    _tokenAmountController.dispose();
     super.dispose();
   }
 
@@ -56,8 +67,8 @@ class _PropertyAddState extends State<PropertyAdd> {
   bool _petsAllowed = false;
   bool _smokingAllowed = false;
 
-  Future<void> _selectDate(BuildContext context,
-      Function(DateTime) onDateSelected) async {
+  Future<void> _selectDate(
+      BuildContext context, Function(DateTime) onDateSelected) async {
     DateTime? picked = await showDatePicker(
       context: context,
       initialDate: DateTime.now(),
@@ -85,12 +96,13 @@ class _PropertyAddState extends State<PropertyAdd> {
                   children: [
                     Text(
                       "Welcome ",
-                      style: TextStyle(
-                          fontSize: 24, fontWeight: FontWeight.bold),
+                      style:
+                          TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
                     ),
                     Text(
                       "Landlord,",
-                      style: TextStyle(fontSize: 24,
+                      style: TextStyle(
+                          fontSize: 24,
                           fontWeight: FontWeight.bold,
                           color: Color(0xff0A71CB)),
                     ),
@@ -117,14 +129,14 @@ class _PropertyAddState extends State<PropertyAdd> {
                           CircleAvatar(
                             radius: 20,
                             backgroundColor: Colors.grey,
-                            backgroundImage: AssetImage(
-                                'assets/Profile/img_3.png'),
+                            backgroundImage:
+                                AssetImage('assets/Profile/img_3.png'),
                           ),
                           SizedBox(width: 10),
                           Text(
                             "Landlord",
-                            style: TextStyle(fontSize: 16,
-                                fontWeight: FontWeight.bold),
+                            style: TextStyle(
+                                fontSize: 16, fontWeight: FontWeight.bold),
                           ),
                         ],
                       ),
@@ -169,96 +181,61 @@ class _PropertyAddState extends State<PropertyAdd> {
                       InkWell(
                         onTap: () {
                           if (_formKey.currentState!.validate()) {
-                            {
-                              PropertyModel Property =
-                              PropertyModel(
-                                propertyName: _propertyNameController.text,
-                                propertyAddress: _addressController.text,
-                                propertyArea: _areaController.text,
-                                country: _selectedCountry,
-                                state: _selectedState,
-                                city: _selectedCityController.text,
-                                roomTypes: _selectedRoomType,
-                                roomSizes: _selectedRoomSize,
-                                availableFrom: _availableFromController
-                                    .toString(),
-                                moveInDate: _moveInController.toString(),
-                                propertyImageURL: "",
-                                aboutProperty: _aboutPropertyController.text,
-                                bedroom: _selectedBedroom,
-                                bathroom: _selectedBathroom,
-                                kitchen: _selectedKitchen,
-                                furnishingOptions: _selectedFurnishing,
-                                propertyAmountWeek: _amountWeekController.text,
-                                propertyAmountMonth: _amountMonthController
-                                    .text,
-                                tokenAmount: _tokenAmountController
-                                    .text,
-                                stayDurations: _selectedMinStay,
-                                sexualOrientations: _selectedSexualOrientation,
-                                minimumStay: _selectedMinStay,
-                                maximumStay: _selectedMaxStay,
-                                ownerName: _ownerNameController.text,
-                                ownerPhone: _phoneController.text,
-                                ownershipProof: "",
-                                parking: _parkingAvailable ? "Yes" : "No",
-                                billStatus: _billsIncluded ? "Yes" : "No",
-                                pets: _petsAllowed ? "Yes" : "No",
-                                smoking: _smokingAllowed ? "Yes" : "No",
-
-
-                              );
-                              context.read<PropertyAuthBlock>().add(
-                                  Property_Add_Event(
-                                      Property: Property));
-                            }
+                            Property_Model property = Property_Model(
+                              propertyName: _propertyNameController.text,
+                              propertyAddress: _addressController.text,
+                              propertyArea: _areaController.text,
+                              country: _selectedCountry,
+                              state: _selectedState,
+                              city: _selectedCityController.text,
+                              roomTypes: _selectedRoomType,
+                              roomSizes: _selectedRoomSize,
+                              availableFrom: _availableFromController.text,
+                              moveInDate: _moveInController.text,
+                              propertyImageURL: "",
+                              aboutProperty: _aboutPropertyController.text,
+                              bedroom: _selectedBedroom,
+                              bathroom: _selectedBathroom,
+                              kitchen: _selectedKitchen,
+                              furnishingOptions: _selectedFurnishing,
+                              propertyAmountWeek: _amountWeekController.text,
+                              propertyAmountMonth: _amountMonthController.text,
+                              tokenAmount: _tokenAmountController.text,
+                              stayDurations: _selectedMinStay,
+                              sexualOrientations: _selectedSexualOrientation,
+                              minimumStay: _selectedMinStay,
+                              maximumStay: _selectedMaxStay,
+                              ownerName: _ownerNameController.text,
+                              ownerPhone: _phoneController.text,
+                              ownershipProof: "",
+                              parking: _parkingAvailable ? "Yes" : "No",
+                              billStatus: _billsIncluded ? "Yes" : "No",
+                              pets: _petsAllowed ? "Yes" : "No",
+                              smoking: _smokingAllowed ? "Yes" : "No",
+                            );
+                            context
+                                .read<PropertyAuthBlock>()
+                                .add(Property_Add_Event(Property: property));
                           }
                         },
-
                         borderRadius: BorderRadius.circular(8),
-                        // Smooth border effect on tap
                         child: Container(
-                      padding: EdgeInsets.symmetric(vertical: 8, horizontal: 36),
-                  decoration: BoxDecoration(
-                    color: Colors.blue,
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                  child: state is PropertyaddSuccess
-                      ? Loading_Widget()
-                      : Text(
-                    "+Add",
-                    style: TextStyle(fontSize: 18, color: Colors.white, fontWeight: FontWeight.bold),
-                  ),
-                  // ), Container(
-                  //         padding: EdgeInsets.symmetric(
-                  //             vertical: 8, horizontal: 36),
-                  //         decoration: BoxDecoration(
-                  //           color: Colors.blue, // Blue background
-                  //           borderRadius:
-                  //           BorderRadius.circular(8), // Rounded corners
-                  //         ),
-                  //         child: PropertyAuthState is PropertyaddSuccess
-                  //             ? Loading_Widget()
-                  //             : Text(
-                  //           "+Add",
-                  //           style: TextStyle(
-                  //               fontSize: 18,
-                  //               color: Colors.white,
-                  //               fontWeight: FontWeight.bold),
-                  //         ),
-                  //       ),
-                        // child: Container(
-                        //   padding: EdgeInsets.symmetric(vertical: 8, horizontal: 36),
-                        //   decoration: BoxDecoration(
-                        //     color: Colors.blue, // Blue background
-                        //     borderRadius: BorderRadius.circular(8), // Rounded corners
-                        //   ),
-                        //   child: Text(
-                        //     "+Add",
-                        //     style: TextStyle(fontSize: 18, color: Colors.white, fontWeight: FontWeight.bold),
-                        //   ),
-                        // ),
-                      ),
+                          padding:
+                              EdgeInsets.symmetric(vertical: 8, horizontal: 36),
+                          decoration: BoxDecoration(
+                            color: Colors.blue,
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                          child: state is PropertyaddSuccess
+                              ? Loading_Widget()
+                              : Text(
+                                  "+Add",
+                                  style: TextStyle(
+                                      fontSize: 18,
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                        ),
                       ),
                     ],
                   ),
@@ -274,37 +251,41 @@ class _PropertyAddState extends State<PropertyAdd> {
 
             Row(
               children: [
-                Expanded(child: _buildTextField(
-                    "Property Name", _propertyNameController, true)),
+                Expanded(
+                    child: _buildTextField(
+                        "Property Name", _propertyNameController, true)),
                 SizedBox(width: 10),
-                Expanded(child: _buildTextField(
-                    "Address", _addressController, true)),
+                Expanded(
+                    child:
+                        _buildTextField("Address", _addressController, true)),
               ],
             ),
             SizedBox(height: 10),
-            _buildDropdown("Country",
+            _buildDropdown(
+                "Country",
                 ["India", "Canada", "United States", "United Kingdom"],
                 _selectedCountry, (value) {
-                  setState(() {
-                    _selectedCountry = value;
-                    _selectedState = null; // Reset state when country changes
-                  });
-                }, true),
+              setState(() {
+                _selectedCountry = value;
+                _selectedState = null; // Reset state when country changes
+              });
+            }, true),
             const SizedBox(height: 10),
 
             // State Dropdown
             if (_selectedCountry != null)
               _buildDropdown("State", _getStatesForCountry(_selectedCountry!),
                   _selectedState, (value) {
-                    setState(() {
-                      _selectedState = value;
-                    });
-                  }, true),
+                setState(() {
+                  _selectedState = value;
+                });
+              }, true),
             const SizedBox(height: 15),
             Row(
               children: [
-                Expanded(child: _buildTextField(
-                    "City", _selectedCityController, true)),
+                Expanded(
+                    child:
+                        _buildTextField("City", _selectedCityController, true)),
                 SizedBox(width: 10),
                 Expanded(child: _buildTextField("Area", _areaController, true)),
               ],
@@ -319,17 +300,21 @@ class _PropertyAddState extends State<PropertyAdd> {
 
             Row(
               children: [
-                Expanded(child: _buildDropdown(
-                    "Room Type", ["House", "Apartment", "Townhouse"],
-                    _selectedRoomType, (value) {
+                Expanded(
+                    child: _buildDropdown(
+                        "Room Type",
+                        ["House", "Apartment", "Townhouse"],
+                        _selectedRoomType, (value) {
                   setState(() {
                     _selectedRoomType = value;
                   });
                 }, true)),
                 SizedBox(width: 10),
-                Expanded(child: _buildDropdown(
-                    "Room Size", ['Small', 'Medium', 'Large'],
-                    _selectedRoomSize, (value) {
+                Expanded(
+                    child: _buildDropdown(
+                        "Room Size",
+                        ['Small', 'Medium', 'Large'],
+                        _selectedRoomSize, (value) {
                   setState(() {
                     _selectedRoomSize = value;
                   });
@@ -340,12 +325,12 @@ class _PropertyAddState extends State<PropertyAdd> {
             Row(
               children: [
                 Expanded(
-                  child: _buildDatePicker(
-                      "Available From", availableFrom, (date) {
+                  child:
+                      _buildDatePicker("Available From", availableFrom, (date) {
                     setState(() {
                       availableFrom = date;
-                      _availableFromController.text = "${date?.toLocal()}"
-                          .split(' ')[0];
+                      _availableFromController.text =
+                          "${date?.toLocal()}".split(' ')[0];
                     });
                   }, _availableFromController),
                 ),
@@ -354,8 +339,8 @@ class _PropertyAddState extends State<PropertyAdd> {
                   child: _buildDatePicker("Move-in Date", moveInDate, (date) {
                     setState(() {
                       moveInDate = date;
-                      _moveInController.text = "${date?.toLocal()}"
-                          .split(' ')[0];
+                      _moveInController.text =
+                          "${date?.toLocal()}".split(' ')[0];
                     });
                   }, _moveInController),
                 ),
@@ -371,8 +356,9 @@ class _PropertyAddState extends State<PropertyAdd> {
             SizedBox(height: 10),
             Row(
               children: [
-                Expanded(child: _buildTextField(
-                    "About Property", _aboutPropertyController, true)),
+                Expanded(
+                    child: _buildTextField(
+                        "About Property", _aboutPropertyController, true)),
               ],
             ),
 
@@ -383,42 +369,49 @@ class _PropertyAddState extends State<PropertyAdd> {
 
             Row(
               children: [
-                Expanded(child: _buildTextField(
-                    "Amount /Week", _amountWeekController, true)),
+                Expanded(
+                    child: _buildTextField(
+                        "Amount /Week", _amountWeekController, true)),
                 SizedBox(width: 10),
-                Expanded(child: _buildTextField(
-                    "Amount /Month", _amountMonthController, true)),
+                Expanded(
+                    child: _buildTextField(
+                        "Amount /Month", _amountMonthController, true)),
+              ],
+            ),
+            SizedBox(height: 5),
+            Row(
+              children: [
+                Expanded(
+                    child: _buildTextField(
+                        "Token Amount", _tokenAmountController, true)),
+                SizedBox(width: 10),
+                Expanded(
+                    child: _buildDropdown(
+                        "Sexual Orientation",
+                        ['Any', 'LGBTQ+ Friendly', 'Male Only', 'Female Only'],
+                        _selectedSexualOrientation, (value) {
+                  setState(() {
+                    _selectedSexualOrientation = value;
+                  });
+                }, true)),
               ],
             ),
             SizedBox(height: 10),
             Row(
               children: [
-                Expanded(child: _buildTextField(
-                    "Token Amount", _tokenAmountController, true)),
+                Expanded(
+                    child: _buildDropdown(
+                        "Minimum Stay",
+                        ['1', "2", "3", "4", "5", "6", "7", "8", "9", "10"],
+                        _selectedMinStay, (value) {
+                  setState(() {
+                    _selectedMinStay = value;
+                  });
+                }, true)),
                 SizedBox(width: 10),
-                Expanded(child: _buildDropdown("Sexual Orientation",
-                    ['Any', 'LGBTQ+ Friendly', 'Male Only', 'Female Only'],
-                    _selectedSexualOrientation, (value) {
-                      setState(() {
-                        _selectedSexualOrientation = value;
-                      });
-                    }, true)),
-              ],
-            ),
-            SizedBox(height: 10),
-            Row(
-              children: [
-                Expanded(child: _buildDropdown("Minimum Stay",
-                    ['1', "2", "3", "4", "5", "6", "7", "8", "9", "10"],
-                    _selectedMinStay, (value) {
-                      setState(() {
-                        _selectedMinStay = value;
-                      });
-                    }, true)),
-                SizedBox(width: 10),
-                Expanded(child: _buildDropdown(
-                    "Maximum Stay", [ "6", "7", "8", "9", "10"],
-                    _selectedMaxStay, (value) {
+                Expanded(
+                    child: _buildDropdown("Maximum Stay",
+                        ["6", "7", "8", "9", "10"], _selectedMaxStay, (value) {
                   setState(() {
                     _selectedMaxStay = value;
                   });
@@ -436,17 +429,21 @@ class _PropertyAddState extends State<PropertyAdd> {
             // First Row (Furnishing & Bedroom)
             Row(
               children: [
-                Expanded(child: _buildDropdown("Furnishing",
-                    ["Furnished", "Unfurnished", "Semi-furnished"],
-                    _selectedFurnishing, (value) {
-                      setState(() {
-                        _selectedFurnishing = value;
-                      });
-                    }, true)),
+                Expanded(
+                    child: _buildDropdown(
+                        "Furnishing",
+                        ["Furnished", "Unfurnished", "Semi-furnished"],
+                        _selectedFurnishing, (value) {
+                  setState(() {
+                    _selectedFurnishing = value;
+                  });
+                }, true)),
                 SizedBox(width: 10), // Adds spacing
-                Expanded(child: _buildDropdown(
-                    "Bedroom", ['1', '2', '3', '4', '5', '6 and above'],
-                    _selectedBedroom, (value) {
+                Expanded(
+                    child: _buildDropdown(
+                        "Bedroom",
+                        ['1', '2', '3', '4', '5', '6 and above'],
+                        _selectedBedroom, (value) {
                   setState(() {
                     _selectedBedroom = value;
                   });
@@ -459,17 +456,21 @@ class _PropertyAddState extends State<PropertyAdd> {
             // Second Row (Bathroom & Kitchen)
             Row(
               children: [
-                Expanded(child: _buildDropdown(
-                    "Bathroom", ['1', '2', '3', '4', '5', '6 and above'],
-                    _selectedBathroom, (value) {
+                Expanded(
+                    child: _buildDropdown(
+                        "Bathroom",
+                        ['1', '2', '3', '4', '5', '6 and above'],
+                        _selectedBathroom, (value) {
                   setState(() {
                     _selectedBathroom = value;
                   });
                 }, true)),
                 SizedBox(width: 10),
-                Expanded(child: _buildDropdown(
-                    "Kitchen", ['1', '2', '3', '4', '5', '6 and above'],
-                    _selectedKitchen, (value) {
+                Expanded(
+                    child: _buildDropdown(
+                        "Kitchen",
+                        ['1', '2', '3', '4', '5', '6 and above'],
+                        _selectedKitchen, (value) {
                   setState(() {
                     _selectedKitchen = value;
                   });
@@ -487,15 +488,17 @@ class _PropertyAddState extends State<PropertyAdd> {
             Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Expanded(child: _buildCheckbox(
-                    "Parking Available", _parkingAvailable, (value) {
+                Expanded(
+                    child: _buildCheckbox(
+                        "Parking Available", _parkingAvailable, (value) {
                   setState(() {
                     _parkingAvailable = value!;
                   });
                 }, required: true)),
                 SizedBox(width: 10), // Adds spacing
-                Expanded(child: _buildCheckbox(
-                    "Bills Included", _billsIncluded, (value) {
+                Expanded(
+                    child: _buildCheckbox("Bills Included", _billsIncluded,
+                        (value) {
                   setState(() {
                     _billsIncluded = value!;
                   });
@@ -509,15 +512,17 @@ class _PropertyAddState extends State<PropertyAdd> {
             Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Expanded(child: _buildCheckbox(
-                    "Pets Allowed", _petsAllowed, (value) {
+                Expanded(
+                    child:
+                        _buildCheckbox("Pets Allowed", _petsAllowed, (value) {
                   setState(() {
                     _petsAllowed = value!;
                   });
                 }, required: true)),
                 SizedBox(width: 10), // Adds spacing
-                Expanded(child: _buildCheckbox(
-                    "Smoking Allowed", _smokingAllowed, (value) {
+                Expanded(
+                    child: _buildCheckbox("Smoking Allowed", _smokingAllowed,
+                        (value) {
                   setState(() {
                     _smokingAllowed = value!;
                   });
@@ -535,11 +540,13 @@ class _PropertyAddState extends State<PropertyAdd> {
 
             Row(
               children: [
-                Expanded(child: _buildTextField(
-                    "Owner Name", _ownerNameController, true)),
+                Expanded(
+                    child: _buildTextField(
+                        "Owner Name", _ownerNameController, true)),
                 SizedBox(width: 10),
-                Expanded(child: _buildTextField(
-                    "Phone Number", _phoneController, true)),
+                Expanded(
+                    child: _buildTextField(
+                        "Phone Number", _phoneController, true)),
               ],
             ),
 
@@ -557,14 +564,14 @@ class _PropertyAddState extends State<PropertyAdd> {
     );
   }
 
-  Widget _buildTextField(String label, TextEditingController controller,
-      bool isRequired) {
+  Widget _buildTextField(
+      String label, TextEditingController controller, bool isRequired) {
     return Padding(
       padding: EdgeInsets.only(bottom: 15),
       child: TextFormField(
         controller: controller,
-        decoration: InputDecoration(
-            labelText: label, border: OutlineInputBorder()),
+        decoration:
+            InputDecoration(labelText: label, border: OutlineInputBorder()),
         validator: (value) {
           if (isRequired && (value == null || value.isEmpty)) {
             return "$label cannot be empty";
@@ -573,8 +580,10 @@ class _PropertyAddState extends State<PropertyAdd> {
               !RegExp(r'^\+?[0-9]{10,15}$').hasMatch(value!)) {
             return "Enter a valid phone number";
           }
-          if ((label == "Amount /Week" || label == "Amount /Month" ||
-              label == "Token Amount") && double.tryParse(value!) == null) {
+          if ((label == "Amount /Week" ||
+                  label == "Amount /Month" ||
+                  label == "Token Amount") &&
+              double.tryParse(value!) == null) {
             return "Enter a valid amount";
           }
           return null;
@@ -588,11 +597,12 @@ class _PropertyAddState extends State<PropertyAdd> {
     return Padding(
       padding: EdgeInsets.only(bottom: 15),
       child: DropdownButtonFormField<String>(
-        decoration: InputDecoration(
-            labelText: label, border: OutlineInputBorder()),
+        decoration:
+            InputDecoration(labelText: label, border: OutlineInputBorder()),
         value: selectedValue,
-        items: items.map((item) =>
-            DropdownMenuItem(value: item, child: Text(item))).toList(),
+        items: items
+            .map((item) => DropdownMenuItem(value: item, child: Text(item)))
+            .toList(),
         onChanged: onChanged,
         validator: (value) {
           if (isRequired && value == null) {
@@ -604,9 +614,8 @@ class _PropertyAddState extends State<PropertyAdd> {
     );
   }
 
-
   Widget _buildCheckbox(String label, bool value, Function(bool?) onChanged,
-      { bool required = true}) {
+      {bool required = true}) {
     return CheckboxListTile(
       title: Text(label),
       value: value,
@@ -614,17 +623,15 @@ class _PropertyAddState extends State<PropertyAdd> {
     );
   }
 
-
-
-  Widget _buildDatePicker(String label, DateTime? date, Function(DateTime) onDateSelected, TextEditingController controller) {
+  Widget _buildDatePicker(String label, DateTime? date,
+      Function(DateTime) onDateSelected, TextEditingController controller) {
     return Padding(
       padding: EdgeInsets.only(bottom: 15),
       child: TextFormField(
         controller: controller,
         readOnly: true,
         decoration: InputDecoration(
-          labelText: date == null ? label : "${date?.toLocal()}"
-              .split(' ')[0],
+          labelText: date == null ? label : "${date?.toLocal()}".split(' ')[0],
           border: OutlineInputBorder(),
           suffixIcon: IconButton(
             icon: Icon(Icons.calendar_today),
@@ -642,18 +649,18 @@ class _PropertyAddState extends State<PropertyAdd> {
   }
 }
 
-  Widget _buildSectionTitle(String title) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 8.0),
-      child: Text(
-        title,
-        style: TextStyle(
-          fontSize: 18,
-          fontWeight: FontWeight.bold,
-        ),
+Widget _buildSectionTitle(String title) {
+  return Padding(
+    padding: const EdgeInsets.symmetric(vertical: 8.0),
+    child: Text(
+      title,
+      style: TextStyle(
+        fontSize: 18,
+        fontWeight: FontWeight.bold,
       ),
-    );
-  }
+    ),
+  );
+}
 
 List<String> _getStatesForCountry(String country) {
   switch (country) {

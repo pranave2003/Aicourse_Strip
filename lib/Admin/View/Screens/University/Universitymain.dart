@@ -196,24 +196,7 @@ class _University_mainState extends State<University_main> {
                                         ),
                                       ),
                                     ),
-                                    // child: Image.network(
-                                    //                             student. UniversityimageURL.toString(),
-                                    //   width: 100, // Adjusted width
-                                    //   height: 160, // Adjusted height
-                                    //   fit: BoxFit.cover,
-                                    //   errorBuilder: (context, error, stackTrace) {
-                                    //     return Container(
-                                    //       width: 130,
-                                    //       height: 300,
-                                    //       color: Colors.grey[300], // Placeholder background
-                                    //       child: Icon(
-                                    //         Icons.image_not_supported,
-                                    //         size: 50,
-                                    //         color: Colors.grey[600],
-                                    //       ),
-                                    //     );
-                                    //   },
-                                    // ),
+
                                   ),
                                 ),
                                 ),
