@@ -1,4 +1,5 @@
 import 'package:course_connect/Controller/Bloc/Ai_coursefinder_block/coursefinder_block.dart';
+import 'package:course_connect/Controller/Bloc/Property/Property/Property_auth_block.dart';
 import 'package:course_connect/Controller/Bloc/University_block/university_bloc.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -36,6 +37,9 @@ class MyApp extends StatelessWidget {
         ),
         BlocProvider<UniversityBloc>(
           create: (context) => UniversityBloc(),
+        ),
+        BlocProvider<PropertyAuthBlock>(
+          create: (context) => PropertyAuthBlock(),
         ),
         BlocProvider(
           create: (context) => SelectionCubit(),

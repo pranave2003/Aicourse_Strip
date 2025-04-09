@@ -26,7 +26,7 @@ class _Bottom_nav2State extends State<Bottom_nav2> {
   int _currentIndex = 0; // Track the selected page
 
   final List<Widget> _pages = [
-    AccommodationDetailScreen(),
+    PropertyWrapper(),
     BookingStatus(),
     FeedbackScreen(),
     Profile(),
