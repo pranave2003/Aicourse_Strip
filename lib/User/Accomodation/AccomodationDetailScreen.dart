@@ -129,7 +129,7 @@ class _AccommodationDetailScreenState extends State<AccommodationDetailScreen> {
                             //         ));
                             //   },
                             //   child:
-                            Container(
+                         return   Container(
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(12),
                                 color: Colors.white,

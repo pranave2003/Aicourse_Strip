@@ -92,14 +92,13 @@ class PropertyAuthBlock extends Bloc<PropertyAuthEvent, PropertyAuthState> {
         }
       }
     });
+
     on<FetchProperty>((event, emit) async {
-
-
       print("fetch in progress");
       emit(PropertyLoading());
       try {
         CollectionReference Propertycollection =
-        FirebaseFirestore.instance.collection('Property');
+            FirebaseFirestore.instance.collection('Property');
 
         Query query = Propertycollection;
         QuerySnapshot snapshot = await query.get();
@@ -117,12 +116,13 @@ class PropertyAuthBlock extends Bloc<PropertyAuthEvent, PropertyAuthState> {
                 .contains(event.searchQuery!.toLowerCase());
           }).toList();
         }
-print(userss);
+        print(userss);
         emit(PropertyLoaded(userss));
       } catch (e) {
         emit(Propertyfailerror(e.toString()));
       }
     });
+
     on<DeleteProperty>(
       (event, emit) async {
         emit(Propertygetloading());
@@ -138,6 +138,7 @@ print(userss);
         }
       },
     );
+
     on<Property_Edit_Event>(
       (event, emit) async {
         emit(PropertyLoading());
