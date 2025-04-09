@@ -93,10 +93,13 @@ class PropertyAuthBlock extends Bloc<PropertyAuthEvent, PropertyAuthState> {
       }
     });
     on<FetchProperty>((event, emit) async {
+
+
+      print("fetch in progress");
       emit(PropertyLoading());
       try {
         CollectionReference Propertycollection =
-            FirebaseFirestore.instance.collection('Property');
+        FirebaseFirestore.instance.collection('Property');
 
         Query query = Propertycollection;
         QuerySnapshot snapshot = await query.get();
@@ -105,6 +108,8 @@ class PropertyAuthBlock extends Bloc<PropertyAuthEvent, PropertyAuthState> {
           return Property_Model.fromMap(doc.data() as Map<String, dynamic>);
         }).toList();
 
+        print("Fetched properties: ${userss.length}"); // Debugging line
+
         if (event.searchQuery != null && event.searchQuery!.isNotEmpty) {
           userss = userss.where((Property) {
             return Property.propertyName!
@@ -112,7 +117,7 @@ class PropertyAuthBlock extends Bloc<PropertyAuthEvent, PropertyAuthState> {
                 .contains(event.searchQuery!.toLowerCase());
           }).toList();
         }
-
+print(userss);
         emit(PropertyLoaded(userss));
       } catch (e) {
         emit(Propertyfailerror(e.toString()));
