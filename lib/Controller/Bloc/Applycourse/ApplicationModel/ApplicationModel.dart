@@ -9,11 +9,12 @@ class Applicationmodel {
   String? Degree_offered;
   String? Universityid;
   String? collagecode;
+  String?applicationid;
 
   String? uaser_uid;
   String? username;
   String? userphone;
-  String? gender;
+  String? Gender;
   String? userprofilephoto;
   String? userphone_number;
   String? useremail;
@@ -35,6 +36,7 @@ class Applicationmodel {
     required this.Degree_offered,
     required this.collagecode,
     required this.Universityid,
+    required this.applicationid,
     required this.uaser_uid,
     required this.username,
     required this.userphone,
@@ -43,6 +45,7 @@ class Applicationmodel {
     required this.userprofilephoto,
     required this.userphone_number,
     required this.useremail,
+    required this.Gender,
     required this.Education_doc_url,
     required this.Transcript_doc_Url,
     required this.Sop_doc_url,
@@ -56,6 +59,8 @@ class Applicationmodel {
         Coursename: data["Coursename"],
         status: data["status"],
         Ban: data["Ban"],
+        Gender: data["Gender"],
+        applicationid: data["applicationid"],
         Country: data["Country"],
         Degree_offered: data["Degree_offered"],
         collagecode: data["collagecode"],

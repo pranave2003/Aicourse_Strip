@@ -130,6 +130,7 @@ class _University_mainState extends State<University_main> {
                         minWidth: MediaQuery.of(context).size.width,
                       ),
                       child: DataTable(
+                        dataRowMaxHeight: 100,
                         headingRowColor: MaterialStateColor.resolveWith(
                             (states) => Colors.grey.shade300),
                         decoration: BoxDecoration(color: Colors.white),
@@ -146,12 +147,14 @@ class _University_mainState extends State<University_main> {
                           (index) {
                             final student = state.University[index];
                             return DataRow(
+
                               cells: [
                                 DataCell(Padding(
                                   padding: const EdgeInsets.symmetric(vertical: 10.0),
                                   child: Text(student.Collegename ?? '',
                                       style: TextStyle(
                                           fontWeight: FontWeight.bold)),
+
                                 )),
                                 DataCell(Padding(
                                   padding: const EdgeInsets.symmetric(vertical: 10.0),

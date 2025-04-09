@@ -32,6 +32,7 @@ class ApplicationBloc extends Bloc<ApplicationEvent, ApplicationState> {
             "Degree_offered": event.application.Degree_offered,
             "collagecode": event.application.collagecode,
             "uaser_uid": event.application.uaser_uid,
+            "Gender": event.application.Gender,
             "username": event.application.username,
             "userphone": event.application.userphone,
             "userstate": event.application.userstate,
@@ -78,6 +79,28 @@ class ApplicationBloc extends Bloc<ApplicationEvent, ApplicationState> {
         emit(Application_loaded(userss));
       } catch (e) {
         emit(Applicationfailerror(e.toString()));
+      }
+    });
+    on<FetchApplicationDetailsById>((event, emit) async {
+      emit(Applicationgetloading());
+
+      if (event.Application_id != null) {
+        print("fetch Application detaisl");
+        try {
+          final doc = await FirebaseFirestore.instance
+              .collection('Applications')
+              .doc(event.Application_id)
+              .get();
+
+          if (doc.exists) {
+            Applicationmodel userData = Applicationmodel.fromMap(doc.data()!);
+            emit(ApplicationLoaded(userData));
+          } else {
+            emit(Applicationfailerror("Application not found"));
+          }
+        } catch (e) {
+          emit(Applicationfailerror(e.toString()));
+        }
       }
     });
   }

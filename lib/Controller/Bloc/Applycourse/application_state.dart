@@ -30,3 +30,9 @@ class Application_loaded extends ApplicationState {
       );
 }
 
+final class Applicationgetloading extends ApplicationState {}
+
+final class ApplicationLoaded extends ApplicationState {
+  final Applicationmodel application;
+  ApplicationLoaded(this.application);
+}

@@ -7,6 +7,7 @@ class UserModel {
   String? status;
   String? Ban;
   String? Country;
+  String? Gender;
   String? state;
   String? City;
   String? Onesignal_id;
@@ -23,6 +24,7 @@ class UserModel {
       this.Ban,
       this.state,
       this.Country,
+      this.Gender,
       this.City,
       this.Onesignal_id,
       this.District,
@@ -37,6 +39,7 @@ class UserModel {
       phone: data['phone_number'],
       status: data['status'],
       Ban: data['ban'],
+      Gender: data['Gender'],
       Onesignal_id: data['image'],
       Country: data['Country'],
       state: data['state'],

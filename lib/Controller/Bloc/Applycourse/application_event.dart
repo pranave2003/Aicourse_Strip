@@ -19,3 +19,8 @@ class FetchApplication extends ApplicationEvent {
   final String? searchQuery;
   FetchApplication({required this.searchQuery});
 }
+
+class FetchApplicationDetailsById extends ApplicationEvent {
+  final String? Application_id;
+  FetchApplicationDetailsById({required this.Application_id});
+}

@@ -1,4 +1,5 @@
 
+import 'package:course_connect/Admin/View/Screens/ApplicationView/ApplicationOverall.dart';
 import 'package:course_connect/Controller/Bloc/Applycourse/application_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -125,9 +126,11 @@ class _ViewApplicationsState extends State<ViewApplications> {
                                 (states) => Colors.grey.shade300),
                         decoration: BoxDecoration(color: Colors.white),
                         columns: [
+                          _buildColumn('S/No'),
                           _buildColumn('Student'),
                           _buildColumn('Email '),
                           _buildColumn('Phone'),
+                          _buildColumn('College'),
                           _buildColumn('Course'),
                           _buildColumn('Status'),
                           _buildColumn('Action'),
@@ -138,6 +141,14 @@ class _ViewApplicationsState extends State<ViewApplications> {
                             final student = state.Application[index];
                             return DataRow(
                               cells: [
+                                DataCell(Padding(
+                                  padding:
+                                  const EdgeInsets.symmetric(vertical: 10.0),
+                                  child: Text((index + 1).toString(),
+                                      style: const TextStyle(
+                                          fontWeight:
+                                          FontWeight.bold)), // Add S/no cell
+                                )),
                                 DataCell(Padding(
                                   padding: const EdgeInsets.symmetric(
                                       vertical: 10.0),
@@ -165,6 +176,11 @@ class _ViewApplicationsState extends State<ViewApplications> {
                                 DataCell(Padding(
                                   padding: const EdgeInsets.symmetric(
                                       vertical: 0.0),
+                                  child: Text(student.Coursename ?? ''),
+                                )),
+                                DataCell(Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      vertical: 0.0),
                                   child: Text(student.status ?? ''),
                                 )),
                                 DataCell(Row(
@@ -174,16 +190,16 @@ class _ViewApplicationsState extends State<ViewApplications> {
                                           color: Colors.green),
                                       iconSize: 30.0,
                                       onPressed: () {
-                                        // Navigator.push(
-                                        //   context,
-                                        //   MaterialPageRoute(
-                                        //     builder: (context) =>
-                                        //         AdminInfoWrapper(
-                                        //           universityid:
-                                        //           student.Universityid ?? '',
-                                        //         ),
-                                        //   ),
-                                        // );
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) =>
+                                                AdminInfoWrapper2(
+                                                  applicationid:
+                                                  student.applicationid ?? '',
+                                                ),
+                                          ),
+                                        );
                                       },
                                     ),
                                     IconButton(

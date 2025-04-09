@@ -1,4 +1,5 @@
 import 'package:bloc/bloc.dart';
+import 'package:course_connect/Controller/Bloc/Applycourse/application_bloc.dart';
 import 'package:meta/meta.dart';
 
 part 'document_event.dart';
@@ -50,5 +51,6 @@ class DocumentBloc extends Bloc<DocumentEvent, DocumentState> {
         englishTestUrl: _englishTestUrl,
       ));
     });
+
   }
 }

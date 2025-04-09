@@ -152,6 +152,7 @@ class Document_upload extends StatelessWidget {
                                       username: userData.name,
                                       userphone: userData.phone,
                                       userstate: userData.state,
+                                          Gender: userData.Gender,
                                       usercountry: userData.Country,
                                       userprofilephoto: userData.image,
                                       userphone_number: userData.phone,
@@ -160,7 +161,7 @@ class Document_upload extends StatelessWidget {
                                       Education_doc_url: Education,
                                       Sop_doc_url: sopUrl,
                                       Transcript_doc_Url: transcriptUrl,
-                                      Travel_doc_url: TravelandEmigration,
+                                      Travel_doc_url: TravelandEmigration, applicationid: '',
                                     );
                                     context.read<ApplicationBloc>().add(
                                         Applicationaddevent(
