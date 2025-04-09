@@ -149,6 +149,8 @@ class ApplicationOverall extends StatelessWidget {
                     title: "Uploaded Documents",
                     children: [
                       DocumentItem(
+                        useemail: ApplicationState.useremail.toString(),
+
                         documentName: 'Transcript Document',
                         documentUrl:
                             ApplicationState.Transcript_doc_Url.toString(),
@@ -158,6 +160,7 @@ class ApplicationOverall extends StatelessWidget {
                             ApplicationState.applicationid.toString(),
                       ),
                       DocumentItem(
+                        useemail: ApplicationState.useremail.toString(),
                         documentName: 'SOP Document',
                         documentUrl: ApplicationState.Sop_doc_url.toString(),
                         icon: Icons.description_outlined,
@@ -166,6 +169,7 @@ class ApplicationOverall extends StatelessWidget {
                             ApplicationState.applicationid.toString(),
                       ),
                       DocumentItem(
+                        useemail: ApplicationState.useremail.toString(),
                         documentName: 'Education Document',
                         documentUrl:
                             ApplicationState.Education_doc_url.toString(),
@@ -175,6 +179,8 @@ class ApplicationOverall extends StatelessWidget {
                             ApplicationState.applicationid.toString(),
                       ),
                       DocumentItem(
+                        useemail: ApplicationState.useremail.toString(),
+
                         documentName: 'Travel Document',
                         documentUrl: ApplicationState.Travel_doc_url.toString(),
                         icon: Icons.description_outlined,
@@ -225,21 +231,7 @@ class ApplicationOverall extends StatelessWidget {
                                 borderRadius: BorderRadius.circular(10)),
                           ),
                         ),
-                        ElevatedButton.icon(
-                          onPressed: () {
-                            // Pending logic
-                          },
-                          icon: const Icon(Icons.hourglass_bottom),
-                          label: const Text("Pending"),
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.orange[600],
-                            foregroundColor: Colors.white,
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 24, vertical: 12),
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(10)),
-                          ),
-                        ),
+
                       ],
                     ),
                   ),
@@ -327,6 +319,7 @@ class DocumentItem extends StatelessWidget {
   final IconData icon;
   final String url;
   final String Application_ID;
+  final String useemail;
 
   const DocumentItem(
       {super.key,
@@ -334,17 +327,18 @@ class DocumentItem extends StatelessWidget {
       required this.icon,
       required this.url,
       required this.Application_ID,
+      required this.useemail,
       required String documentUrl});
 
   Widget build(BuildContext context) {
     return ListTile(
       contentPadding: EdgeInsets.zero,
-      leading: Icon(icon, color: url.isEmpty ? Colors.red : Colors.green),
+      leading: Icon(icon, color: url=="null" ? Colors.red : Colors.green),
       title: Text(
         documentName,
         style: const TextStyle(fontWeight: FontWeight.w500),
       ),
-      trailing: TextButton(
+      trailing:url=="null"?Text("optional"): TextButton(
         onPressed: () {
           showDialog(
             context: context,
@@ -370,7 +364,7 @@ class DocumentItem extends StatelessWidget {
                       backgroundColor: Colors.green, // Text color
                     ),
                     onPressed: () {
-                      if (Application_ID == keyController.text) {
+                      if (useemail == keyController.text) {
                         print("success");
 
                         context
