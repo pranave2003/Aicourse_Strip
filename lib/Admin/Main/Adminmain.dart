@@ -5,13 +5,8 @@ import 'package:course_connect/Controller/Bloc/University_block/university_bloc.
 import 'package:course_connect/Widget/Constands/colors.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:course_connect/Admin/View/Screens/Courses/Addcourses.dart';
-import 'package:course_connect/Admin/View/Screens/Courses/Courses.dart';
-import 'package:course_connect/Admin/View/Screens/Courses/Editcourses.dart';
-import 'package:course_connect/Admin/View/Screens/KnowledgeBank/CountryRules.dart';
 import 'package:course_connect/Admin/View/Screens/Landlord/New_Landlords.dart';
 import 'package:course_connect/Admin/View/Screens/University/AddUniversity.dart';
-import 'package:course_connect/Admin/View/Screens/University/EditUniversity.dart';
 import 'package:course_connect/Admin/View/Screens/University/Universitymain.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../Controller/Bloc/Landloard_auth/landloard_auth_bloc.dart';
@@ -44,8 +39,8 @@ class MyApp extends StatelessWidget {
         ),
         BlocProvider<UniversityBloc>(create: (context) => UniversityBloc()),
         BlocProvider<ApplicationBloc>(
-          create: (context) => ApplicationBloc()..add(FetchApplication(searchQuery: null)),
-          
+          create: (context) =>
+              ApplicationBloc()..add(FetchApplication(searchQuery: null)),
         ),
       ],
       child: MaterialApp(
@@ -121,8 +116,7 @@ class _AdminPageState extends State<AdminPage> {
                   title: 'Courses',
                   icon: Icons.school_outlined,
                   children: [
-                    _buildSubListTile(
-                        "View Courses", Universitymainwrapper()),
+                    _buildSubListTile("View Courses", Universitymainwrapper()),
                     _buildSubListTile("Add Courses", AddUniversity()),
                     // _buildSubListTile("Edit Courses", EditUniversity(universityname: '', universityid: '', Collegename: '', Collegecode: '',  highestEducationpercentage: '', establishedDate: '', admissionEndDate: '', Admission_startdate: '', Terms_and_conditions: '', scholarshipFee: '', courseFee: '', Discription: '', AcadamicTest: '', AcadamicTestPercentage: '', highestEducation: '', Englishtest: '', Englishtestpercentage: '', )),
                   ],
@@ -135,7 +129,8 @@ class _AdminPageState extends State<AdminPage> {
                     _buildSubListTile("New Landlords", Landlord()),
                   ],
                 ),
-                _buildMainListTile('Applications', Viewapplicationsmainwrapper(),
+                _buildMainListTile(
+                    'Applications', Viewapplicationsmainwrapper(),
                     icon: Icons.book_online),
                 _buildMainListTile('Houses', ViewHouses(),
                     icon: Icons.maps_home_work_outlined),

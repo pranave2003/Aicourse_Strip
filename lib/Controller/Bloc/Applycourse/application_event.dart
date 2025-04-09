@@ -24,3 +24,10 @@ class FetchApplicationDetailsById extends ApplicationEvent {
   final String? Application_id;
   FetchApplicationDetailsById({required this.Application_id});
 }
+
+
+
+class DownloadImageFromFirebase extends ApplicationEvent {
+  final String firebasePath; // Firebase Storage path, e.g. "images/sample.jpg"
+  DownloadImageFromFirebase(this.firebasePath);
+}

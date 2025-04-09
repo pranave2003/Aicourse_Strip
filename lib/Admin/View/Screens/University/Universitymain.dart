@@ -1,5 +1,3 @@
-
-
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:course_connect/Admin/View/Screens/University/EditUniversity.dart';
 import 'package:course_connect/Widget/Constands/Loading.dart';
@@ -130,13 +128,12 @@ class _University_mainState extends State<University_main> {
                         minWidth: MediaQuery.of(context).size.width,
                       ),
                       child: DataTable(
-                        dataRowMaxHeight: 100,
+                        dataRowHeight: 100,
                         headingRowColor: MaterialStateColor.resolveWith(
                             (states) => Colors.grey.shade300),
                         decoration: BoxDecoration(color: Colors.white),
                         columns: [
                           _buildColumn('College '),
-                          _buildColumn('University '),
                           _buildColumn('Country'),
                           _buildColumn('Image'),
                           _buildColumn('Course'),
@@ -147,61 +144,78 @@ class _University_mainState extends State<University_main> {
                           (index) {
                             final student = state.University[index];
                             return DataRow(
-
                               cells: [
-                                DataCell(Padding(
-                                  padding: const EdgeInsets.symmetric(vertical: 10.0),
-                                  child: Text(student.Collegename ?? '',
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.bold)),
-
+                                DataCell(Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          vertical: 10.0),
+                                      child: Text(student.Collegename ?? '',
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.bold)),
+                                    ),
+                                    Text(student.Universityname ?? '',
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.normal,
+                                            color: Colors.grey,
+                                            fontSize: 10))
+                                  ],
                                 )),
+                                // DataCell(Padding(
+                                //   padding: const EdgeInsets.symmetric(vertical: 10.0),
+                                //   child: Text(student.Universityname ?? '',
+                                //       style: TextStyle(
+                                //           fontWeight: FontWeight.bold)),
+                                // )),
                                 DataCell(Padding(
-                                  padding: const EdgeInsets.symmetric(vertical: 10.0),
-                                  child: Text(student.Universityname ?? '',
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.bold)),
-                                )),
-                                DataCell(Padding(
-                                  padding: const EdgeInsets.symmetric(vertical: 0.0),
+                                  padding:
+                                      const EdgeInsets.symmetric(vertical: 0.0),
                                   child: Text(student.Country ?? ''),
                                 )),
                                 // DataCell(Text(student. UniversityimageURL.toString())),
-                                DataCell(Padding(
-                                  padding: const EdgeInsets.symmetric(vertical: 10.0),
-                                  child: Container(
-                                    height:80,
-                                   child: ClipRRect(
-                                      borderRadius: BorderRadius.circular(
-                                          5), // Rounded corners for image
-                                      child: CachedNetworkImage(
-                                        imageUrl: student. UniversityimageURL.toString(),
-                                        width: 100, // Adjusted width
-                                        height: 50, // Adjusted height
-                                        fit: BoxFit.cover,
-                                        placeholder: (context, url) => Container(
-                                          width: 50,
-                                          height: 50,
-                                          color: Colors.grey[300], // Placeholder background
-                                          child: Center(
-                                            child: Loading_Widget(), // Loading indicator
+                                DataCell(
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        vertical: 10.0),
+                                    child: Container(
+                                      height: 80,
+                                      child: ClipRRect(
+                                        borderRadius: BorderRadius.circular(
+                                            5), // Rounded corners for image
+                                        child: CachedNetworkImage(
+                                          imageUrl: student.UniversityimageURL
+                                              .toString(),
+                                          width: 100, // Adjusted width
+                                          height: 50, // Adjusted height
+                                          fit: BoxFit.cover,
+                                          placeholder: (context, url) =>
+                                              Container(
+                                            width: 50,
+                                            height: 50,
+                                            color: Colors.grey[
+                                                300], // Placeholder background
+                                            child: Center(
+                                              child:
+                                                  Loading_Widget(), // Loading indicator
+                                            ),
                                           ),
-                                        ),
-                                        errorWidget: (context, url, error) => Container(
-                                          width: 50,
-                                          height: 50,
-                                          color: Colors.grey[300], // Placeholder background
-                                          child: Icon(
-                                            Icons.image_not_supported,
-                                            size: 50,
-                                            color: Colors.grey[600],
+                                          errorWidget: (context, url, error) =>
+                                              Container(
+                                            width: 50,
+                                            height: 50,
+                                            color: Colors.grey[
+                                                300], // Placeholder background
+                                            child: Icon(
+                                              Icons.image_not_supported,
+                                              size: 50,
+                                              color: Colors.grey[600],
+                                            ),
                                           ),
                                         ),
                                       ),
                                     ),
-
                                   ),
-                                ),
                                 ),
                                 DataCell(Text(student.Course_offered ?? '')),
                                 DataCell(Row(
@@ -263,15 +277,20 @@ class _University_mainState extends State<University_main> {
                                               scholarshipFee: student
                                                       .Schoolarship_details ??
                                                   '',
-                                                  AcadamicTestPercentage: student
+                                              AcadamicTestPercentage: student
                                                       .AcadamicTestPercentage ??
                                                   '',
                                               AcadamicTest:
                                                   student.AcadamicTest ?? '',
 
-                                              highestEducation: student.highestEducation ?? '',
-                                              Englishtest: student.Englishtest??'',
-                                              Englishtestpercentage:student.highestEducationpercentage?? '',
+                                              highestEducation:
+                                                  student.highestEducation ??
+                                                      '',
+                                              Englishtest:
+                                                  student.Englishtest ?? '',
+                                              Englishtestpercentage: student
+                                                      .highestEducationpercentage ??
+                                                  '',
                                               // AcademicTestPercentage:student.AcadamicTestPercentage??'',
                                               // AcadamicTest:student.AcadamicTest??'',
 

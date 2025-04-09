@@ -1,12 +1,17 @@
+import 'dart:io';
 import 'package:bloc/bloc.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:course_connect/Controller/Bloc/Applycourse/ApplicationModel/ApplicationModel.dart';
-
+import 'package:firebase_storage/firebase_storage.dart';
+import 'dart:html' as html; // Only fo
 import 'package:flutter/foundation.dart';
 import 'package:meta/meta.dart';
-
+import 'package:path/path.dart';
+import 'package:path_provider/path_provider.dart';
 part 'application_event.dart';
 part 'application_state.dart';
+
+
 
 class ApplicationBloc extends Bloc<ApplicationEvent, ApplicationState> {
   ApplicationBloc() : super(ApplicationInitial()) {
@@ -59,7 +64,7 @@ class ApplicationBloc extends Bloc<ApplicationEvent, ApplicationState> {
       emit(ApplicationLoading());
       try {
         CollectionReference Applicationcollection =
-        FirebaseFirestore.instance.collection('Applications');
+            FirebaseFirestore.instance.collection('Applications');
 
         Query query = Applicationcollection;
         QuerySnapshot snapshot = await query.get();
@@ -101,6 +106,41 @@ class ApplicationBloc extends Bloc<ApplicationEvent, ApplicationState> {
         } catch (e) {
           emit(Applicationfailerror(e.toString()));
         }
+      }
+    });
+
+    on<DownloadImageFromFirebase>((event, emit) async {
+      emit(ImageDownloading());
+
+      try {
+        final ref = FirebaseStorage.instance.ref(event.firebasePath);
+        final url = await ref.getDownloadURL();
+
+        if (kIsWeb) {
+          // Trigger browser download
+          final anchor = html.AnchorElement(href: url)
+            ..target = 'blank'
+            ..download = event.firebasePath.split('/').last
+            ..click();
+
+          emit(ImageDownloaded(url));
+        } else {
+          // mobile / desktop download (previous implementation)
+          final response = await HttpClient().getUrl(Uri.parse(url));
+          final imageData = await response.close();
+
+          final bytes = await consolidateHttpClientResponseBytes(imageData);
+
+          final dir = await getApplicationDocumentsDirectory();
+          final fileName = basename(event.firebasePath);
+          final file = File('${dir.path}/$fileName');
+
+          await file.writeAsBytes(bytes);
+
+          emit(ImageDownloaded(file.path));
+        }
+      } catch (e) {
+        emit(ImageDownloadError("Failed: ${e.toString()}"));
       }
     });
   }

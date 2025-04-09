@@ -1,4 +1,3 @@
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -8,8 +7,7 @@ import '../../../../Widget/Constands/Loading.dart';
 
 class AdminInfoWrapper2 extends StatelessWidget {
   const AdminInfoWrapper2({super.key, required this.applicationid});
-  final String applicationid;// Specify the type
-
+  final String applicationid; // Specify the type
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +19,6 @@ class AdminInfoWrapper2 extends StatelessWidget {
   }
 }
 
-
 class ApplicationOverall extends StatelessWidget {
   const ApplicationOverall({super.key});
 
@@ -32,7 +29,9 @@ class ApplicationOverall extends StatelessWidget {
       body: BlocConsumer<ApplicationBloc, ApplicationState>(
         listener: (context, state) {
           if (state is RefreshApplication) {
-            context.read<ApplicationBloc>().add(FetchApplication(searchQuery: null));
+            context
+                .read<ApplicationBloc>()
+                .add(FetchApplication(searchQuery: null));
           }
         },
         builder: (context, state) {
@@ -51,7 +50,8 @@ class ApplicationOverall extends StatelessWidget {
                     padding: EdgeInsets.only(left: 10),
                     child: Text(
                       "View Application Details",
-                      style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
+                      style:
+                          TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
                     ),
                   ),
                   const SizedBox(height: 20),
@@ -74,27 +74,42 @@ class ApplicationOverall extends StatelessWidget {
                               children: [
                                 CircleAvatar(
                                   radius: 40,
-                                  backgroundImage: NetworkImage(ApplicationState.userprofilephoto.toString()),
+                                  backgroundImage: NetworkImage(ApplicationState
+                                      .userprofilephoto
+                                      .toString()),
                                 ),
                                 const SizedBox(width: 20),
                                 Expanded(
                                   child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                     children: [
-                                      buildReadOnlyField("Name", ApplicationState.username.toString()),
+                                      buildReadOnlyField("Name",
+                                          ApplicationState.username.toString()),
                                       const SizedBox(height: 10),
-                                      buildReadOnlyField("Email", ApplicationState.useremail.toString()),
+                                      buildReadOnlyField(
+                                          "Email",
+                                          ApplicationState.useremail
+                                              .toString()),
                                       const SizedBox(height: 10),
-                                      buildReadOnlyField("Status", ApplicationState.status.toString()),
+                                      buildReadOnlyField("Status",
+                                          ApplicationState.status.toString()),
                                     ],
                                   ),
                                 ),
                               ],
                             ),
                             const SizedBox(height: 20),
-                            buildRowFields("Phone Number", ApplicationState.userphone.toString(),"Gender", ApplicationState.Gender.toString()),
-                            buildRowFields("Country", ApplicationState.usercountry.toString(),
-                                "State", ApplicationState.userstate.toString()),
+                            buildRowFields(
+                                "Phone Number",
+                                ApplicationState.userphone.toString(),
+                                "Gender",
+                                ApplicationState.Gender.toString()),
+                            buildRowFields(
+                                "Country",
+                                ApplicationState.usercountry.toString(),
+                                "State",
+                                ApplicationState.userstate.toString()),
                           ],
                         ),
                       ),
@@ -106,20 +121,28 @@ class ApplicationOverall extends StatelessWidget {
                         child: buildCard(
                           title: "Course & University Information",
                           children: [
-                            buildRowFields("Course Name", ApplicationState.Coursename.toString(),
-                                "University Name", ApplicationState.Universityname.toString()),
-                            buildRowFields("College Name", ApplicationState.collagename.toString(),
-                                "College Code", ApplicationState.collagecode.toString()),
-                            buildRowFields("Degree Offered", ApplicationState.Degree_offered.toString(), "", ""),
+                            buildRowFields(
+                                "Course Name",
+                                ApplicationState.Coursename.toString(),
+                                "University Name",
+                                ApplicationState.Universityname.toString()),
+                            buildRowFields(
+                                "College Name",
+                                ApplicationState.collagename.toString(),
+                                "College Code",
+                                ApplicationState.collagecode.toString()),
+                            buildRowFields(
+                                "Degree Offered",
+                                ApplicationState.Degree_offered.toString(),
+                                "",
+                                ""),
                           ],
                         ),
                       ),
                     ],
                   ),
 
-
                   const SizedBox(height: 20),
-
 
                   // Uploaded Documents
                   buildCard(
@@ -127,23 +150,37 @@ class ApplicationOverall extends StatelessWidget {
                     children: [
                       DocumentItem(
                         documentName: 'Transcript Document',
-                        documentUrl: ApplicationState.Transcript_doc_Url.toString(),
+                        documentUrl:
+                            ApplicationState.Transcript_doc_Url.toString(),
                         icon: Icons.description_outlined,
+                        url: ApplicationState.Transcript_doc_Url.toString(),
+                        Application_ID:
+                            ApplicationState.applicationid.toString(),
                       ),
                       DocumentItem(
                         documentName: 'SOP Document',
                         documentUrl: ApplicationState.Sop_doc_url.toString(),
                         icon: Icons.description_outlined,
+                        url: ApplicationState.Sop_doc_url.toString(),
+                        Application_ID:
+                            ApplicationState.applicationid.toString(),
                       ),
                       DocumentItem(
                         documentName: 'Education Document',
-                        documentUrl: ApplicationState.Education_doc_url.toString(),
+                        documentUrl:
+                            ApplicationState.Education_doc_url.toString(),
                         icon: Icons.description_outlined,
+                        url: ApplicationState.Education_doc_url.toString(),
+                        Application_ID:
+                            ApplicationState.applicationid.toString(),
                       ),
                       DocumentItem(
                         documentName: 'Travel Document',
                         documentUrl: ApplicationState.Travel_doc_url.toString(),
                         icon: Icons.description_outlined,
+                        url: ApplicationState.Travel_doc_url.toString(),
+                        Application_ID:
+                            ApplicationState.applicationid.toString(),
                       ),
                       // DocumentItem(documentName: 'Statement of Purpose', icon: Icons.article_outlined),
                       // DocumentItem(documentName: 'Transcript Document', icon: Icons.file_copy_outlined),
@@ -167,8 +204,10 @@ class ApplicationOverall extends StatelessWidget {
                           style: ElevatedButton.styleFrom(
                             backgroundColor: Colors.green[600],
                             foregroundColor: Colors.white,
-                            padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
-                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 24, vertical: 12),
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10)),
                           ),
                         ),
                         ElevatedButton.icon(
@@ -180,8 +219,10 @@ class ApplicationOverall extends StatelessWidget {
                           style: ElevatedButton.styleFrom(
                             backgroundColor: Colors.red[600],
                             foregroundColor: Colors.white,
-                            padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
-                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 24, vertical: 12),
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10)),
                           ),
                         ),
                         ElevatedButton.icon(
@@ -193,8 +234,10 @@ class ApplicationOverall extends StatelessWidget {
                           style: ElevatedButton.styleFrom(
                             backgroundColor: Colors.orange[600],
                             foregroundColor: Colors.white,
-                            padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
-                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 24, vertical: 12),
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10)),
                           ),
                         ),
                       ],
@@ -209,7 +252,6 @@ class ApplicationOverall extends StatelessWidget {
       ),
     );
   }
-
 
   Widget buildCard({required String title, required List<Widget> children}) {
     return Container(
@@ -232,7 +274,10 @@ class ApplicationOverall extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(title,
-              style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Color(0xff0A71CB))),
+              style: const TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                  color: Color(0xff0A71CB))),
           const SizedBox(height: 15),
           ...children,
         ],
@@ -240,14 +285,16 @@ class ApplicationOverall extends StatelessWidget {
     );
   }
 
-  Widget buildRowFields(String label1, String value1, String label2, String value2) {
+  Widget buildRowFields(
+      String label1, String value1, String label2, String value2) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 10),
       child: Row(
         children: [
           Expanded(child: buildReadOnlyField(label1, value1)),
           const SizedBox(width: 20),
-          if (label2.isNotEmpty) Expanded(child: buildReadOnlyField(label2, value2)),
+          if (label2.isNotEmpty)
+            Expanded(child: buildReadOnlyField(label2, value2)),
         ],
       ),
     );
@@ -257,12 +304,14 @@ class ApplicationOverall extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(label, style: const TextStyle(fontSize: 15, fontWeight: FontWeight.w600)),
+        Text(label,
+            style: const TextStyle(fontSize: 15, fontWeight: FontWeight.w600)),
         const SizedBox(height: 5),
         TextField(
           readOnly: true,
           decoration: InputDecoration(
-            contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 14),
+            contentPadding:
+                const EdgeInsets.symmetric(horizontal: 12, vertical: 14),
             border: OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
             hintText: value,
           ),
@@ -276,15 +325,21 @@ class ApplicationOverall extends StatelessWidget {
 class DocumentItem extends StatelessWidget {
   final String documentName;
   final IconData icon;
+  final String url;
+  final String Application_ID;
 
   const DocumentItem(
-      {super.key, required this.documentName, required this.icon, required String documentUrl});
-
+      {super.key,
+      required this.documentName,
+      required this.icon,
+      required this.url,
+      required this.Application_ID,
+      required String documentUrl});
 
   Widget build(BuildContext context) {
     return ListTile(
       contentPadding: EdgeInsets.zero,
-      leading: Icon(icon, color: Colors.black54),
+      leading: Icon(icon, color: url.isEmpty ? Colors.red : Colors.green),
       title: Text(
         documentName,
         style: const TextStyle(fontWeight: FontWeight.w500),
@@ -311,18 +366,24 @@ class DocumentItem extends StatelessWidget {
                 actions: [
                   TextButton(
                     style: TextButton.styleFrom(
-                      foregroundColor: Colors.white, backgroundColor: Colors.green, // Text color
+                      foregroundColor: Colors.white,
+                      backgroundColor: Colors.green, // Text color
                     ),
                     onPressed: () {
-                      String enteredKey = keyController.text;
-                      // TODO: Add your key validation or download logic here
+                      if (Application_ID == keyController.text) {
+                        print("success");
 
-                      Navigator.of(context).pop();
+                        context
+                            .read<ApplicationBloc>()
+                            .add(DownloadImageFromFirebase(url));
+                        // ScaffoldMessenger.of(context).showSnackBar(
+                        //   SnackBar(
+                        //       content: Text("Entered Key: $Application_ID")),
+                        // );
+                        Navigator.of(context).pop();
+                      }
 
                       // Example: show snackbar
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(content: Text("Entered Key: $enteredKey")),
-                      );
                     },
                     child: const Text("Submit"),
                   ),
