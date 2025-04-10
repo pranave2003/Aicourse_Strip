@@ -150,7 +150,6 @@ class ApplicationOverall extends StatelessWidget {
                     children: [
                       DocumentItem(
                         useemail: ApplicationState.useremail.toString(),
-
                         documentName: 'Transcript Document',
                         documentUrl:
                             ApplicationState.Transcript_doc_Url.toString(),
@@ -180,7 +179,6 @@ class ApplicationOverall extends StatelessWidget {
                       ),
                       DocumentItem(
                         useemail: ApplicationState.useremail.toString(),
-
                         documentName: 'Travel Document',
                         documentUrl: ApplicationState.Travel_doc_url.toString(),
                         icon: Icons.description_outlined,
@@ -203,6 +201,12 @@ class ApplicationOverall extends StatelessWidget {
                       children: [
                         ElevatedButton.icon(
                           onPressed: () {
+                            context.read<ApplicationBloc>().add(
+                                AcceptOrRejectApplication(
+                                    applicationid:
+                                        ApplicationState.applicationid,
+                                    Status: "1"));
+
                             // Approve logic
                           },
                           icon: const Icon(Icons.check_circle_outline),
@@ -217,8 +221,13 @@ class ApplicationOverall extends StatelessWidget {
                           ),
                         ),
                         ElevatedButton.icon(
+
                           onPressed: () {
-                            // Reject logic
+                            context.read<ApplicationBloc>().add(
+                                AcceptOrRejectApplication(
+                                    applicationid:
+                                        ApplicationState.applicationid,
+                                    Status: "2"));
                           },
                           icon: const Icon(Icons.cancel_outlined),
                           label: const Text("Reject"),
@@ -231,7 +240,6 @@ class ApplicationOverall extends StatelessWidget {
                                 borderRadius: BorderRadius.circular(10)),
                           ),
                         ),
-
                       ],
                     ),
                   ),
@@ -333,64 +341,67 @@ class DocumentItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListTile(
       contentPadding: EdgeInsets.zero,
-      leading: Icon(icon, color: url=="null" ? Colors.red : Colors.green),
+      leading: Icon(icon, color: url == "null" ? Colors.red : Colors.green),
       title: Text(
         documentName,
         style: const TextStyle(fontWeight: FontWeight.w500),
       ),
-      trailing:url=="null"?Text("optional"): TextButton(
-        onPressed: () {
-          showDialog(
-            context: context,
-            builder: (BuildContext context) {
-              TextEditingController keyController = TextEditingController();
+      trailing: url == "null"
+          ? Text("optional")
+          : TextButton(
+              onPressed: () {
+                showDialog(
+                  context: context,
+                  builder: (BuildContext context) {
+                    TextEditingController keyController =
+                        TextEditingController();
 
-              return AlertDialog(
-                title: const Text("Enter Key"),
-                content: Padding(
-                  padding: const EdgeInsets.only(top: 8.0),
-                  child: TextFormField(
-                    controller: keyController,
-                    decoration: InputDecoration(
-                      hintText: "Enter key",
-                      border: OutlineInputBorder(),
-                    ),
-                  ),
-                ),
-                actions: [
-                  TextButton(
-                    style: TextButton.styleFrom(
-                      foregroundColor: Colors.white,
-                      backgroundColor: Colors.green, // Text color
-                    ),
-                    onPressed: () {
-                      if (useemail == keyController.text) {
-                        print("success");
+                    return AlertDialog(
+                      title: const Text("Enter Key"),
+                      content: Padding(
+                        padding: const EdgeInsets.only(top: 8.0),
+                        child: TextFormField(
+                          controller: keyController,
+                          decoration: InputDecoration(
+                            hintText: "Enter key",
+                            border: OutlineInputBorder(),
+                          ),
+                        ),
+                      ),
+                      actions: [
+                        TextButton(
+                          style: TextButton.styleFrom(
+                            foregroundColor: Colors.white,
+                            backgroundColor: Colors.green, // Text color
+                          ),
+                          onPressed: () {
+                            if (useemail == keyController.text) {
+                              print("success");
 
-                        context
-                            .read<ApplicationBloc>()
-                            .add(DownloadImageFromFirebase(url));
-                        // ScaffoldMessenger.of(context).showSnackBar(
-                        //   SnackBar(
-                        //       content: Text("Entered Key: $Application_ID")),
-                        // );
-                        Navigator.of(context).pop();
-                      }
+                              context
+                                  .read<ApplicationBloc>()
+                                  .add(DownloadImageFromFirebase(url));
+                              // ScaffoldMessenger.of(context).showSnackBar(
+                              //   SnackBar(
+                              //       content: Text("Entered Key: $Application_ID")),
+                              // );
+                              Navigator.of(context).pop();
+                            }
 
-                      // Example: show snackbar
-                    },
-                    child: const Text("Submit"),
-                  ),
-                ],
-              );
-            },
-          );
-        },
-        child: const Text(
-          'Download',
-          style: TextStyle(color: Colors.blue),
-        ),
-      ),
+                            // Example: show snackbar
+                          },
+                          child: const Text("Submit"),
+                        ),
+                      ],
+                    );
+                  },
+                );
+              },
+              child: const Text(
+                'Download',
+                style: TextStyle(color: Colors.blue),
+              ),
+            ),
     );
   }
 }

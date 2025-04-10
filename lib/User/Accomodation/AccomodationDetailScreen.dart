@@ -4,6 +4,7 @@ import 'package:course_connect/Controller/Bloc/Property/Property/Property_auth_s
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../Widget/Constands/Loading.dart';
+import 'PropertyDetailsPage.dart';
 
 class PropertyWrapper extends StatelessWidget {
   const PropertyWrapper({super.key});
@@ -88,14 +89,17 @@ class _AccommodationDetailScreenState extends State<AccommodationDetailScreen> {
                         return Text(state.error.toString());
                       } else if (state is PropertyLoaded) {
                         if (state.Property.isEmpty) {
-                          // Return "No data found" if txhe list is empty
+                          // Return "No data found" if tx he list is empty
                           return Center(
                             child: Text(
                               "No property is available for the given name.",
+
                               style: TextStyle(
                                   fontSize: 16,
                                   fontWeight: FontWeight.bold,
-                                  color: Colors.grey),
+                                  color: Colors.grey,
+
+                              ),
                             ),
                           );
                         }
@@ -117,19 +121,19 @@ class _AccommodationDetailScreenState extends State<AccommodationDetailScreen> {
                           itemBuilder: (context, index) {
                             final property = state.Property[index];
 
-                            // return InkWell(
-                            //   onTap: () {
-                            //     Navigator.push(context,
-                            //         MaterialPageRoute(
-                            //           builder: (context) {
-                            //             return Collages_Wrapper(
-                            //                 university: university
-                            //                     .Universityname);
-                            //           },
-                            //         ));
-                            //   },
-                            //   child:
-                         return   Container(
+                            return InkWell(
+                              onTap: () {
+                                Navigator.push(context,
+                                    MaterialPageRoute(
+                                      builder: (context) {
+                                        return PropertyInfoScreenWrapper( propertyId:property
+                                            .propertyName,
+                                            );
+                                      },
+                                    ));
+                              },
+                              child:
+                          Container(
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(12),
                                 color: Colors.white,
@@ -196,6 +200,7 @@ class _AccommodationDetailScreenState extends State<AccommodationDetailScreen> {
                                       )),
                                 ],
                               ),
+                            ),
                             );
                           },
                         );

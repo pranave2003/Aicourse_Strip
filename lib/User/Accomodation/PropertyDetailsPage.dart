@@ -3,9 +3,28 @@
 
 
 import 'dart:async';
+import 'package:course_connect/Controller/Bloc/Property/Property/Property_auth_block.dart';
+import 'package:course_connect/Controller/Bloc/Property/Property/Property_auth_state.dart';
 import 'package:course_connect/User/Accomodation/BookingFormPage.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../Widget/Constands/Loading.dart';
+class PropertyInfoScreenWrapper extends StatelessWidget {
+  const PropertyInfoScreenWrapper(
+      {super.key, required this.propertyId, this.availableFrom});
+  final propertyId;
+  final availableFrom;
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocProvider<PropertyAuthBlock>(
+      create: (context) => PropertyAuthBlock()
+        ..add(FetchPropertyDetailsById(Property_id: propertyId)),
+      child: PropertyDetailsPage(),
+    );
+  }
+}
 class PropertyDetailsPage extends StatefulWidget {
   const PropertyDetailsPage({super.key});
 
@@ -45,260 +64,288 @@ class _PropertyDetailsPageState extends State<PropertyDetailsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        elevation: 0,
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: Colors.black),
-          onPressed: () {
-            Navigator.pop(context);
-          },
+        appBar: AppBar(
+          elevation: 0,
+          leading: IconButton(
+            icon: const Icon(Icons.arrow_back, color: Colors.black),
+            onPressed: () {
+              Navigator.pop(context);
+            },
+          ),
         ),
-      ),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              SizedBox(
-                height: 250,
-                child: Stack(
-                  alignment: Alignment.bottomCenter,
-                  children: [
-                    PageView.builder(
-                      controller: _pageController,
-                      onPageChanged: (index) {
-                        setState(() {
-                          _currentIndex = index;
-                        });
-                      },
-                      itemCount: imageUrls.length,
-                      itemBuilder: (context, index) {
-                        return ClipRRect(
-                          borderRadius: BorderRadius.circular(20),
-                          child: Image.network(
-                            imageUrls[index],
-                            width: double.infinity,
-                            height: 250,
-                            fit: BoxFit.cover,
-                          ),
-                        );
-                      },
-                    ),
-                    Positioned(
-                      bottom: 10,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: List.generate(imageUrls.length, (index) {
-                          return Container(
-                            margin: const EdgeInsets.symmetric(horizontal: 4.0),
-                            width: _currentIndex == index ? 12 : 8,
-                            height: _currentIndex == index ? 12 : 8,
-                            decoration: BoxDecoration(
-                              color: _currentIndex == index ? Colors.blue : Colors.grey,
-                              shape: BoxShape.circle,
-                            ),
-                          );
-                        }),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-          SizedBox(height:20),
-          Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      const Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            "Portchester House",
-                            style: TextStyle(
-                                fontSize: 20, fontWeight: FontWeight.bold),
-                          ),
-                          SizedBox(height: 4),
-                          Row(
+        body: BlocConsumer<PropertyAuthBlock, PropertyAuthState>(
+            listener: (context, state) {},
+            builder: (context, state) {
+              if (state is Propertygetloading) {
+                return Loading_Widget();
+              }
+              if (state is PropertyLoaded) {
+                final property = state.Property;
+                return SingleChildScrollView(
+
+                  child: Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        SizedBox(
+                          height: 250,
+                          child: Stack(
+                            alignment: Alignment.bottomCenter,
                             children: [
-                              Icon(Icons.location_on,
-                                  color: Colors.green, size: 18),
-                              SizedBox(width: 4),
-                              Text(
-                                "25 Sussex Street, May Mews, Leeds, UK",
-                                style:
-                                    TextStyle(fontSize: 14, color: Colors.grey),
+                              PageView.builder(
+                                controller: _pageController,
+                                onPageChanged: (index) {
+                                  setState(() {
+                                    _currentIndex = index;
+                                  });
+                                },
+                                itemCount: imageUrls.length,
+                                itemBuilder: (context, index) {
+                                  return ClipRRect(
+                                    borderRadius: BorderRadius.circular(20),
+                                    child: Image.network(
+                                      imageUrls[index],
+                                      width: double.infinity,
+                                      height: 250,
+                                      fit: BoxFit.cover,
+                                    ),
+                                  );
+                                },
+                              ),
+                              Positioned(
+                                bottom: 10,
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: List.generate(
+                                      imageUrls.length, (index) {
+                                    return Container(
+                                      margin: const EdgeInsets.symmetric(
+                                          horizontal: 4.0),
+                                      width: _currentIndex == index ? 12 : 8,
+                                      height: _currentIndex == index ? 12 : 8,
+                                      decoration: BoxDecoration(
+                                        color: _currentIndex == index ? Colors
+                                            .blue : Colors.grey,
+                                        shape: BoxShape.circle,
+                                      ),
+                                    );
+                                  }),
+                                ),
                               ),
                             ],
                           ),
-                        ],
-                      ),
-                      Text(
-                        "£350/week",
-                        textAlign: TextAlign.right,
-                        style: TextStyle(
-                            fontSize: 10,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.black),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 12),
+                        ),
+                        SizedBox(height: 20),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            const Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  "Portchester House",
+                                  style: TextStyle(
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                                SizedBox(height: 4),
+                                Row(
+                                  children: [
+                                    Icon(Icons.location_on,
+                                        color: Colors.green, size: 18),
+                                    SizedBox(width: 4),
+                                    Text(
+                                      "25 Sussex Street, May Mews, Leeds, UK",
+                                      style:
+                                      TextStyle(
+                                          fontSize: 14, color: Colors.grey),
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
+                            Text(
+                              "£350/week",
+                              textAlign: TextAlign.right,
+                              style: TextStyle(
+                                  fontSize: 10,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.black),
+                            ),
+                          ],
+                        ),
+                        const SizedBox(height: 12),
 
-                  // Features (3 bedroom, smoking, pets)
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: featureList
-                        .map((feature) => _buildFeatureChip(feature))
-                        .toList(),
-                  ),
-                  const SizedBox(height: 16),
+                        // Features (3 bedroom, smoking, pets)
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: featureList
+                              .map((feature) => _buildFeatureChip(feature))
+                              .toList(),
+                        ),
+                        const SizedBox(height: 16),
 
-                  // Property Information
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      const Text(
-                        "Property Information",
-                        style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                      ),
-                    ],
-                  ),
+                        // Property Information
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            const Text(
+                              "Property Information",
+                              style: TextStyle(fontSize: 18,
+                                  fontWeight: FontWeight.bold),
+                            ),
+                          ],
+                        ),
 
-                  const SizedBox(height: 8),
-                  Text(
-                    "Located in the heart of Boston’s vibrant community, 1027 Commonwealth Avenue offers premium accommodations designed for students and modern lifestyles...",
-                    style: TextStyle(fontSize: 14, color: Colors.grey[700]),
-                  ),
-                  const SizedBox(height: 16),
+                        const SizedBox(height: 8),
+                        Text(
+                          "Located in the heart of Boston’s vibrant community, 1027 Commonwealth Avenue offers premium accommodations designed for students and modern lifestyles...",
+                          style: TextStyle(
+                              fontSize: 14, color: Colors.grey[700]),
+                        ),
+                        const SizedBox(height: 16),
 
-                  // Amenities Section
-                  SingleChildScrollView(
-                    // scrollDirection: Axis.horizontal,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        const Text(
-                          "Amenities",
-                          style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                        // Amenities Section
+                        SingleChildScrollView(
+                          // scrollDirection: Axis.horizontal,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              const Text(
+                                "Amenities",
+                                style: TextStyle(
+                                    fontSize: 18, fontWeight: FontWeight.bold),
+                              ),
+                            ],
+                          ),
+                        ),
+                        const SizedBox(height: 20),
+
+                        GridView(
+
+                          physics: NeverScrollableScrollPhysics(),
+                          shrinkWrap: true,
+                          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                              crossAxisCount: 3),
+
+                          children: serviceList.map((service) =>
+                              _buildInfoCard(service)).toList(),
+                        ),
+
+                        // const SizedBox(height: 8),
+                        // GridView.count(
+                        //   shrinkWrap: true,
+                        //   crossAxisCount: 3,
+                        //   childAspectRatio: 2,
+                        //   physics: const NeverScrollableScrollPhysics(),
+                        //   children: serviceList
+                        //       .map((amenity) => _buildAmenityTile(amenity))
+                        //       .toList(),
+                        // ),
+                        const SizedBox(height: 16),
+
+                        Row(
+                          children: [
+                            const Text(
+                              "Rent and Payment Details",
+                              style: TextStyle(fontSize: 18,
+                                  fontWeight: FontWeight.bold),
+                            ),
+                          ],
+                        ), // Rent and Payment Details
+
+                        const SizedBox(height: 8),
+                        _buildDetailText("Amount per Week", "£350"),
+                        _buildDetailText("Amount per Month", "£1500"),
+                        _buildDetailText("Token Amount", "£300 (2 weeks rent)"),
+                        _buildDetailText("Minimum Stay", "3 months"),
+                        _buildDetailText("Maximum Stay", "12 months"),
+                        const SizedBox(height: 16),
+
+                        // Additional Details
+                        Row(
+                          children: [
+                            const Text(
+                              "Additional Details",
+                              style: TextStyle(fontSize: 18,
+                                  fontWeight: FontWeight.bold),
+                            ),
+                          ],
+                        ),
+
+                        const SizedBox(height: 8),
+                        _buildDetailText("LGBTQ+ Friendly", "Yes"),
+                        _buildDetailText(
+                            "Bills Included",
+                            "Yes (Electricity, Wi-Fi, Hosting)"),
+                        _buildDetailText("Bonus Ticket", "10ft x 10ft Storage"),
+                        _buildDetailText("Available From", "April 1, 2025"),
+                        _buildDetailText("Move-in Date", "Flexible"),
+                        const SizedBox(height: 16),
+
+                        // Owner Details
+                        Row(
+                          children: [
+                            const Text(
+                              "Owner Details",
+                              style: TextStyle(fontSize: 18,
+                                  fontWeight: FontWeight.bold),
+                            ),
+                          ],
+                        ),
+
+
+                        const SizedBox(height: 8),
+                        _buildDetailText("Owner Name", "Mr. David Thompson"),
+                        _buildDetailText("Phone Number", "+44 7911 123456"),
+                        _buildDetailText(
+                            "Ownership Proof", "Title Deed (Verified)"),
+                        const SizedBox(height: 20),
+
+                        // Enquire Now Button
+                        SizedBox(
+                          width: double.infinity,
+                          child: InkWell(
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => BookingFormPage(),
+                                ),
+                              );
+                            },
+
+                            child: Container(
+                              height: 51,
+                              width: 231,
+                              decoration: BoxDecoration(
+                                color: Color(0xff0A71CB),
+                                borderRadius: BorderRadius.circular(30),
+                              ),
+                              child: const Center(
+                                child: Text(
+                                  "Enquire Now",
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 22,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+
                         ),
                       ],
                     ),
-                  ),
-                  const SizedBox(height: 20),
-
-                  GridView(
-
-                  physics: NeverScrollableScrollPhysics(),
-                    shrinkWrap: true,
-                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 3),
-
-                    children: serviceList.map((service) => _buildInfoCard(service)).toList(),
-                  ),
-
-                  // const SizedBox(height: 8),
-                  // GridView.count(
-                  //   shrinkWrap: true,
-                  //   crossAxisCount: 3,
-                  //   childAspectRatio: 2,
-                  //   physics: const NeverScrollableScrollPhysics(),
-                  //   children: serviceList
-                  //       .map((amenity) => _buildAmenityTile(amenity))
-                  //       .toList(),
-                  // ),
-                  const SizedBox(height: 16),
-
-                  Row(
-                    children: [
-                      const Text(
-                        "Rent and Payment Details",
-                        style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                      ),
-                    ],
-                  ),// Rent and Payment Details
-
-                  const SizedBox(height: 8),
-                  _buildDetailText("Amount per Week", "£350"),
-                  _buildDetailText("Amount per Month", "£1500"),
-                  _buildDetailText("Token Amount", "£300 (2 weeks rent)"),
-                  _buildDetailText("Minimum Stay", "3 months"),
-                  _buildDetailText("Maximum Stay", "12 months"),
-                  const SizedBox(height: 16),
-
-                  // Additional Details
-                  Row(
-                    children: [
-                      const Text(
-                        "Additional Details",
-                        style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                      ),
-                    ],
-                  ),
-
-                  const SizedBox(height: 8),
-                  _buildDetailText("LGBTQ+ Friendly", "Yes"),
-                  _buildDetailText(
-                      "Bills Included", "Yes (Electricity, Wi-Fi, Hosting)"),
-                  _buildDetailText("Bonus Ticket", "10ft x 10ft Storage"),
-                  _buildDetailText("Available From", "April 1, 2025"),
-                  _buildDetailText("Move-in Date", "Flexible"),
-                  const SizedBox(height: 16),
-
-                  // Owner Details
-                  Row(
-                     children: [
-                       const Text(
-                         "Owner Details",
-                         style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                       ),
-                     ],
-                  ),
-
-
-              const SizedBox(height: 8),
-                  _buildDetailText("Owner Name", "Mr. David Thompson"),
-                  _buildDetailText("Phone Number", "+44 7911 123456"),
-                  _buildDetailText("Ownership Proof", "Title Deed (Verified)"),
-                  const SizedBox(height: 20),
-
-                  // Enquire Now Button
-                  SizedBox(
-                    width: double.infinity,
-                    child:InkWell(
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => BookingFormPage(),
-                          ),
-                        );
-                      },
-
-                      child: Container(
-                        height: 51,
-                        width: 231,
-                        decoration: BoxDecoration(
-                          color: Color(0xff0A71CB),
-                          borderRadius: BorderRadius.circular(30),
-                        ),
-                        child: const Center(
-                          child: Text(
-                            "Enquire Now",
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 22,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
 
                   ),
-                ],
-              ),
-
-          ),
-    )
+                );
+              }
+              return SizedBox();
+  },
+)
     );
   }
 
@@ -362,7 +409,7 @@ class _PropertyDetailsPageState extends State<PropertyDetailsPage> {
           children: [
             Text(title,
                 style:
-                    const TextStyle(fontSize: 14, fontWeight: FontWeight.w500)),
+                const TextStyle(fontSize: 14, fontWeight: FontWeight.w500)),
             Text(value, style: TextStyle(fontSize: 14, color: Colors.grey[700])),
           ],
         ),
@@ -430,5 +477,4 @@ List<Map<String, dynamic>> serviceList  = [
   {"icon": Icons.bathtub, "name": "Two Bathrooms"},
   {"icon": Icons.kitchen, "name": "Private Kitchen"},
 ];
-
 
