@@ -1,8 +1,11 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:carousel_slider/carousel_slider.dart';
+import 'package:course_connect/Controller/Bloc/Property/Property/Property_Auth/Property_Model/PropertyModel.dart';
 import 'package:course_connect/Controller/Bloc/Property/Property/Property_auth_block.dart';
 import 'package:course_connect/Controller/Bloc/Property/Property/Property_auth_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import '../../Landlord/Views/Screens/Property/Property.dart';
 import '../../Widget/Constands/Loading.dart';
 import 'PropertyDetailsPage.dart';
 
@@ -12,10 +15,7 @@ class PropertyWrapper extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider<PropertyAuthBlock>(
-      create: (context) => PropertyAuthBlock()
-        ..add(FetchProperty(
-          searchQuery: null,
-        )),
+      create: (context) => PropertyAuthBlock()..add(FetchProperty(searchQuery: null)),
       child: AccommodationDetailScreen(),
     );
   }
@@ -23,9 +23,9 @@ class PropertyWrapper extends StatelessWidget {
 
 class AccommodationDetailScreen extends StatefulWidget {
   const AccommodationDetailScreen({super.key});
+
   @override
-  State<AccommodationDetailScreen> createState() =>
-      _AccommodationDetailScreenState();
+  State<AccommodationDetailScreen> createState() => _AccommodationDetailScreenState();
 }
 
 class _AccommodationDetailScreenState extends State<AccommodationDetailScreen> {
@@ -69,147 +69,43 @@ class _AccommodationDetailScreenState extends State<AccommodationDetailScreen> {
             Text(
               "Student housing near Yale University",
               style: TextStyle(
-                  color: Colors.black,
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold),
+                color: Colors.black,
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+              ),
             ),
-            Row(
-              children: [
-                Expanded(
-                  child: BlocConsumer<PropertyAuthBlock, PropertyAuthState>(
-                    listener: (context, state) {
-                      // TODO: implement listener
-                    },
-                    builder: (context, state) {
-                      if (state is PropertyLoading) {
-                        return Center(
-                          child: Loading_Widget(),
-                        );
-                      } else if (state is Propertyfailerror) {
-                        return Text(state.error.toString());
-                      } else if (state is PropertyLoaded) {
-                        if (state.Property.isEmpty) {
-                          // Return "No data found" if tx he list is empty
-                          return Center(
-                            child: Text(
-                              "No property is available for the given name.",
+            SizedBox(height: 10),
+            BlocConsumer<PropertyAuthBlock, PropertyAuthState>(
+              listener: (context, state) {},
+              builder: (context, state) {
+                if (state is PropertyLoading) {
+                  return Center(child: Loading_Widget());
+                } else if (state is Propertyfailerror) {
+                  return Text(state.error.toString());
+                } else if (state is PropertyLoaded) {
+                  if (state.Property.isEmpty) {
+                    return Center(
+                      child: Text(
+                        "No property is available for the given name.",
+                        style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.grey),
+                      ),
+                    );
+                  }
 
-                              style: TextStyle(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.grey,
-
-                              ),
-                            ),
-                          );
-                        }
-                        return GridView.builder(
-                          physics:
-                              NeverScrollableScrollPhysics(), // Prevents extra scrolling
-                          shrinkWrap: true,
-                          padding:
-                              EdgeInsets.symmetric(horizontal: 5, vertical: 10),
-                          gridDelegate:
-                              SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 2, // Two columns
-                            crossAxisSpacing: 10, // Space between columns
-                            mainAxisSpacing: 10, // Space between rows
-                            childAspectRatio:
-                                0.75, // Adjusted for better image fit
-                          ),
-                          itemCount: state.Property.length,
-                          itemBuilder: (context, index) {
-                            final property = state.Property[index];
-
-                            return InkWell(
-                              onTap: () {
-                                Navigator.push(context,
-                                    MaterialPageRoute(
-                                      builder: (context) {
-                                        return PropertyInfoScreenWrapper( propertyId:property
-                                            .propertyName,
-                                            );
-                                      },
-                                    ));
-                              },
-                              child:
-                          Container(
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(12),
-                                color: Colors.white,
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Colors.grey.withOpacity(0.2),
-                                    blurRadius: 5,
-                                    spreadRadius: 2,
-                                  ),
-                                ],
-                              ),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  SizedBox(height: 10),
-                                  ClipRRect(
-                                      borderRadius: BorderRadius.circular(
-                                          10), // Uncomment if needed
-                                      child: CachedNetworkImage(
-                                        imageUrl: property.propertyImageURL
-                                            .toString(),
-
-                                        // imageUrl: university
-                                        //         .UniversityimageURL
-                                        //     .toString(),
-                                        height: 140,
-                                        width: 160,
-                                        fit: BoxFit.cover,
-
-                                        // Show a loading indicator while fetching the image
-                                        placeholder: (context, url) => Center(
-                                          child: Loading_Widget(),
-                                        ),
-
-                                        // Show an error icon if the image fails to load
-                                        errorWidget: (context, url, error) =>
-                                            Icon(
-                                          Icons.image_not_supported,
-                                          size: 50,
-                                          color: Colors.grey,
-                                        ),
-                                      )),
-                                  SizedBox(height: 8),
-                                  Padding(
-                                      padding:
-                                          EdgeInsets.symmetric(horizontal: 8),
-                                      child: Text(
-                                        property.propertyName.toString(),
-                                        style: TextStyle(
-                                            fontSize: 16,
-                                            fontWeight: FontWeight.bold),
-                                        textAlign: TextAlign.left,
-                                      )),
-                                  SizedBox(height: 4),
-                                  Padding(
-                                      padding:
-                                          EdgeInsets.symmetric(horizontal: 8),
-                                      child: Text(
-                                        property.city.toString().toString(),
-                                        style: TextStyle(
-                                            fontSize: 12,
-                                            color: Colors.grey[700]),
-                                        textAlign: TextAlign.left,
-                                      )),
-                                ],
-                              ),
-                            ),
-                            );
-                          },
-                        );
-                      }
-                      return SizedBox();
-                    },
-                  ),
-                ),
-              ],
+                  return SizedBox(
+                    height: 380,
+                    child: ListView.builder(
+                      scrollDirection: Axis.horizontal,
+                      itemCount: state.Property.length,
+                      itemBuilder: (context, index) {
+                        final property = state.Property[index];
+                        return _PropertyCard(property: property);
+                      },
+                    ),
+                  );
+                }
+                return SizedBox();
+              },
             ),
           ],
         ),
@@ -217,3 +113,142 @@ class _AccommodationDetailScreenState extends State<AccommodationDetailScreen> {
     );
   }
 }
+
+// 🔄 REUSABLE CARD WITH SYNCED IMAGE & VIEW NAME
+class _PropertyCard extends StatefulWidget {
+  final Property_Model property;
+
+  const _PropertyCard({required this.property});
+
+  @override
+  State<_PropertyCard> createState() => _PropertyCardState();
+}
+
+class _PropertyCardState extends State<_PropertyCard> {
+  int currentIndex = 0;
+
+  @override
+  Widget build(BuildContext context) {
+    final property = widget.property;
+    final images = property.propertyImageURL ?? [];
+
+    return Container(
+      width: 360,
+      margin: EdgeInsets.only(right: 12),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(12),
+        border: Border.all(color: Colors.grey.shade300),
+        color: Colors.white,
+      ),
+      child: InkWell(
+        onTap: () {
+          Navigator.push(context, MaterialPageRoute(
+            builder: (context) => PropertyInfoScreenWrapper(propertyId: property.propertyId),
+          ));
+        },
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Stack(
+              children: [
+                CarouselSlider.builder(
+                  itemCount: images.length,
+                  itemBuilder: (context, index, _) {
+                    return ClipRRect(
+                      borderRadius: BorderRadius.circular(10),
+                      child: CachedNetworkImage(
+                        imageUrl: images[index],
+                        width: 360,
+                        height: 200,
+                        fit: BoxFit.cover,
+                        placeholder: (context, url) => Center(child: Loading_Widget()),
+                        errorWidget: (context, url, error) => Icon(Icons.image_not_supported),
+                      ),
+                    );
+                  },
+                  options: CarouselOptions(
+                    height: 200,
+                    autoPlay: true,
+                    viewportFraction: 1.0,
+                    enableInfiniteScroll: true,
+                    onPageChanged: (index, reason) {
+                      setState(() {
+                        currentIndex = index;
+                      });
+                    },
+                  ),
+                ),
+
+              ],
+            ),
+            SizedBox(height: 6),
+            Center(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: List.generate(images.length, (index) {
+                  return AnimatedContainer(
+                    duration: Duration(milliseconds: 300),
+                    margin: EdgeInsets.symmetric(horizontal: 3),
+                    width: currentIndex == index ? 10 : 6,
+                    height: currentIndex == index ? 10 : 6,
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: currentIndex == index ? Colors.black : Colors.grey.shade400,
+                    ),
+                  );
+                }),
+              ),
+            ),
+SizedBox(height: 20,),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 8),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    property.propertyName.toString(),
+                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                  Text(
+                    "${property.city}, ${property.state}, ${property.country ?? "GB"}",
+                    style: TextStyle(fontSize: 12, color: Colors.grey[700]),
+                  ),
+                  SizedBox(height: 8),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      RichText(
+                        text: TextSpan(
+                          text: 'From ',
+                          style: TextStyle(fontSize: 14, color: Colors.grey[600]),
+                          children: [
+                            TextSpan(
+                              text: "£${property.tokenAmount}/week",
+                              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16, color: Colors.black),
+                            ),
+                          ],
+                        ),
+                      ),
+                      Row(
+                        children: [
+                          Icon(Icons.star, size: 16, color: Colors.green),
+                          SizedBox(width: 6),
+                          Text("4.7", style: TextStyle(fontSize: 14)),
+                        ],
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+
+  }
+

@@ -1,4 +1,5 @@
 import 'package:course_connect/Admin/View/Screens/ApplicationView/ViewApplications.dart';
+import 'package:course_connect/Admin/View/Screens/Auth/AdminLogin.dart';
 import 'package:course_connect/Admin/View/Screens/Feedback/FeedbackView.dart';
 import 'package:course_connect/Controller/Bloc/Applycourse/application_bloc.dart';
 import 'package:course_connect/Controller/Bloc/University_block/university_bloc.dart';
@@ -43,6 +44,7 @@ class MyApp extends StatelessWidget {
               ApplicationBloc()..add(FetchApplication(searchQuery: null)),
         ),
       ],
+
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'Course Connect Admin',

@@ -1,53 +1,75 @@
-
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import '../../../Controller/Bloc/Applycourse/ApplicationModel/ApplicationModel.dart';
+import '../../../Controller/Bloc/Applycourse/application_bloc.dart';
+import '../../../Widget/Constands/Loading.dart';
 import '../../Apply/TrackingApplication.dart'; // Ensure correct import
+
+class Viewapplicationsmainwrapper1 extends StatelessWidget {
+  const Viewapplicationsmainwrapper1({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocProvider(
+      create: (context) =>
+      ApplicationBloc()
+        ..add(FetchApplication(searchQuery: null)),
+      child: ApplicationStatusPage(),
+    );
+  }
+}
 
 class ApplicationStatusPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        elevation: 0,
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back, color: Colors.black),
-          onPressed: () {
-            Navigator.pop(context);
-          },
-        ),
-      ),
+
       body: Padding(
         padding: EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              "Application Status",
+              "Application Details",
               style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
             ),
             SizedBox(height: 16),
             Expanded(
               child: ListView(
                 children: [
-                  _buildApplicationCard(
-                    context,
-                    "Your application to Toronto University is confirmed.",
-                    Colors.grey[100]!,
+    BlocConsumer<ApplicationBloc, ApplicationState>(
+    listener: (context, state) {
+    if (state is RefreshApplication) {
+    context
+        .read<ApplicationBloc>()
+        .add(FetchApplication(searchQuery: null));
+    }
+    },
+    builder: (context, state) {
+    if (state is ApplicationLoading) {
+    return Center(child: Loading_Widget());
+    } else if (state is Applicationfailerror) {
+    return Center(child: Text(state.error.toString()));
+    } else if (state is Application_loaded) {
+      return ListView.builder(
+        shrinkWrap: true,
+        itemCount: state.Application.length,
+        itemBuilder: (context, index) {
+          final application = state.Application[index];
+          return _buildApplicationCard(
+            context,
+            application,
+            Colors.grey[100]!,
+          );
+        },
+      );
+
+    };
+    return SizedBox();
+    },
+
                   ),
-                  _buildApplicationCard(
-                    context,
-                    "Your application for Master’s in Computer Science at XYZ University has been successfully submitted. The university will review your application, and you can expect an update by March 15, 2025.",
-                    Colors.grey[300]!,
-                  ),
-                  _buildApplicationCard(
-                    context,
-                    "Your application for ABC University is incomplete. Please upload your Statement of Purpose (SOP) and Letter of Recommendation (LOR) before February 10, 2025, to avoid delays.",
-                    Colors.grey[300]!,
-                  ),
-                  _buildApplicationCard(
-                    context,
-                    "You are eligible for the International Student Excellence Scholarship at JKL University. The deadline to apply is April 1, 2025.",
-                    Colors.grey[300]!,
-                  ),
+
                 ],
               ),
             ),
@@ -57,10 +79,9 @@ class ApplicationStatusPage extends StatelessWidget {
     );
   }
 
-  Widget _buildApplicationCard(BuildContext context, String text, Color bgColor) {
+  Widget _buildApplicationCard(BuildContext context, Applicationmodel application, Color bgColor) {
     return GestureDetector(
       onTap: () {
-        // Navigate to TrackingApplication Page
         Navigator.push(
           context,
           MaterialPageRoute(
@@ -86,14 +107,17 @@ class ApplicationStatusPage extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(text),
+                Text("University: ${application.Universityname ?? 'N/A'}", style: TextStyle(fontWeight: FontWeight.bold)),
+                SizedBox(height: 5),
+                Text("Course: ${application.Coursename ?? 'N/A'}"),
+                Text("Degree: ${application.Degree_offered ?? 'N/A'}"),
+                Text("Country: ${application.Country ?? 'N/A'}"),
+                Text("Collage: ${application.collagename ?? 'N/A'}"),
                 SizedBox(height: 8),
+                Text("Status: ${application.status ?? 'N/A'}", style: TextStyle(color: Colors.green)),
                 Align(
                   alignment: Alignment.centerRight,
-                  child: Text(
-                    "Cancel",
-                    style: TextStyle(color: Colors.red),
-                  ),
+                  child: Text("Track Application", style: TextStyle(color: Colors.red)),
                 ),
               ],
             ),
@@ -102,4 +126,7 @@ class ApplicationStatusPage extends StatelessWidget {
       ),
     );
   }
+
+
 }
+

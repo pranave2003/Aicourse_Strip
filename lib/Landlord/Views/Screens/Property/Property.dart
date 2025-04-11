@@ -24,9 +24,8 @@ class Propertymainwrapper extends StatelessWidget {
 }
 
 class Property extends StatefulWidget {
-  static var features;
 
-  static var services;
+
 
   const Property({super.key});
 
