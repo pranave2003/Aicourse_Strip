@@ -62,8 +62,8 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
               "Gender": event.user.Gender,
               "Onesignal_id": "playerId",
               "role": "User",
-              "ban": "1",
-              "status": "1",
+              "ban": "0",
+              "status": "0",
               "image":
                   "https://img.freepik.com/premium-vector/avatar-profile-icon-flat-style-female-user-profile-vector-illustration-isolated-background-women-profile-sign-business-concept_157943-38866.jpg"
             });
@@ -102,18 +102,30 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
           User? user = _auth.currentUser;
 
           if (user != null) {
-            // Get the Player ID from OneSignalService
-
-            // Update Firestore with the correct user ID and OneSignal ID
-            await FirebaseFirestore.instance
-                .collection("Users")
-                .doc(user.uid) // Use current user's UID
-                .update({"Onesignal_id": "null"}); // Update with OneSignal ID
-
-            // Sign out the user
             await _auth.signOut();
             print("sign out ${user.uid}");
             emit(UnAuthenticated());
+          } else {
+            emit(AuthenticatedError(message: "No user is logged in"));
+          }
+        } catch (e) {
+          emit(AuthenticatedError(message: e.toString()));
+        }
+      },
+    );
+
+    on<Removeaccount>(
+      (event, emit) async {
+        try {
+          User? user = _auth.currentUser;
+
+          if (user != null) {
+            await FirebaseFirestore.instance
+                .collection("Users")
+                .doc(user.uid) // Use current user's UID
+                .update({"ban": "1"}); // Update with OneSignal ID
+
+            await _auth.signOut();
           } else {
             emit(AuthenticatedError(message: "No user is logged in"));
           }
@@ -172,7 +184,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
               final userData = userDoc.data() as Map<String, dynamic>;
 
               // Check if the 'Ban' field is 1
-              if (userData['ban'] == "1") {
+              if (userData['ban'] == "0") {
                 // Update OneSignal ID
                 await FirebaseFirestore.instance
                     .collection("Users")

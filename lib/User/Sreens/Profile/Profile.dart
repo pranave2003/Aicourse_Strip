@@ -53,7 +53,6 @@ class _ProfileState extends State<Profile> {
                   padding: EdgeInsets.all(16.0),
                   child: Column(
                     children: [
-
                       ClipRRect(
                         borderRadius: BorderRadius.circular(
                             30), // Rounded corners for image
@@ -85,7 +84,6 @@ class _ProfileState extends State<Profile> {
                           ),
                         ),
                       ),
-
                       SizedBox(height: 10),
                       Text(
                         '${user.name ?? ''}',
@@ -291,7 +289,13 @@ class _ProfileState extends State<Profile> {
                           TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
                     ),
                     onTap: () {
-                      // Handle Remove Account action
+                      final Authbloc = BlocProvider.of<AuthBloc>(context);
+                      Authbloc.add(Removeaccount());
+                      Navigator.pushNamedAndRemoveUntil(
+                        context,
+                        "/login",
+                        (route) => false,
+                      );
                     },
                   ),
                 ),

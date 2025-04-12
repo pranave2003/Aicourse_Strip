@@ -34,3 +34,4 @@ class FetchUsers extends AuthEvent {
   FetchUsers({required this.searchQuery});
 }
 class PickAndUploadImageEvent extends AuthEvent {}
+class Removeaccount extends AuthEvent {}
