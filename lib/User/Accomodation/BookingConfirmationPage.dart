@@ -33,12 +33,11 @@ class BookingConfirmformpageScreenWrapper extends StatelessWidget {
   final String propertyId;
   final String propertyTotal;
 
-
   @override
   Widget build(BuildContext context) {
     return BlocProvider<PropertyAuthBlock>(
-      create: (context) =>
-      PropertyAuthBlock()..add(FetchPropertyDetailsById(Property_id: propertyId)),
+      create: (context) => PropertyAuthBlock()
+        ..add(FetchPropertyDetailsById(Property_id: propertyId)),
       child: BookingConfirmationPage(
         propertyName: propertyName,
         tokenAmount: tokenAmount,
@@ -76,9 +75,9 @@ class BookingConfirmationPage extends StatefulWidget {
     required this.propertyTotal,
   });
 
-
   @override
-  State<BookingConfirmationPage> createState() => _BookingConfirmationPageState();
+  State<BookingConfirmationPage> createState() =>
+      _BookingConfirmationPageState();
 }
 
 class _BookingConfirmationPageState extends State<BookingConfirmationPage> {
@@ -140,15 +139,19 @@ class _BookingConfirmationPageState extends State<BookingConfirmationPage> {
                                     ClipRRect(
                                       borderRadius: BorderRadius.circular(10),
                                       child: CachedNetworkImage(
-                                        imageUrl: widget.propertyImageURL.toString(),
+                                        imageUrl:
+                                            widget.propertyImageURL.toString(),
                                         width: 250,
                                         height: 250,
                                         fit: BoxFit.cover,
-                                        placeholder: (context, url) => Container(
+                                        placeholder: (context, url) =>
+                                            Container(
                                           color: Colors.grey[50],
-                                          child: Center(child: Loading_Widget()),
+                                          child:
+                                              Center(child: Loading_Widget()),
                                         ),
-                                        errorWidget: (context, url, error) => Container(
+                                        errorWidget: (context, url, error) =>
+                                            Container(
                                           color: Colors.grey[300],
                                           child: Icon(
                                             Icons.image_not_supported,
@@ -182,22 +185,23 @@ class _BookingConfirmationPageState extends State<BookingConfirmationPage> {
                                   Text(
                                     "${widget.city}, ${widget.country}",
                                     style: TextStyle(
-                                        color: Colors.grey.shade700, fontSize: 12),
+                                        color: Colors.grey.shade700,
+                                        fontSize: 12),
                                   ),
                                 ],
                               ),
                               SizedBox(height: 4),
                               Row(
                                 children: [
-
                                   Text(
                                     widget.tokenAmount ?? '',
-                                    style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                                    style: const TextStyle(
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.bold),
                                   ),
                                   Text("/Week"),
                                 ],
                               ),
-
                             ],
                           ),
                         ),
@@ -216,9 +220,13 @@ class _BookingConfirmationPageState extends State<BookingConfirmationPage> {
                     ),
                     child: Row(
                       children: [
-                        Expanded(child: _buildDateTile("Booking From", "April 20, 2025")),
+                        Expanded(
+                            child: _buildDateTile(
+                                "Booking From", "April 20, 2025")),
                         SizedBox(width: 12),
-                        Expanded(child: _buildDateTile("Booking To", "April 30, 2025")),
+                        Expanded(
+                            child:
+                                _buildDateTile("Booking To", "April 30, 2025")),
                       ],
                     ),
                   ),
@@ -226,9 +234,11 @@ class _BookingConfirmationPageState extends State<BookingConfirmationPage> {
 
                   // Fee Details
                   Text("Fee & Tax Details",
-                      style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+                      style:
+                          TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
                   SizedBox(height: 10),
-                  _buildFeeDetailRow("Token Amount", "£${widget.propertyTotal}"),
+                  _buildFeeDetailRow(
+                      "Token Amount", "£${widget.propertyTotal}"),
                   _buildFeeDetailRow("Token Amount", "£${widget.tokenAmount}"),
                   Divider(),
                   _buildFeeDetailRow("Total", "£2815", isBold: true),
@@ -246,13 +256,13 @@ class _BookingConfirmationPageState extends State<BookingConfirmationPage> {
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(30),
                         ),
-                        padding: EdgeInsets.symmetric(horizontal: 80, vertical: 15),
+                        padding:
+                            EdgeInsets.symmetric(horizontal: 80, vertical: 15),
                       ),
                       child: Text(
                         "Pay Token Amount (£${property.tokenAmount})",
                         style: TextStyle(fontSize: 18, color: Colors.white),
                       ),
-
                     ),
                   ),
                   SizedBox(height: 20),
@@ -305,7 +315,8 @@ class _BookingConfirmationPageState extends State<BookingConfirmationPage> {
     );
   }
 
-  Widget _buildFeeDetailRow(String label, String amount, {bool isBold = false}) {
+  Widget _buildFeeDetailRow(String label, String amount,
+      {bool isBold = false}) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 4.0),
       child: Row(
