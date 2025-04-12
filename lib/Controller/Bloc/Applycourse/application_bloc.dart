@@ -143,5 +143,18 @@ class ApplicationBloc extends Bloc<ApplicationEvent, ApplicationState> {
         emit(ImageDownloadError("Failed: ${e.toString()}"));
       }
     });
+    on<AcceptOrRejectApplication>((event, emit) async {
+      emit(AcceptorrejectLoadingstate());
+
+      try {
+        FirebaseFirestore.instance
+            .collection("Applications")
+            .doc(event.applicationid)
+            .update({"status": event.Status.toString()});
+        emit(RefreshApplication());
+      } catch (e) {
+        emit(AcceptorrejectErrorstate(e.toString()));
+      }
+    });
   }
 }

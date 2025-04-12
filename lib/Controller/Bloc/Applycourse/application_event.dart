@@ -31,3 +31,8 @@ class DownloadImageFromFirebase extends ApplicationEvent {
   final String firebasePath; // Firebase Storage path, e.g. "images/sample.jpg"
   DownloadImageFromFirebase(this.firebasePath);
 }
+class AcceptOrRejectApplication extends ApplicationEvent {
+  final String? applicationid;
+  final String? Status;
+  AcceptOrRejectApplication({this.applicationid, this.Status});
+}

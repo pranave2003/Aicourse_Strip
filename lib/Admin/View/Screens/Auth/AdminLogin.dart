@@ -1,12 +1,13 @@
 
 import 'package:flutter/material.dart';
 
-void main() {
-  runApp(MaterialApp(
-    debugShowCheckedModeBanner: false,
-    home: Adminlogin(),
-  ));
-}
+
+// void main() {
+//   runApp(MaterialApp(
+//     debugShowCheckedModeBanner: false,
+//     home: Adminlogin(),
+//   ));
+// }
 
 class Adminlogin extends StatefulWidget {
   @override

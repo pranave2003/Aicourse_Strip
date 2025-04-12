@@ -40,7 +40,6 @@ final class ApplicationLoaded extends ApplicationState {
 }
 
 
-
 class ImageDownloading extends ApplicationState {}
 
 class ImageDownloaded extends ApplicationState {
@@ -52,3 +51,13 @@ class ImageDownloadError extends ApplicationState {
   final String message;
   ImageDownloadError(this.message);
 }
+class AcceptorrejectLoadingstate extends ApplicationState {}
+
+class Refresh extends ApplicationState {}
+
+class AcceptorrejectErrorstate extends ApplicationState {
+  final String error;
+
+  AcceptorrejectErrorstate(this.error);
+}
+
