@@ -20,8 +20,8 @@ class BookingformpageScreenWrapper extends StatelessWidget {
     required this.country,
     required this.state,
     required this.city,
-    required this. propertyImageURL,
-    required this. propertyTotal,
+    required this.propertyImageURL,
+    required this.propertyTotal,
   });
 
   final propertyId;
@@ -39,16 +39,21 @@ class BookingformpageScreenWrapper extends StatelessWidget {
     return BlocProvider<PropertyAuthBlock>(
       create: (context) => PropertyAuthBlock()
         ..add(FetchPropertyDetailsById(Property_id: propertyId)),
-      child: BookingFormPage(propertyName: propertyName,tokenAmount: tokenAmount,propertyImageURL:propertyImageURL, country: country,state: state,city: city,propertyId: propertyId,propertyTotal: propertyTotal,),
+      child: BookingFormPage(
+        propertyName: propertyName,
+        tokenAmount: tokenAmount,
+        propertyImageURL: propertyImageURL,
+        country: country,
+        state: state,
+        city: city,
+        propertyId: propertyId,
+        propertyTotal: propertyTotal,
+      ),
     );
   }
-
-
 }
 
-
 class BookingFormPage extends StatefulWidget {
-
   final String? propertyName;
   final String? tokenAmount;
   final String? propertyImageURL;
@@ -58,10 +63,16 @@ class BookingFormPage extends StatefulWidget {
   final String? propertyId;
   final String? propertyTotal;
 
-
-  const BookingFormPage({super.key,this.propertyName,this.tokenAmount, required this. propertyImageURL,required this. country,required this. state,required this. city,required this.propertyId,required this.propertyTotal});
-
-
+  const BookingFormPage(
+      {super.key,
+      this.propertyName,
+      this.tokenAmount,
+      required this.propertyImageURL,
+      required this.country,
+      required this.state,
+      required this.city,
+      required this.propertyId,
+      required this.propertyTotal});
 
   @override
   State<BookingFormPage> createState() => _BookingFormPageState();
@@ -74,9 +85,15 @@ class _BookingFormPageState extends State<BookingFormPage> {
     context.read<AuthBloc>()..add(FetchUserDetailsById());
     super.initState();
   }
+
+  DateTime? _selectedDate;
+
+  // Controller to show date in TextField
+  TextEditingController checkin = TextEditingController();
+  TextEditingController checkout = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
@@ -85,13 +102,11 @@ class _BookingFormPageState extends State<BookingFormPage> {
         ),
       ),
       body: BlocConsumer<AuthBloc, AuthState>(
-
         listener: (context, state) {},
         builder: (context, state) {
           if (state is PropertyLoading) {
             return Loading_Widget();
-          }
-          else if (state is UserByidLoaded) {
+          } else if (state is UserByidLoaded) {
             final user = state.Userdata;
 
             return SingleChildScrollView(
@@ -101,13 +116,14 @@ class _BookingFormPageState extends State<BookingFormPage> {
                 children: [
                   Row(
                     children: [
-                      Text("Thanks",style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
-
+                      Text("Thanks",
+                          style: TextStyle(
+                              fontSize: 20, fontWeight: FontWeight.bold)),
                       Text(' ${user.name ?? ''}',
-                        style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+                          style: TextStyle(
+                              fontSize: 20, fontWeight: FontWeight.bold)),
                     ],
                   ),
-
 
                   Text(
                       "Fasten the booking by filling out the details to reserve this property."),
@@ -120,8 +136,61 @@ class _BookingFormPageState extends State<BookingFormPage> {
                       _buildNameDisplay(user.name.toString()),
                       _buildEmailDisplay(user.email.toString()),
                       _buildPhoneDisplay(user.phone.toString()),
-                      _buildDatePickerField(context),
-                      _buildDatePickerField2(context),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 8.0),
+                        child: TextField(
+                          controller: checkin,
+                          decoration: InputDecoration(
+                            labelText: "Check-in Date",
+                            border: OutlineInputBorder(),
+                            suffixIcon: Icon(Icons.calendar_today),
+                          ),
+                          readOnly: true,
+                          onTap: () async {
+                            DateTime? pickedDate = await showDatePicker(
+                              context: context,
+                              initialDate: DateTime.now(),
+                              firstDate: DateTime.now(),
+                              lastDate: DateTime(2030),
+                            );
+
+                            if (pickedDate != null) {
+                              setState(() {
+                                _selectedDate = pickedDate;
+                                checkin.text =
+                                    "${pickedDate.day}/${pickedDate.month}/${pickedDate.year}"; // formatted string
+                              });
+                            }
+                          },
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 8.0),
+                        child: TextField(
+                          controller: checkout,
+                          decoration: InputDecoration(
+                            labelText: "Check-out Date",
+                            border: OutlineInputBorder(),
+                            suffixIcon: Icon(Icons.calendar_today),
+                          ),
+                          readOnly: true,
+                          onTap: () async {
+                            DateTime? pickedDate = await showDatePicker(
+                              context: context,
+                              initialDate: DateTime.now(),
+                              firstDate: DateTime.now(),
+                              lastDate: DateTime(2030),
+                            );
+                            if (pickedDate != null) {
+                              setState(() {
+                                _selectedDate = pickedDate;
+                                checkout.text =
+                                    "${pickedDate.day}/${pickedDate.month}/${pickedDate.year}"; // formatted string
+                              });
+                            }
+                          },
+                        ),
+                      )
                     ],
                   ),
 
@@ -153,19 +222,24 @@ class _BookingFormPageState extends State<BookingFormPage> {
                     onTap: () {
                       Navigator.push(
                         context,
-                          MaterialPageRoute(
-                          builder: (context) => BookingConfirmformpageScreenWrapper(
-                        propertyName: widget.propertyName.toString(),
-                        tokenAmount: widget.tokenAmount.toString(),
-                        propertyImageURL: widget.propertyImageURL.toString(),
-                        state: widget.state.toString(),
-                        country: widget.country.toString(),
-                        city: widget.city.toString(),
-                        propertyId: widget.propertyId.toString(),
-                        userid_global: userid_global.toString(), // ✅ Add this line
+                        MaterialPageRoute(
+                          builder: (context) =>
+                              BookingConfirmformpageScreenWrapper(
+                            propertyName: widget.propertyName.toString(),
+                            tokenAmount: widget.tokenAmount.toString(),
+                            propertyImageURL:
+                                widget.propertyImageURL.toString(),
+                            state: widget.state.toString(),
+                            country: widget.country.toString(),
+                            city: widget.city.toString(),
+                            propertyId: widget.propertyId.toString(),
+                            userid_global:
+                                userid_global.toString(), // ✅ Add this line
+                                checkindate:checkin.text
+                                  ,checkoutdate:checkin.text,
                             propertyTotal: widget.propertyTotal.toString(),
-                      ),
                           ),
+                        ),
                       );
                     },
                     child: Center(
@@ -204,46 +278,46 @@ class _BookingFormPageState extends State<BookingFormPage> {
         ClipRRect(
           borderRadius: BorderRadius.circular(8),
           child: SizedBox(
-          height: 250,
-          width: 200,
-          child: Stack(
-          alignment: Alignment.center,
-          children: [
-            CarouselSlider(
-              options: CarouselOptions(
-                height: 250,
-                autoPlay: false, // Optional: disable auto play if only one image
-                viewportFraction: 1.0,
-                enableInfiniteScroll: false,
-                enlargeCenterPage: false,
-              ),
-              items: [
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(10),
-                  child: CachedNetworkImage(
-                    imageUrl: widget.propertyImageURL.toString(),
-                    width: 250,
+            height: 250,
+            width: 200,
+            child: Stack(
+              alignment: Alignment.center,
+              children: [
+                CarouselSlider(
+                  options: CarouselOptions(
                     height: 250,
-                    fit: BoxFit.cover,
-                    placeholder: (context, url) => Container(
-                      color: Colors.grey[50],
-                      child: Center(child: Loading_Widget()),
-                    ),
-                    errorWidget: (context, url, error) => Container(
-                      color: Colors.grey[300],
-                      child: Icon(Icons.image_not_supported, size: 50, color: Colors.grey[600]),
-                    ),
+                    autoPlay:
+                        false, // Optional: disable auto play if only one image
+                    viewportFraction: 1.0,
+                    enableInfiniteScroll: false,
+                    enlargeCenterPage: false,
                   ),
+                  items: [
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(10),
+                      child: CachedNetworkImage(
+                        imageUrl: widget.propertyImageURL.toString(),
+                        width: 250,
+                        height: 250,
+                        fit: BoxFit.cover,
+                        placeholder: (context, url) => Container(
+                          color: Colors.grey[50],
+                          child: Center(child: Loading_Widget()),
+                        ),
+                        errorWidget: (context, url, error) => Container(
+                          color: Colors.grey[300],
+                          child: Icon(Icons.image_not_supported,
+                              size: 50, color: Colors.grey[600]),
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
               ],
             ),
-
-          ],
-    ),
-    ),
+          ),
         ),
-
-    SizedBox(width: 12),
+        SizedBox(width: 12),
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -251,22 +325,22 @@ class _BookingFormPageState extends State<BookingFormPage> {
               widget.propertyName ?? '',
               style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
             ),
-
-Row(
-  children: [
-
-    Text(
-      widget.tokenAmount ?? '',
-      style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-    ),
-    Text("/Week"),
-  ],
-)
-                    ],
+            Row(
+              children: [
+                Text(
+                  widget.tokenAmount ?? '',
+                  style: const TextStyle(
+                      fontSize: 18, fontWeight: FontWeight.bold),
+                ),
+                Text("/Week"),
+              ],
+            )
+          ],
         ),
       ],
     );
   }
+
   Widget _buildNameDisplay(String name) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8.0),
@@ -321,27 +395,6 @@ Row(
     );
   }
 
-  Widget _buildDatePickerField(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 8.0),
-      child: TextField(
-        decoration: InputDecoration(
-          labelText: "Check-in Date",
-          border: OutlineInputBorder(),
-          suffixIcon: Icon(Icons.calendar_today),
-        ),
-        readOnly: true,
-        onTap: () async {
-          await showDatePicker(
-            context: context,
-            initialDate: DateTime.now(),
-            firstDate: DateTime.now(),
-            lastDate: DateTime(2030),
-          );
-        },
-      ),
-    );
-  }
   Widget _buildDatePickerField2(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8.0),
@@ -378,4 +431,3 @@ Row(
     );
   }
 }
-

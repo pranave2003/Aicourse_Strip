@@ -21,6 +21,8 @@ class BookingConfirmformpageScreenWrapper extends StatelessWidget {
     required this.state,
     this.userid_global,
     required this.propertyTotal,
+    required this.checkindate,
+    required this.checkoutdate,
   });
 
   final userid_global;
@@ -32,6 +34,8 @@ class BookingConfirmformpageScreenWrapper extends StatelessWidget {
   final String state;
   final String propertyId;
   final String propertyTotal;
+  final String checkindate;
+  final String checkoutdate;
 
   @override
   Widget build(BuildContext context) {

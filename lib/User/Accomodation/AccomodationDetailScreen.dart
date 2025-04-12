@@ -5,7 +5,6 @@ import 'package:course_connect/Controller/Bloc/Property/Property/Property_auth_b
 import 'package:course_connect/Controller/Bloc/Property/Property/Property_auth_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../Landlord/Views/Screens/Property/Property.dart';
 import '../../Widget/Constands/Loading.dart';
 import 'PropertyDetailsPage.dart';
 
@@ -15,7 +14,8 @@ class PropertyWrapper extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider<PropertyAuthBlock>(
-      create: (context) => PropertyAuthBlock()..add(FetchProperty(searchQuery: null)),
+      create: (context) =>
+          PropertyAuthBlock()..add(FetchProperty(searchQuery: null)),
       child: AccommodationDetailScreen(),
     );
   }
@@ -25,7 +25,8 @@ class AccommodationDetailScreen extends StatefulWidget {
   const AccommodationDetailScreen({super.key});
 
   @override
-  State<AccommodationDetailScreen> createState() => _AccommodationDetailScreenState();
+  State<AccommodationDetailScreen> createState() =>
+      _AccommodationDetailScreenState();
 }
 
 class _AccommodationDetailScreenState extends State<AccommodationDetailScreen> {
@@ -87,7 +88,10 @@ class _AccommodationDetailScreenState extends State<AccommodationDetailScreen> {
                     return Center(
                       child: Text(
                         "No property is available for the given name.",
-                        style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.grey),
+                        style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.grey),
                       ),
                     );
                   }
@@ -142,9 +146,12 @@ class _PropertyCardState extends State<_PropertyCard> {
       ),
       child: InkWell(
         onTap: () {
-          Navigator.push(context, MaterialPageRoute(
-            builder: (context) => PropertyInfoScreenWrapper(propertyId: property.propertyId),
-          ));
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) =>
+                    PropertyInfoScreenWrapper(propertyId: property.propertyId),
+              ));
         },
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -161,8 +168,10 @@ class _PropertyCardState extends State<_PropertyCard> {
                         width: 360,
                         height: 200,
                         fit: BoxFit.cover,
-                        placeholder: (context, url) => Center(child: Loading_Widget()),
-                        errorWidget: (context, url, error) => Icon(Icons.image_not_supported),
+                        placeholder: (context, url) =>
+                            Center(child: Loading_Widget()),
+                        errorWidget: (context, url, error) =>
+                            Icon(Icons.image_not_supported),
                       ),
                     );
                   },
@@ -178,7 +187,6 @@ class _PropertyCardState extends State<_PropertyCard> {
                     },
                   ),
                 ),
-
               ],
             ),
             SizedBox(height: 6),
@@ -193,13 +201,17 @@ class _PropertyCardState extends State<_PropertyCard> {
                     height: currentIndex == index ? 10 : 6,
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
-                      color: currentIndex == index ? Colors.black : Colors.grey.shade400,
+                      color: currentIndex == index
+                          ? Colors.black
+                          : Colors.grey.shade400,
                     ),
                   );
                 }),
               ),
             ),
-            SizedBox(height: 20,),
+            SizedBox(
+              height: 20,
+            ),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 8),
               child: Column(
@@ -222,11 +234,15 @@ class _PropertyCardState extends State<_PropertyCard> {
                       RichText(
                         text: TextSpan(
                           text: 'From ',
-                          style: TextStyle(fontSize: 14, color: Colors.grey[600]),
+                          style:
+                              TextStyle(fontSize: 14, color: Colors.grey[600]),
                           children: [
                             TextSpan(
                               text: "£${property.tokenAmount}/week",
-                              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16, color: Colors.black),
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 16,
+                                  color: Colors.black),
                             ),
                           ],
                         ),
@@ -248,7 +264,4 @@ class _PropertyCardState extends State<_PropertyCard> {
       ),
     );
   }
-
-
 }
-
