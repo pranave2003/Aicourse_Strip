@@ -302,7 +302,8 @@ class _PropertyDetailsPageState extends State<PropertyDetailsPage> {
                     _buildDetailText("Amount per Week",
                         "£${property.propertyAmountMonth ?? 'N/A'}"),
                     _buildDetailText(
-                        "Token Amount", property.tokenAmount ?? 'N/A'),
+                        "Token Amount", property.tokenAmount ?? 'N/A'), _buildDetailText(
+                        "propertyTotal", property.propertyTotal ?? 'N/A'),
                     _buildDetailText(
                         "Minimum Stay", property.minimumStay ?? 'N/A'),
                     _buildDetailText(
@@ -355,7 +356,7 @@ class _PropertyDetailsPageState extends State<PropertyDetailsPage> {
                     _buildDetailText(
                         "Phone Number", "${property.ownerPhone ?? 'N/A'}"),
                     _buildDetailText(
-                        "Ownership Proof", property.ownershipProof ?? 'N/A'),
+                        "Total Property Amount", property.propertyTotal ?? 'N/A'),
 
                     const SizedBox(height: 20),
 
@@ -374,7 +375,7 @@ class _PropertyDetailsPageState extends State<PropertyDetailsPage> {
                                     FirebaseAuth.instance.currentUser!.uid,
                                 propertyName: property.propertyName,
                                 tokenAmount: property.tokenAmount,
-                                      propertyImageURL:property.propertyImageURL![0],
+                                      propertyImageURL:property.propertyImageURL![0], country: property.country,state: property.state,city:property.city,propertyTotal: property.propertyTotal,
                               ),
                             ),
                           );

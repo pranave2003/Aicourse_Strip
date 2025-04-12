@@ -26,7 +26,7 @@ class Property_Model {
   String? maximumStay;
   String? ownerName;
   String? ownerPhone;
-  String? ownershipProof;
+  String? propertyTotal;
   String? parking;
   String? billStatus;
   String? pets;
@@ -62,7 +62,7 @@ class Property_Model {
     this.maximumStay,
     this.ownerName,
     this.ownerPhone,
-    this.ownershipProof,
+    this.propertyTotal,
     this.parking,
     this.billStatus,
     this.pets,
@@ -101,7 +101,7 @@ class Property_Model {
       maximumStay: data['maximumStay'],
       ownerName: data['ownerName'],
       ownerPhone: data['ownerPhone'],
-      ownershipProof: data['ownershipProof'],
+      propertyTotal: data['propertyTotal'],
       parking: data['parking'],
       billStatus: data['billStatus'],
       pets: data['pets'],

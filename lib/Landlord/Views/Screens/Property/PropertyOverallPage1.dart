@@ -192,8 +192,8 @@ class Propertyoverallpage1 extends StatelessWidget {
                           buildRowFields(
                             "Owner Phone",
                             PropertyAuthState.ownerPhone.toString(),
-                            "Ownership Proof",
-                            PropertyAuthState.ownershipProof.toString(),
+                            "total Amount of Property",
+                            PropertyAuthState.propertyTotal.toString(),
                           ),
                           buildRowFields(
                             "Parking",

@@ -159,7 +159,9 @@ class _UsermainState extends State<Usermain> {
                       _buildColumn('Email'),
                       _buildColumn('phone'),
                       _buildColumn('Country'),
-                      _buildColumn('District'),
+                      _buildColumn('State'),
+                      _buildColumn('City'),
+
                       _buildColumn('Edit/Delete'),
                     ],
 
@@ -176,7 +178,8 @@ class _UsermainState extends State<Usermain> {
                             DataCell(Text(User.Email)),
                             DataCell(Text(User.phone.toString())),
                             DataCell(Text(User.Country)),
-                            DataCell(Text(User.District)),
+                            DataCell(Text(User.state)),
+                            DataCell(Text(User.Country)),
                             DataCell(Row(
                               children: [
                                 Padding(

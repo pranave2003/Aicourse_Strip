@@ -30,6 +30,7 @@ class _PropertyAddState extends State<PropertyAdd> {
       TextEditingController();
   final TextEditingController _moveInController = TextEditingController();
   final TextEditingController _tokenAmountController = TextEditingController();
+  final TextEditingController _propertyTotalController = TextEditingController();
 
   void dispose() {
     _propertyNameController.dispose();
@@ -43,6 +44,7 @@ class _PropertyAddState extends State<PropertyAdd> {
     _selectedCityController.dispose();
     _availableFromController.dispose();
     _moveInController.dispose();
+    _propertyTotalController.dispose();
     _tokenAmountController.dispose();
     super.dispose();
   }
@@ -229,7 +231,7 @@ class _PropertyAddState extends State<PropertyAdd> {
                                 maximumStay: _selectedMaxStay,
                                 ownerName: _ownerNameController.text,
                                 ownerPhone: _phoneController.text,
-                                ownershipProof: "",
+                                propertyTotal:_propertyTotalController.text ,
                                 parking: _parkingAvailable ? "Yes" : "No",
                                 billStatus: _billsIncluded ? "Yes" : "No",
                                 pets: _petsAllowed ? "Yes" : "No",
@@ -409,6 +411,10 @@ class _PropertyAddState extends State<PropertyAdd> {
                         "Token Amount", _tokenAmountController, true)),
                 SizedBox(width: 10),
                 Expanded(
+                    child: _buildTextField(
+                        "Total Amount", _propertyTotalController, true)),
+                SizedBox(width: 10),
+                Expanded(
                     child: _buildDropdown(
                         "Sexual Orientation",
                         ['Any', 'LGBTQ+ Friendly', 'Male Only', 'Female Only'],
@@ -575,9 +581,8 @@ class _PropertyAddState extends State<PropertyAdd> {
 
             SizedBox(height: 10),
 
-            Text("Upload Ownership Proof:",
-                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
-            SizedBox(height: 20),
+
+
 
             BlocConsumer<PropertyAuthBlock, PropertyAuthState>(
               listener: (context, state) {

@@ -372,8 +372,7 @@ class _UserviewState extends State<Userview> {
                           _buildColumn('Email'),
                           _buildColumn('Country'),
                           _buildColumn('State'),
-                          _buildColumn('District'),
-                          _buildColumn('Street'),
+                          _buildColumn('City'),
                         ],
                         rows: List.generate(
                           state.Users.length,
@@ -407,7 +406,6 @@ class _UserviewState extends State<Userview> {
                                 DataCell(Text(User.email.toString())),
                                 DataCell(Text(User.Country.toString())),
                                 DataCell(Text(User.state.toString())),
-                                DataCell(Text(User.District.toString())),
                                 DataCell(Text(User.City.toString())),
                               ],
                             );

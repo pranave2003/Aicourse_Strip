@@ -3,15 +3,17 @@ class Usermodel {
   final int phone;
   final String Email;
   final String Country;
-  final String District;
+  final String state;
   final String UserId;
+  final String city;
 
   Usermodel({
     required this.name,
     required this.phone,
     required this.Email,
     required this.Country,
-    required this.District,
+    required this.state,
+    required this.city,
     required this.UserId,
   });
   factory Usermodel.fromJson(Map<String, dynamic> json) {
@@ -20,9 +22,10 @@ class Usermodel {
         phone: json["phone"] ?? "",
         name: json["name"] ?? "",
         Country: json["Country"] ?? "",
-        District: json["District"] ?? "",
-        Email: json["Email"] ?? "");
+        state: json["state"] ?? "",
+        city: json["city"] ?? "", Email:json["Email"] ??'');
   }
+
 }
 
 List<Usermodel> Users = [
@@ -31,6 +34,7 @@ List<Usermodel> Users = [
       phone: 723786672,
       Email: "P@gmail.com",
       Country: "india",
-      District: "Kozhikode",
+      state: "kerala",
+      city: "calicut",
       UserId: "sjdhddhgsjhfdjsgfdhfgjf")
 ];

@@ -31,7 +31,7 @@ class PropertyEdit extends StatefulWidget {
     required this.maximumStay,
     required this.ownerName,
     required this.ownerPhone,
-    required this.ownershipProof,
+    required this.propertyTotal,
     required this.parking,
     required this.billStatus,
     required this.pets,
@@ -63,7 +63,7 @@ class PropertyEdit extends StatefulWidget {
   final String maximumStay;
   final String ownerName;
   final String ownerPhone;
-  final String ownershipProof;
+  final String propertyTotal;
   final String parking;
   final String billStatus;
   final String furnishingOptions;
@@ -93,6 +93,7 @@ class _PropertyEditState extends State<PropertyEdit> {
   final TextEditingController _aboutPropertyController =
       TextEditingController();
   final TextEditingController _tokenAmountController = TextEditingController();
+  final TextEditingController _propertyTotalController = TextEditingController();
 
   String? _selectedCountry;
   String? _selectedState;
@@ -105,6 +106,7 @@ class _PropertyEditState extends State<PropertyEdit> {
   String? _selectedKitchen;
   String? _selectedTokenAmount;
   String? _selectedMinStay;
+  String? _selectedpropertyTotal;
   String? _selectedMaxStay;
   String? _selectedSexualOrientation;
 
@@ -142,6 +144,7 @@ class _PropertyEditState extends State<PropertyEdit> {
     _selectedBathroom = widget.bathroom;
     _selectedKitchen = widget.kitchen;
     _selectedTokenAmount = widget.tokenAmount;
+    _selectedpropertyTotal= widget.propertyTotal;
     _selectedMinStay = widget.minimumStay;
     _selectedMaxStay = widget.maximumStay;
     _selectedSexualOrientation = widget.sexualOrientations;
@@ -299,7 +302,7 @@ class _PropertyEditState extends State<PropertyEdit> {
                                 maximumStay: _selectedMaxStay,
                                 ownerName: _ownerNameController.text,
                                 ownerPhone: _phoneController.text,
-                                ownershipProof: "",
+                                propertyTotal: _propertyTotalController.text,
                                 parking: parking ? "Yes" : "No",
                                 billStatus: billsIncluded ? "Yes" : "No",
                                 pets: petsAllowed ? "Yes" : "No",
@@ -500,6 +503,15 @@ class _PropertyEditState extends State<PropertyEdit> {
                           Expanded(
                               child: _buildTextField(
                                   "Token Amount", _tokenAmountController,
+                                  (value) {
+                            if (value!.isEmpty) {
+                              return 'Please enter amount per month';
+                            }
+                            return null;
+                          })),
+                          SizedBox(width: 10),Expanded(
+                              child: _buildTextField(
+                                  "Token Amount", _propertyTotalController,
                                   (value) {
                             if (value!.isEmpty) {
                               return 'Please enter amount per month';

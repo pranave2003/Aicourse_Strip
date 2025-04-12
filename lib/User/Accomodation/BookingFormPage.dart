@@ -6,6 +6,7 @@ import 'package:course_connect/Controller/Bloc/User_Authbloc/auth_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../Controller/Bloc/Property/Property/Property_auth_block.dart';
+import '../../Controller/Bloc/User_Authbloc/auth_bloc.dart';
 import '../../Widget/Constands/Loading.dart';
 import 'BookingConfirmationPage.dart';
 
@@ -16,7 +17,11 @@ class BookingformpageScreenWrapper extends StatelessWidget {
     required this.propertyName,
     required this.userid_global,
     required this.tokenAmount,
+    required this.country,
+    required this.state,
+    required this.city,
     required this. propertyImageURL,
+    required this. propertyTotal,
   });
 
   final propertyId;
@@ -24,13 +29,17 @@ class BookingformpageScreenWrapper extends StatelessWidget {
   final propertyName;
   final tokenAmount;
   final propertyImageURL;
+  final propertyTotal;
+  final country;
+  final state;
+  final city;
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider<PropertyAuthBlock>(
       create: (context) => PropertyAuthBlock()
         ..add(FetchPropertyDetailsById(Property_id: propertyId)),
-      child: BookingFormPage(propertyName: propertyName,tokenAmount: tokenAmount,propertyImageURL:propertyImageURL),
+      child: BookingFormPage(propertyName: propertyName,tokenAmount: tokenAmount,propertyImageURL:propertyImageURL, country: country,state: state,city: city,propertyId: propertyId,propertyTotal: propertyTotal,),
     );
   }
 
@@ -43,9 +52,16 @@ class BookingFormPage extends StatefulWidget {
   final String? propertyName;
   final String? tokenAmount;
   final String? propertyImageURL;
+  final String? country;
+  final String? state;
+  final String? city;
+  final String? propertyId;
+  final String? propertyTotal;
 
 
-  const BookingFormPage({super.key,this.propertyName,this.tokenAmount, required this. propertyImageURL});
+  const BookingFormPage({super.key,this.propertyName,this.tokenAmount, required this. propertyImageURL,required this. country,required this. state,required this. city,required this.propertyId,required this.propertyTotal});
+
+
 
   @override
   State<BookingFormPage> createState() => _BookingFormPageState();
@@ -105,7 +121,7 @@ class _BookingFormPageState extends State<BookingFormPage> {
                       _buildEmailDisplay(user.email.toString()),
                       _buildPhoneDisplay(user.phone.toString()),
                       _buildDatePickerField(context),
-                      _buildDatePickerField(context),
+                      _buildDatePickerField2(context),
                     ],
                   ),
 
@@ -137,8 +153,19 @@ class _BookingFormPageState extends State<BookingFormPage> {
                     onTap: () {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(
-                            builder: (context) => BookingConfirmationPage()),
+                          MaterialPageRoute(
+                          builder: (context) => BookingConfirmformpageScreenWrapper(
+                        propertyName: widget.propertyName.toString(),
+                        tokenAmount: widget.tokenAmount.toString(),
+                        propertyImageURL: widget.propertyImageURL.toString(),
+                        state: widget.state.toString(),
+                        country: widget.country.toString(),
+                        city: widget.city.toString(),
+                        propertyId: widget.propertyId.toString(),
+                        userid_global: userid_global.toString(), // ✅ Add this line
+                            propertyTotal: widget.propertyTotal.toString(),
+                      ),
+                          ),
                       );
                     },
                     child: Center(
@@ -295,6 +322,27 @@ Row(
   }
 
   Widget _buildDatePickerField(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 8.0),
+      child: TextField(
+        decoration: InputDecoration(
+          labelText: "Check-in Date",
+          border: OutlineInputBorder(),
+          suffixIcon: Icon(Icons.calendar_today),
+        ),
+        readOnly: true,
+        onTap: () async {
+          await showDatePicker(
+            context: context,
+            initialDate: DateTime.now(),
+            firstDate: DateTime.now(),
+            lastDate: DateTime(2030),
+          );
+        },
+      ),
+    );
+  }
+  Widget _buildDatePickerField2(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8.0),
       child: TextField(

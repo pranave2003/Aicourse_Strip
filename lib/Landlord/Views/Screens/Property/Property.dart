@@ -285,8 +285,8 @@ class _PropertyState extends State<Property> {
                                             ownerName: property.ownerName ?? '',
                                             ownerPhone:
                                                 property.ownerPhone ?? '',
-                                            ownershipProof:
-                                                property.ownershipProof ?? '',
+                                            propertyTotal:
+                                                property.propertyTotal ?? '',
                                             parking: property.parking ?? '',
                                             billStatus:
                                                 property.billStatus ?? '',
