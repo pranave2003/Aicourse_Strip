@@ -39,9 +39,11 @@ class BookingformpageScreenWrapper extends StatelessWidget {
 
 
 class BookingFormPage extends StatefulWidget {
+
   final String? propertyName;
   final String? tokenAmount;
   final String? propertyImageURL;
+
 
   const BookingFormPage({super.key,this.propertyName,this.tokenAmount, required this. propertyImageURL});
 
@@ -102,6 +104,7 @@ class _BookingFormPageState extends State<BookingFormPage> {
                       _buildNameDisplay(user.name.toString()),
                       _buildEmailDisplay(user.email.toString()),
                       _buildPhoneDisplay(user.phone.toString()),
+                      _buildDatePickerField(context),
                       _buildDatePickerField(context),
                     ],
                   ),
