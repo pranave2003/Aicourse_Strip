@@ -87,7 +87,7 @@ class BachelorsDetailsOverall extends StatelessWidget {
                                 SelectionBox(
                                   label:
                                       "Knowledge About \n Application Deadlines",
-                                  value: state.selections["Options"] ??
+                                  value: state.selections["selectedAnswer"] ??
                                       "Not Selected",
                                 ),
                               ],

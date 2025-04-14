@@ -102,18 +102,18 @@ class Document_upload extends StatelessWidget {
                       ),
                       university.Country != "India"
                           ? UploadTile(
-                              title: "Travel @Emigration",
-                              uploaded: TravelandEmigration != null,
-                              fileUrl: TravelandEmigration,
-                              onTap: () async {
-                                final url = await _uploadFile("englishTest");
-                                if (url != null) {
-                                  context
-                                      .read<DocumentBloc>()
-                                      .add(UploadEnglishTest(url));
-                                }
-                              },
-                            )
+                        title: "Travel @Emigration",
+                        uploaded: TravelandEmigration != null,
+                        fileUrl: TravelandEmigration,
+                        onTap: () async {
+                          final url = await _uploadFile("englishTest");
+                          if (url != null) {
+                            context
+                                .read<DocumentBloc>()
+                                .add(UploadEnglishTest(url));
+                          }
+                        },
+                      )
                           : SizedBox(),
                       const SizedBox(height: 20),
                       BlocBuilder<AuthBloc, AuthState>(
@@ -128,60 +128,71 @@ class Document_upload extends StatelessWidget {
                                 if (state is addapplicationAddSuccessstate) {
                                   Navigator.push(context, MaterialPageRoute(
                                     builder: (context) {
-                                      return SuccessScreen();
+                                      return SuccessScreenwrapper(
+                                        university: university,
+                                      );
                                     },
                                   ));
                                 }
                               },
                               builder: (context, state) {
-                                return ElevatedButton(
-                                  onPressed: () {
-                                    Applicationmodel application =
-                                        Applicationmodel(
-                                      Universityname: university.Universityname,
-                                      UniversityDescription:
-                                          university.Description,
-                                      collagename: university.Collegename,
-                                      Coursename: university.Course_offered,
-                                      status: "0",
-                                      Ban: "0",
-                                      Country: university.Country,
-                                      Degree_offered: university.Degree_offered,
-                                      collagecode: university.collagecode,
-                                      uaser_uid: userData.uid,
-                                      username: userData.name,
-                                      userphone: userData.phone,
-                                      userstate: userData.state,
-                                          Gender: userData.Gender,
-                                      usercountry: userData.Country,
-                                      userprofilephoto: userData.image,
-                                      userphone_number: userData.phone,
-                                      useremail: userData.email,
-                                      Universityid: university.Universityid,
-                                      Education_doc_url: Education,
-                                      Sop_doc_url: sopUrl,
-                                      Transcript_doc_Url: transcriptUrl,
-                                      Travel_doc_url: TravelandEmigration, applicationid: '',
-                                    );
-                                    context.read<ApplicationBloc>().add(
-                                        Applicationaddevent(
-                                            application: application));
-                                  },
-                                  style: ElevatedButton.styleFrom(
-                                    backgroundColor: Colors.blue,
-                                    minimumSize: Size(double.infinity, 50),
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(8),
-                                    ),
-                                  ),
-                                  child: state is addapplicationloadingstate
-                                      ? Loading_Widget()
-                                      : Text(
-                                          'Apply Now',
-                                          style: TextStyle(color: Colors.white),
-                                        ),
-                                );
-                              },
+                                 if(sopUrl != null && transcriptUrl != null  && Education != null  ) {
+                                   return
+                                   ElevatedButton
+                                     (
+                                     onPressed: () {
+                                       Applicationmodel application =
+                                       Applicationmodel(
+                                         Universityname: university
+                                             .Universityname,
+                                         UniversityDescription:
+                                         university.Description,
+                                         collagename: university.Collegename,
+                                         Coursename: university.Course_offered,
+                                         status: "0",
+                                         Ban: "0",
+                                         Country: university.Country,
+                                         Degree_offered: university
+                                             .Degree_offered,
+                                         collagecode: university.collagecode,
+                                         uaser_uid: userData.uid,
+                                         username: userData.name,
+                                         userphone: userData.phone,
+                                         userstate: userData.state,
+                                         Gender: userData.Gender,
+                                         usercountry: userData.Country,
+                                         userprofilephoto: userData.image,
+                                         userphone_number: userData.phone,
+                                         useremail: userData.email,
+                                         Universityid: university.Universityid,
+                                         Education_doc_url: Education,
+                                         Sop_doc_url: sopUrl,
+                                         Transcript_doc_Url: transcriptUrl,
+                                         Travel_doc_url: TravelandEmigration,
+                                         applicationid: '',
+                                       );
+                                       context.read<ApplicationBloc>().add(
+                                           Applicationaddevent(
+                                               application: application));
+                                     },
+                                     style: ElevatedButton.styleFrom(
+                                       backgroundColor: Colors.blue,
+                                       minimumSize: Size(double.infinity, 50),
+                                       shape: RoundedRectangleBorder(
+                                         borderRadius: BorderRadius.circular(8),
+                                       ),
+                                     ),
+                                     child: state is addapplicationloadingstate
+                                         ? Loading_Widget()
+                                         : Text(
+                                       'Apply Now',
+                                       style: TextStyle(color: Colors.white),
+                                     ),
+                                   );
+                                   SizedBox();
+                                 }
+                                 return SizedBox();
+                                 },
                             );
                           }
                           return SizedBox();

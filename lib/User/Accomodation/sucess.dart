@@ -1,40 +1,32 @@
 import 'dart:async';
-import 'package:course_connect/Controller/Bloc/University_block/university_bloc.dart';
+import 'package:course_connect/Controller/Bloc/Booking/Booking_model/BookingModel.dart';
+import 'package:course_connect/Controller/Bloc/Property/Property/Property_Auth/Property_Model/PropertyModel.dart';
+import 'package:course_connect/User/Sreens/BottomNavigation/Bottom_nav2.dart';
 import 'package:flutter/material.dart';
 import 'package:course_connect/User/Sreens/Home/homepage.dart';
 import 'package:course_connect/Widget/Constands/colors.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../Controller/Bloc/University_block/University_model/University_model.dart';
-import '../../Controller/Bloc/User_Authbloc/auth_bloc.dart';
 import '../Sreens/BottomNavigation/Bottom_Nav.dart';
-class SuccessScreenwrapper extends StatelessWidget {
-  const SuccessScreenwrapper({super.key, required this.university});
-  final University_model university;
+class SuccessScreenwrapper2 extends StatelessWidget {
+  const SuccessScreenwrapper2({super.key, required this.Booking});
+  final Bookingmodel Booking;
 
   @override
   Widget build(BuildContext context) {
-    return SuccessScreen(
-      university: university,
+    return Success(
+      // Booking: Booking,
     );
   }
 }
 
-
-class SuccessScreen extends StatefulWidget {
-  const SuccessScreen({super.key, required this.university});
-
-  final University_model university;
-
+class Success extends StatefulWidget {
   @override
-  _SuccessScreenState createState() => _SuccessScreenState();
+  _SuccessState createState() => _SuccessState();
 }
 
-
-class _SuccessScreenState extends State<SuccessScreen> {
+class _SuccessState extends State<Success> {
   int _seconds = 10;
   Timer? _timer;
-
 
   @override
   void initState() {
@@ -97,14 +89,13 @@ class _SuccessScreenState extends State<SuccessScreen> {
               ),
               SizedBox(height: 10),
               Text(
-                "Your application to ${widget.university.Universityname} is successful. You will get a notification after the confirmation.",
+                "Your Booking is Confirmed",
                 textAlign: TextAlign.center,
-                style: const TextStyle(
+                style: TextStyle(
                   fontSize: 16,
                   color: Colors.black54,
                 ),
               ),
-
               SizedBox(height: 30),
               Text(
                 "Redirecting in $_seconds seconds...",
@@ -120,7 +111,7 @@ class _SuccessScreenState extends State<SuccessScreen> {
                     Navigator.pushReplacement(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => BottomNavWrapper())); // R
+                            builder: (context) => Bottom_nav2())); // R
                   },
                   child: Container(
                     height: 51,

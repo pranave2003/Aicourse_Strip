@@ -20,6 +20,15 @@ class _Maters_academicState extends State<Maters_academic> {
     "GRE", "GMAT", "GATE", "IIT JAM", "NEET", "LSAT", "TEST NOT TAKEN"
   ];
 
+  final Map<String, String> testScoreRanges = {
+    "GRE": "130 - 170",
+    "GMAT": "200 - 800",
+    "GATE": "0 - 100",
+    "IIT JAM": "0 - 100",
+    "NEET": "0 - 720",
+    "LSAT": "120 - 180",
+  };
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -74,7 +83,7 @@ class _Maters_academicState extends State<Maters_academic> {
                       setState(() {
                         selectedIndex = index;
                         selectedAcademic = englishTests[index];
-                        scoreController.clear(); // Clear input on selection change
+                        scoreController.clear();
                       });
                     },
                     child: Container(
@@ -104,7 +113,7 @@ class _Maters_academicState extends State<Maters_academic> {
               Column(
                 children: [
                   Text(
-                    "Enter Your ${selectedAcademic} Score",
+                    "Enter Your $selectedAcademic Score",
                     style: const TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.bold,
@@ -114,21 +123,35 @@ class _Maters_academicState extends State<Maters_academic> {
                   const SizedBox(height: 10),
                   SizedBox(
                     width: 200,
-                    child: TextFormField(
-                      controller: scoreController,
-                      keyboardType: TextInputType.number,
-                      decoration: InputDecoration(
-                        hintText: "Score",
-                        hintStyle: const TextStyle(color: Colors.black, fontSize: 18),
-                        enabledBorder: const UnderlineInputBorder(
-                          borderSide: BorderSide(color: Colors.black),
+                    child: Column(
+                      children: [
+                        TextFormField(
+                          controller: scoreController,
+                          keyboardType: TextInputType.number,
+                          decoration: InputDecoration(
+                            hintText: "Score",
+                            hintStyle: const TextStyle(color: Colors.black, fontSize: 18),
+                            enabledBorder: const UnderlineInputBorder(
+                              borderSide: BorderSide(color: Colors.black),
+                            ),
+                            focusedBorder: const UnderlineInputBorder(
+                              borderSide: BorderSide(color: Colors.black, width: 1.5),
+                            ),
+                          ),
+                          textAlign: TextAlign.center,
+                          style: const TextStyle(color: Colors.black, fontSize: 18),
                         ),
-                        focusedBorder: const UnderlineInputBorder(
-                          borderSide: BorderSide(color: Colors.black, width: 1.5),
-                        ),
-                      ),
-                      textAlign: TextAlign.center,
-                      style: const TextStyle(color: Colors.black, fontSize: 18),
+                        const SizedBox(height: 5),
+                        if (testScoreRanges.containsKey(selectedAcademic!))
+                          Text(
+                            "Valid Range: ${testScoreRanges[selectedAcademic]}",
+                            style: const TextStyle(
+                              fontSize: 14,
+                              color: Colors.redAccent,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                      ],
                     ),
                   ),
                 ],
@@ -161,7 +184,6 @@ class _Maters_academicState extends State<Maters_academic> {
                     return;
                   }
 
-                  // Validation for each test
                   if (selectedAcademic == "GRE" && (score < 130 || score > 170)) {
                     ScaffoldMessenger.of(context).showSnackBar(
                       const SnackBar(content: Text("GRE score must be between 130 - 170.")),

@@ -101,7 +101,7 @@ class _ProfileState extends State<Profile> {
                             context,
                             MaterialPageRoute(
                                 builder: (context) => EditProfilePage(
-                                    image: state.Userdata.image)),
+                                    image: state.Userdata.image.toString())),
                           );
                         },
                         style: ElevatedButton.styleFrom(

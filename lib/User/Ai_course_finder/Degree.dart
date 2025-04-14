@@ -1,6 +1,7 @@
 import 'package:course_connect/User/Ai_course_finder/Bachelors.dart/BachelorsEducation.dart';
 import 'package:course_connect/User/Ai_course_finder/MBA.dart/MBA_education.dart';
 import 'package:course_connect/User/Ai_course_finder/Masters.dart/Masters_education.dart';
+import 'package:course_connect/Widget/Constands/colors.dart';
 import 'package:flutter/material.dart';
 
 class Degree extends StatefulWidget {
@@ -125,7 +126,7 @@ class _DegreeState extends State<Degree> {
                   );
                 }),
               ),
-              const SizedBox(height: 30),
+              const SizedBox(height: 280),
 
               // Continue Button with Validation
               InkWell(
@@ -147,10 +148,11 @@ class _DegreeState extends State<Degree> {
                   }
                 },
                 child: Container(
-                  height: 50,
-                  width: 200,
+                  margin: const EdgeInsets.only(bottom: 20),
+                  height: 51,
+                  width: 231,
                   decoration: BoxDecoration(
-                    color: Colors.blue,
+                    color: blueColor,
                     borderRadius: BorderRadius.circular(30),
                   ),
                   child: const Center(

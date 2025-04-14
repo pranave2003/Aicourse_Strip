@@ -4,7 +4,6 @@ import 'package:course_connect/User/Ai_course_finder/Masters.dart/Maters_academi
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
 import '../../../Controller/Bloc/selection_cubit.dart';
 
 class Masters_Courses extends StatefulWidget {
@@ -51,6 +50,33 @@ class _Masters_CoursesState extends State<Masters_Courses> {
     "MSc in Industrial Engineering"
   ];
 
+  // For storing filtered list based on search query
+  List<String> filteredCourses = [];
+  TextEditingController searchController = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    filteredCourses = courses; // Initially display all courses
+    searchController.addListener(_filterCourses); // Add listener to the search field
+  }
+
+  // Function to filter courses based on search query
+  void _filterCourses() {
+    String query = searchController.text.toLowerCase();
+    setState(() {
+      filteredCourses = courses.where((course) {
+        return course.toLowerCase().contains(query); // Case-insensitive search
+      }).toList();
+    });
+  }
+
+  @override
+  void dispose() {
+    searchController.dispose(); // Dispose the controller when the widget is removed
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -88,6 +114,7 @@ class _Masters_CoursesState extends State<Masters_Courses> {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16),
               child: TextFormField(
+                controller: searchController,
                 decoration: InputDecoration(
                   hintText: "Search Course",
                   prefixIcon: Icon(Icons.search),
@@ -100,7 +127,7 @@ class _Masters_CoursesState extends State<Masters_Courses> {
             Expanded(
               child: ListView.builder(
                 padding: EdgeInsets.symmetric(horizontal: 20),
-                itemCount: courses.length, // Number of courses
+                itemCount: filteredCourses.length, // Use filtered list for courses
                 itemBuilder: (context, index) {
                   bool isSelected = selectedIndex == index;
                   return GestureDetector(
@@ -111,7 +138,7 @@ class _Masters_CoursesState extends State<Masters_Courses> {
                           selectedCourse = null;
                         } else {
                           selectedIndex = index;
-                          selectedCourse = courses[index];
+                          selectedCourse = filteredCourses[index];
                         }
                       });
                     },
@@ -131,7 +158,7 @@ class _Masters_CoursesState extends State<Masters_Courses> {
                               setState(() {
                                 if (value == true) {
                                   selectedIndex = index;
-                                  selectedCourse = courses[index];
+                                  selectedCourse = filteredCourses[index];
                                 } else {
                                   selectedIndex = null;
                                   selectedCourse = null;
@@ -143,7 +170,7 @@ class _Masters_CoursesState extends State<Masters_Courses> {
                           ),
                           SizedBox(width: 10),
                           Text(
-                            courses[index],
+                            filteredCourses[index], // Display filtered course
                             style: TextStyle(
                               fontWeight: FontWeight.bold,
                               color: isSelected ? Colors.white : Colors.black,

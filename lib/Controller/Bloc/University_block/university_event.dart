@@ -48,8 +48,10 @@ class University_Edit_Event extends UniversityEvent {
 }
 
 class FetchCourseDetailsById extends UniversityEvent {
+  final String? searchQuery;
+
   final String? CourseUniversity_id;
-  FetchCourseDetailsById({required this.CourseUniversity_id});
+  FetchCourseDetailsById({required this.CourseUniversity_id, required this.searchQuery});
 }
 
 /**/

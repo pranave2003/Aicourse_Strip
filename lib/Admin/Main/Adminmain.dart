@@ -2,6 +2,7 @@ import 'package:course_connect/Admin/View/Screens/ApplicationView/ViewApplicatio
 import 'package:course_connect/Admin/View/Screens/Auth/AdminLogin.dart';
 import 'package:course_connect/Admin/View/Screens/Feedback/FeedbackView.dart';
 import 'package:course_connect/Controller/Bloc/Applycourse/application_bloc.dart';
+import 'package:course_connect/Controller/Bloc/Property/Property/Property_auth_block.dart';
 import 'package:course_connect/Controller/Bloc/University_block/university_bloc.dart';
 import 'package:course_connect/Widget/Constands/colors.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -42,6 +43,9 @@ class MyApp extends StatelessWidget {
         BlocProvider<ApplicationBloc>(
           create: (context) =>
               ApplicationBloc()..add(FetchApplication(searchQuery: null)),
+        ), BlocProvider<PropertyAuthBlock>(
+          create: (context) =>
+          PropertyAuthBlock()..add(FetchProperty(searchQuery: null)),
         ),
       ],
 

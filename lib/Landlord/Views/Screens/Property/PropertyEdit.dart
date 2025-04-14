@@ -685,15 +685,7 @@ class _PropertyEditState extends State<PropertyEdit> {
                           })),
                         ],
                       ),
-                      SizedBox(height: 10),
-                      Text("Upload Ownership Proof:",
-                          style: TextStyle(
-                              fontSize: 16, fontWeight: FontWeight.bold)),
-                      SizedBox(height: 20),
-                      ElevatedButton(
-                          onPressed: () {}, child: Text("Upload Document")),
-                      SizedBox(height: 10),
-                      SizedBox(height: 20),
+
                     ],
                   ),
                 ),

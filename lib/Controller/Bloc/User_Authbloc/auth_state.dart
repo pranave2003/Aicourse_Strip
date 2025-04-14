@@ -57,7 +57,11 @@ class ProfileImageInitial extends AuthState {}
 class ProfileImageLoading extends AuthState {}
 
 class ProfileImageSuccess extends AuthState {
+  final String image;
+
+  ProfileImageSuccess(this.image);
 }
+
 
 class ProfileImageFailure extends AuthState {
   final String error;

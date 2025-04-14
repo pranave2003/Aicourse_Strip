@@ -1,4 +1,3 @@
-import 'package:course_connect/Admin/View/Screens/Landlord/New_Landlords.dart';
 import 'package:course_connect/Controller/Bloc/Landloard_auth/landloard_auth_bloc.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -6,7 +5,6 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../Controller/Bloc/Landloard_auth/LandloardModel/LandloardModel.dart';
-import '../../../../Widget/Constands/CustomTextfield.dart';
 import '../../../../Widget/Constands/Loading.dart';
 
 class Landlordsignupwrapper extends StatelessWidget {
@@ -20,6 +18,7 @@ class Landlordsignupwrapper extends StatelessWidget {
     );
   }
 }
+String idproofimage = '1';
 
 class Signup extends StatefulWidget {
   @override
@@ -71,6 +70,8 @@ class _SignupState extends State<Signup> {
         Adress: _addressController.text,
         password: passwordController.text,
         Universityname: selectedUniversity,
+        idproofimage: idproofimage, // ✅ now the uploaded URL will be passed
+
       );
 
       // Trigger the sign-up event
@@ -285,13 +286,77 @@ class _SignupState extends State<Signup> {
                                   : null,
                             ),
                             SizedBox(height: 10),
-                            Text(
-                                "Government-issued ID (Passport, Driver’s License, etc.)"),
-                            SizedBox(height: 10),
-                            ElevatedButton(
-                              onPressed: () {},
-                              child: Text("Choose File"),
+                            BlocConsumer<LandloardAuthBloc, LandloardAuthState>(
+                              listener: (context, state) {
+                                if (state is Imageuploadedurl) {
+                                  setState(() {
+                                    idproofimage = state.Imageurl;
+                                  });
+                                }
+                              },
+                              builder: (context, state) {
+                                String? imageUrl;
+                                if (state is Imageuploadedurl) {
+                                  imageUrl = state.Imageurl;
+                                }
+
+                                return Card(
+                                  child: Container(
+                                    height: 100,
+                                    width: 300,
+                                    decoration: BoxDecoration(
+                                      border: Border.all(
+                                        color: state is Imageuploadedurl ? Colors.green : Colors.red,
+                                      ),
+                                      color: Colors.white,
+                                    ),
+                                    child: Row(
+                                      children: [
+                                        Padding(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: ClipRRect(
+                                            borderRadius: BorderRadius.circular(10),
+                                            child: imageUrl != null && imageUrl.isNotEmpty
+                                                ? Image.network(
+                                              imageUrl,
+                                              width: 100,
+                                              height: 100,
+                                              fit: BoxFit.fill,
+                                              errorBuilder: (context, error, stackTrace) {
+                                                return Container(
+                                                  width: 100,
+                                                  height: 100,
+                                                  color: Colors.grey[300],
+                                                  child: Icon(Icons.image_not_supported,
+                                                      size: 50, color: Colors.grey[600]),
+                                                );
+                                              },
+                                            )
+                                                : Container(
+                                              width: 100,
+                                              height: 100,
+                                              color: Colors.grey[300],
+                                              child: Icon(Icons.image, size: 10, color: Colors.grey[600]),
+                                            ),
+                                          ),
+                                        ),
+                                        TextButton(
+                                          onPressed: () {
+                                            context.read<LandloardAuthBloc>().add(Uploadidproofphoto());
+                                          },
+                                          child: state is ImageuploadLoading
+                                              ? Loading_Widget()
+                                              : (state is Imageuploadedurl
+                                              ? Text("Uploaded ✅", style: TextStyle(color: Colors.green))
+                                              : Text("Upload image")),
+                                        )
+                                      ],
+                                    ),
+                                  ),
+                                );
+                              },
                             ),
+
                             SizedBox(height: 20),
                             const SizedBox(height: 20),
                             const SizedBox(height: 20),

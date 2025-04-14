@@ -373,7 +373,7 @@ class _HomepageState extends State<Homepage> {
                                     // Return "No data found" if txhe list is empty
                                     return Center(
                                       child: Text(
-                                        "No university courses available for the given name.",
+                                        "No university  available for the given name.",
                                         style: TextStyle(
                                             fontSize: 16,
                                             fontWeight: FontWeight.bold,

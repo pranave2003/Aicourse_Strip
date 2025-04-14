@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:course_connect/Controller/Bloc/Landloard_auth/landloard_auth_bloc.dart';
 import 'package:course_connect/Widget/Constands/Loading.dart';
 import 'package:flutter/material.dart';
@@ -60,7 +61,7 @@ class _Accept_LandloardState extends State<Accept_Landloard> {
               scrollDirection: Axis.horizontal,
               child: DataTable(
                 headingRowColor: MaterialStateColor.resolveWith(
-                    (states) => Colors.grey.shade300),
+                        (states) => Colors.grey.shade300),
                 columnSpacing: 45,
                 dataRowMaxHeight: 100,
                 decoration: BoxDecoration(color: Colors.white),
@@ -76,7 +77,7 @@ class _Accept_LandloardState extends State<Accept_Landloard> {
                 ],
                 rows: List.generate(
                   state.landloareds.length,
-                  (index) {
+                      (index) {
                     final landlord = state.landloareds[index];
                     return DataRow(
                       cells: [
@@ -88,11 +89,52 @@ class _Accept_LandloardState extends State<Accept_Landloard> {
                         DataCell(SizedBox(
                           width: 200,
                           child:
-                              Text(landlord.Adress.toString(), softWrap: true),
+                          Text(landlord.Adress.toString(), softWrap: true),
                         )),
                         DataCell(Text(landlord.gender.toString())),
-                        DataCell(Text(landlord.Onesignal_id.toString())),
-                        DataCell(Row(
+                        DataCell(
+                          Padding(
+                            padding: const EdgeInsets.symmetric(
+                                vertical: 10.0),
+                            child: Container(
+                              height: 80,
+                              child: ClipRRect(
+                                borderRadius: BorderRadius.circular(
+                                    5), // Rounded corners for image
+                                child: CachedNetworkImage(
+                                  imageUrl:landlord.idproofimage
+                                      .toString(),
+                                  width: 100, // Adjusted width
+                                  height: 50, // Adjusted height
+                                  fit: BoxFit.cover,
+                                  placeholder: (context, url) =>
+                                      Container(
+                                        width: 50,
+                                        height: 50,
+                                        color: Colors.grey[
+                                        300], // Placeholder background
+                                        child: Center(
+                                          child:
+                                          Loading_Widget(), // Loading indicator
+                                        ),
+                                      ),
+                                  errorWidget: (context, url, error) =>
+                                      Container(
+                                        width: 50,
+                                        height: 50,
+                                        color: Colors.grey[
+                                        300], // Placeholder background
+                                        child: Icon(
+                                          Icons.image_not_supported,
+                                          size: 50,
+                                          color: Colors.grey[600],
+                                        ),
+                                      ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),                           DataCell(Row(
                           children: [
                             OutlinedButton(
                               style: OutlinedButton.styleFrom(

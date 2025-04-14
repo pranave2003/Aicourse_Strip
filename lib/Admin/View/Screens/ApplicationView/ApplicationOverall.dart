@@ -1,9 +1,11 @@
+import 'package:course_connect/User/Apply/SuccessScreen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../Controller/Bloc/Applycourse/application_bloc.dart';
 import '../../../../Widget/Constands/Loading.dart';
+import 'ViewApplications.dart';
 
 class AdminInfoWrapper2 extends StatelessWidget {
   const AdminInfoWrapper2({super.key, required this.applicationid});
@@ -207,6 +209,12 @@ class ApplicationOverall extends StatelessWidget {
                                         ApplicationState.applicationid,
                                     Status: "1"));
 
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) =>  Viewapplicationsmainwrapper()),
+                            );
+
                             // Approve logic
                           },
                           icon: const Icon(Icons.check_circle_outline),
@@ -221,13 +229,17 @@ class ApplicationOverall extends StatelessWidget {
                           ),
                         ),
                         ElevatedButton.icon(
-
                           onPressed: () {
                             context.read<ApplicationBloc>().add(
                                 AcceptOrRejectApplication(
                                     applicationid:
                                         ApplicationState.applicationid,
                                     Status: "2"));
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) =>  ViewApplications()),
+                            );
                           },
                           icon: const Icon(Icons.cancel_outlined),
                           label: const Text("Reject"),

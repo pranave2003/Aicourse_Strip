@@ -110,7 +110,7 @@ class _CourseState extends State<Course> {
                               builder: (context) {
                                 return UniversityInfoScreenWrapper(
                                   universityid: university.Universityid,
-                                );
+                                  university: university.Universityname,                                );
                               },
                             ));
                           },

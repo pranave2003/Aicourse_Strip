@@ -90,34 +90,36 @@ class _PropertyDetailsPageState extends State<PropertyDetailsPage> {
             List<Map<String, dynamic>> serviceList = [
               {
                 "icon": Icons.local_parking,
-                "name": "Parking : ${property.parking}"
+                "name": "Parking:${property.parking}"
               },
+
               {
                 "icon": Icons.chair_alt_outlined,
                 "name": "Furnishing: ${property.furnishingOptions}"
               },
               {
                 "icon": Icons.bed_outlined,
-                "name": "Bedroom: ${property.bedroom}"
+                "name": "${property.bedroom} Bedroom"
               },
-              {"icon": Icons.kitchen, "name": "kitchen: ${property.kitchen}"},
-              {"icon": Icons.bathtub, "name": "Bathroom: ${property.bathroom}"},
+              {"icon": Icons.kitchen,  "name": "${property.kitchen} kitchen"},
+              {"icon": Icons.bathtub, "name": "${property.bathroom} Bathroom" },
               {
                 "icon": Icons.book,
-                "name": "Bills included: ${property.billStatus}"
+                "name": "Bills included:\n  ${property.billStatus}"
               },
               // Add more services as needed
             ];
             List<Map<String, dynamic>> featureList = [
               {
                 "icon": Icons.king_bed,
-                "name": "${property.bedroom.toString()} Bedroom"
+                "name": "${property.bedroom} Bedroom"
               },
+
               {
                 "icon": Icons.smoke_free,
-                "name": "Smoking: ${property.smoking}"
+                "name": "Smoking Allowed:\n  ${property.smoking}"
               },
-              {"icon": Icons.pets, "name": "Pets: ${property.pets}"},
+              {"icon": Icons.pets,  "name": "Pets Allowed:\n  ${property.pets}"},
             ];
 
             return SingleChildScrollView(
@@ -209,7 +211,7 @@ class _PropertyDetailsPageState extends State<PropertyDetailsPage> {
                           ],
                         ),
                         Text(
-                          property.tokenAmount ?? 'Property Name',
+                          property.tokenAmount ?? '/week',
                           style: TextStyle(
                               fontSize: 10,
                               fontWeight: FontWeight.bold,
@@ -298,11 +300,12 @@ class _PropertyDetailsPageState extends State<PropertyDetailsPage> {
 
                     const SizedBox(height: 8),
                     _buildDetailText("Amount per Week",
-                        "£${property.propertyAmountWeek ?? 'N/A'}"),
+                        "${property.propertyAmountWeek ?? 'N/A'}"),
                     _buildDetailText("Amount per Week",
-                        "£${property.propertyAmountMonth ?? 'N/A'}"),
+                        "${property.propertyAmountMonth ?? 'N/A'}"),
                     _buildDetailText(
-                        "Token Amount", property.tokenAmount ?? 'N/A'), _buildDetailText(
+                        "Token Amount", property.tokenAmount ?? 'N/A'),
+                    _buildDetailText(
                         "propertyTotal", property.propertyTotal ?? 'N/A'),
                     _buildDetailText(
                         "Minimum Stay", property.minimumStay ?? 'N/A'),
@@ -355,8 +358,8 @@ class _PropertyDetailsPageState extends State<PropertyDetailsPage> {
                         "Owner Name", "${property.ownerName ?? 'N/A'}"),
                     _buildDetailText(
                         "Phone Number", "${property.ownerPhone ?? 'N/A'}"),
-                    _buildDetailText(
-                        "Total Property Amount", property.propertyTotal ?? 'N/A'),
+                    _buildDetailText("Total Property Amount",
+                        property.propertyTotal ?? 'N/A'),
 
                     const SizedBox(height: 20),
 
@@ -371,11 +374,16 @@ class _PropertyDetailsPageState extends State<PropertyDetailsPage> {
                               builder: (context) =>
                                   BookingformpageScreenWrapper(
                                 propertyId: property.propertyId,
-                                userid_global:
-                                    FirebaseAuth.instance.currentUser!.uid,
+                                Landloard_id: property.LandlordId,
+                                landloardname: property.ownerName,
+                                landloardphone: property.ownerName,
                                 propertyName: property.propertyName,
                                 tokenAmount: property.tokenAmount,
-                                      propertyImageURL:property.propertyImageURL![0], country: property.country,state: property.state,city:property.city,propertyTotal: property.propertyTotal,
+                                propertyImageURL: property.propertyImageURL![0],
+                                country: property.country,
+                                state: property.state,
+                                city: property.city,
+                                propertyTotal: property.propertyTotal,
                               ),
                             ),
                           );

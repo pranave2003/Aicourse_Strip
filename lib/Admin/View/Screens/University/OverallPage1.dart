@@ -11,7 +11,7 @@ class AdminInfoWrapper extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider<UniversityBloc>(
       create: (context) => UniversityBloc()
-        ..add(FetchCourseDetailsById(CourseUniversity_id: universityid)),
+        ..add(FetchCourseDetailsById(CourseUniversity_id: universityid, searchQuery: '0')),
       child: const OverallPage1(), // Use const for better performance
     );
   }

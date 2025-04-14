@@ -24,6 +24,30 @@ class ViewApplications extends StatefulWidget {
   @override
   State<ViewApplications> createState() => _ViewApplicationsState();
 }
+String _getStatusText(String? status) {
+  switch (status) {
+    case '1':
+      return 'Approved';
+    case '2':
+      return 'Rejected';
+    case '0':
+    default:
+      return 'Pending';
+  }
+}
+
+Color _getStatusColor(String? status) {
+  switch (status) {
+    case '1':
+      return Colors.green;
+    case '2':
+      return Colors.red;
+    case '0':
+    default:
+      return Colors.orange;
+  }
+}
+
 
 class _ViewApplicationsState extends State<ViewApplications> {
   @override
@@ -178,11 +202,19 @@ class _ViewApplicationsState extends State<ViewApplications> {
                                       vertical: 0.0),
                                   child: Text(student.Coursename ?? ''),
                                 )),
-                                DataCell(Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                      vertical: 0.0),
-                                  child: Text(student.status ?? ''),
-                                )),
+                                DataCell(
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(vertical: 0.0),
+                                    child: Text(
+                                      _getStatusText(student.status),
+                                      style: TextStyle(
+                                        color: _getStatusColor(student.status),
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+
                                 DataCell(Row(
                                   children: <Widget>[
                                     IconButton(

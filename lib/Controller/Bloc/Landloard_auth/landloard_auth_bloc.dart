@@ -1,7 +1,12 @@
+import 'dart:io';
+
 import 'package:bloc/bloc.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:course_connect/Admin/View/Screens/Landlord/New_Landlords.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
+import 'package:flutter/foundation.dart';
 import 'package:meta/meta.dart';
 import 'LandloardModel/LandloardModel.dart';
 part 'landloard_auth_event.dart';
@@ -9,7 +14,10 @@ part 'landloard_auth_state.dart';
 
 final Lanloardid_global=FirebaseAuth.instance.currentUser!.uid;
 
-class LandloardAuthBloc extends Bloc<LandloardAuthEvent, LandloardAuthState> {
+class LandloardAuthBloc extends Bloc<LandloardAuthEvent, LandloardAuthState>
+{
+  final FirebaseStorage _firebaseStorage = FirebaseStorage.instance;
+
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
   LandloardAuthBloc() : super(LandloardAuthInitial()) {
@@ -57,6 +65,7 @@ class LandloardAuthBloc extends Bloc<LandloardAuthEvent, LandloardAuthState> {
               "dob": event.user.DOB,
               "place": event.user.Place,
               "address": event.user.Adress,
+              "idproofimage": event.user.idproofimage,
               "university": event.user.Universityname,
               "timestamp": DateTime.now(),
               "Onesignal_id": "playerId",
@@ -231,6 +240,49 @@ class LandloardAuthBloc extends Bloc<LandloardAuthEvent, LandloardAuthState> {
         emit(Acceptorrejectstate());
       } catch (e) {
         emit(AcceptorrejectErrorstate(e.toString()));
+      }
+    });
+    on<Uploadidproofphoto>((event, emit) async {
+      try {
+        emit(ImageuploadLoading());
+
+        // ✅ Open file picker
+        FilePickerResult? result = await FilePicker.platform.pickFiles(
+          type: FileType.image, // Pick only image files
+          withData: true, // Required for web
+        );
+
+        if (result == null) {
+          emit(ProfileImageFailure("No picked the image"));
+
+          print("No image selected.");
+          return; // User canceled selection
+        }
+
+        String fileName =
+            "Landloard/${DateTime.now().millisecondsSinceEpoch}.jpg";
+        Reference storageRef = _firebaseStorage.ref().child(fileName);
+        UploadTask uploadTask;
+
+        if (kIsWeb) {
+          // ✅ Web: Upload image as bytes
+          var imageData = result.files.first.bytes!;
+          uploadTask = storageRef.putData(imageData);
+        } else {
+          // ✅ Mobile: Upload image as a File
+          File imageFile = File(result.files.first.path!);
+          uploadTask = storageRef.putFile(imageFile);
+        }
+
+        // ✅ Wait for the upload to complete
+        TaskSnapshot snapshot = await uploadTask;
+        String downloadUrl = await snapshot.ref.getDownloadURL();
+        print("Uploaded Image URL: $downloadUrl");
+
+        emit(Imageuploadedurl(downloadUrl));
+      } catch (e) {
+        print("Error: $e");
+        emit(ProfileImageFailure("Failed to upload image"));
       }
     });
   }

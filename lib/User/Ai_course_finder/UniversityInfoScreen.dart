@@ -10,15 +10,16 @@ import '../Apply/Document_upload.dart';
 
 class UniversityInfoScreenWrapper extends StatelessWidget {
   const UniversityInfoScreenWrapper(
-      {super.key, required this.universityid, this.Established_date});
+      {super.key, required this.universityid, this.Established_date, this. university});
   final universityid;
   final Established_date;
+  final university;
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider<UniversityBloc>(
       create: (context) => UniversityBloc()
-        ..add(FetchCourseDetailsById(CourseUniversity_id: universityid)),
+        ..add(FetchCourseDetailsById(CourseUniversity_id: universityid, searchQuery: '0',)),
       child: UniversityInfoScreen(),
     );
   }
@@ -35,6 +36,16 @@ class _UniversityInfoScreenState extends State<UniversityInfoScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back),
+          onPressed: () => Navigator.pop(context),
+
+        ),
+        // title: Text(' ${university.Established_date'}', style: TextStyle(color: Colors.black)),
+        //   iconTheme: IconThemeData(color: Colors.black),
+        ),
+
       backgroundColor: Colors.white,
       // appBar: AppBar(
       //   backgroundColor: Colors.white,
@@ -60,7 +71,7 @@ class _UniversityInfoScreenState extends State<UniversityInfoScreen> {
               {"icon": Icons.star, "name": "QS Ranking: ${university.Rank}"},
               {
                 "icon": Icons.lock_clock,
-                "name": "Length: ${university.Duration}"
+                "name": "Duration:\n ${university.Duration}"
               },
               // Add more services as needed
             ];
@@ -75,7 +86,7 @@ class _UniversityInfoScreenState extends State<UniversityInfoScreen> {
                         borderRadius: BorderRadius.circular(10),
                         child: CachedNetworkImage(
                           imageUrl: university.UniversityimageURL.toString(),
-                          height: 200,
+                          height: 280,
                           width: double.infinity,
                           fit: BoxFit.cover,
                           placeholder: (context, url) =>
@@ -101,6 +112,12 @@ class _UniversityInfoScreenState extends State<UniversityInfoScreen> {
                                   color: Colors.white),
                             ),
                             Text(
+                              university.Universityname.toString(),
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.white,
+                                  backgroundColor: Colors.black45),
+                            ),Text(
                               university.Country.toString(),
                               style: TextStyle(
                                   fontWeight: FontWeight.bold,
@@ -221,50 +238,69 @@ class _UniversityInfoScreenState extends State<UniversityInfoScreen> {
                         ]),
                         _infoSection('Terms and Conditions',
                             [university.Terms_and_conditions.toString()]),
+                        // ... other code ...
+
                         Row(
                           children: [
                             Checkbox(
-                                value: _isAgreed,
-                                onChanged: (value) {
-                                  setState(() {
-                                    _isAgreed = value ?? false;
-                                  });
-                                }),
+                              value: _isAgreed,
+                              onChanged: (value) {
+                                setState(() {
+                                  _isAgreed = value ?? false;
+                                });
+                              },
+                            ),
                             Expanded(
                               child: Text(
-                                  'I agree with the terms and conditions',
-                                  style: TextStyle(color: Colors.black87)),
+                                'I agree with the terms and conditions',
+                                style: TextStyle(color: Colors.black87),
+                              ),
                             ),
                           ],
                         ),
                         InkWell(
                           onTap: () {
-                            // if (selectedOrganization != null) {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => Uploaddocumentwrapper(
-                                    university: university),
-                              ),
-                            );
-                            // print("fill all fields");
+                            if (_isAgreed) {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => Uploaddocumentwrapper(
+                                    university: university,
+                                  ),
+                                ),
+                              );
+                            } else {
+                              // Show a message to the user that they need to agree to the terms
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(
+                                  content: Text('You must agree to the terms and conditions to proceed.'),
+                                  duration: Duration(seconds: 2),
+                                ),
+                              );
+                            }
                           },
                           child: Container(
                             height: 51,
                             width: double.infinity,
                             decoration: BoxDecoration(
-                                color: blueColor,
-                                borderRadius: BorderRadius.circular(30)),
+                              color: blueColor,
+                              borderRadius: BorderRadius.circular(30),
+                            ),
                             child: Center(
-                                child: Text(
-                              "Apply Now",
-                              style: TextStyle(
+                              child: Text(
+                                "Apply Now",
+                                style: TextStyle(
                                   color: Colors.white,
                                   fontSize: 22,
-                                  fontWeight: FontWeight.bold),
-                            )),
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ),
                           ),
                         ),
+
+// ... other code ...
+
                       ],
                     ),
                   ),

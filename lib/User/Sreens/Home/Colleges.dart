@@ -7,8 +7,9 @@ import '../../../Widget/Constands/Loading.dart';
 import 'Course.dart';
 
 class Collages_Wrapper extends StatelessWidget {
-  const Collages_Wrapper({super.key, this.university});
+  const Collages_Wrapper({super.key, this.university,this.Universityname});
   final university;
+  final Universityname;
   @override
   Widget build(BuildContext context) {
     return BlocProvider<UniversityBloc>(
@@ -36,17 +37,19 @@ class _CollegesState extends State<Colleges> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        // backgroundColor: Colors.yellowAccent,
-        toolbarHeight: 80,
-        automaticallyImplyLeading: false,
-        title: Text(
-          "Colleges",
-          style: TextStyle(
-            color: Colors.black,
-            fontSize: 32,
-            fontWeight: FontWeight.bold,
-          ),
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back),
+          onPressed: () => Navigator.pop(context),
+
         ),
+    title: Text(
+    "Colleges",
+    style: TextStyle(
+    color: Colors.black,
+    fontSize: 32,
+    fontWeight: FontWeight.bold,
+    ),
+      ),
       ),
       body: Padding(
         padding: const EdgeInsets.all(10),

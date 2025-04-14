@@ -325,7 +325,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
               .update({"image": downloadUrl});
         }
 
-        emit(ProfileImageSuccess());
+        emit(ProfileImageSuccess( downloadUrl)); // ✅ This is correct now
       } catch (e) {
         print("Error: $e");
         emit(ProfileImageFailure("Failed to upload image"));

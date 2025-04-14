@@ -168,7 +168,7 @@ class _BachelorsEducationState extends State<BachelorsEducation> {
                   style: const TextStyle(color: Colors.black, fontSize: 18),
                 ),
               ),
-              const SizedBox(height: 50),
+              const SizedBox(height: 280),
               InkWell(
                 onTap: () {
                   double? percentage =

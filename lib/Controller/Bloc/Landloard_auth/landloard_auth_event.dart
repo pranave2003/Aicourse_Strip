@@ -47,3 +47,4 @@ class AcceptOrRejectLandloard extends LandloardAuthEvent {
   final String? Status;
   AcceptOrRejectLandloard({this.Landloaredid, this.Status});
 }
+class Uploadidproofphoto extends LandloardAuthEvent {}

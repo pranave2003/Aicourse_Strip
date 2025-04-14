@@ -382,7 +382,8 @@ class _UserSignupState extends State<UserSignup> {
   final TextEditingController _mobileController = TextEditingController();
   final TextEditingController _cityController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-  final TextEditingController _confirmPasswordController = TextEditingController();
+  final TextEditingController _confirmPasswordController =
+      TextEditingController();
 
   @override
   void dispose() {
@@ -424,7 +425,8 @@ class _UserSignupState extends State<UserSignup> {
     if (value == null || value.isEmpty) {
       return 'Please enter your email';
     }
-    final emailRegex = RegExp(r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$');
+    final emailRegex =
+        RegExp(r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$');
     if (!emailRegex.hasMatch(value)) {
       return 'Enter a valid email address';
     }
@@ -465,7 +467,8 @@ class _UserSignupState extends State<UserSignup> {
     return null;
   }
 
-  Widget buildDropdown(String hint, List<String> items, String? selectedValue, ValueChanged<String?> onChanged) {
+  Widget buildDropdown(String hint, List<String> items, String? selectedValue,
+      ValueChanged<String?> onChanged) {
     IconData getPrefixIcon(String hint) {
       switch (hint) {
         case "Gender":
@@ -508,7 +511,8 @@ class _UserSignupState extends State<UserSignup> {
       listener: (context, state) {
         if (state is Authenticated) {
           WidgetsBinding.instance.addPostFrameCallback((_) {
-            Navigator.pushNamedAndRemoveUntil(context, '/home', (route) => false);
+            Navigator.pushNamedAndRemoveUntil(
+                context, '/home', (route) => false);
           });
         }
         if (state is AuthenticatedError) {
@@ -529,7 +533,6 @@ class _UserSignupState extends State<UserSignup> {
                   children: [
                     Image.asset("assets/logo.png", width: 150),
                     const SizedBox(height: 20),
-
                     CustomTextForm(
                       prefixIcon: const Icon(Icons.person),
                       hintText: "Full Name",
@@ -537,7 +540,6 @@ class _UserSignupState extends State<UserSignup> {
                       validator: _validateName,
                     ),
                     const SizedBox(height: 15),
-
                     CustomTextForm(
                       prefixIcon: const Icon(Icons.email),
                       hintText: "Email",
@@ -546,7 +548,6 @@ class _UserSignupState extends State<UserSignup> {
                       keyboardType: TextInputType.emailAddress,
                     ),
                     const SizedBox(height: 15),
-
                     CustomTextForm(
                       prefixIcon: const Icon(Icons.phone),
                       hintText: "Mobile Number",
@@ -555,30 +556,34 @@ class _UserSignupState extends State<UserSignup> {
                       keyboardType: TextInputType.phone,
                     ),
                     const SizedBox(height: 15),
-
-                    buildDropdown("Gender", ["Male", "Female", "Other"], selectedGender, (value) {
+                    buildDropdown(
+                        "Gender", ["Male", "Female", "Other"], selectedGender,
+                        (value) {
                       setState(() {
                         selectedGender = value; // ✅ No reset here
                       });
                     }),
                     const SizedBox(height: 15),
-
-                    buildDropdown("Country", ["India", "Canada", "United States", "UK"], selectedCountry, (value) {
+                    buildDropdown(
+                        "Country",
+                        ["India", "Canada", "United States", "UK"],
+                        selectedCountry, (value) {
                       setState(() {
                         selectedCountry = value;
                         selectedState = null;
                       });
                     }),
                     const SizedBox(height: 15),
-
                     if (selectedCountry != null)
-                      buildDropdown("State", _getStatesForCountry(selectedCountry!), selectedState, (value) {
+                      buildDropdown(
+                          "State",
+                          _getStatesForCountry(selectedCountry!),
+                          selectedState, (value) {
                         setState(() {
                           selectedState = value;
                         });
                       }),
                     const SizedBox(height: 15),
-
                     CustomTextForm(
                       prefixIcon: const Icon(Icons.place_outlined),
                       hintText: "City",
@@ -586,7 +591,6 @@ class _UserSignupState extends State<UserSignup> {
                       validator: (value) => _validateField(value, 'City'),
                     ),
                     const SizedBox(height: 15),
-
                     CustomTextForm(
                       prefixIcon: const Icon(Icons.password),
                       hintText: "Password",
@@ -595,7 +599,6 @@ class _UserSignupState extends State<UserSignup> {
                       obscureText: true,
                     ),
                     const SizedBox(height: 15),
-
                     CustomTextForm(
                       prefixIcon: const Icon(Icons.password_sharp),
                       hintText: "Confirm Password",
@@ -604,9 +607,7 @@ class _UserSignupState extends State<UserSignup> {
                       obscureText: true,
                     ),
                     const SizedBox(height: 20),
-
                     if (state is Authloading) Loading_Widget(),
-
                     InkWell(
                       onTap: _registerUser,
                       child: Container(
@@ -629,7 +630,6 @@ class _UserSignupState extends State<UserSignup> {
                       ),
                     ),
                     const SizedBox(height: 20),
-
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
@@ -638,7 +638,8 @@ class _UserSignupState extends State<UserSignup> {
                           onPressed: () {
                             Navigator.push(
                               context,
-                              MaterialPageRoute(builder: (context) => UserLogin_auth()),
+                              MaterialPageRoute(
+                                  builder: (context) => UserLogin_auth()),
                             );
                           },
                           child: const Text("Sign In"),
@@ -659,38 +660,125 @@ class _UserSignupState extends State<UserSignup> {
     switch (country) {
       case "India":
         return [
-          "Andhra Pradesh", "Arunachal Pradesh", "Assam", "Bihar", "Chhattisgarh",
-          "Goa", "Gujarat", "Haryana", "Himachal Pradesh", "Jharkhand", "Karnataka",
-          "Kerala", "Madhya Pradesh", "Maharashtra", "Manipur", "Meghalaya", "Mizoram",
-          "Nagaland", "Odisha", "Punjab", "Rajasthan", "Sikkim", "Tamil Nadu",
-          "Telangana", "Tripura", "Uttar Pradesh", "Uttarakhand", "West Bengal"
+          "Andhra Pradesh",
+          "Arunachal Pradesh",
+          "Assam",
+          "Bihar",
+          "Chhattisgarh",
+          "Goa",
+          "Gujarat",
+          "Haryana",
+          "Himachal Pradesh",
+          "Jharkhand",
+          "Karnataka",
+          "Kerala",
+          "Madhya Pradesh",
+          "Maharashtra",
+          "Manipur",
+          "Meghalaya",
+          "Mizoram",
+          "Nagaland",
+          "Odisha",
+          "Punjab",
+          "Rajasthan",
+          "Sikkim",
+          "Tamil Nadu",
+          "Telangana",
+          "Tripura",
+          "Uttar Pradesh",
+          "Uttarakhand",
+          "West Bengal"
         ];
       case "Canada":
         return [
-          "Alberta", "British Columbia", "Manitoba", "New Brunswick", "Newfoundland and Labrador",
-          "Nova Scotia", "Ontario", "Prince Edward Island", "Quebec", "Saskatchewan",
-          "Northwest Territories", "Nunavut", "Yukon"
+          "Alberta",
+          "British Columbia",
+          "Manitoba",
+          "New Brunswick",
+          "Newfoundland and Labrador",
+          "Nova Scotia",
+          "Ontario",
+          "Prince Edward Island",
+          "Quebec",
+          "Saskatchewan",
+          "Northwest Territories",
+          "Nunavut",
+          "Yukon"
         ];
       case "United States":
         return [
-          "Alabama", "Alaska", "Arizona", "Arkansas", "California", "Colorado",
-          "Connecticut", "Delaware", "Florida", "Georgia", "Hawaii", "Idaho",
-          "Illinois", "Indiana", "Iowa", "Kansas", "Kentucky", "Louisiana",
-          "Maine", "Maryland", "Massachusetts", "Michigan", "Minnesota",
-          "Mississippi", "Missouri", "Montana", "Nebraska", "Nevada",
-          "New Hampshire", "New Jersey", "New Mexico", "New York", "North Carolina",
-          "North Dakota", "Ohio", "Oklahoma", "Oregon", "Pennsylvania",
-          "Rhode Island", "South Carolina", "South Dakota", "Tennessee", "Texas",
-          "Utah", "Vermont", "Virginia", "Washington", "West Virginia",
-          "Wisconsin", "Wyoming"
+          "Alabama",
+          "Alaska",
+          "Arizona",
+          "Arkansas",
+          "California",
+          "Colorado",
+          "Connecticut",
+          "Delaware",
+          "Florida",
+          "Georgia",
+          "Hawaii",
+          "Idaho",
+          "Illinois",
+          "Indiana",
+          "Iowa",
+          "Kansas",
+          "Kentucky",
+          "Louisiana",
+          "Maine",
+          "Maryland",
+          "Massachusetts",
+          "Michigan",
+          "Minnesota",
+          "Mississippi",
+          "Missouri",
+          "Montana",
+          "Nebraska",
+          "Nevada",
+          "New Hampshire",
+          "New Jersey",
+          "New Mexico",
+          "New York",
+          "North Carolina",
+          "North Dakota",
+          "Ohio",
+          "Oklahoma",
+          "Oregon",
+          "Pennsylvania",
+          "Rhode Island",
+          "South Carolina",
+          "South Dakota",
+          "Tennessee",
+          "Texas",
+          "Utah",
+          "Vermont",
+          "Virginia",
+          "Washington",
+          "West Virginia",
+          "Wisconsin",
+          "Wyoming"
         ];
       case "UK":
         return [
-          "England", "Scotland", "Wales", "Northern Ireland", "Guernsey",
-          "Jersey", "Isle of Man", "Anguilla", "Bermuda", "British Antarctic Territory",
-          "British Indian Ocean Territory", "British Virgin Islands", "Cayman Islands",
-          "Falkland Islands", "Montserrat", "Pitcairn Islands", "Saint Helena, Ascension and Tristan da Cunha",
-          "South Georgia and the South Sandwich Islands", "Sovereign Base Areas of Akrotiri and Dhekelia",
+          "England",
+          "Scotland",
+          "Wales",
+          "Northern Ireland",
+          "Guernsey",
+          "Jersey",
+          "Isle of Man",
+          "Anguilla",
+          "Bermuda",
+          "British Antarctic Territory",
+          "British Indian Ocean Territory",
+          "British Virgin Islands",
+          "Cayman Islands",
+          "Falkland Islands",
+          "Montserrat",
+          "Pitcairn Islands",
+          "Saint Helena, Ascension and Tristan da Cunha",
+          "South Georgia and the South Sandwich Islands",
+          "Sovereign Base Areas of Akrotiri and Dhekelia",
           "Turks and Caicos Islands"
         ];
       default:

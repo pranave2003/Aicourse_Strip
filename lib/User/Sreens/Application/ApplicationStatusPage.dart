@@ -18,6 +18,30 @@ class Viewapplicationsmainwrapper1 extends StatelessWidget {
     );
   }
 }
+String _getStatusText(String? status) {
+  switch (status) {
+    case '1':
+      return 'Approved';
+    case '2':
+      return 'Rejected';
+    case '0':
+    default:
+      return 'Pending';
+  }
+}
+
+Color _getStatusColor(String? status) {
+  switch (status) {
+    case '1':
+      return Colors.green;
+    case '2':
+      return Colors.red;
+    case '0':
+    default:
+      return Colors.orange;
+  }
+}
+
 
 class ApplicationStatusPage extends StatelessWidget {
   @override
@@ -107,6 +131,10 @@ class ApplicationStatusPage extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                Text(
+                  "Your Application to ${application.collagename} is ${_getStatusText(application.status)}",
+                  style: TextStyle(color: _getStatusColor(application.status),fontSize: 16,fontWeight: FontWeight.bold),
+                ),
                 Text("University: ${application.Universityname ?? 'N/A'}", style: TextStyle(fontWeight: FontWeight.bold)),
                 SizedBox(height: 5),
                 Text("Course: ${application.Coursename ?? 'N/A'}"),
@@ -114,11 +142,11 @@ class ApplicationStatusPage extends StatelessWidget {
                 Text("Country: ${application.Country ?? 'N/A'}"),
                 Text("Collage: ${application.collagename ?? 'N/A'}"),
                 SizedBox(height: 8),
-                Text("Status: ${application.status ?? 'N/A'}", style: TextStyle(color: Colors.green)),
-                Align(
-                  alignment: Alignment.centerRight,
-                  child: Text("Track Application", style: TextStyle(color: Colors.red)),
-                ),
+
+                // Align(
+                //   alignment: Alignment.centerRight,
+                //   child: Text("Track Application", style: TextStyle(color: Colors.red)),
+                // ),
               ],
             ),
           ),

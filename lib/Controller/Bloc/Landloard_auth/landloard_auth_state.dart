@@ -1,6 +1,8 @@
 part of 'landloard_auth_bloc.dart';
 
 @immutable
+String? idproofimage;
+
 sealed class LandloardAuthState {}
 
 final class LandloardAuthInitial extends LandloardAuthState {}
@@ -65,3 +67,15 @@ class AcceptorrejectErrorstate extends LandloardAuthState {
 
   AcceptorrejectErrorstate(this.error);
 }
+final class Imageuploadedurl extends LandloardAuthState {
+  String Imageurl;
+  Imageuploadedurl(this.Imageurl);
+}
+final class ImageuploadLoading extends LandloardAuthState {}
+
+
+final class ProfileImageFailure extends LandloardAuthState {
+  String error;
+  ProfileImageFailure(this.error);
+}
+

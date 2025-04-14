@@ -32,6 +32,13 @@ class University_loaded extends UniversityState {
     this.University,
   );
 }
+class Course_loaded extends UniversityState {
+  final List<University_model> course;
+
+  Course_loaded(
+    this.course,
+  );
+}
 
 final class Coursesgetloading extends UniversityState {}
 

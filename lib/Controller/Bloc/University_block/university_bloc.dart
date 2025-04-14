@@ -57,6 +57,9 @@ class UniversityBloc extends Bloc<UniversityEvent, UniversityState> {
                 event.University.highestEducationpercentage,
             "collagecode": event.University.collagecode,
             "Collegename": event.University.Collegename
+
+            // "state": event.University.state,
+            // "city": event.University.city
           });
           print("done...");
           emit(UniversityaddSuccess());
@@ -282,6 +285,8 @@ class UniversityBloc extends Bloc<UniversityEvent, UniversityState> {
             "highestEducationpercentage":
                 event.University.highestEducationpercentage,
             "collagecode": event.University.collagecode,
+            // "city": event.University.city,
+            // "state": event.University.state,
             "Collegename": event.University.Collegename
           }); // Generate ID
           emit(UniversityaddSuccess());

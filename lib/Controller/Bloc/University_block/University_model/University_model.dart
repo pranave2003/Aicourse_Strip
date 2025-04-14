@@ -3,6 +3,8 @@ class University_model {
   String? Established_date;
   String? Universityname;
   String? Description;
+  // String? state;
+  // String? city;
   String? Admission_startdate;
   String? Admission_enddate;
   String? Degree_offered;
@@ -37,6 +39,8 @@ class University_model {
     this.Degree_offered,
     this.Course_offered,
     this.Duration,
+    // this.state,
+    // this.city,
     this.Tuition_fees,
     this.Schoolarship_details,
     this.Eligibility_criteria,
@@ -68,6 +72,8 @@ class University_model {
       Course_offered: data['Course_offered'],
       Duration: data['Duration'],
       Tuition_fees: data['Tuition_fees'],
+      // city: data['city'],
+      // state: data['state'],
       Schoolarship_details: data['Schoolarship_details'],
       Eligibility_criteria: data['Eligibility_criteria'],
       Terms_and_conditions: data['Terms_and_conditions'],

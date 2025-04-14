@@ -1,4 +1,13 @@
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:carousel_slider/carousel_options.dart';
+import 'package:carousel_slider/carousel_slider.dart';
+import 'package:course_connect/Controller/Bloc/Property/Property/Property_auth_block.dart';
+import 'package:course_connect/Controller/Bloc/User_Authbloc/auth_bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+import '../../../../Controller/Bloc/Property/Property/Property_auth_state.dart';
+import '../../../../Widget/Constands/Loading.dart';
 
 class ViewHouses extends StatefulWidget {
   const ViewHouses({super.key});
@@ -80,59 +89,175 @@ class _ViewHousesState extends State<ViewHouses> {
           ),
 
           const SizedBox(height: 20),
-          Expanded(
-            child: SingleChildScrollView(
+          BlocConsumer<PropertyAuthBlock, PropertyAuthState>(
+              listener: (context, state) {
+                // TODO: implement listener
+              },
+              builder: (context, state) {
+                if (state is PropertyLoading) {
+                  return Center(child: Loading_Widget());
+                } else if (state is Propertyfailerror) {
+                  return Text(state.error.toString());
+                } else if (state is PropertyLoaded) {
+                  if (state.Property.isEmpty) {
+                    // Return "No data found" if txhe list is empty
+                    return Center(
+                      child: Text(
+                        "No data found",
+                        style: TextStyle(
+                            fontSize: 16, fontWeight: FontWeight.bold),
+                      ),
+                    );
+                  }
+                  return Expanded(
+                    child: SingleChildScrollView(
 
-              scrollDirection: Axis.horizontal,
-              child: SingleChildScrollView(
+                      scrollDirection: Axis.horizontal,
+                      child: SingleChildScrollView(
 
-                scrollDirection: Axis.vertical,
+                        scrollDirection: Axis.vertical,
 
-                child: DataTable(
-                  // dividerThickness: 4.0,
-                  headingRowColor: MaterialStateColor.resolveWith((states) => Colors.grey.shade300),
-                  horizontalMargin:2.0,
+                        child: DataTable(
+                          // dividerThickness: 4.0,
+                          headingRowColor: MaterialStateColor.resolveWith((
+                              states) => Colors.grey.shade300),
+                          horizontalMargin: 2.0,
 
-                  columnSpacing: 50,
-                  // Adjust spacing
-                  dataRowMinHeight: 70,
-                  // Minimum row height
-                  dataRowMaxHeight: 180,
+                          columnSpacing: 50,
+                          // Adjust spacing
+                          dataRowMinHeight: 70,
+                          // Minimum row height
+                          dataRowMaxHeight: 180,
 
-                  // columnSpacing: 15,
-                  // dataRowHeight: 100,
-                  decoration: BoxDecoration(color: Colors.white),
+                          // columnSpacing: 15,
+                          // dataRowHeight: 100,
+                          decoration: BoxDecoration(color: Colors.white),
 
-                  columns: [
-                    _buildColumn('S/no'),
-                    _buildColumn('Property Name'),
-                    _buildColumn('Token Amount'),
-                    _buildColumn('Image'),
-                    _buildColumn('Address'),
-                    _buildColumn('About Property'),
-                    _buildColumn('Period'),
-                    _buildColumn('Property Information'),
+                          columns: [
+                            _buildColumn('S/no'),
+                            _buildColumn('Property Name'),
+                            _buildColumn('Token Amount'),
+                            _buildColumn('Image'),
+                            _buildColumn('Address'),
+                            _buildColumn('About Property'),
+                            _buildColumn('Period'),
+                            _buildColumn('Property Information'),
 
-                  ],
+                          ],
 
-                  rows: [
-                    _buildRow("1"),
+                          rows: List.generate(
+                          state.Property.length,
+                              (index) {
+                            final property = state.Property[index];
+
+                            return DataRow(
+                              cells: [
+                                // Serial Number
+                                DataCell(Text(
+                                  (index + 1).toString(),
+                                  style: const TextStyle(fontWeight: FontWeight.bold),
+                                )),
+
+                                // Property Name
+                                DataCell(Text(
+                                  property.propertyName ?? "N/A",
+                                  style: const TextStyle(fontWeight: FontWeight.bold),
+                                )),
+
+                                // Property Price (e.g. monthly amount)
+                                DataCell(Text(
+                                  "${property.propertyAmountMonth ?? 'N/A'} ",
+                                )),
+
+                                // Property Image URL or Image (replace with Image.network for actual image)
+                                DataCell(
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(vertical: 10.0),
+                                    child: Container(
+                                      height: 100,
+                                      width: 250,
+                                      child: CarouselSlider(
+
+                                        options: CarouselOptions(
+                                          autoPlay: true,
+                                          height: 100,
+                                          viewportFraction: 1.0,
+                                          enableInfiniteScroll: false,
+                                          enlargeCenterPage: true,
+                                        ),
+                                        items: property.propertyImageURL!.map((imageUrl) {
+                                          return CachedNetworkImage(
+                                            imageUrl: imageUrl,
+                                            width: 200,
+                                            height: 100,
+                                            fit: BoxFit.cover,
+                                            placeholder: (context, url) => Container(
+                                              width: 50,
+                                              height: 50,
+                                              color: Colors.grey[50],
+                                              child: Center(child: Loading_Widget()),
+                                            ),
+                                            errorWidget: (context, url, error) => Container(
+                                              width: 50,
+                                              height: 50,
+                                              color: Colors.grey[300],
+                                              child: Icon(Icons.image_not_supported,
+                                                  size: 50, color: Colors.grey[600]),
+                                            ),
+                                          );
+                                        }).toList(),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+
+                                // Full Address
+                                DataCell(Text(
+                                  "${property.propertyAddress ?? ''}\n${property.city ?? ''}, ${property.state ?? ''}, ${property.country ?? ''}",
+                                )),
+
+                                // Property Details
+                                DataCell(Text(
+                                  "sqft: ${property.propertyArea ?? 'N/A'}\n"
+                                      "Rooms: ${property.bedroom ?? 'N/A'}\n"
+                                      "Bathrooms: ${property.bathroom ?? 'N/A'}\n"
+                                      "Furnishing: ${property.furnishingOptions ?? 'N/A'}\n"
+                                      "Kitchen: ${property.kitchen ?? 'N/A'}",
+                                )),
+
+                                // Stay Duration
+                                DataCell(Text(
+                                  property.minimumStay != null
+                                      ? "${property.minimumStay} Month"
+                                      : "N/A",
+                                )),
+
+                                // About Property
+                                DataCell(Text(
+                                  property.aboutProperty ?? "N/A",
+                                  overflow: TextOverflow.ellipsis,
+                                  maxLines: 3,
+                                )),
+                              ],
+                            );
+                          },
+                        ),
+
+                        // Example thickness value
+
+                        ),
+
+                      ),
 
 
-                    _buildRow2("2"),
-                  ],
-                 // Example thickness value
-
-                ),
-
-              ),
+                    ),
 
 
-
-            ),
-
-
-          ),
+                  );
+                }
+                return SizedBox();
+  },
+),
 
         ],
       ),

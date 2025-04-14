@@ -13,9 +13,9 @@ class ResultAicoursefinder extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return
-        // BlocProvider(
-        // create: (context) => CoursefinderBlock()..add(FetchAllUniversites(searchQuery: null)),
-        // child:
+        BlocProvider(
+        create: (context) => CoursefinderBlock()..add(FetchAllUniversites(searchQuery: null)),
+        child:
 
         Scaffold(
       appBar: AppBar(
@@ -31,10 +31,10 @@ class ResultAicoursefinder extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            Text(
-              ' 10 universities found',
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-            ),
+            // Text(
+            //   ' 10 universities found',
+            //   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+            // ),
             SizedBox(height: 10),
             Row(
               children: [
@@ -51,23 +51,23 @@ class ResultAicoursefinder extends StatelessWidget {
                   ),
                 ),
                 SizedBox(width: 10),
-                Expanded(
-                  flex: 1,
-                  child: Container(
-                    height: 50,
-                    width: 50,
-                    decoration: BoxDecoration(
-                      color: Colors.grey[100],
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                    child: IconButton(
-                      icon: Icon(Icons.tune, color: Colors.brown),
-                      onPressed: () {
-                        // TODO: Implement filter functionality
-                      },
-                    ),
-                  ),
-                ),
+                // Expanded(
+                //   flex: 1,
+                //   child: Container(
+                //     height: 50,
+                //     width: 50,
+                //     decoration: BoxDecoration(
+                //       color: Colors.grey[100],
+                //       borderRadius: BorderRadius.circular(12),
+                //     ),
+                //     child: IconButton(
+                //       icon: Icon(Icons.tune, color: Colors.brown),
+                //       onPressed: () {
+                //         // TODO: Implement filter functionality
+                //       },
+                //     ),
+                //   ),
+                // ),
               ],
             ),
             SizedBox(height: 20),
@@ -243,7 +243,7 @@ class ResultAicoursefinder extends StatelessWidget {
           ],
         ),
       ),
-    );
+    ));
     // );
   }
 }

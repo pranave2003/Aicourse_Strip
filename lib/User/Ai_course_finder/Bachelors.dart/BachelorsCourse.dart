@@ -12,8 +12,8 @@ class BachelorsCourse extends StatefulWidget {
 }
 
 class _BachelorsCourseState extends State<BachelorsCourse> {
-  int? selectedIndex; // Track selected course index
-  String? selectedCourse; // Store selected course name
+  int? selectedIndex;
+  String? selectedCourse;
 
   final List<String> courses = [
     "BBA (Bachelor of Business Administration)",
@@ -42,6 +42,15 @@ class _BachelorsCourseState extends State<BachelorsCourse> {
     "BA in Economics",
     "BA in International Relations"
   ];
+
+  String searchQuery = "";
+  List<String> filteredCourses = [];
+
+  @override
+  void initState() {
+    super.initState();
+    filteredCourses = courses;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -81,6 +90,20 @@ class _BachelorsCourseState extends State<BachelorsCourse> {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16),
               child: TextFormField(
+                onChanged: (value) {
+                  setState(() {
+                    searchQuery = value.toLowerCase();
+                    filteredCourses = courses
+                        .where((course) =>
+                        course.toLowerCase().contains(searchQuery))
+                        .toList();
+                    if (selectedCourse != null &&
+                        !filteredCourses.contains(selectedCourse)) {
+                      selectedIndex = null;
+                      selectedCourse = null;
+                    }
+                  });
+                },
                 decoration: const InputDecoration(
                   hintText: "Search Course",
                   prefixIcon: Icon(Icons.search),
@@ -94,9 +117,11 @@ class _BachelorsCourseState extends State<BachelorsCourse> {
             Expanded(
               child: ListView.builder(
                 padding: const EdgeInsets.symmetric(horizontal: 20),
-                itemCount: courses.length,
+                itemCount: filteredCourses.length,
                 itemBuilder: (context, index) {
-                  bool isSelected = selectedIndex == index;
+                  final course = filteredCourses[index];
+                  bool isSelected = selectedCourse == course;
+
                   return GestureDetector(
                     onTap: () {
                       setState(() {
@@ -105,7 +130,7 @@ class _BachelorsCourseState extends State<BachelorsCourse> {
                           selectedCourse = null;
                         } else {
                           selectedIndex = index;
-                          selectedCourse = courses[index];
+                          selectedCourse = course;
                         }
                       });
                     },
@@ -115,7 +140,9 @@ class _BachelorsCourseState extends State<BachelorsCourse> {
                       padding: const EdgeInsets.symmetric(horizontal: 15),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(40),
-                        color: isSelected ? const Color(0xff0A1F52) : Colors.grey,
+                        color: isSelected
+                            ? const Color(0xff0A1F52)
+                            : Colors.grey,
                       ),
                       child: Row(
                         children: [
@@ -125,7 +152,7 @@ class _BachelorsCourseState extends State<BachelorsCourse> {
                               setState(() {
                                 if (value == true) {
                                   selectedIndex = index;
-                                  selectedCourse = courses[index];
+                                  selectedCourse = course;
                                 } else {
                                   selectedIndex = null;
                                   selectedCourse = null;
@@ -138,10 +165,12 @@ class _BachelorsCourseState extends State<BachelorsCourse> {
                           const SizedBox(width: 10),
                           Expanded(
                             child: Text(
-                              courses[index],
+                              course,
                               style: TextStyle(
                                 fontWeight: FontWeight.bold,
-                                color: isSelected ? Colors.white : Colors.black,
+                                color: isSelected
+                                    ? Colors.white
+                                    : Colors.black,
                               ),
                               overflow: TextOverflow.ellipsis,
                             ),
@@ -162,7 +191,9 @@ class _BachelorsCourseState extends State<BachelorsCourse> {
                   );
                   return;
                 }
-                context.read<SelectionCubit>().updateSelection("course", selectedCourse.toString());
+                context
+                    .read<SelectionCubit>()
+                    .updateSelection("course", selectedCourse.toString());
                 Navigator.push(
                   context,
                   MaterialPageRoute(
