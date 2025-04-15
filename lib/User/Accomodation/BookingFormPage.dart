@@ -22,7 +22,7 @@ class BookingformpageScreenWrapper extends StatelessWidget {
     required this.propertyTotal,
     required this.Landloard_id,
     required this.landloardname,
-    required this.landloardphone,
+    required this.landloardphone,  required this. propertyAddress,
   });
 
   final propertyId;
@@ -36,6 +36,7 @@ class BookingformpageScreenWrapper extends StatelessWidget {
   final Landloard_id;
   final landloardname;
   final landloardphone;
+  final propertyAddress;
 
   @override
   Widget build(BuildContext context) {
@@ -54,6 +55,7 @@ class BookingformpageScreenWrapper extends StatelessWidget {
         Landloard_id: Landloard_id,
         landloardname: landloardname,
         landloardphone: landloardphone,
+        propertyAddress: propertyAddress,
       ),
     );
   }
@@ -68,6 +70,7 @@ class BookingFormPage extends StatefulWidget {
   final String? city;
   final String? propertyId;
   final String? propertyTotal;
+  final String? propertyAddress;
   final String? Landloard_id;
   final String? landloardname;
   final String? landloardphone;
@@ -80,6 +83,7 @@ class BookingFormPage extends StatefulWidget {
     required this.country,
     required this.state,
     required this.city,
+    required this.propertyAddress,
     required this.propertyId,
     required this.propertyTotal,
     required this.Landloard_id,
@@ -148,6 +152,7 @@ class _BookingFormPageState extends State<BookingFormPage> {
           username: user.name.toString(),
           userphonenumber: user.phone.toString(),
           useremail: user.email.toString(),
+            propertyAddress: widget.propertyAddress.toString(),
         ),
       ),
     );

@@ -8,21 +8,26 @@ import 'package:course_connect/Widget/Constands/colors.dart';
 
 import '../Sreens/BottomNavigation/Bottom_Nav.dart';
 class SuccessScreenwrapper2 extends StatelessWidget {
-  const SuccessScreenwrapper2({super.key, required this.Booking});
-  final Bookingmodel Booking;
+  final Bookingmodel booking;
+
+  const SuccessScreenwrapper2({super.key, required this.booking});
 
   @override
   Widget build(BuildContext context) {
-    return Success(
-      // Booking: Booking,
-    );
+    return Success(booking: booking);
   }
 }
 
 class Success extends StatefulWidget {
+  final Bookingmodel booking;
+
+  const Success({super.key, required this.booking});
+
   @override
   _SuccessState createState() => _SuccessState();
 }
+
+
 
 class _SuccessState extends State<Success> {
   int _seconds = 10;

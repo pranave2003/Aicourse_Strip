@@ -5,6 +5,7 @@ import 'package:course_connect/Controller/Bloc/Booking/BookingAuthEvent.dart';
 import 'package:course_connect/Controller/Bloc/Booking/BookingState.dart';
 import 'package:course_connect/Controller/Bloc/Booking/Booking_authblock.dart';
 import 'package:course_connect/Controller/Bloc/User_Authbloc/auth_bloc.dart';
+import 'package:course_connect/User/Accomodation/sucess.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -45,7 +46,7 @@ class BookingConfirmformpageScreenWrapper extends StatelessWidget {
     required this.username,
     required this.userphonenumber,
     required this.useremail,
-    this.userid_global,
+    this.userid_global, required this. propertyAddress,
   });
 
   final userid_global;
@@ -66,6 +67,7 @@ class BookingConfirmformpageScreenWrapper extends StatelessWidget {
   final String username;
   final String userphonenumber;
   final String useremail;
+  final String propertyAddress;
 
   @override
   Widget build(BuildContext context) {
@@ -218,61 +220,69 @@ class BookingConfirmformpageScreenWrapper extends StatelessWidget {
 
             BlocConsumer<BookingAuthblock, BookingState>(
               listener: (context, state) {
-
+                if (state is BookingaddSuccess) {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => SuccessScreenwrapper2(booking: Bookingmodel(),
+                    ),
+                  ));
+                } else if (state is Bookingfailerror) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(content: Text('Booking failed: ${state.error}')),
+                  );
+                }
               },
               builder: (context, state) {
+                final booking = Bookingmodel(
+                  propertyId: propertyId,
+                  propertyName: propertyName,
+                  tokenamount: tokenAmount,
+                  checkindate: checkindate,
+                  userid: userid_global,
+                  landlordId: Landloard_id,
+                  landlordname: landloardname,
+                  landlordphone: landloardphone,
+                  useremail: useremail,
+                  propertyImageURL: propertyImageURL,
+                  propertyTotal: propertyTotal,
+                  username: username,
+                  userphonenumber: userphonenumber,
+                  bookingdate: DateTime.now().toString(),
+                  bookingtime: DateTime.now().toString(),
+                  propertystate: state.toString(),
+                  propertycountry: country,
+                  propertycity: city,
+                  propertyaddress: propertyAddress,
+                  ownername: landloardname,
+                  checkoutdate: checkoutdate, // ✅ fixed from checkindate
+                );
+
                 return Center(
                   child: ElevatedButton(
                     onPressed: () {
-                      {
-                        Bookingmodel booking = Bookingmodel(
-                          propertyId: propertyId,
-                          propertyName: propertyName,
-                          tokenamount: tokenAmount,
-                          checkindate: checkindate,
-                          userid: userid_global,
-                          landlordId: Landloard_id,
-                          landlordname: landloardname,
-                          landlordphone: landloardphone,
-                          useremail: useremail,
-                          propertyImageURL: propertyImageURL,
-                          propertyTotal: propertyTotal,
-                          username: username,
-                          userphonenumber: userphonenumber,
-                          bookingdate: DateTime.now().toString(),
-                          bookingtime: DateTime.now().toString(),
-                          propertystate: state.toString(),
-                          propertycountry: country,
-                          propertycity: city,
-                          propertyaddress: "",
-                          ownername: landloardname,
-                          checkoutdate: checkindate,
-                        );
-                        context
-                            .read<BookingAuthblock>()
-                            .add(Booking_Add_event(Booking: booking));
-                      }
-
-                      // Payment logic goes here
+                      context.read<BookingAuthblock>().add(
+                        Booking_Add_event(Booking: booking),
+                      );
                     },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Color(0xff0A71CB),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(30),
                       ),
-                      padding:
-                          EdgeInsets.symmetric(horizontal: 80, vertical: 15),
+                      padding: EdgeInsets.symmetric(horizontal: 80, vertical: 15),
                     ),
                     child: state is BookingLoading
                         ? Loading_Widget()
                         : Text(
-                            "Pay Token Amount (${tokenAmount})",
-                            style: TextStyle(fontSize: 18, color: Colors.white),
-                          ),
+                      "Pay Token Amount (${tokenAmount})",
+                      style: TextStyle(fontSize: 18, color: Colors.white),
+                    ),
                   ),
                 );
               },
             ),
+
             SizedBox(height: 20),
           ],
         ),
@@ -338,55 +348,3 @@ class BookingConfirmformpageScreenWrapper extends StatelessWidget {
     );
   }
 }
-
-// // Main Booking Confirmation Page
-// class BookingConfirmationPage extends StatefulWidget {
-//   final String propertyName;
-//   final String tokenAmount;
-//   final String propertyImageURL;
-//   final String propertyId;
-//   final String country;
-//   final String city;
-//   final String state;
-//   final String propertyTotal;
-//   final String checkoutdate;
-//   final String checkindate;
-//   final String Landloard_id;
-//   final String landloardname;
-//   final String landloardphone;
-//   final String username;
-//   final String userphonenumber;
-//   final String useremail;
-//
-//   const BookingConfirmationPage({
-//     super.key,
-//     required this.propertyName,
-//     required this.tokenAmount,
-//     required this.propertyImageURL,
-//     required this.propertyId,
-//     required this.country,
-//     required this.city,
-//     required this.state,
-//     required this.propertyTotal,
-//     required this.checkoutdate,
-//     required this.checkindate,    required this.Landloard_id,
-//     required this.landloardname,
-//     required this.landloardphone,
-//     required this.username,
-//     required this.userphonenumber,
-//     required this.useremail,
-//   });
-//
-//   @override
-//   State<BookingConfirmationPage> createState() =>
-//       _BookingConfirmationPageState();
-// }
-//
-// class _BookingConfirmationPageState extends State<BookingConfirmationPage> {
-//   @override
-//   Widget build(BuildContext context) {
-//     return
-//   }
-//
-//
-// }

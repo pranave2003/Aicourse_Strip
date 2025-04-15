@@ -7,3 +7,17 @@ class Booking_Add_event extends BookingAuthEvent {
   final Bookingmodel Booking;
   Booking_Add_event({required this.Booking});
 }
+class FetchBookings extends BookingAuthEvent {
+  final String? searchQuery;
+  final String? status;
+  FetchBookings({required this.searchQuery, required this.status});
+}
+
+// acccept or reject
+
+
+class AcceptOrRejectBookings extends BookingAuthEvent {
+  final String? bookingid;
+  final String? Status;
+  AcceptOrRejectBookings({this.bookingid, this.Status});
+}

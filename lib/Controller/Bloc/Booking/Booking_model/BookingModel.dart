@@ -5,6 +5,7 @@ class Bookingmodel {
   String? username;
   String? userphonenumber;
   String? userid;
+  String? status;
   String? propertystate;
   String? propertycity;
   String? propertycountry;
@@ -31,6 +32,7 @@ class Bookingmodel {
     this.userphonenumber,
     this.landlordId,
     this.propertyName,
+    this.status,
     this.checkindate,
     this.checkoutdate,
     this.ownername,
@@ -59,6 +61,7 @@ class Bookingmodel {
         propertyId: data['propertyId'],
         landlordId: data['landlordId'],
         userid: data['userid'],
+        status: data['status'],
         username: data['username'],
         userphonenumber: data['userphonenumber'],
         propertyName: data['propertyName'],
@@ -91,6 +94,7 @@ class Bookingmodel {
       'owneremail': owneremail,
       'bookingdate': bookingdate,
       'tokenamount': tokenamount,
+      'status': status,
       'bookingtime': bookingtime,
       'propertystate': propertystate,
       'propertycity': propertycity,

@@ -384,6 +384,7 @@ class _PropertyDetailsPageState extends State<PropertyDetailsPage> {
                                 state: property.state,
                                 city: property.city,
                                 propertyTotal: property.propertyTotal,
+                                propertyAddress: property.propertyAddress,
                               ),
                             ),
                           );

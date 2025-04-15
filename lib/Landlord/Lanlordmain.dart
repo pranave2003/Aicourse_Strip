@@ -1,3 +1,5 @@
+import 'package:course_connect/Controller/Bloc/Booking/BookingAuthEvent.dart';
+import 'package:course_connect/Controller/Bloc/Booking/Booking_authblock.dart';
 import 'package:course_connect/Controller/Bloc/Landloard_auth/landloard_auth_bloc.dart';
 import 'package:course_connect/Landlord/Views/Screens/ProfileLandlord/LandlordProfile.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -28,6 +30,11 @@ class MyApp extends StatelessWidget {
       providers: [
         BlocProvider<LandloardAuthBloc>(
           create: (context) => LandloardAuthBloc(),
+        ),
+        BlocProvider<BookingAuthblock>(
+          create: (context) => BookingAuthblock()
+            ..add(FetchBookings(searchQuery: null, status: "0" ),
+        ),
         ),
         BlocProvider<PropertyAuthBlock>(
           create: (context) => PropertyAuthBlock(),
@@ -131,7 +138,7 @@ class _LandlordPageState extends State<LandlordPage> {
                   ],
                 ),
 
-                _buildMainListTile('Bookings', Allbookings(),
+                _buildMainListTile('Bookings', Pending_Booking_wrapper(),
                     icon: Icons.book_online),
                 _buildMainListTile('Payment', ViewPayment(),
                     icon: Icons.payments_outlined),
