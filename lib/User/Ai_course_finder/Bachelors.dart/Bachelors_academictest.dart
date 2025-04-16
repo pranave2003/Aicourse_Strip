@@ -165,9 +165,12 @@ class _Bachelors_academictestState extends State<Bachelors_academictest> {
                   );
                   return;
                 }
-                context.read<SelectionCubit>().updateSelection("Acadamictest", selectedacademicTest.toString());
-                context.read<SelectionCubit>().updateSelection("AcadamicTestpercentage", percentageController.text);
-
+                if(selectedacademicTest!=null) {
+                  context.read<SelectionCubit>().updateSelection(
+                      "Acadamictest", selectedacademicTest.toString());
+                  context.read<SelectionCubit>().updateSelection(
+                      "AcadamicTestpercentage", percentageController.text);
+                };
                 Navigator.push(context, MaterialPageRoute(builder: (context) => Bachelors_activities()));
               },
               child: Container(

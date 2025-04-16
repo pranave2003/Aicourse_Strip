@@ -142,7 +142,7 @@ class _CourseState extends State<Course> {
                             ),
                           ),
                           subtitle:
-                              Text("College Code: ${university.Collegename}"),
+                              Text("College Code: ${university.collagecode}"),
                         );
                       },
                     );

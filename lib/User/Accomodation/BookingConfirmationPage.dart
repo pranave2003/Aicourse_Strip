@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_options.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:course_connect/Admin/Model/Universitymodel/Bookingsmodel.dart';
 import 'package:course_connect/Controller/Bloc/Booking/BookingAuthEvent.dart';
 import 'package:course_connect/Controller/Bloc/Booking/BookingState.dart';
 import 'package:course_connect/Controller/Bloc/Booking/Booking_authblock.dart';
@@ -28,6 +29,8 @@ String _monthName(int month) {
 
 // Wrapper Widget with BlocProvider
 class BookingConfirmformpageScreenWrapper extends StatelessWidget {
+  // const  BookingConfirmformpage({super.key, required this.booking});
+  // final Bookingmodel booking;
   const BookingConfirmformpageScreenWrapper({
     super.key,
     required this.propertyName,
@@ -46,10 +49,10 @@ class BookingConfirmformpageScreenWrapper extends StatelessWidget {
     required this.username,
     required this.userphonenumber,
     required this.useremail,
-    this.userid_global, required this. propertyAddress,
+    required this.userid_global, required this. propertyAddress, required this.owneremail,
   });
 
-  final userid_global;
+  final String userid_global;
   final String propertyName;
   final String tokenAmount;
   final String propertyImageURL;
@@ -68,6 +71,7 @@ class BookingConfirmformpageScreenWrapper extends StatelessWidget {
   final String userphonenumber;
   final String useremail;
   final String propertyAddress;
+  final String owneremail;
 
   @override
   Widget build(BuildContext context) {
@@ -242,7 +246,7 @@ class BookingConfirmformpageScreenWrapper extends StatelessWidget {
                   userid: userid_global,
                   landlordId: Landloard_id,
                   landlordname: landloardname,
-                  landlordphone: landloardphone,
+                  landlordphone:landloardphone,
                   useremail: useremail,
                   propertyImageURL: propertyImageURL,
                   propertyTotal: propertyTotal,
@@ -250,12 +254,16 @@ class BookingConfirmformpageScreenWrapper extends StatelessWidget {
                   userphonenumber: userphonenumber,
                   bookingdate: DateTime.now().toString(),
                   bookingtime: DateTime.now().toString(),
-                  propertystate: state.toString(),
+                  propertystate:this.state, // ✅ This is the actual property state string
+
                   propertycountry: country,
                   propertycity: city,
                   propertyaddress: propertyAddress,
-                  ownername: landloardname,
+                  owneremail: owneremail,
                   checkoutdate: checkoutdate, // ✅ fixed from checkindate
+                  status: "0",
+                  ban: "0",
+
                 );
 
                 return Center(

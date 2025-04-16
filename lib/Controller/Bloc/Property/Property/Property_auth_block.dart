@@ -54,6 +54,7 @@ class PropertyAuthBlock extends Bloc<PropertyAuthEvent, PropertyAuthState> {
             "minimumStay": event.Property.minimumStay,
             "maximumStay": event.Property.maximumStay,
             "ownerName": event.Property.ownerName,
+            "owneremail": event.Property.owneremail,
             "ownerPhone": event.Property.ownerPhone,
             "propertyTotal": event.Property.propertyTotal,
             "parking": event.Property.parking,

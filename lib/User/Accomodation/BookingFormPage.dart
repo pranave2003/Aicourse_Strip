@@ -22,7 +22,7 @@ class BookingformpageScreenWrapper extends StatelessWidget {
     required this.propertyTotal,
     required this.Landloard_id,
     required this.landloardname,
-    required this.landloardphone,  required this. propertyAddress,
+    required this.landloardphone,  required this. propertyAddress, required this. owneremail, required this. userid,
   });
 
   final propertyId;
@@ -37,6 +37,8 @@ class BookingformpageScreenWrapper extends StatelessWidget {
   final landloardname;
   final landloardphone;
   final propertyAddress;
+  final owneremail;
+  final userid;
 
   @override
   Widget build(BuildContext context) {
@@ -56,6 +58,8 @@ class BookingformpageScreenWrapper extends StatelessWidget {
         landloardname: landloardname,
         landloardphone: landloardphone,
         propertyAddress: propertyAddress,
+          owneremail:owneremail,
+        userid:userid,
       ),
     );
   }
@@ -73,7 +77,9 @@ class BookingFormPage extends StatefulWidget {
   final String? propertyAddress;
   final String? Landloard_id;
   final String? landloardname;
+  final String? owneremail;
   final String? landloardphone;
+  final String? userid;
 
   const BookingFormPage({
     super.key,
@@ -89,6 +95,8 @@ class BookingFormPage extends StatefulWidget {
     required this.Landloard_id,
     required this.landloardname,
     required this.landloardphone,
+    required this.owneremail,
+    required this.userid,
   });
 
   @override
@@ -153,6 +161,9 @@ class _BookingFormPageState extends State<BookingFormPage> {
           userphonenumber: user.phone.toString(),
           useremail: user.email.toString(),
             propertyAddress: widget.propertyAddress.toString(),
+            owneremail: widget.owneremail.toString(),
+          userid_global: userid_global,
+
         ),
       ),
     );
@@ -275,11 +286,11 @@ class _BookingFormPageState extends State<BookingFormPage> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(widget.propertyName ?? '',
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+                style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold)),
             Row(
               children: [
                 Text(widget.tokenAmount ?? '',
-                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+                    style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold)),
                 Text("/Week"),
               ],
             )

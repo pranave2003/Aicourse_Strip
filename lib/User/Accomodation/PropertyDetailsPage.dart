@@ -3,6 +3,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:course_connect/Controller/Bloc/Property/Property/Property_auth_block.dart';
 import 'package:course_connect/Controller/Bloc/Property/Property/Property_auth_state.dart';
+import 'package:course_connect/Controller/Bloc/User_Authbloc/auth_bloc.dart';
 import 'package:course_connect/User/Accomodation/BookingFormPage.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -14,10 +15,11 @@ int currentIndex = 0;
 
 class PropertyInfoScreenWrapper extends StatelessWidget {
   const PropertyInfoScreenWrapper(
-      {super.key, required this.propertyId, this.availableFrom});
+      {super.key, required this.propertyId, this.availableFrom ,this.owneremail,});
 
   final propertyId;
   final availableFrom;
+  final owneremail;
 
   @override
   Widget build(BuildContext context) {
@@ -95,7 +97,7 @@ class _PropertyDetailsPageState extends State<PropertyDetailsPage> {
 
               {
                 "icon": Icons.chair_alt_outlined,
-                "name": "Furnishing: ${property.furnishingOptions}"
+                "name": "Furnishing: \n ${property.furnishingOptions}"
               },
               {
                 "icon": Icons.bed_outlined,
@@ -376,7 +378,7 @@ class _PropertyDetailsPageState extends State<PropertyDetailsPage> {
                                 propertyId: property.propertyId,
                                 Landloard_id: property.LandlordId,
                                 landloardname: property.ownerName,
-                                landloardphone: property.ownerName,
+                                landloardphone: property.ownerPhone,
                                 propertyName: property.propertyName,
                                 tokenAmount: property.tokenAmount,
                                 propertyImageURL: property.propertyImageURL![0],
@@ -385,6 +387,9 @@ class _PropertyDetailsPageState extends State<PropertyDetailsPage> {
                                 city: property.city,
                                 propertyTotal: property.propertyTotal,
                                 propertyAddress: property.propertyAddress,
+                                    userid:userid_global,
+                                    owneremail:property.owneremail,
+
                               ),
                             ),
                           );

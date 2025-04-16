@@ -4,7 +4,9 @@ class Bookingmodel {
   String? landlordId;
   String? username;
   String? userphonenumber;
+  String? useremail;
   String? userid;
+  String? ban;
   String? status;
   String? propertystate;
   String? propertycity;
@@ -13,14 +15,12 @@ class Bookingmodel {
   String? propertyName;
   String? checkindate;
   String? checkoutdate;
-  String? ownername;
-  String? owneremail;
   String? bookingdate;
   String? tokenamount;
   String? bookingtime;
   String? landlordname;
+  String? owneremail;
   String? landlordphone;
-  String? useremail;
   String? propertyTotal;
   String? propertyImageURL;
 
@@ -35,9 +35,8 @@ class Bookingmodel {
     this.status,
     this.checkindate,
     this.checkoutdate,
-    this.ownername,
-    this.owneremail,
     this.bookingdate,
+    this.ban,
     this.tokenamount,
     this.bookingtime,
     this.propertystate,
@@ -49,6 +48,8 @@ class Bookingmodel {
     this. useremail,
     this.  propertyTotal,
     this.  propertyImageURL,
+    this.owneremail,
+
   });
 
   factory Bookingmodel.fromMap(Map<String, dynamic> data) {
@@ -67,16 +68,18 @@ class Bookingmodel {
         propertyName: data['propertyName'],
         checkindate: data['checkindate'],
         checkoutdate: data['checkoutdate'],
-        ownername: data['ownername'],
-        owneremail: data['owneremail'],
         bookingdate: data['bookingdate'],
         tokenamount: data['tokenamount'],
         bookingtime: data['bookingtime'],
         propertystate: data['propertystate'],
         propertycity: data['propertycity'],
+        ban: data['ban'],
         propertycountry: data['propertycountry'],
         propertyaddress: data['propertyaddress'],
-        landlordname: data["landlordname"]);
+        landlordname: data["landlordname"],
+        owneremail:data['owneremail']
+    );
+
   }
 
   Map<String, dynamic> toMap() {
@@ -90,10 +93,15 @@ class Bookingmodel {
       'propertyName': propertyName,
       'checkindate': checkindate,
       'checkoutdate': checkoutdate,
-      'ownername': ownername,
-      'owneremail': owneremail,
+      'landlordname': landlordname,
+      'landlordphone': landlordphone,
+      'useremail': useremail,
+      'propertyTotal': propertyTotal,
+      'propertyImageURL': propertyImageURL,
+      'owneremail':owneremail,
       'bookingdate': bookingdate,
       'tokenamount': tokenamount,
+      'ban': ban,
       'status': status,
       'bookingtime': bookingtime,
       'propertystate': propertystate,

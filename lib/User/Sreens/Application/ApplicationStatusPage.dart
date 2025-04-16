@@ -106,12 +106,12 @@ class ApplicationStatusPage extends StatelessWidget {
   Widget _buildApplicationCard(BuildContext context, Applicationmodel application, Color bgColor) {
     return GestureDetector(
       onTap: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => TrackingApplication(),
-          ),
-        );
+        // Navigator.push(
+        //   context,
+        //   MaterialPageRoute(
+        //     builder: (context) => TrackingApplication(),
+        //   ),
+        // );
       },
       child: Container(
         margin: EdgeInsets.symmetric(vertical: 8),

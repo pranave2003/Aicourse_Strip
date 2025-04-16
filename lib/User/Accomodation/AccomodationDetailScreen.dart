@@ -15,7 +15,7 @@ class PropertyWrapper extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider<PropertyAuthBlock>(
       create: (context) =>
-          PropertyAuthBlock()..add(FetchProperty(searchQuery: null)),
+      PropertyAuthBlock()..add(FetchProperty(searchQuery: null)),
       child: AccommodationDetailScreen(),
     );
   }
@@ -29,19 +29,19 @@ class AccommodationDetailScreen extends StatefulWidget {
       _AccommodationDetailScreenState();
 }
 
-class _AccommodationDetailScreenState extends State<AccommodationDetailScreen> {
+class _AccommodationDetailScreenState
+    extends State<AccommodationDetailScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-
-        appBar: AppBar(
-          elevation: 0,
-          leading: IconButton(
-            icon: const Icon(Icons.arrow_back, color: Colors.black),
-            onPressed: () {
-              Navigator.pop(context);
-            },
-          ),
+      appBar: AppBar(
+        elevation: 0,
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back, color: Colors.black),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        ),
         title: Text(
           "Finding Perfect Home for You",
           style: TextStyle(
@@ -102,16 +102,14 @@ class _AccommodationDetailScreenState extends State<AccommodationDetailScreen> {
                     );
                   }
 
-                  return SizedBox(
-                    height: 380,
-                    child: ListView.builder(
-                      scrollDirection: Axis.horizontal,
-                      itemCount: state.Property.length,
-                      itemBuilder: (context, index) {
-                        final property = state.Property[index];
-                        return _PropertyCard(property: property);
-                      },
-                    ),
+                  return Column(
+                    children: List.generate(state.Property.length, (index) {
+                      final property = state.Property[index];
+                      return Padding(
+                        padding: const EdgeInsets.only(bottom: 16.0),
+                        child: _PropertyCard(property: property),
+                      );
+                    }),
                   );
                 }
                 return SizedBox();
@@ -124,7 +122,6 @@ class _AccommodationDetailScreenState extends State<AccommodationDetailScreen> {
   }
 }
 
-// 🔄 REUSABLE CARD WITH SYNCED IMAGE & VIEW NAME
 class _PropertyCard extends StatefulWidget {
   final Property_Model property;
 
@@ -143,8 +140,6 @@ class _PropertyCardState extends State<_PropertyCard> {
     final images = property.propertyImageURL ?? [];
 
     return Container(
-      width: 360,
-      margin: EdgeInsets.only(right: 12),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(12),
         border: Border.all(color: Colors.grey.shade300),
@@ -153,11 +148,12 @@ class _PropertyCardState extends State<_PropertyCard> {
       child: InkWell(
         onTap: () {
           Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) =>
-                    PropertyInfoScreenWrapper(propertyId: property.propertyId),
-              ));
+            context,
+            MaterialPageRoute(
+              builder: (context) =>
+                  PropertyInfoScreenWrapper(propertyId: property.propertyId),
+            ),
+          );
         },
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -171,7 +167,7 @@ class _PropertyCardState extends State<_PropertyCard> {
                       borderRadius: BorderRadius.circular(10),
                       child: CachedNetworkImage(
                         imageUrl: images[index],
-                        width: 360,
+                        width: double.infinity,
                         height: 200,
                         fit: BoxFit.cover,
                         placeholder: (context, url) =>
@@ -215,11 +211,9 @@ class _PropertyCardState extends State<_PropertyCard> {
                 }),
               ),
             ),
-            SizedBox(
-              height: 20,
-            ),
+            SizedBox(height: 20),
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 8),
+              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -241,10 +235,10 @@ class _PropertyCardState extends State<_PropertyCard> {
                         text: TextSpan(
                           text: 'From ',
                           style:
-                              TextStyle(fontSize: 14, color: Colors.grey[600]),
+                          TextStyle(fontSize: 14, color: Colors.grey[600]),
                           children: [
                             TextSpan(
-                              text: "£${property.tokenAmount}/week",
+                              text: "${property.tokenAmount}/week",
                               style: TextStyle(
                                   fontWeight: FontWeight.bold,
                                   fontSize: 16,
@@ -253,13 +247,7 @@ class _PropertyCardState extends State<_PropertyCard> {
                           ],
                         ),
                       ),
-                      Row(
-                        children: [
-                          Icon(Icons.star, size: 16, color: Colors.green),
-                          SizedBox(width: 6),
-                          Text("4.7", style: TextStyle(fontSize: 14)),
-                        ],
-                      ),
+                      // Add rating or favorite icon if needed
                     ],
                   ),
                 ],

@@ -38,12 +38,11 @@ class BookingAuthblock extends Bloc<BookingAuthEvent, BookingState> {
           "userid": event.Booking.userid,
           "status": event.Booking.status,
           "username": event.Booking.username,
+          "useremail": event.Booking.useremail,
           "userphonenumber": event.Booking.userphonenumber,
           "propertyName": event.Booking.propertyName,
           "checkindate": event.Booking.checkindate,
           "checkoutdate": event.Booking.checkoutdate,
-          "ownername": event.Booking.ownername,
-          "owneremail": event.Booking.owneremail,
           "bookingdate": event.Booking.bookingdate,
           "tokenamount": event.Booking.tokenamount,
           "bookingtime": event.Booking.bookingtime,
@@ -54,8 +53,8 @@ class BookingAuthblock extends Bloc<BookingAuthEvent, BookingState> {
           "propertyImageURL": event.Booking.propertyImageURL,
           "propertyTotal": event.Booking.propertyTotal,
           "landlordname": event.Booking.landlordname,
-          "landlordphone": event.Booking.landlordphone,
-          "useremail": event.Booking.useremail,
+          "landloardphone": event.Booking.landlordphone,
+          "owneremail": event.Booking.owneremail,
         });
 
         print("Booking Details saved successfully.");

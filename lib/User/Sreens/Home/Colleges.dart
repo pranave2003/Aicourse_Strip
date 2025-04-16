@@ -78,13 +78,13 @@ class _CollegesState extends State<Colleges> {
               ],
             ),
             SizedBox(height: 20),
-            Text(
-              "Top Universities in United states",
-              style: TextStyle(
-                  color: Colors.black,
-                  fontSize: 24,
-                  fontWeight: FontWeight.bold),
-            ),
+            // Text(
+            //   "Top Universities in United states",
+            //   style: TextStyle(
+            //       color: Colors.black,
+            //       fontSize: 24,
+            //       fontWeight: FontWeight.bold),
+            // ),
             Row(
               children: [
                 Expanded(

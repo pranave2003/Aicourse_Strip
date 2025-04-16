@@ -191,15 +191,17 @@ class _BachelorsCourseState extends State<BachelorsCourse> {
                   );
                   return;
                 }
-                context
-                    .read<SelectionCubit>()
-                    .updateSelection("course", selectedCourse.toString());
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => BachelorsEnglish(),
-                  ),
-                );
+                if (selectedCourse != null) {
+                  context
+                      .read<SelectionCubit>()
+                      .updateSelection("course", selectedCourse.toString());
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => BachelorsEnglish(),
+                    ),
+                  );
+                };
               },
               child: Container(
                 height: 51,

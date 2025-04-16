@@ -31,6 +31,7 @@ class Property_Model {
   String? billStatus;
   String? pets;
   String? smoking;
+  String? owneremail;
   String? ban;
   String? oneSignalId;
 
@@ -46,6 +47,7 @@ class Property_Model {
     this.roomTypes,
     this.roomSizes,
     this.availableFrom,
+    this.owneremail,
     this.moveInDate,
     this.propertyImageURL,
     this.aboutProperty,
@@ -80,6 +82,7 @@ class Property_Model {
       propertyArea: data['propertyArea'],
       country: data['country'],
       state: data['state'],
+      owneremail: data['owneremail'],
       city: data['city'],
       roomTypes: data['roomTypes'],
       roomSizes: data['roomSizes'],

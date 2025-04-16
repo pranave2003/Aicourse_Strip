@@ -179,10 +179,10 @@ class BookingStatus extends StatelessWidget {
                 children: [
                   GestureDetector(
                     onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => BookingTracking()),
-                      );
+                      // Navigator.push(
+                      //   context,
+                      //   MaterialPageRoute(builder: (context) => BookingTracking()),
+                      // );
                     },
                     child: Text(
                       "View",

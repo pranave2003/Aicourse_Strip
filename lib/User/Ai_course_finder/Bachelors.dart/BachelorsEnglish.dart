@@ -191,11 +191,15 @@ class _BachelorsEnglishState extends State<BachelorsEnglish> {
                     );
                     return;
                   }
+                  if(selectedTest!=null){
+                    context.read<SelectionCubit>().updateSelection("EnglishTest", selectedTest!);
+                    context.read<SelectionCubit>().updateSelection("EnglishTest_percentage", percentageController.text);
+                  }
 
-                  context.read<SelectionCubit>().updateSelection("EnglishTest_percentage", percentageController.text);
+                  // context.read<SelectionCubit>().updateSelection("EnglishTest_percentage", percentageController.text);
                 }
 
-                context.read<SelectionCubit>().updateSelection("EnglishTest", selectedTest!);
+                // context.read<SelectionCubit>().updateSelection("EnglishTest", selectedTest!);
                 Navigator.push(
                   context,
                   MaterialPageRoute(

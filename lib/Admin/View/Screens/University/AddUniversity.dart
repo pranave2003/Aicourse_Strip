@@ -128,7 +128,7 @@ class _AddUniversityState extends State<AddUniversity> {
                       SnackBar(
                         content: Text("University added successfully!"),
                         backgroundColor: Colors.green,
-                        duration: Duration(seconds: 2),
+                        duration: Duration(seconds: 1),
                       ),
                     );
                   }

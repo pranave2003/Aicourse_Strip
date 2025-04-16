@@ -172,7 +172,7 @@ class _BachelorsEducationState extends State<BachelorsEducation> {
               InkWell(
                 onTap: () {
                   double? percentage =
-                      double.tryParse(highesteducationpercentage.text);
+                  double.tryParse(highesteducationpercentage.text);
 
                   if (seletedEducation == null) {
                     ScaffoldMessenger.of(context).showSnackBar(
@@ -218,23 +218,24 @@ class _BachelorsEducationState extends State<BachelorsEducation> {
                     );
                     return;
                   }
+                  if (seletedEducation != null) {
+                    // Save selection
+                    context.read<SelectionCubit>().updateSelection(
+                        "selectedDegree", widget.selecteddegree.toString());
+                    context.read<SelectionCubit>().updateSelection(
+                        "highestEducation", seletedEducation.toString());
+                    context.read<SelectionCubit>().updateSelection(
+                        "highestEducation_percentage",
+                        highesteducationpercentage.text);
 
-                  // Save selection
-                  context.read<SelectionCubit>().updateSelection(
-                      "selectedDegree", widget.selecteddegree.toString());
-                  context.read<SelectionCubit>().updateSelection(
-                      "highestEducation", seletedEducation.toString());
-                  context.read<SelectionCubit>().updateSelection(
-                      "highestEducation_percentage",
-                      highesteducationpercentage.text);
-
-                  // Navigate to the next page
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => BachelorsCourse(),
-                    ),
-                  );
+                    // Navigate to the next page
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => BachelorsCourse(),
+                      ),
+                    );
+                  };
                 },
                 child: Container(
                   height: 51,
