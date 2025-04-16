@@ -232,7 +232,9 @@ class BachelorsDetailsOverall extends StatelessWidget {
                   SizedBox(height: 20),
                   GestureDetector(
                     onTap: () async {
-                      context.read<CoursefinderBlock>().add(FetchAllUniversites(
+                      context.read<CoursefinderBlock>().add(
+
+                          FetchAllUniversites(
                             searchQuery: null,
                             Country: state.selections["country"],
                             AcadamicTest: state.selections["Acadamictest"],

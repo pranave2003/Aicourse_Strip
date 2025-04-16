@@ -20,7 +20,6 @@ void main() async {
   runApp(MyApp());
 }
 
-
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
@@ -42,14 +41,13 @@ class MyApp extends StatelessWidget {
         ),
         BlocProvider<PropertyAuthBlock>(
           create: (context) => PropertyAuthBlock(),
-        ),   BlocProvider<BookingAuthblock>(
+        ),
+        BlocProvider<BookingAuthblock>(
           create: (context) => BookingAuthblock(),
         ),
         BlocProvider(
           create: (context) => SelectionCubit(),
         ),
-
-
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,

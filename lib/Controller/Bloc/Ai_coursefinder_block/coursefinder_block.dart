@@ -70,7 +70,7 @@ class CoursefinderBlock extends Bloc<CoursefinderEvent, CoursefinderState> {
         }
         if (event.Degree_offered != null) {
           query =
-              query.where('Degree offered', isEqualTo: event.Degree_offered);
+              query.where('Degree_offered', isEqualTo: event.Degree_offered);
         }
         if (event.highestEducation != null) {
           query = query.where('highestEducation',
@@ -89,7 +89,6 @@ class CoursefinderBlock extends Bloc<CoursefinderEvent, CoursefinderState> {
         if (event.Rank != null) {
           query = query.where('Rank', isEqualTo: event.Rank);
         }
-
 
         QuerySnapshot snapshot = await query.get();
 
