@@ -155,7 +155,7 @@ class _AddUniversityState extends State<AddUniversity> {
                                 {
                                   University_model university =
                                   University_model(
-                                      UniversityimageURL: university_image,
+                                      UniversityimageURL: university_image??"https://firebasestorage.googleapis.com/v0/b/courseconnectai.firebasestorage.app/o/universitydummy%2F360_F_110530499_pjM3zKDTmbwdsUbduglVzAsl4HGVUzDA.jpg?alt=media&token=631596e2-7e4f-4bf1-ad30-9a2c8193f6ac",
                                       Country: selectedCountry,
                                       Admission_enddate:
                                       admissionEndDateController.text,
