@@ -36,3 +36,4 @@ class AcceptorrejectErrorstate extends BookingState {
 
   AcceptorrejectErrorstate(this.error);
 }
+final class RefreshBooking extends BookingState {}

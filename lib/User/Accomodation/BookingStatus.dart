@@ -1,18 +1,23 @@
 
+import 'package:course_connect/Controller/Bloc/Applycourse/application_bloc.dart';
 import 'package:course_connect/Controller/Bloc/Booking/BookingAuthEvent.dart';
+import 'package:course_connect/Controller/Bloc/Booking/BookingState.dart';
 import 'package:course_connect/Controller/Bloc/Booking/Booking_authblock.dart';
+import 'package:course_connect/Controller/Bloc/Booking/Booking_model/BookingModel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import '../../Widget/Constands/Loading.dart';
 import 'BookingTracking.dart'; // Import the second page
 class Viewbookingmainwrapper1 extends StatelessWidget {
   const Viewbookingmainwrapper1({super.key});
+
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) =>
       BookingAuthblock()
-        ..add(FetchBookings(searchQuery: null,)),
+        ..add(FetchBookings(searchQuery: null,userid:userid_global)),
       child: BookingStatus(),
     );
   }
@@ -20,7 +25,7 @@ class Viewbookingmainwrapper1 extends StatelessWidget {
 String _getStatusText(String? status) {
   switch (status) {
     case '1':
-      return 'Approved';
+      return 'Confirmed';
     case '2':
       return 'Rejected';
     case '0':
@@ -64,12 +69,34 @@ class BookingStatus extends StatelessWidget {
             ),
             SizedBox(height: 16),
             Expanded(
-              child: ListView(
-                children: [
-                  _buildBookingCard(context),
-                  _buildBookingCard(context),
-                  _buildBookingCard(context),
-                ],
+              child: BlocConsumer<BookingAuthblock, BookingState>(
+                listener: (context, state) {
+                  if (state is RefreshBooking) {
+                    context
+                        .read<BookingAuthblock>()
+                        .add(FetchBookings(searchQuery: null));
+                  }
+                },
+                builder: (context, state) {
+                  if (state is BookingLoading) {
+                    return Center(child: Loading_Widget());
+                  } else if (state is Bookingfailerror) {
+                    return Center(child: Text(state.error.toString()));
+                  } else if (state is BookingLoaded) {
+                    return ListView.builder(
+                      itemCount: state.booking.length,
+                      itemBuilder: (context, index) {
+                        final booking = state.booking[index];
+                        return _buildBookingCard(
+                          context,
+                          booking,
+                          Colors.grey[100]!,
+                        );
+                      },
+                    );
+                  }
+                  return SizedBox();
+                },
               ),
             ),
           ],
@@ -78,7 +105,8 @@ class BookingStatus extends StatelessWidget {
     );
   }
 
-  Widget _buildBookingCard(BuildContext context) {
+
+  Widget _buildBookingCard(BuildContext context,Bookingmodel booking, Color bgColor) {
     return Container(
       margin: EdgeInsets.symmetric(vertical: 8),
       decoration: BoxDecoration(
@@ -98,13 +126,15 @@ class BookingStatus extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                "Your Booking is Confirmed!",
-                style: TextStyle(fontWeight: FontWeight.bold),
+                "Your Booking is  ${_getStatusText(booking.status)}!",
+                style: TextStyle(fontWeight: FontWeight.bold,color: _getStatusColor(booking.status,),fontSize: 18),
               ),
               SizedBox(height: 4),
               Text(
-                "Hello Nafiya, We are pleased to confirm your stay at Portchester house.",
+                "Hello ${booking.username},  We are pleased to confirm your stay at ${booking.propertyName} ",
+                style: TextStyle(fontSize: 16),
               ),
+
               SizedBox(height: 8),
               Row(
                 mainAxisAlignment: MainAxisAlignment.end,

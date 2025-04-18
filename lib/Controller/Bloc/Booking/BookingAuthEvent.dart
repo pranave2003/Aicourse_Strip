@@ -10,7 +10,8 @@ class Booking_Add_event extends BookingAuthEvent {
 class FetchBookings extends BookingAuthEvent {
   final String? searchQuery;
 final String? landlordid;
-  FetchBookings({required this.searchQuery,this.landlordid});
+final String? userid;
+  FetchBookings({required this.searchQuery,this.landlordid,this.userid,});
 }
 
 // acccept or reject

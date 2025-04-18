@@ -18,6 +18,29 @@ class Pending_Booking_wrapper extends StatelessWidget {
     );
   }
 }
+String _getStatusText(String? status) {
+  switch (status) {
+    case '1':
+      return 'Confirmed';
+    case '2':
+      return 'Rejected';
+    case '0':
+    default:
+      return 'Pending';
+  }
+}
+
+Color _getStatusColor(String? status) {
+  switch (status) {
+    case '1':
+      return Colors.green;
+    case '2':
+      return Colors.red;
+    case '0':
+    default:
+      return Colors.orange;
+  }
+}
 
 class Bookingstate extends StatelessWidget {
   @override
@@ -194,35 +217,59 @@ class Bookingstate extends StatelessWidget {
                                     ),
                                   ),
                                 ),
+
                                 DataCell(
                                   Row(
                                     children: [
-                                      IconButton(
+                                      booking.status == "1"
+                                          ? Container(
+                                        padding: EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+                                        decoration: BoxDecoration(
+                                          color: Colors.green[100],
+                                          borderRadius: BorderRadius.circular(12),
+                                        ),
+                                        child: Row(
+                                          children: [
+                                            Icon(Icons.check_circle, color: Colors.green),
+                                            SizedBox(width: 6),
+                                            Text(
+                                              "Confirmed",
+                                              style: TextStyle(color: Colors.green[800], fontWeight: FontWeight.bold),
+                                            ),
+                                          ],
+                                        ),
+                                      )
+                                          : ElevatedButton.icon(
                                         onPressed: () {
+
                                           context.read<BookingAuthblock>().add(
-                                              AcceptOrRejectBookings(
-                                                  bookingid:
-                                                  booking.bookingid,
-                                                  Status: "1"));
+                                            AcceptOrRejectBookings(
+                                              bookingid: booking.bookingid,
+                                              Status: "1", // Confirm status
+                                            ),
+                                          );
                                         },
-                                        icon: Icon(Icons.done,
-                                            color: Colors.green),
-                                      ),
-                                      SizedBox(width: 20),
-                                      IconButton(
-                                        onPressed: () {
-                                          context.read<BookingAuthblock>().add(
-                                              AcceptOrRejectBookings(
-                                                  bookingid:
-                                                  booking.bookingid,
-                                                  Status: "2"));
-                                        },
-                                        icon:
-                                        Icon(Icons.close, color: Colors.red),
+                                        icon: Icon(Icons.check_circle_outline, size: 18),
+                                        label: Text(
+                                          'Confirm',
+                                          style: TextStyle(fontSize: 14),
+                                        ),
+                                        style: ElevatedButton.styleFrom(
+                                          backgroundColor: Colors.green[600], // Button color
+                                          foregroundColor: Colors.white,
+                                          padding: EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius: BorderRadius.circular(12),
+                                          ),
+                                          elevation: 3,
+                                        ),
                                       ),
                                     ],
                                   ),
                                 ),
+
+
+
                               ],
                             );
                           }),

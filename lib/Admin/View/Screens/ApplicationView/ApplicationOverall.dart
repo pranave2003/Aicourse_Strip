@@ -27,6 +27,19 @@ class ApplicationOverall extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: const Text("Application Details"),
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back),
+          onPressed: () {
+            Navigator.pop(context); // Go back to the previous screen
+          },
+        ),
+        backgroundColor: Colors.white,
+        foregroundColor: Colors.black, // Sets icon/text color
+        elevation: 1,
+      ),
+
       backgroundColor: Colors.grey[100],
       body: BlocConsumer<ApplicationBloc, ApplicationState>(
         listener: (context, state) {
@@ -48,19 +61,18 @@ class ApplicationOverall extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Padding(
-                    padding: EdgeInsets.only(left: 10),
-                    child: Text(
-                      "View Application Details",
-                      style:
-                          TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
-                    ),
-                  ),
-                  const SizedBox(height: 20),
+                  // const Padding(
+                  //   padding: EdgeInsets.only(left: 10),
+                  //   child: Text(
+                  //     "View Application Details",
+                  //     style:
+                  //         TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
+                  //   ),
+                  // ),
+                  const SizedBox(height: 10),
 
                   // Profile Top Section (optional)
 
-                  const SizedBox(height: 20),
 
                   // Info Cards Row
                   Row(
@@ -193,7 +205,7 @@ class ApplicationOverall extends StatelessWidget {
                     ],
                   ),
 
-                  const SizedBox(height: 20),
+                  const SizedBox(height: 10),
 
                   // Application Status Buttons
                   Align(

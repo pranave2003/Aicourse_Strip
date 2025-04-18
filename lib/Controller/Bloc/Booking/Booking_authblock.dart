@@ -1,10 +1,16 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:course_connect/Controller/Bloc/Booking/Booking_model/BookingModel.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'BookingState.dart';
 import 'BookingAuthEvent.dart';
+String? getCurrentUserId() {
+  return FirebaseAuth.instance.currentUser?.uid;
+}
+final uid = getCurrentUserId();
+
 
 class BookingAuthblock extends Bloc<BookingAuthEvent, BookingState> {
   final FirebaseStorage _firebaseStorage = FirebaseStorage.instance;
@@ -77,8 +83,10 @@ class BookingAuthblock extends Bloc<BookingAuthEvent, BookingState> {
         Query query = ShopesCollection;
         query = query.where("status");
         query = query.where("landlordId",isEqualTo: event.landlordid);
+        query=query.where("uaser_uid",isEqualTo: event.userid);
 
         QuerySnapshot snapshot = await query.get();
+
 
         List<Bookingmodel> Landloared = snapshot.docs.map((doc) {
           return Bookingmodel.fromMap(doc.data() as Map<String, dynamic>);

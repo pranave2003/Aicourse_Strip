@@ -113,45 +113,109 @@ class ApplicationStatusPage extends StatelessWidget {
         //   ),
         // );
       },
-      child: Container(
-        margin: EdgeInsets.symmetric(vertical: 8),
-        decoration: BoxDecoration(
-          color: bgColor,
-          border: Border.all(color: Color(0xff0A71CB), width: 2),
-          borderRadius: BorderRadius.circular(8),
-        ),
-        child: Card(
-          elevation: 0,
-          color: Colors.transparent,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(8),
+        child: Container(
+          margin: EdgeInsets.symmetric(vertical: 10),
+          decoration: BoxDecoration(
+            color: Colors.white,
+            border: Border.all(color: Color(0xff0A71CB), width: 2),
+            borderRadius: BorderRadius.circular(12),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.grey.withOpacity(0.2),
+                blurRadius: 6,
+                offset: Offset(0, 4),
+              ),
+            ],
           ),
           child: Padding(
-            padding: EdgeInsets.all(12),
+            padding: EdgeInsets.all(16),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  "Your Application to ${application.collagename} is ${_getStatusText(application.status)}",
-                  style: TextStyle(color: _getStatusColor(application.status),fontSize: 16,fontWeight: FontWeight.bold),
+                Row(
+                  children: [
+                    Icon(Icons.school, color: Colors.blue[800]),
+                    SizedBox(width: 8),
+                    Expanded(
+                      child: Text(
+                        "${application.Universityname ?? 'N/A'}",
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.blue[800],
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
-                Text("University: ${application.Universityname ?? 'N/A'}", style: TextStyle(fontWeight: FontWeight.bold)),
-                SizedBox(height: 5),
-                Text("Course: ${application.Coursename ?? 'N/A'}"),
-                Text("Degree: ${application.Degree_offered ?? 'N/A'}"),
-                Text("Country: ${application.Country ?? 'N/A'}"),
-                Text("Collage: ${application.collagename ?? 'N/A'}"),
                 SizedBox(height: 8),
+                Row(
+                  children: [
+                    Icon(Icons.domain, size: 20, color: Colors.grey[800]),  // College icon
+                    SizedBox(width: 6),
+                    Text(
+                      "${application.collagename ?? 'N/A'}",  // College name
+                      style: TextStyle(fontSize: 15),
+                    ),
+                  ],
+                ),
+                SizedBox(height: 8),
+                Row(
+                  children: [
+                    Icon(Icons.book, size: 20, color: Colors.grey[800]),
+                    SizedBox(width: 6),
+                    Text(
+                      "${application.Coursename ?? 'N/A'}",
+                      style: TextStyle(fontSize: 15),
+                    ),
+                  ],
+                ),
+                SizedBox(height: 4),
+                Row(
+                  children: [
+                    Icon(Icons.workspace_premium, size: 20, color: Colors.grey[800]),
+                    SizedBox(width: 6),
+                    Text(
+                      "${application.Degree_offered ?? 'N/A'}",
+                      style: TextStyle(fontSize: 15),
+                    ),
+                  ],
+                ),
+                SizedBox(height: 4),
+                Row(
+                  children: [
+                    Icon(Icons.flag, size: 20, color: Colors.grey[800]),
+                    SizedBox(width: 6),
+                    Text(
+                      "${application.Country ?? 'N/A'}",
+                      style: TextStyle(fontSize: 15),
+                    ),
+                  ],
+                ),
+                Divider(height: 20),
+                Row(
+                  children: [
+                    Icon(Icons.info_outline, color: _getStatusColor(application.status)),
+                    SizedBox(width: 8),
+                    Text(
+                      "Your application is ${_getStatusText(application.status)}",
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w600,
+                        color: _getStatusColor(application.status),
+                      ),
+                    ),
+                  ],
+                ),
 
-                // Align(
-                //   alignment: Alignment.centerRight,
-                //   child: Text("Track Application", style: TextStyle(color: Colors.red)),
-                // ),
               ],
             ),
           ),
         ),
-      ),
+
+// Status color and text based on status value
+
+
     );
   }
 
