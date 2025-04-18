@@ -14,10 +14,11 @@ class Viewbookingmainwrapper1 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
     return BlocProvider(
       create: (context) =>
       BookingAuthblock()
-        ..add(FetchBookings(searchQuery: null,userid:userid_global)),
+        ..add(FetchBookings(searchQuery: null,userid: userid_global1)),
       child: BookingStatus(),
     );
   }

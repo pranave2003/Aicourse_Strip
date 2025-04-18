@@ -10,6 +10,7 @@ class Viewapplicationsmainwrapper1 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
     return BlocProvider(
       create: (context) =>
       ApplicationBloc()

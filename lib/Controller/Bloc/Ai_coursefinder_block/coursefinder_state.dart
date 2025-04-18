@@ -34,7 +34,7 @@ class CoursefinderLoaded extends CoursefinderState {
 
 class CoursefinderFailError extends CoursefinderState {
   final String error;
-
   CoursefinderFailError(this.error);
-
 }
+
+

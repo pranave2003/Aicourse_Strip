@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:course_connect/Controller/Bloc/Ai_coursefinder_block/coursefinder_block.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import '../../Controller/Bloc/Ai_coursefinder_block/coursefinder_state.dart';
 import '../../Controller/Bloc/University_block/University_model/University_model.dart';
 import '../../Controller/Bloc/selection_cubit.dart';
 import '../../Controller/Bloc/selection_state.dart';

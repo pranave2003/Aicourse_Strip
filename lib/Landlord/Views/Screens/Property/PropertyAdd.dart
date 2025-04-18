@@ -277,17 +277,38 @@ class _PropertyAddState extends State<PropertyAdd> {
             _buildSectionTitle("Property Details"),
             SizedBox(height: 5),
 
-            Row(
-              children: [
-                Expanded(
-                    child: _buildTextField(
-                        "Property Name", _propertyNameController, true)),
-                SizedBox(width: 10),
-                Expanded(
-                    child:
-                        _buildTextField("Address", _addressController, true)),
-              ],
+            Form(
+              key: _formKey,
+              child: Column(
+                children: [
+                  Row(
+                    children: [
+                      Expanded(
+                        child: _buildTextField(
+                            "Property Name", _propertyNameController, true),
+                      ),
+                      SizedBox(width: 10),
+                      Expanded(
+                        child: _buildTextField(
+                            "Address", _addressController, true),
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: 20),
+                  ElevatedButton(
+                    onPressed: () {
+                      if (_formKey.currentState!.validate()) {
+                        // All validations passed
+                        print("Property Name: ${_propertyNameController.text}");
+                        print("Address: ${_addressController.text}");
+                      }
+                    },
+                    child: Text("Submit"),
+                  ),
+                ],
+              ),
             ),
+
             SizedBox(height: 10),
             _buildDropdown(
                 "Country",
@@ -645,55 +666,55 @@ class _PropertyAddState extends State<PropertyAdd> {
     );
   }
 
-  Widget _buildTextField(
-      String label, TextEditingController controller, bool isRequired) {
-    return Padding(
-      padding: EdgeInsets.only(bottom: 15),
-      child: TextFormField(
-        controller: controller,
-        decoration:
-            InputDecoration(labelText: label, border: OutlineInputBorder()),
-        validator: (value) {
-          if (isRequired && (value == null || value.isEmpty)) {
-            return "$label cannot be empty";
-          }
-          if (label == "Phone Number" &&
-              !RegExp(r'^\+?[0-9]{10,15}$').hasMatch(value!)) {
-            return "Enter a valid phone number";
-          }
-          if ((label == "Amount /Week" ||
-                  label == "Amount /Month" ||
-                  label == "Token Amount") &&
-              double.tryParse(value!) == null) {
-            return "Enter a valid amount";
-          }
-          return null;
-        },
-      ),
-    );
-  }
+  // Widget _buildTextField(
+  //     String label, TextEditingController controller, bool isRequired) {
+  //   return Padding(
+  //     padding: EdgeInsets.only(bottom: 15),
+  //     child: TextFormField(
+  //       controller: controller,
+  //       decoration:
+  //           InputDecoration(labelText: label, border: OutlineInputBorder()),
+  //       validator: (value) {
+  //         if (isRequired && (value == null || value.isEmpty)) {
+  //           return "$label cannot be empty";
+  //         }
+  //         if (label == "Phone Number" &&
+  //             !RegExp(r'^\+?[0-9]{10,15}$').hasMatch(value!)) {
+  //           return "Enter a valid phone number";
+  //         }
+  //         if ((label == "Amount /Week" ||
+  //                 label == "Amount /Month" ||
+  //                 label == "Token Amount") &&
+  //             double.tryParse(value!) == null) {
+  //           return "Enter a valid amount";
+  //         }
+  //         return null;
+  //       },
+  //     ),
+  //   );
+  // }
 
-  Widget _buildDropdown(String label, List<String> items, String? selectedValue,
-      Function(String?) onChanged, bool isRequired) {
-    return Padding(
-      padding: EdgeInsets.only(bottom: 15),
-      child: DropdownButtonFormField<String>(
-        decoration:
-            InputDecoration(labelText: label, border: OutlineInputBorder()),
-        value: selectedValue,
-        items: items
-            .map((item) => DropdownMenuItem(value: item, child: Text(item)))
-            .toList(),
-        onChanged: onChanged,
-        validator: (value) {
-          if (isRequired && value == null) {
-            return "$label cannot be empty";
-          }
-          return null;
-        },
-      ),
-    );
-  }
+  // Widget _buildDropdown(String label, List<String> items, String? selectedValue,
+  //     Function(String?) onChanged, bool isRequired) {
+  //   return Padding(
+  //     padding: EdgeInsets.only(bottom: 15),
+  //     child: DropdownButtonFormField<String>(
+  //       decoration:
+  //           InputDecoration(labelText: label, border: OutlineInputBorder()),
+  //       value: selectedValue,
+  //       items: items
+  //           .map((item) => DropdownMenuItem(value: item, child: Text(item)))
+  //           .toList(),
+  //       onChanged: onChanged,
+  //       validator: (value) {
+  //         if (isRequired && value == null) {
+  //           return "$label cannot be empty";
+  //         }
+  //         return null;
+  //       },
+  //     ),
+  //   );
+  // }
 
   Widget _buildCheckbox(String label, bool value, Function(bool?) onChanged,
       {bool required = true}) {
@@ -729,6 +750,107 @@ class _PropertyAddState extends State<PropertyAdd> {
     );
   }
 }
+Widget _buildTextField(
+    String label, TextEditingController controller, bool isRequired) {
+  return Padding(
+    padding: EdgeInsets.only(bottom: 15),
+    child: TextFormField(
+      controller: controller,
+      decoration:
+      InputDecoration(labelText: label, border: OutlineInputBorder()),
+      validator: (value) {
+        if (isRequired && (value == null || value.trim().isEmpty)) {
+          return "$label cannot be empty";
+        }
+
+        if (label == "Phone Number" &&
+            !RegExp(r'^\+?[0-9]{10,15}\$').hasMatch(value!.trim())) {
+          return "Enter a valid phone number";
+        }
+
+        if ((label == "Amount /Week" ||
+            label == "Amount /Month" ||
+            label == "Token Amount" ||
+            label == "Total Amount") &&
+            double.tryParse(value!.trim()) == null) {
+          return "Enter a valid amount";
+        }
+
+        if (label == "Property Name") {
+          final regex = RegExp(r'^([A-Z][a-z]*)(\s[A-Z][a-z]*)*\$');
+          if (!regex.hasMatch(value!.trim())) {
+            return "Each word in Property Name must start with a capital letter";
+          }
+        }
+
+        return null;
+      },
+    ),
+  );
+}
+
+Widget _buildDropdown(String label, List<String> items, String? selectedValue,
+    Function(String?) onChanged, bool isRequired) {
+  return Padding(
+    padding: EdgeInsets.only(bottom: 15),
+    child: DropdownButtonFormField<String>(
+      decoration:
+      InputDecoration(labelText: label, border: OutlineInputBorder()),
+      value: selectedValue,
+      items: items
+          .map((item) => DropdownMenuItem(value: item, child: Text(item)))
+          .toList(),
+      onChanged: onChanged,
+      validator: (value) {
+        if (isRequired && (value == null || value.isEmpty)) {
+          return "$label cannot be empty";
+        }
+        return null;
+      },
+    ),
+  );
+}
+
+Widget _buildCheckbox(String label, bool value, Function(bool?) onChanged,
+    {bool required = true}) {
+  return CheckboxListTile(
+    title: Text(label),
+    value: value,
+    onChanged: onChanged,
+    subtitle: required && !value
+        ? Text(
+      "$label must be selected",
+      style: TextStyle(color: Colors.red),
+    )
+        : null,
+  );
+}
+
+// Widget _buildDatePicker(String label, DateTime? date,
+//     Function(DateTime) onDateSelected, TextEditingController controller) {
+//   return Padding(
+//     padding: EdgeInsets.only(bottom: 15),
+//     child: TextFormField(
+//       controller: controller,
+//       readOnly: true,
+//       decoration: InputDecoration(
+//         labelText: date == null ? label : "${date.toLocal()}".split(' ')[0],
+//         border: OutlineInputBorder(),
+//         suffixIcon: IconButton(
+//           icon: Icon(Icons.calendar_today),
+//           onPressed: () => _selectDate(context, onDateSelected),
+//         ),
+//       ),
+//       validator: (value) {
+//         if (date == null) {
+//           return "$label cannot be empty";
+//         }
+//         return null;
+//       },
+//     ),
+//   );
+// }
+
 
 Widget _buildSectionTitle(String title) {
   return Padding(

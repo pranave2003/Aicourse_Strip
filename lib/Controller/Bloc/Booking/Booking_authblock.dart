@@ -6,11 +6,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'BookingState.dart';
 import 'BookingAuthEvent.dart';
-String? getCurrentUserId() {
-  return FirebaseAuth.instance.currentUser?.uid;
-}
-final uid = getCurrentUserId();
-
+// String? getCurrentUserId() {
+//   return FirebaseAuth.instance.currentUser?.uid;
+// }
+// final uid = getCurrentUserId();
+final userid_global1=FirebaseAuth.instance.currentUser!.uid;
 
 class BookingAuthblock extends Bloc<BookingAuthEvent, BookingState> {
   final FirebaseStorage _firebaseStorage = FirebaseStorage.instance;
@@ -83,7 +83,7 @@ class BookingAuthblock extends Bloc<BookingAuthEvent, BookingState> {
         Query query = ShopesCollection;
         query = query.where("status");
         query = query.where("landlordId",isEqualTo: event.landlordid);
-        query=query.where("uaser_uid",isEqualTo: event.userid);
+        query=query.where("userid",isEqualTo: event.userid);
 
         QuerySnapshot snapshot = await query.get();
 

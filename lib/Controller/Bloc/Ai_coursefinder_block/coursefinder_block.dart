@@ -42,6 +42,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:meta/meta.dart';
 
 import '../University_block/University_model/University_model.dart';
+import 'coursefinder_state.dart';
 
 @immutable
 abstract class CoursefinderEvent {}
@@ -74,22 +75,7 @@ class FetchAllUniversites extends CoursefinderEvent {
   });
 }
 
-@immutable
-abstract class CoursefinderState {}
 
-class CoursefinderInitial extends CoursefinderState {}
-
-class CoursefinderLoading extends CoursefinderState {}
-
-class CoursefinderLoaded extends CoursefinderState {
-  final List<University_model> universities;
-  CoursefinderLoaded(this.universities);
-}
-
-class CoursefinderFailError extends CoursefinderState {
-  final String error;
-  CoursefinderFailError(this.error);
-}
 
 class CoursefinderBlock extends Bloc<CoursefinderEvent, CoursefinderState> {
   CoursefinderBlock() : super(CoursefinderInitial()) {
