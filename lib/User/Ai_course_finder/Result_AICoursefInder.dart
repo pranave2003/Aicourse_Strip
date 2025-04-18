@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../Controller/Bloc/University_block/University_model/University_model.dart';
 import '../../Controller/Bloc/selection_cubit.dart';
 import '../../Controller/Bloc/selection_state.dart';
+import '../Sreens/BottomNavigation/Bottom_Nav.dart';
 import 'UniversityInfoScreen.dart';
 
 class ResultAicoursefinder extends StatelessWidget {
@@ -41,6 +42,17 @@ class ResultAicoursefinder extends StatelessWidget {
                       Navigator.pop(context);
                     },
                   ),
+                  actions: [
+                    TextButton(
+                        onPressed: () {
+                          Navigator.push(context, MaterialPageRoute(
+                            builder: (context) {
+                              return BottomNavWrapper();
+                            },
+                          ));
+                        },
+                        child: Text("Back to Home"))
+                  ],
                 ),
                 body: Padding(
                   padding: const EdgeInsets.all(10),

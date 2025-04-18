@@ -281,24 +281,44 @@ class _ProfileState extends State<Profile> {
                     ],
                   ),
                   child: ListTile(
-                    leading:
-                        Icon(Icons.remove_circle, color: Colors.red, size: 24),
+                    leading: Icon(Icons.remove_circle, color: Colors.red, size: 24),
                     title: Text(
                       "Remove Account",
-                      style:
-                          TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+                      style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
                     ),
                     onTap: () {
-                      final Authbloc = BlocProvider.of<AuthBloc>(context);
-                      Authbloc.add(Removeaccount());
-                      Navigator.pushNamedAndRemoveUntil(
-                        context,
-                        "/login",
-                        (route) => false,
+                      showDialog(
+                        context: context,
+                        builder: (context) => AlertDialog(
+                          title: Text("Confirm"),
+                          content: Text("Are you sure you want to remove your account?"),
+                          actions: [
+                            TextButton(
+                              onPressed: () {
+                                Navigator.of(context).pop(); // Dismiss dialog
+                              },
+                              child: Text("No"),
+                            ),
+                            TextButton(
+                              onPressed: () {
+                                Navigator.of(context).pop(); // Close dialog first
+                                final authBloc = BlocProvider.of<AuthBloc>(context);
+                                authBloc.add(Removeaccount());
+                                Navigator.pushNamedAndRemoveUntil(
+                                  context,
+                                  "/login",
+                                      (route) => false,
+                                );
+                              },
+                              child: Text("Yes"),
+                            ),
+                          ],
+                        ),
                       );
                     },
                   ),
                 ),
+
 
                 // Log Out
                 BlocListener<AuthBloc, AuthState>(

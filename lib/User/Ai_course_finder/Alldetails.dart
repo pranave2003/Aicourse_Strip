@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../Controller/Bloc/Ai_coursefinder_block/coursefinder_block.dart';
 import '../../Controller/Bloc/selection_cubit.dart';
 import '../../Controller/Bloc/selection_state.dart';
+import 'Ai.dart';
 
 class BachelorsDetailsOverall extends StatelessWidget {
   @override
@@ -232,9 +233,7 @@ class BachelorsDetailsOverall extends StatelessWidget {
                   SizedBox(height: 20),
                   GestureDetector(
                     onTap: () async {
-                      context.read<CoursefinderBlock>().add(
-
-                          FetchAllUniversites(
+                      context.read<CoursefinderBlock>().add(FetchAllUniversites(
                             searchQuery: null,
                             Country: state.selections["country"],
                             AcadamicTest: state.selections["Acadamictest"],
@@ -250,10 +249,48 @@ class BachelorsDetailsOverall extends StatelessWidget {
                             highestEducationpercentage:
                                 state.selections["highestEducation_percentage"],
                           ));
-                      await Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => ResultAicoursefinder(),
+                      // await Navigator.push(
+                      //   context,
+                      //   MaterialPageRoute(
+                      //     builder: (context) => ResultAicoursefinder(),
+                      //   ),
+                      // );
+                      Navigator.of(context).push(
+                        PageRouteBuilder(
+                          pageBuilder:
+                              (context, animation, secondaryAnimation) {
+                            return AIGenerationScreen(
+                              onGenerationComplete: () {
+                                // Navigate to home screen after generation is complete
+                                Navigator.of(context).pushReplacement(
+                                  MaterialPageRoute(
+                                    builder: (context) =>
+                                        const ResultAicoursefinder(),
+                                  ),
+                                );
+                              },
+                            );
+                          },
+                          transitionsBuilder: (
+                            context,
+                            animation,
+                            secondaryAnimation,
+                            child,
+                          ) {
+                            const begin = 0.0;
+                            const end = 1.0;
+                            const curve = Curves.easeInOut;
+
+                            var tween = Tween(
+                              begin: begin,
+                              end: end,
+                            ).chain(CurveTween(curve: curve));
+
+                            return FadeTransition(
+                              opacity: animation.drive(tween),
+                              child: child,
+                            );
+                          },
                         ),
                       );
                     },
