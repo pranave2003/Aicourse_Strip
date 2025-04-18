@@ -3,6 +3,7 @@ import 'package:course_connect/Controller/Bloc/Booking/BookingState.dart';
 import 'package:course_connect/Controller/Bloc/Booking/Booking_authblock.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import '../../../../Controller/Bloc/Landloard_auth/landloard_auth_bloc.dart';
 import '../../../../Widget/Constands/Loading.dart';
 
 class Pending_Booking_wrapper extends StatelessWidget {
@@ -12,7 +13,7 @@ class Pending_Booking_wrapper extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider<BookingAuthblock>(
       create: (context) => BookingAuthblock()
-        ..add(FetchBookings(searchQuery: null, status: "0")),
+        ..add(FetchBookings(searchQuery: null,landlordid:Lanloardid_global )),
       child: Bookingstate(),
     );
   }
@@ -87,10 +88,10 @@ class Bookingstate extends StatelessWidget {
             Expanded(
               child: BlocConsumer<BookingAuthblock, BookingState>(
                 listener: (context, state) {
-                  if (state is Acceptorrejectstate) {
-                    context.read<BookingAuthblock>().add(
-                        FetchBookings(searchQuery: null, status: "0"));
-                  }
+                  // if (state is Acceptorrejectstate) {
+                  //   context.read<BookingAuthblock>().add(
+                  //       FetchBookings(searchQuery: null));
+                  // }
                 },
                 builder: (context, state) {
                   if (state is BookingLoading) {

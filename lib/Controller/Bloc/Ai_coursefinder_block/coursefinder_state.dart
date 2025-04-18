@@ -21,3 +21,20 @@ class University_loaded extends CoursefinderState {
       );
 }
 
+
+
+class CoursefinderInitial extends CoursefinderState {}
+
+class CoursefinderLoading extends CoursefinderState {}
+
+class CoursefinderLoaded extends CoursefinderState {
+  final List<University_model> universities;
+  CoursefinderLoaded(this.universities);
+}
+
+class CoursefinderFailError extends CoursefinderState {
+  final String error;
+
+  CoursefinderFailError(this.error);
+
+}

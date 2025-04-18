@@ -10,7 +10,8 @@ class Property_Add_Event extends PropertyAuthEvent {
 
 class FetchProperty extends PropertyAuthEvent {
   final String? searchQuery;
-  FetchProperty({required this.searchQuery});
+  final String? landlordid;
+  FetchProperty({required this.searchQuery,this.landlordid});
 }
 
 class FetchPropertyDetailsById extends PropertyAuthEvent {

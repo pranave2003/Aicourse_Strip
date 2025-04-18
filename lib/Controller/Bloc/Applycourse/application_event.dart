@@ -17,7 +17,9 @@ class Applicationaddevent extends ApplicationEvent {
 }
 class FetchApplication extends ApplicationEvent {
   final String? searchQuery;
-  FetchApplication({required this.searchQuery});
+  final String? uaser_uid;
+
+  FetchApplication({required this.searchQuery,this.uaser_uid});
 }
 
 class FetchApplicationDetailsById extends ApplicationEvent {

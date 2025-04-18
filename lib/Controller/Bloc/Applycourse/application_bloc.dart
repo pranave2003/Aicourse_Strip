@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:bloc/bloc.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:course_connect/Controller/Bloc/Applycourse/ApplicationModel/ApplicationModel.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'dart:html' as html; // Only fo
 import 'package:flutter/foundation.dart';
@@ -11,6 +12,7 @@ import 'package:path_provider/path_provider.dart';
 part 'application_event.dart';
 part 'application_state.dart';
 
+final userid_global=FirebaseAuth.instance.currentUser!.uid;
 
 
 class ApplicationBloc extends Bloc<ApplicationEvent, ApplicationState> {
@@ -67,6 +69,8 @@ class ApplicationBloc extends Bloc<ApplicationEvent, ApplicationState> {
             FirebaseFirestore.instance.collection('Applications');
 
         Query query = Applicationcollection;
+        query=query.where("uaser_uid",isEqualTo: event.uaser_uid);
+
         QuerySnapshot snapshot = await query.get();
 
         List<Applicationmodel> userss = snapshot.docs.map((doc) {
@@ -96,6 +100,7 @@ class ApplicationBloc extends Bloc<ApplicationEvent, ApplicationState> {
               .collection('Applications')
               .doc(event.Application_id)
               .get();
+
 
           if (doc.exists) {
             Applicationmodel userData = Applicationmodel.fromMap(doc.data()!);

@@ -75,7 +75,8 @@ class BookingAuthblock extends Bloc<BookingAuthEvent, BookingState> {
         FirebaseFirestore.instance.collection('Bookings');
 
         Query query = ShopesCollection;
-        query = query.where("status", isEqualTo: event.status);
+        query = query.where("status");
+        query = query.where("landlordId",isEqualTo: event.landlordid);
 
         QuerySnapshot snapshot = await query.get();
 

@@ -6,6 +6,7 @@ import 'package:course_connect/Landlord/Views/Screens/Property/PropertyOverallPa
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../../Controller/Bloc/Landloard_auth/landloard_auth_bloc.dart';
 import '../../../../Controller/Bloc/Property/Property/Property_auth_block.dart';
 import '../../../../Controller/Bloc/Property/Property/Property_auth_state.dart';
 import '../../../../Widget/Constands/Loading.dart';
@@ -17,7 +18,7 @@ class Propertymainwrapper extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) =>
-          PropertyAuthBlock()..add(FetchProperty(searchQuery: null)),
+          PropertyAuthBlock()..add(FetchProperty(searchQuery: null,landlordid: Lanloardid_global)),
       child: Property(),
     );
   }
@@ -110,7 +111,7 @@ class _PropertyState extends State<Property> {
                 if (state is RefreshProperty) {
                   context
                       .read<PropertyAuthBlock>()
-                      .add(FetchProperty(searchQuery: null));
+                      .add(FetchProperty(searchQuery: null,landlordid: Lanloardid_global));
                 }
               },
               builder: (context, state) {

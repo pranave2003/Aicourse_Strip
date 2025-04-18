@@ -8,3 +8,4 @@ class FetchAllUniversites extends CoursefinderEvent {
   final String? searchQuery;
   FetchAllUniversites({required this.searchQuery});
 }
+

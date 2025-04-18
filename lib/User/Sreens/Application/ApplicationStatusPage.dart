@@ -13,7 +13,7 @@ class Viewapplicationsmainwrapper1 extends StatelessWidget {
     return BlocProvider(
       create: (context) =>
       ApplicationBloc()
-        ..add(FetchApplication(searchQuery: null)),
+        ..add(FetchApplication(searchQuery: null,uaser_uid: userid_global)),
       child: ApplicationStatusPage(),
     );
   }

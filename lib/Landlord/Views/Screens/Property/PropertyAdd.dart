@@ -22,6 +22,7 @@ class _PropertyAddState extends State<PropertyAdd> {
   final TextEditingController _amountWeekController = TextEditingController();
   final TextEditingController _amountMonthController = TextEditingController();
   final TextEditingController _ownerNameController = TextEditingController();
+  final TextEditingController _ownerEmailController = TextEditingController();
   final TextEditingController _phoneController = TextEditingController();
   final TextEditingController _aboutPropertyController =
       TextEditingController();
@@ -46,6 +47,7 @@ class _PropertyAddState extends State<PropertyAdd> {
     _moveInController.dispose();
     _propertyTotalController.dispose();
     _tokenAmountController.dispose();
+    _ownerEmailController.dispose();
     super.dispose();
   }
 
@@ -236,6 +238,7 @@ class _PropertyAddState extends State<PropertyAdd> {
                                 billStatus: _billsIncluded ? "Yes" : "No",
                                 pets: _petsAllowed ? "Yes" : "No",
                                 smoking: _smokingAllowed ? "Yes" : "No",
+                                owneremail:_ownerEmailController.text,
                               );
                               context
                                   .read<PropertyAuthBlock>()

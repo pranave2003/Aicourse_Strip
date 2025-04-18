@@ -102,7 +102,10 @@ class PropertyAuthBlock extends Bloc<PropertyAuthEvent, PropertyAuthState> {
             FirebaseFirestore.instance.collection('Property');
 
         Query query = Propertycollection;
+        query=query.where("LandlordId",isEqualTo: event.landlordid);
         QuerySnapshot snapshot = await query.get();
+
+
 
         List<Property_Model> userss = snapshot.docs.map((doc) {
           return Property_Model.fromMap(doc.data() as Map<String, dynamic>);

@@ -20,11 +20,11 @@ class ResultAicoursefinder extends StatelessWidget {
                 ..add(FetchAllUniversites(
                   searchQuery: null,
                   Country: state.selections["country"],
-                  // AcadamicTest: state.selections["Acadamictest"],
-                  // Course_offered: state.selections["course"],
+                  AcadamicTest: state.selections["Acadamictest"],
+                  Course_offered: state.selections["course"],
                   Degree_offered: state.selections["selectedDegree"],
-                  // Englishtest: state.selections["EnglishTest"],
-                  // highestEducation: state.selections["highestEducation"],
+                  Englishtest: state.selections["EnglishTest"],
+                  highestEducation: state.selections["highestEducation"],
 
                   // AcadamicTestPercentage:
                   //     state.selections["AcadamicTestpercentage"],

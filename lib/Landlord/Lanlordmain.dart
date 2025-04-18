@@ -33,7 +33,7 @@ class MyApp extends StatelessWidget {
         ),
         BlocProvider<BookingAuthblock>(
           create: (context) => BookingAuthblock()
-            ..add(FetchBookings(searchQuery: null, status: "0" ),
+            ..add(FetchBookings(searchQuery: null),
         ),
         ),
         BlocProvider<PropertyAuthBlock>(
