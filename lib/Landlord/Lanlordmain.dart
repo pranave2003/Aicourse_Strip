@@ -331,13 +331,40 @@ class Dashboard extends StatelessWidget {
             spacing: 16,
             runSpacing: 16,
             children: const [
-              SummaryCard(title: 'Total Houses Listed', value: '34'),
-              SummaryCard(title: 'Total Bookings', value: '128'),
-              SummaryCard(title: 'Approved Bookings', value: '87'),
-              SummaryCard(title: 'Payments Received', value: '\$12,540'),
-              SummaryCard(title: 'Total Users', value: '256'),
+              SummaryCard(
+                title: 'Total Houses Listed',
+                value: '34',
+                icon: Icons.house,
+                color: Colors.blue,
+              ),
+              SummaryCard(
+                title: 'Total Bookings',
+                value: '128',
+                icon: Icons.book_online,
+                color: Colors.green,
+              ),
+              SummaryCard(
+                title: 'Approved Bookings',
+                value: '87',
+                icon: Icons.check_circle,
+                color: Colors.teal,
+              ),
+              SummaryCard(
+                title: 'Payments Received',
+                value: '\$12,540',
+                icon: Icons.attach_money,
+                color: Colors.orange,
+              ),
+              SummaryCard(
+                title: 'Total Users',
+                value: '256',
+                icon: Icons.people,
+                color: Colors.purple,
+              ),
             ],
           ),
+
+
           const SizedBox(height: 32),
           const Text('Landlord Info',
               style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
@@ -489,15 +516,77 @@ Widget buildInputField(IconData icon, String title, TextEditingController contro
 class SummaryCard extends StatelessWidget {
   final String title;
   final String value;
+  final IconData icon;
+  final Color color;
 
   const SummaryCard({
     super.key,
     required this.title,
     required this.value,
+    required this.icon,
+    required this.color,
   });
 
   @override
   Widget build(BuildContext context) {
+    return Container(
+      width: 200,
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        color: color.withOpacity(0.1),
+        borderRadius: BorderRadius.circular(20),
+        boxShadow: [
+          BoxShadow(
+            color: color.withOpacity(0.4),
+            blurRadius: 12,
+            offset: const Offset(0, 6),
+          ),
+        ],
+        gradient: LinearGradient(
+          colors: [color.withOpacity(0.9), color.withOpacity(0.6)],
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+        ),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Icon(icon, size: 30, color: Colors.white),
+          const SizedBox(height: 12),
+          Text(
+            value,
+            style: const TextStyle(
+              fontSize: 24,
+              fontWeight: FontWeight.bold,
+              color: Colors.white,
+              shadows: [
+                Shadow(
+                  blurRadius: 4,
+                  color: Colors.black26,
+                  offset: Offset(1, 2),
+                ),
+              ],
+            ),
+          ),
+          const SizedBox(height: 8),
+          Text(
+            title,
+            style: const TextStyle(
+              fontSize: 14,
+              color: Colors.white70,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+
+
+  @override
+  Widget build(BuildContext context, IconData? icon, String value, String title) {
+    var color;
     return ConstrainedBox(
       constraints: const BoxConstraints(
         minWidth: 140,
@@ -505,31 +594,48 @@ class SummaryCard extends StatelessWidget {
       ),
       child: Container(
         padding: const EdgeInsets.all(16),
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(12),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.grey.withOpacity(0.15),
-              spreadRadius: 2,
-              blurRadius: 6,
-            ),
-          ],
-        ),
+        // decoration: BoxDecoration(
+        //   color: Colors.white,
+        //   borderRadius: BorderRadius.circular(16),
+        //   boxShadow: [
+        //     BoxShadow(
+        //       color: Colors.grey.withOpacity(0.1), // subtle shadow
+        //       spreadRadius: 1,
+        //       blurRadius: 4,
+        //       offset: const Offset(0, 2),
+        //     ),
+        //   ],
+        //   border: Border.all(color: color.withOpacity(0.3), width: 1.5),
+        // ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(value,
-                style: const TextStyle(
-                    fontSize: 20, fontWeight: FontWeight.bold)),
+            Icon(icon, color: color, size: 26),
+            const SizedBox(height: 12),
+            Text(
+              value,
+              style: TextStyle(
+                fontSize: 22,
+                fontWeight: FontWeight.bold,
+                color: color,
+              ),
+            ),
             const SizedBox(height: 4),
-            Text(title, style: const TextStyle(color: Colors.grey)),
+            Text(
+              title,
+              style: const TextStyle(
+                fontSize: 14,
+                color: Colors.black54,
+              ),
+            ),
           ],
         ),
       ),
     );
   }
-}
+
+
+
 class BookingTile extends StatelessWidget {
   final String name;
   final String property;

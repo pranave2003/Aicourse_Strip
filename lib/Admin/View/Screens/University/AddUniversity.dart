@@ -2,6 +2,7 @@ import 'package:course_connect/Controller/Bloc/University_block/University_model
 import 'package:course_connect/Controller/Bloc/University_block/university_bloc.dart';
 import 'package:course_connect/Widget/Constands/Loading.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../Main/Adminmain.dart';
@@ -18,7 +19,7 @@ class _AddUniversityState extends State<AddUniversity> {
   String? selectedCourse;
   String? selectedDuration;
   String? selectedEligibility;
-  String? selectedRank;
+  int? selectedRank;
   DateTime? establishedDate;
   DateTime? admissionStartDate;
   DateTime? admissionEndDate;
@@ -832,37 +833,45 @@ class _AddUniversityState extends State<AddUniversity> {
                         const SizedBox(width: 15), // Same width as the second row's space
 
                         // Second Field (QS Rank)
-                        Expanded(
-                          child: Container(
-                            height: 60, // Set a fixed height for consistency
-                            padding: const EdgeInsets.symmetric( vertical: 8, horizontal: 25), // Align with the dropdowns
-                            child: TextFormField(
-                              decoration: const InputDecoration(
-                                labelText: "QS Rank",
-                                hintText: "Enter QS Rank (e.g., 42)",
-                                border: OutlineInputBorder(),
-                              ),
-                              keyboardType: TextInputType.number, // Restrict input to numbers only
-                              initialValue: selectedRank != null ? selectedRank.toString() : '', // Handle initial value properly
-                              validator: (value) {
-                                if (value == null || value.trim().isEmpty) {
-                                  return 'QS Rank is required';
-                                }
-                                final intValue = int.tryParse(value.trim());
-                                if (intValue == null) {
-                                  return 'Enter a valid integer';
-                                }
-                                return null;
-                              },
-                              onChanged: (value) {
-                                setState(() {
-                                  selectedRank = (int.tryParse(value.trim()) ?? 0).toString(); // Set to 0 if invalid
-                                });
-                              },
-                            ),
-                          ),
-                        ),
-                      ],
+
+    Expanded(
+    child: Container(
+    height: 60,
+    padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 25),
+    child: TextFormField(
+    decoration: const InputDecoration(
+    labelText: "QS Rank",
+    hintText: "Enter QS Rank (e.g., 42)",
+    border: OutlineInputBorder(),
+    ),
+    keyboardType: TextInputType.number,
+    inputFormatters: [
+    FilteringTextInputFormatter.digitsOnly, // Only allow digits
+    ],
+    initialValue: selectedRank?.toString() ?? '', // Just for displaying initial value
+    validator: (value) {
+    if (value == null || value.trim().isEmpty) {
+    return 'QS Rank is required';
+    }
+    final intValue = int.tryParse(value.trim());
+    if (intValue == null) {
+    return 'Enter a valid integer';
+    }
+    return null;
+    },
+    onChanged: (value) {
+    final intValue = int.tryParse(value.trim());
+    if (intValue != null) {
+    setState(() {
+    selectedRank = intValue; // ✅ Store as integer only
+    });
+    }
+    },
+    ),
+    ),
+    ),
+
+    ],
                     ),
 
                     SizedBox(height: 15), // Add a small space between rows
