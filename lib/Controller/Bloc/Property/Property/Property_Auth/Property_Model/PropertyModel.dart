@@ -36,7 +36,6 @@ class Property_Model {
   String? oneSignalId;
   String? location;
 
-
   Property_Model({
     this.propertyId,
     this.LandlordId,

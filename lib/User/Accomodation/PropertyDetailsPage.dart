@@ -8,15 +8,20 @@ import 'package:course_connect/User/Accomodation/BookingFormPage.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../Widget/Constands/Loading.dart';
 
 int currentIndex = 0;
 
 class PropertyInfoScreenWrapper extends StatelessWidget {
-  const PropertyInfoScreenWrapper(
-      {super.key, required this.propertyId, this.availableFrom ,this.owneremail, this.location,});
-
+  const PropertyInfoScreenWrapper({
+    super.key,
+    required this.propertyId,
+    this.availableFrom,
+    this.owneremail,
+    this.location,
+  });
 
   final propertyId;
   final availableFrom;
@@ -54,6 +59,12 @@ class _PropertyDetailsPageState extends State<PropertyDetailsPage> {
   void initState() {
     super.initState();
     _startAutoSlide();
+  }
+
+  void launchURL(String url) async {
+    if (await canLaunch(url)) {
+      await launch(url);
+    }
   }
 
   void _startAutoSlide() {
@@ -105,8 +116,8 @@ class _PropertyDetailsPageState extends State<PropertyDetailsPage> {
                 "icon": Icons.bed_outlined,
                 "name": "${property.bedroom} Bedroom"
               },
-              {"icon": Icons.kitchen,  "name": "${property.kitchen} kitchen"},
-              {"icon": Icons.bathtub, "name": "${property.bathroom} Bathroom" },
+              {"icon": Icons.kitchen, "name": "${property.kitchen} kitchen"},
+              {"icon": Icons.bathtub, "name": "${property.bathroom} Bathroom"},
               {
                 "icon": Icons.book,
                 "name": "Bills included:\n  ${property.billStatus}"
@@ -114,16 +125,12 @@ class _PropertyDetailsPageState extends State<PropertyDetailsPage> {
               // Add more services as needed
             ];
             List<Map<String, dynamic>> featureList = [
-              {
-                "icon": Icons.king_bed,
-                "name": "${property.bedroom} Bedroom"
-              },
-
+              {"icon": Icons.king_bed, "name": "${property.bedroom} Bedroom"},
               {
                 "icon": Icons.smoke_free,
                 "name": "Smoking Allowed:\n  ${property.smoking}"
               },
-              {"icon": Icons.pets,  "name": "Pets Allowed:\n  ${property.pets}"},
+              {"icon": Icons.pets, "name": "Pets Allowed:\n  ${property.pets}"},
             ];
 
             return SingleChildScrollView(
@@ -193,7 +200,7 @@ class _PropertyDetailsPageState extends State<PropertyDetailsPage> {
                             Row(
                               children: [
                                 const Icon(Icons.location_on,
-                                    color: Colors.green, size: 18),
+                                    color: Colors.grey, size: 18),
                                 const SizedBox(width: 4),
                                 Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -214,22 +221,45 @@ class _PropertyDetailsPageState extends State<PropertyDetailsPage> {
                             ),
                           ],
                         ),
-            //             ElevatedButton(
-            //               onPressed: googleMapsUrl.isEmpty ? null : _launchURL, // Disable button if URL is not available
-            //               style: ElevatedButton.styleFrom(
-            //                 foregroundColor: Colors.white, backgroundColor: Colors.green, // Set text color to white
-            //                 padding: EdgeInsets.symmetric(horizontal: 24, vertical: 12), // Add padding to button
-            //                 shape: RoundedRectangleBorder(
-            //                   borderRadius: BorderRadius.circular(8), // Rounded corners for the button
-            //                 ),
-            //               ), child: googleMapsUrl.isEmpty
-            //                 ? CircularProgressIndicator() // Show loader until URL is fetched
-            //           : Text('View Location'), // Button text
-            // ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            Column(
+                              children: [
+                                IconButton(
+                                    onPressed: () {
+                                      launchURL(property.location.toString());
+                                    },
+                                    icon: Icon(
+                                      Icons.location_on,
+                                      color: Colors.red,
+                                    )),
+                                Text(
+                                  "Tap to find",
+                                  style: TextStyle(
+                                      color: Colors.grey, fontSize: 12),
+                                )
+                              ],
+                            )
+                          ],
+                        ),
+                        //             ElevatedButton(
+                        //               onPressed: googleMapsUrl.isEmpty ? null : _launchURL, // Disable button if URL is not available
+                        //               style: ElevatedButton.styleFrom(
+                        //                 foregroundColor: Colors.white, backgroundColor: Colors.green, // Set text color to white
+                        //                 padding: EdgeInsets.symmetric(horizontal: 24, vertical: 12), // Add padding to button
+                        //                 shape: RoundedRectangleBorder(
+                        //                   borderRadius: BorderRadius.circular(8), // Rounded corners for the button
+                        //                 ),
+                        //               ), child: googleMapsUrl.isEmpty
+                        //                 ? CircularProgressIndicator() // Show loader until URL is fetched
+                        //           : Text('View Location'), // Button text
+                        // ),
                       ],
                     ),
                     const SizedBox(height: 12),
 
+                    const SizedBox(height: 12),
                     // Features (3 bedroom, smoking, pets)
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -394,9 +424,8 @@ class _PropertyDetailsPageState extends State<PropertyDetailsPage> {
                                 city: property.city,
                                 propertyTotal: property.propertyTotal,
                                 propertyAddress: property.propertyAddress,
-                                    userid:userid_global,
-                                    owneremail:property.owneremail,
-
+                                userid: userid_global,
+                                owneremail: property.owneremail,
                               ),
                             ),
                           );
