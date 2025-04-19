@@ -279,15 +279,20 @@ class _HomepageState extends State<Homepage> {
                           )
                         ],
                       ),
-                      SizedBox(height: 20,),
+                      SizedBox(
+                        height: 20,
+                      ),
                       //search query
                       Container(
                         height: 40,
                         width: 400,
-                        decoration: BoxDecoration(borderRadius: BorderRadius.circular(18)),
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(18)),
                         child: TextField(
                           onChanged: (value) {
-                            context.read<UniversityBloc>().add(FetchUniversity(searchQuery: value));
+                            context
+                                .read<UniversityBloc>()
+                                .add(FetchUniversity(searchQuery: value));
                           },
                           decoration: InputDecoration(
                             filled: true,
@@ -296,10 +301,11 @@ class _HomepageState extends State<Homepage> {
                               borderSide: BorderSide(color: Colors.grey),
                             ),
                             border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(18),
-                              borderSide: BorderSide(
-                                  width: 1, color: Colors.black,)
-                            ),
+                                borderRadius: BorderRadius.circular(18),
+                                borderSide: BorderSide(
+                                  width: 1,
+                                  color: Colors.black,
+                                )),
                             hintText: 'Search Universities',
                             prefixIcon: Icon(Icons.search, color: Colors.grey),
                           ),
@@ -436,7 +442,9 @@ class _HomepageState extends State<Homepage> {
                                                       BorderRadius.circular(
                                                           10), // Uncomment if needed
                                                   child: CachedNetworkImage(
-                                                    imageUrl: university.UniversityimageURL.toString(),
+                                                    imageUrl: university
+                                                            .UniversityimageURL
+                                                        .toString(),
 
                                                     // imageUrl: university
                                                     //         .UniversityimageURL
@@ -449,8 +457,7 @@ class _HomepageState extends State<Homepage> {
                                                     placeholder:
                                                         (context, url) =>
                                                             Center(
-                                                      child:
-                                                          Loading_Widget(),
+                                                      child: Loading_Widget(),
                                                     ),
 
                                                     // Show an error icon if the image fails to load
@@ -489,6 +496,31 @@ class _HomepageState extends State<Homepage> {
                                                             Colors.grey[700]),
                                                     textAlign: TextAlign.left,
                                                   )),
+                                              Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.end,
+                                                children: [
+                                                  Text(
+                                                    "Rank ",
+                                                    style: TextStyle(
+                                                        color: Colors.grey,
+                                                        fontSize: 10),
+                                                  ),
+                                                  Text(
+                                                    "${university.Rank}",
+                                                    style: TextStyle(
+                                                        color: Colors.black,
+                                                        fontSize: 12,
+                                                        fontWeight:
+                                                            FontWeight.bold),
+                                                  ),
+                                                  Icon(
+                                                    Icons.star,
+                                                    color: Colors.amber,
+                                                    size: 10,
+                                                  )
+                                                ],
+                                              )
                                             ],
                                           ),
                                         ),

@@ -194,6 +194,40 @@ class _UniversitiesState extends State<Universities> {
                                               color: Colors.grey[700]),
                                           textAlign: TextAlign.left,
                                         )),
+                                    Padding(
+                                        padding:
+                                            EdgeInsets.symmetric(horizontal: 8),
+                                        child: Text(
+                                          university.collagecode
+                                              .toString()
+                                              .toString(),
+                                          style: TextStyle(
+                                              fontSize: 12,
+                                              color: Colors.grey[700]),
+                                          textAlign: TextAlign.left,
+                                        )),
+                                    Row(
+                                      mainAxisAlignment: MainAxisAlignment.end,
+                                      children: [
+                                        Text(
+                                          "Rank ",
+                                          style: TextStyle(
+                                              color: Colors.grey, fontSize: 10),
+                                        ),
+                                        Text(
+                                          "${university.Rank}",
+                                          style: TextStyle(
+                                              color: Colors.black,
+                                              fontSize: 12,
+                                              fontWeight: FontWeight.bold),
+                                        ),
+                                        Icon(
+                                          Icons.star,
+                                          color: Colors.amber,
+                                          size: 10,
+                                        )
+                                      ],
+                                    )
                                   ],
                                 ),
                               ),

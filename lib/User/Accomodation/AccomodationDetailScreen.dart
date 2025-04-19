@@ -82,6 +82,13 @@ class _AccommodationDetailScreenState extends State<AccommodationDetailScreen> {
                   onChanged: (bool? newValue) {
                     setState(() {
                       isChecked = newValue!;
+                      if (isChecked == false) {
+                        context.read<PropertyAuthBlock>()
+                          ..add(FetchProperty(
+                            searchQuery: null,
+                          ));
+                      }
+                      ;
                     });
                   },
                 ),
