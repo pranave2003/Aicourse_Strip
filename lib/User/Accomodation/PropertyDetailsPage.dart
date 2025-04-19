@@ -15,13 +15,12 @@ int currentIndex = 0;
 
 class PropertyInfoScreenWrapper extends StatelessWidget {
   const PropertyInfoScreenWrapper(
-      {super.key, required this.propertyId, this.availableFrom ,this.owneremail, this.location,});
+      {super.key, required this.propertyId, this.availableFrom});
 
 
   final propertyId;
   final availableFrom;
-  final owneremail;
-  final location;
+
 
   @override
   Widget build(BuildContext context) {
