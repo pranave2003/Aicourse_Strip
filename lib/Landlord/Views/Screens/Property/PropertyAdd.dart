@@ -3,12 +3,11 @@ import 'package:file_picker/file_picker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import '../../../../Controller/Bloc/Dropdown_university/dropdown_bloc.dart';
 import '../../../../Controller/Bloc/Property/Property/Property_Auth/Property_Model/PropertyModel.dart';
 import '../../../../Controller/Bloc/Property/Property/Property_auth_block.dart';
 import '../../../../Controller/Bloc/Property/Property/Property_auth_state.dart';
 import '../../../../Widget/Constands/Loading.dart';
-
-import '../../../Lanlordmain.dart';
 
 class PropertyAdd extends StatefulWidget {
   @override
@@ -26,15 +25,15 @@ class _PropertyAddState extends State<PropertyAdd> {
   final TextEditingController _ownerEmailController = TextEditingController();
   final TextEditingController _phoneController = TextEditingController();
   final TextEditingController _aboutPropertyController =
-  TextEditingController();
+      TextEditingController();
   final TextEditingController _selectedCityController = TextEditingController();
   final TextEditingController _availableFromController =
-  TextEditingController();
+      TextEditingController();
   final TextEditingController _moveInController = TextEditingController();
   final TextEditingController _tokenAmountController = TextEditingController();
-  final TextEditingController _propertyTotalController = TextEditingController();
+  final TextEditingController _propertyTotalController =
+      TextEditingController();
   final TextEditingController _locationController = TextEditingController();
-
 
   void dispose() {
     _propertyNameController.dispose();
@@ -69,7 +68,6 @@ class _PropertyAddState extends State<PropertyAdd> {
   List<String> photos_Url = [];
   List<String> location = [];
 
-
   DateTime? availableFrom;
   DateTime? moveInDate;
 
@@ -77,6 +75,7 @@ class _PropertyAddState extends State<PropertyAdd> {
   bool _billsIncluded = false;
   bool _petsAllowed = false;
   bool _smokingAllowed = false;
+  String? Nearbycollage;
 
   Future<void> pickAndUpload(BuildContext context) async {
     final result = await FilePicker.platform.pickFiles(
@@ -120,7 +119,7 @@ class _PropertyAddState extends State<PropertyAdd> {
                     Text(
                       "Welcome ",
                       style:
-                      TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                          TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
                     ),
                     Text(
                       "Landlord,",
@@ -153,7 +152,7 @@ class _PropertyAddState extends State<PropertyAdd> {
                             radius: 20,
                             backgroundColor: Colors.grey,
                             backgroundImage:
-                            AssetImage('assets/Profile/img_3.png'),
+                                AssetImage('assets/Profile/img_3.png'),
                           ),
                           SizedBox(width: 10),
                           Text(
@@ -205,48 +204,52 @@ class _PropertyAddState extends State<PropertyAdd> {
                       SizedBox(width: 20),
                       InkWell(
                         onTap: () {
-                          if (photos_Url.isEmpty) {
+                          if (photos_Url.isEmpty && Nearbycollage == null) {
                             ScaffoldMessenger.of(context).showSnackBar(
                               SnackBar(
-                                content: Text('Please upload photo'),
+                                content: Text(
+                                    'Please upload photo and choose nearby university'),
                               ),
                             );
                           } else {
                             if (_formKey.currentState!.validate()) {
                               Property_Model property = Property_Model(
-                                propertyName: _propertyNameController.text,
-                                propertyAddress: _addressController.text,
-                                propertyArea: _areaController.text,
-                                country: _selectedCountry,
-                                state: _selectedState,
-                                city: _selectedCityController.text,
-                                roomTypes: _selectedRoomType,
-                                roomSizes: _selectedRoomSize,
-                                availableFrom: _availableFromController.text,
-                                moveInDate: _moveInController.text,
-                                propertyImageURL: photos_Url,
-                                aboutProperty: _aboutPropertyController.text,
-                                location: _locationController.text,
-                                bedroom: _selectedBedroom,
-                                bathroom: _selectedBathroom,
-                                kitchen: _selectedKitchen,
-                                furnishingOptions: _selectedFurnishing,
-                                propertyAmountWeek: _amountWeekController.text,
-                                propertyAmountMonth: _amountMonthController.text,
-                                tokenAmount: _tokenAmountController.text,
-                                stayDurations: _selectedMinStay,
-                                sexualOrientations: _selectedSexualOrientation,
-                                minimumStay: _selectedMinStay,
-                                maximumStay: _selectedMaxStay,
-                                ownerName: _ownerNameController.text,
-                                ownerPhone: _phoneController.text,
-                                propertyTotal: _propertyTotalController.text,
-                                parking: _parkingAvailable ? "Yes" : "No",
-                                billStatus: _billsIncluded ? "Yes" : "No",
-                                pets: _petsAllowed ? "Yes" : "No",
-                                smoking: _smokingAllowed ? "Yes" : "No",
-                                owneremail: _ownerEmailController.text,
-                              );
+                                  propertyName: _propertyNameController.text,
+                                  propertyAddress: _addressController.text,
+                                  propertyArea: _areaController.text,
+                                  country: _selectedCountry,
+                                  state: _selectedState,
+                                  city: _selectedCityController.text,
+                                  roomTypes: _selectedRoomType,
+                                  roomSizes: _selectedRoomSize,
+                                  availableFrom: _availableFromController.text,
+                                  moveInDate: _moveInController.text,
+                                  propertyImageURL: photos_Url,
+                                  aboutProperty: _aboutPropertyController.text,
+                                  location: _locationController.text,
+                                  bedroom: _selectedBedroom,
+                                  bathroom: _selectedBathroom,
+                                  kitchen: _selectedKitchen,
+                                  furnishingOptions: _selectedFurnishing,
+                                  propertyAmountWeek:
+                                      _amountWeekController.text,
+                                  propertyAmountMonth:
+                                      _amountMonthController.text,
+                                  tokenAmount: _tokenAmountController.text,
+                                  stayDurations: _selectedMinStay,
+                                  sexualOrientations:
+                                      _selectedSexualOrientation,
+                                  minimumStay: _selectedMinStay,
+                                  maximumStay: _selectedMaxStay,
+                                  ownerName: _ownerNameController.text,
+                                  ownerPhone: _phoneController.text,
+                                  propertyTotal: _propertyTotalController.text,
+                                  parking: _parkingAvailable ? "Yes" : "No",
+                                  billStatus: _billsIncluded ? "Yes" : "No",
+                                  pets: _petsAllowed ? "Yes" : "No",
+                                  smoking: _smokingAllowed ? "Yes" : "No",
+                                  owneremail: _ownerEmailController.text,
+                                  NearestUniversity: Nearbycollage.toString());
 
                               context
                                   .read<PropertyAuthBlock>()
@@ -256,7 +259,8 @@ class _PropertyAddState extends State<PropertyAdd> {
                         },
                         borderRadius: BorderRadius.circular(8),
                         child: Container(
-                          padding: EdgeInsets.symmetric(vertical: 8, horizontal: 36),
+                          padding:
+                              EdgeInsets.symmetric(vertical: 8, horizontal: 36),
                           decoration: BoxDecoration(
                             color: Colors.blue,
                             borderRadius: BorderRadius.circular(8),
@@ -264,13 +268,13 @@ class _PropertyAddState extends State<PropertyAdd> {
                           child: state is PropertyaddSuccess
                               ? Loading_Widget()
                               : Text(
-                            "+Add",
-                            style: TextStyle(
-                              fontSize: 18,
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
+                                  "+Add",
+                                  style: TextStyle(
+                                    fontSize: 18,
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
                         ),
                       ),
                     ],
@@ -292,15 +296,13 @@ class _PropertyAddState extends State<PropertyAdd> {
                       "Property Name",
                       _propertyNameController,
                       true // This indicates that this field is required
-                  ),
+                      ),
                 ),
                 SizedBox(width: 10), // Adds spacing between the two text fields
                 Expanded(
-                  child: _buildTextField(
-                      "Address",
-                      _addressController,
+                  child: _buildTextField("Address", _addressController,
                       true // This indicates that this field is also required
-                  ),
+                      ),
                 ),
               ],
             ),
@@ -321,16 +323,16 @@ class _PropertyAddState extends State<PropertyAdd> {
             if (_selectedCountry != null)
               _buildDropdown("State", _getStatesForCountry(_selectedCountry!),
                   _selectedState, (value) {
-                    setState(() {
-                      _selectedState = value;
-                    });
-                  }, true),
+                setState(() {
+                  _selectedState = value;
+                });
+              }, true),
             const SizedBox(height: 15),
             Row(
               children: [
                 Expanded(
                     child:
-                    _buildTextField("City", _selectedCityController, true)),
+                        _buildTextField("City", _selectedCityController, true)),
                 SizedBox(width: 10),
                 Expanded(child: _buildTextField("Area", _areaController, true)),
               ],
@@ -339,7 +341,7 @@ class _PropertyAddState extends State<PropertyAdd> {
             TextFormField(
               controller: _locationController,
               decoration: InputDecoration(
-                labelText: "Location",
+                labelText: "Location link",
                 border: OutlineInputBorder(),
                 prefixIcon: Icon(Icons.location_on),
               ),
@@ -350,7 +352,49 @@ class _PropertyAddState extends State<PropertyAdd> {
                 return null;
               },
             ),
-
+            SizedBox(height: 10),
+            BlocBuilder<DropdownBloc, DropdownState>(
+              builder: (context, state) {
+                if (state is fetchcatogorydropdownloading) {
+                  return Loading_Widget();
+                } else if (state is catogoryLoadedDOMAIN) {
+                  return Container(
+                    padding: EdgeInsets.symmetric(horizontal: 10, vertical: 2),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      border: Border.all(
+                          color:
+                              Nearbycollage == null ? Colors.red : Colors.grey,
+                          width: 1.5),
+                      borderRadius: BorderRadius.circular(5),
+                    ),
+                    child: DropdownButtonHideUnderline(
+                      child: DropdownButton<String>(
+                        hint: Text("Select College"),
+                        value: Nearbycollage,
+                        isExpanded: true,
+                        items: state.catogory.map((domain) {
+                          return DropdownMenuItem<String>(
+                            value: domain,
+                            child: Text(domain),
+                          );
+                        }).toList(),
+                        onChanged: (newValue) {
+                          setState(() {
+                            Nearbycollage = newValue;
+                          });
+                        },
+                      ),
+                    ),
+                  );
+                } else if (state is FetchcatogotyError) {
+                  return Text('Error: ${state.msg}');
+                } else {
+                  return SizedBox();
+                }
+              },
+            ),
+            SizedBox(height: 10),
 
             Divider(thickness: 2),
             SizedBox(height: 10),
@@ -366,20 +410,20 @@ class _PropertyAddState extends State<PropertyAdd> {
                         "Room Type",
                         ["House", "Apartment", "Townhouse"],
                         _selectedRoomType, (value) {
-                      setState(() {
-                        _selectedRoomType = value;
-                      });
-                    }, true)),
+                  setState(() {
+                    _selectedRoomType = value;
+                  });
+                }, true)),
                 SizedBox(width: 10),
                 Expanded(
                     child: _buildDropdown(
                         "Room Size",
                         ['Small', 'Medium', 'Large'],
                         _selectedRoomSize, (value) {
-                      setState(() {
-                        _selectedRoomSize = value;
-                      });
-                    }, true)),
+                  setState(() {
+                    _selectedRoomSize = value;
+                  });
+                }, true)),
               ],
             ),
             SizedBox(height: 10),
@@ -387,11 +431,11 @@ class _PropertyAddState extends State<PropertyAdd> {
               children: [
                 Expanded(
                   child:
-                  _buildDatePicker("Available From", availableFrom, (date) {
+                      _buildDatePicker("Available From", availableFrom, (date) {
                     setState(() {
                       availableFrom = date;
                       _availableFromController.text =
-                      "${date?.toLocal()}".split(' ')[0];
+                          "${date?.toLocal()}".split(' ')[0];
                     });
                   }, _availableFromController),
                 ),
@@ -401,7 +445,7 @@ class _PropertyAddState extends State<PropertyAdd> {
                     setState(() {
                       moveInDate = date;
                       _moveInController.text =
-                      "${date?.toLocal()}".split(' ')[0];
+                          "${date?.toLocal()}".split(' ')[0];
                     });
                   }, _moveInController),
                 ),
@@ -421,7 +465,7 @@ class _PropertyAddState extends State<PropertyAdd> {
                   print("my photos : $photos_Url");
                   ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                     content:
-                    Text("Uploaded: ${state.downloadUrls.length} files"),
+                        Text("Uploaded: ${state.downloadUrls.length} files"),
                   ));
                 } else if (state is UploadFailure) {
                   ScaffoldMessenger.of(context).showSnackBar(SnackBar(
@@ -443,21 +487,21 @@ class _PropertyAddState extends State<PropertyAdd> {
                               : Colors.red)),
                   child: ElevatedButton.icon(
                     style:
-                    ElevatedButton.styleFrom(backgroundColor: Colors.white),
+                        ElevatedButton.styleFrom(backgroundColor: Colors.white),
                     onPressed: () => pickAndUpload(context),
                     icon: state is UploadSuccess
                         ? Icon(
-                      Icons.image,
-                      color: Colors.green,
-                    )
+                            Icons.image,
+                            color: Colors.green,
+                          )
                         : Icon(Icons.upload_file),
                     label: state is UploadSuccess
                         ? Text(
-                      "Uploaded",
-                      style: TextStyle(
-                          color: Colors.green,
-                          fontWeight: FontWeight.bold),
-                    )
+                            "Uploaded",
+                            style: TextStyle(
+                                color: Colors.green,
+                                fontWeight: FontWeight.bold),
+                          )
                         : Text("Pick & Upload Images"),
                   ),
                 );
@@ -507,10 +551,10 @@ class _PropertyAddState extends State<PropertyAdd> {
                         "Sexual Orientation",
                         ['Any', 'LGBTQ+ Friendly', 'Male Only', 'Female Only'],
                         _selectedSexualOrientation, (value) {
-                      setState(() {
-                        _selectedSexualOrientation = value;
-                      });
-                    }, true)),
+                  setState(() {
+                    _selectedSexualOrientation = value;
+                  });
+                }, true)),
               ],
             ),
             SizedBox(height: 10),
@@ -521,18 +565,18 @@ class _PropertyAddState extends State<PropertyAdd> {
                         "Minimum Stay",
                         ['1', "2", "3", "4", "5", "6", "7", "8", "9", "10"],
                         _selectedMinStay, (value) {
-                      setState(() {
-                        _selectedMinStay = value;
-                      });
-                    }, true)),
+                  setState(() {
+                    _selectedMinStay = value;
+                  });
+                }, true)),
                 SizedBox(width: 10),
                 Expanded(
                     child: _buildDropdown("Maximum Stay",
                         ["6", "7", "8", "9", "10"], _selectedMaxStay, (value) {
-                          setState(() {
-                            _selectedMaxStay = value;
-                          });
-                        }, true)),
+                  setState(() {
+                    _selectedMaxStay = value;
+                  });
+                }, true)),
               ],
             ),
 
@@ -551,20 +595,20 @@ class _PropertyAddState extends State<PropertyAdd> {
                         "Furnishing",
                         ["Furnished", "Unfurnished", "Semi-furnished"],
                         _selectedFurnishing, (value) {
-                      setState(() {
-                        _selectedFurnishing = value;
-                      });
-                    }, true)),
+                  setState(() {
+                    _selectedFurnishing = value;
+                  });
+                }, true)),
                 SizedBox(width: 10), // Adds spacing
                 Expanded(
                     child: _buildDropdown(
                         "Bedroom",
                         ['1', '2', '3', '4', '5', '6 and above'],
                         _selectedBedroom, (value) {
-                      setState(() {
-                        _selectedBedroom = value;
-                      });
-                    }, true)),
+                  setState(() {
+                    _selectedBedroom = value;
+                  });
+                }, true)),
               ],
             ),
 
@@ -578,20 +622,20 @@ class _PropertyAddState extends State<PropertyAdd> {
                         "Bathroom",
                         ['1', '2', '3', '4', '5', '6 and above'],
                         _selectedBathroom, (value) {
-                      setState(() {
-                        _selectedBathroom = value;
-                      });
-                    }, true)),
+                  setState(() {
+                    _selectedBathroom = value;
+                  });
+                }, true)),
                 SizedBox(width: 10),
                 Expanded(
                     child: _buildDropdown(
                         "Kitchen",
                         ['1', '2', '3', '4', '5', '6 and above'],
                         _selectedKitchen, (value) {
-                      setState(() {
-                        _selectedKitchen = value;
-                      });
-                    }, true)),
+                  setState(() {
+                    _selectedKitchen = value;
+                  });
+                }, true)),
               ],
             ),
 
@@ -608,18 +652,18 @@ class _PropertyAddState extends State<PropertyAdd> {
                 Expanded(
                     child: _buildCheckbox(
                         "Parking Available", _parkingAvailable, (value) {
-                      setState(() {
-                        _parkingAvailable = value!;
-                      });
-                    }, required: true)),
+                  setState(() {
+                    _parkingAvailable = value!;
+                  });
+                }, required: true)),
                 SizedBox(width: 10), // Adds spacing
                 Expanded(
                     child: _buildCheckbox("Bills Included", _billsIncluded,
-                            (value) {
-                          setState(() {
-                            _billsIncluded = value!;
-                          });
-                        }, required: true)),
+                        (value) {
+                  setState(() {
+                    _billsIncluded = value!;
+                  });
+                }, required: true)),
               ],
             ),
 
@@ -631,19 +675,19 @@ class _PropertyAddState extends State<PropertyAdd> {
               children: [
                 Expanded(
                     child:
-                    _buildCheckbox("Pets Allowed", _petsAllowed, (value) {
-                      setState(() {
-                        _petsAllowed = value!;
-                      });
-                    }, required: true)),
+                        _buildCheckbox("Pets Allowed", _petsAllowed, (value) {
+                  setState(() {
+                    _petsAllowed = value!;
+                  });
+                }, required: true)),
                 SizedBox(width: 10), // Adds spacing
                 Expanded(
                     child: _buildCheckbox("Smoking Allowed", _smokingAllowed,
-                            (value) {
-                          setState(() {
-                            _smokingAllowed = value!;
-                          });
-                        }, required: true)),
+                        (value) {
+                  setState(() {
+                    _smokingAllowed = value!;
+                  });
+                }, required: true)),
               ],
             ),
             SizedBox(height: 15),
@@ -668,8 +712,6 @@ class _PropertyAddState extends State<PropertyAdd> {
             ),
 
             SizedBox(height: 10),
-
-
           ],
         ),
       ),
@@ -708,7 +750,8 @@ Widget _buildTextField(
     padding: EdgeInsets.only(bottom: 15),
     child: TextFormField(
       controller: controller,
-      decoration: InputDecoration(labelText: label, border: OutlineInputBorder()),
+      decoration:
+          InputDecoration(labelText: label, border: OutlineInputBorder()),
       autovalidateMode: AutovalidateMode.onUserInteraction,
       validator: (value) {
         final trimmedValue = value?.trim() ?? "";
@@ -718,19 +761,24 @@ Widget _buildTextField(
         }
 
         // Validate phone number
-        if (label == "Phone Number" && trimmedValue.isNotEmpty &&
+        if (label == "Phone Number" &&
+            trimmedValue.isNotEmpty &&
             !RegExp(r'^\+?[0-9]{10,15}$').hasMatch(trimmedValue)) {
           return "Enter a valid phone number";
         }
 
         // Validate email
-        if (label == "Owner Email" && trimmedValue.isNotEmpty &&
-            !RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$').hasMatch(trimmedValue)) {
+        if (label == "Owner Email" &&
+            trimmedValue.isNotEmpty &&
+            !RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$')
+                .hasMatch(trimmedValue)) {
           return "Enter a valid email address";
         }
 
         // Validate amounts
-        if (["Amount /Week", "Amount /Month", "Token Amount", "Total Amount"].contains(label) && trimmedValue.isNotEmpty) {
+        if (["Amount /Week", "Amount /Month", "Token Amount", "Total Amount"]
+                .contains(label) &&
+            trimmedValue.isNotEmpty) {
           if (double.tryParse(trimmedValue) == null) {
             return "Enter a valid amount";
           }
@@ -771,7 +819,7 @@ Widget _buildDropdown(String label, List<String> items, String? selectedValue,
     padding: EdgeInsets.only(bottom: 15),
     child: DropdownButtonFormField<String>(
       decoration:
-      InputDecoration(labelText: label, border: OutlineInputBorder()),
+          InputDecoration(labelText: label, border: OutlineInputBorder()),
       value: selectedValue,
       items: items
           .map((item) => DropdownMenuItem(value: item, child: Text(item)))

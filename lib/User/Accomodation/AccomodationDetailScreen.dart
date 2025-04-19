@@ -5,6 +5,7 @@ import 'package:course_connect/Controller/Bloc/Property/Property/Property_auth_b
 import 'package:course_connect/Controller/Bloc/Property/Property/Property_auth_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import '../../Controller/Bloc/Dropdown_university/dropdown_bloc.dart';
 import '../../Widget/Constands/Loading.dart';
 import 'PropertyDetailsPage.dart';
 
@@ -15,7 +16,7 @@ class PropertyWrapper extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider<PropertyAuthBlock>(
       create: (context) =>
-      PropertyAuthBlock()..add(FetchProperty(searchQuery: null)),
+          PropertyAuthBlock()..add(FetchProperty(searchQuery: null)),
       child: AccommodationDetailScreen(),
     );
   }
@@ -29,8 +30,9 @@ class AccommodationDetailScreen extends StatefulWidget {
       _AccommodationDetailScreenState();
 }
 
-class _AccommodationDetailScreenState
-    extends State<AccommodationDetailScreen> {
+class _AccommodationDetailScreenState extends State<AccommodationDetailScreen> {
+  bool isChecked = false;
+  String? Nearbycollage;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -73,6 +75,78 @@ class _AccommodationDetailScreenState
               ],
             ),
             SizedBox(height: 20),
+            Row(
+              children: [
+                Checkbox(
+                  value: isChecked,
+                  onChanged: (bool? newValue) {
+                    setState(() {
+                      isChecked = newValue!;
+                    });
+                  },
+                ),
+                Text(
+                  "Tap to Nearby University",
+                  style: TextStyle(color: Colors.grey),
+                )
+              ],
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                isChecked
+                    ? Expanded(
+                        child: BlocBuilder<DropdownBloc, DropdownState>(
+                          builder: (context, state) {
+                            if (state is fetchcatogorydropdownloading) {
+                              return Loading_Widget();
+                            } else if (state is catogoryLoadedDOMAIN) {
+                              return Container(
+                                padding: EdgeInsets.symmetric(
+                                    horizontal: 10, vertical: 2),
+                                decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  border: Border.all(
+                                      color: Nearbycollage == null
+                                          ? Colors.grey
+                                          : Colors.grey,
+                                      width: 1.5),
+                                  borderRadius: BorderRadius.circular(5),
+                                ),
+                                child: DropdownButtonHideUnderline(
+                                  child: DropdownButton<String>(
+                                    hint: Text("Select College"),
+                                    value: Nearbycollage,
+                                    isExpanded: true,
+                                    items: state.catogory.map((domain) {
+                                      return DropdownMenuItem<String>(
+                                        value: domain,
+                                        child: Text(domain),
+                                      );
+                                    }).toList(),
+                                    onChanged: (newValue) {
+                                      setState(() {
+                                        Nearbycollage = newValue;
+                                        context.read<PropertyAuthBlock>()
+                                          ..add(FetchProperty(
+                                              searchQuery: null,
+                                              Universityname: Nearbycollage));
+                                      });
+                                    },
+                                  ),
+                                ),
+                              );
+                            } else if (state is FetchcatogotyError) {
+                              return Text('Error: ${state.msg}');
+                            } else {
+                              return SizedBox();
+                            }
+                          },
+                        ),
+                      )
+                    : SizedBox(),
+              ],
+            ),
             Text(
               "Student housing near Yale University",
               style: TextStyle(
@@ -235,7 +309,7 @@ class _PropertyCardState extends State<_PropertyCard> {
                         text: TextSpan(
                           text: 'From ',
                           style:
-                          TextStyle(fontSize: 14, color: Colors.grey[600]),
+                              TextStyle(fontSize: 14, color: Colors.grey[600]),
                           children: [
                             TextSpan(
                               text: "${property.tokenAmount}/week",

@@ -7,6 +7,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../firebase_options.dart';
 import '../Controller/Bloc/Applycourse/application_bloc.dart';
 import '../Controller/Bloc/Booking/Booking_authblock.dart';
+import '../Controller/Bloc/Dropdown_university/dropdown_bloc.dart';
 import '../Controller/Bloc/User_Authbloc/auth_bloc.dart';
 import '../Controller/Bloc/selection_cubit.dart';
 import 'Sreens/Authentication/LoginUser.dart';
@@ -48,6 +49,9 @@ class MyApp extends StatelessWidget {
         BlocProvider(
           create: (context) => SelectionCubit(),
         ),
+        BlocProvider<DropdownBloc>(
+          create: (context) => DropdownBloc()..add(Fetchcatogorybydropdown()),
+        )
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,

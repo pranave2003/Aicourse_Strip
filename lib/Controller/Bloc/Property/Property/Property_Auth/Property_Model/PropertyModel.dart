@@ -35,6 +35,7 @@ class Property_Model {
   String? ban;
   String? oneSignalId;
   String? location;
+  String? NearestUniversity;
 
   Property_Model({
     this.propertyId,
@@ -73,47 +74,48 @@ class Property_Model {
     this.ban,
     this.oneSignalId,
     this.location,
+    this.NearestUniversity,
   });
 
   factory Property_Model.fromMap(Map<String, dynamic> data) {
     return Property_Model(
-      propertyId: data['propertyId'],
-      LandlordId: data['LandlordId'],
-      propertyName: data['propertyName'],
-      propertyAddress: data['propertyAddress'],
-      propertyArea: data['propertyArea'],
-      country: data['country'],
-      state: data['state'],
-      owneremail: data['owneremail'],
-      city: data['city'],
-      roomTypes: data['roomTypes'],
-      roomSizes: data['roomSizes'],
-      availableFrom: data['availableFrom'],
-      moveInDate: data['moveInDate'],
-      propertyImageURL:
-          List<String>.from(data['propertyImageURL'] ?? []), // ✅ casting array
-      aboutProperty: data['aboutProperty'],
-      bedroom: data['bedroom'],
-      bathroom: data['bathroom'],
-      kitchen: data['kitchen'],
-      furnishingOptions: data['furnishingOptions'],
-      propertyAmountWeek: data['propertyAmountWeek'],
-      propertyAmountMonth: data['propertyAmountMonth'],
-      tokenAmount: data['tokenAmount'],
-      stayDurations: data['stayDurations'],
-      sexualOrientations: data['sexualOrientations'],
-      minimumStay: data['minimumStay'],
-      maximumStay: data['maximumStay'],
-      ownerName: data['ownerName'],
-      ownerPhone: data['ownerPhone'],
-      propertyTotal: data['propertyTotal'],
-      parking: data['parking'],
-      billStatus: data['billStatus'],
-      pets: data['pets'],
-      smoking: data['smoking'],
-      ban: data['ban'],
-      oneSignalId: data['oneSignalId'],
-      location: data['location'],
-    );
+        propertyId: data['propertyId'],
+        LandlordId: data['LandlordId'],
+        propertyName: data['propertyName'],
+        propertyAddress: data['propertyAddress'],
+        propertyArea: data['propertyArea'],
+        country: data['country'],
+        state: data['state'],
+        owneremail: data['owneremail'],
+        city: data['city'],
+        roomTypes: data['roomTypes'],
+        roomSizes: data['roomSizes'],
+        availableFrom: data['availableFrom'],
+        moveInDate: data['moveInDate'],
+        propertyImageURL: List<String>.from(
+            data['propertyImageURL'] ?? []), // ✅ casting array
+        aboutProperty: data['aboutProperty'],
+        bedroom: data['bedroom'],
+        bathroom: data['bathroom'],
+        kitchen: data['kitchen'],
+        furnishingOptions: data['furnishingOptions'],
+        propertyAmountWeek: data['propertyAmountWeek'],
+        propertyAmountMonth: data['propertyAmountMonth'],
+        tokenAmount: data['tokenAmount'],
+        stayDurations: data['stayDurations'],
+        sexualOrientations: data['sexualOrientations'],
+        minimumStay: data['minimumStay'],
+        maximumStay: data['maximumStay'],
+        ownerName: data['ownerName'],
+        ownerPhone: data['ownerPhone'],
+        propertyTotal: data['propertyTotal'],
+        parking: data['parking'],
+        billStatus: data['billStatus'],
+        pets: data['pets'],
+        smoking: data['smoking'],
+        ban: data['ban'],
+        oneSignalId: data['oneSignalId'],
+        location: data['location'],
+        NearestUniversity: data["NearestUniversity"]);
   }
 }

@@ -11,7 +11,8 @@ class Property_Add_Event extends PropertyAuthEvent {
 class FetchProperty extends PropertyAuthEvent {
   final String? searchQuery;
   final String? landlordid;
-  FetchProperty({required this.searchQuery,this.landlordid});
+  final String? Universityname;
+  FetchProperty({required this.searchQuery, this.landlordid,this.Universityname});
 }
 
 class FetchPropertyDetailsById extends PropertyAuthEvent {
@@ -35,7 +36,6 @@ class UploadImagesEvent extends PropertyAuthEvent {
   final List<PlatformFile> files;
 
   UploadImagesEvent(this.files);
-
 
   List<Object?> get props => [files];
 }

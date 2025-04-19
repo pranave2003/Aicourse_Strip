@@ -1,6 +1,7 @@
 import 'package:course_connect/Controller/Bloc/Booking/BookingAuthEvent.dart';
 import 'package:course_connect/Controller/Bloc/Booking/Booking_authblock.dart';
 import 'package:course_connect/Controller/Bloc/Landloard_auth/landloard_auth_bloc.dart';
+import 'package:course_connect/Controller/Bloc/University_block/university_bloc.dart';
 import 'package:course_connect/Landlord/Views/Screens/ProfileLandlord/LandlordProfile.dart';
 import 'package:course_connect/Widget/Constands/colors.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -10,6 +11,7 @@ import 'package:course_connect/Landlord/Views/Screens/Payments/ViewPayment.dart'
 import 'package:course_connect/Landlord/Views/Screens/Property/Property.dart';
 import 'package:course_connect/Landlord/Views/Screens/Property/PropertyAdd.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import '../Controller/Bloc/Dropdown_university/dropdown_bloc.dart';
 import '../Controller/Bloc/Property/Property/Property_auth_block.dart';
 import '../firebase_options.dart';
 import 'Views/Screens/Auth/LandloardSplash.dart';
@@ -34,11 +36,15 @@ class MyApp extends StatelessWidget {
         ),
         BlocProvider<BookingAuthblock>(
           create: (context) => BookingAuthblock()
-            ..add(FetchBookings(searchQuery: null),
-        ),
+            ..add(
+              FetchBookings(searchQuery: null),
+            ),
         ),
         BlocProvider<PropertyAuthBlock>(
           create: (context) => PropertyAuthBlock(),
+        ),
+        BlocProvider<DropdownBloc>(
+          create: (context) => DropdownBloc()..add(Fetchcatogorybydropdown()),
         )
       ],
       child: MaterialApp(
@@ -301,7 +307,7 @@ class Dashboard extends StatelessWidget {
                   const SizedBox(width: 10),
                   Container(
                     padding:
-                    const EdgeInsets.symmetric(horizontal: 14, vertical: 6),
+                        const EdgeInsets.symmetric(horizontal: 14, vertical: 6),
                     decoration: BoxDecoration(
                       color: Colors.white,
                       borderRadius: BorderRadius.circular(20),
@@ -313,7 +319,7 @@ class Dashboard extends StatelessWidget {
                           radius: 20,
                           backgroundColor: Colors.grey,
                           backgroundImage:
-                          AssetImage('assets/Profile/img_3.png'),
+                              AssetImage('assets/Profile/img_3.png'),
                         ),
                         SizedBox(width: 10),
                         Text("Landlord",
@@ -331,40 +337,13 @@ class Dashboard extends StatelessWidget {
             spacing: 16,
             runSpacing: 16,
             children: const [
-              SummaryCard(
-                title: 'Total Houses Listed',
-                value: '34',
-                icon: Icons.house,
-                color: Colors.blue,
-              ),
-              SummaryCard(
-                title: 'Total Bookings',
-                value: '128',
-                icon: Icons.book_online,
-                color: Colors.green,
-              ),
-              SummaryCard(
-                title: 'Approved Bookings',
-                value: '87',
-                icon: Icons.check_circle,
-                color: Colors.teal,
-              ),
-              SummaryCard(
-                title: 'Payments Received',
-                value: '\$12,540',
-                icon: Icons.attach_money,
-                color: Colors.orange,
-              ),
-              SummaryCard(
-                title: 'Total Users',
-                value: '256',
-                icon: Icons.people,
-                color: Colors.purple,
-              ),
+              SummaryCard(title: 'Total Houses Listed', value: '34'),
+              SummaryCard(title: 'Total Bookings', value: '128'),
+              SummaryCard(title: 'Approved Bookings', value: '87'),
+              SummaryCard(title: 'Payments Received', value: '\$12,540'),
+              SummaryCard(title: 'Total Users', value: '256'),
             ],
           ),
-
-
           const SizedBox(height: 32),
           const Text('Landlord Info',
               style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
@@ -375,9 +354,12 @@ class Dashboard extends StatelessWidget {
                 return const Center(child: CircularProgressIndicator());
               } else if (state is LandlordByidLoaded) {
                 final user = state.Userdata;
-                TextEditingController nameController = TextEditingController(text: user.name ?? '');
-                TextEditingController emailController = TextEditingController(text: user.email ?? '');
-                TextEditingController addressController = TextEditingController(text: user.Adress ?? '');
+                TextEditingController nameController =
+                    TextEditingController(text: user.name ?? '');
+                TextEditingController emailController =
+                    TextEditingController(text: user.email ?? '');
+                TextEditingController addressController =
+                    TextEditingController(text: user.Adress ?? '');
 
                 return Container(
                   padding: const EdgeInsets.all(20),
@@ -399,8 +381,7 @@ class Dashboard extends StatelessWidget {
                       const SizedBox(height: 10),
                       CircleAvatar(
                         radius: 45,
-                        backgroundImage:
-                        AssetImage('assets/profile/img_4.png'),
+                        backgroundImage: AssetImage('assets/profile/img_4.png'),
                       ),
                       const SizedBox(height: 12),
                       Text(
@@ -420,10 +401,13 @@ class Dashboard extends StatelessWidget {
                         runSpacing: 16,
                         alignment: WrapAlignment.center,
                         children: [
-                          buildInputField(Icons.person, '${user.name ?? ''}',nameController),
-                          buildInputField(Icons.email,'${user.email ?? ''}', emailController),
-                          buildInputField(Icons.home, '${user.Adress ?? ''}', addressController),
-                          SizedBox(height: 30),  // Adjust space at the bottom
+                          buildInputField(Icons.person, '${user.name ?? ''}',
+                              nameController),
+                          buildInputField(Icons.email, '${user.email ?? ''}',
+                              emailController),
+                          buildInputField(Icons.home, '${user.Adress ?? ''}',
+                              addressController),
+                          SizedBox(height: 30), // Adjust space at the bottom
                         ],
                       ),
                       const SizedBox(height: 20),
@@ -478,24 +462,26 @@ class Dashboard extends StatelessWidget {
         ),
         const SizedBox(height: 6),
         Text(value, style: const TextStyle(fontWeight: FontWeight.bold)),
-        Text(label,
-            style: TextStyle(color: Colors.grey[600], fontSize: 12)),
+        Text(label, style: TextStyle(color: Colors.grey[600], fontSize: 12)),
       ],
     );
   }
 }
+
 // Static input fields without editing capability
-Widget buildInputField(IconData icon, String title, TextEditingController controller) {
+Widget buildInputField(
+    IconData icon, String title, TextEditingController controller) {
   return Padding(
-    padding: const EdgeInsets.symmetric(vertical: 12.0),  // Increased padding for better spacing
+    padding: const EdgeInsets.symmetric(
+        vertical: 12.0), // Increased padding for better spacing
     child: TextField(
       controller: controller,
-      enabled: false,  // Disable editing
-      style: TextStyle(fontSize: 16),  // Ensure text is readable
+      enabled: false, // Disable editing
+      style: TextStyle(fontSize: 16), // Ensure text is readable
       decoration: InputDecoration(
         prefixIcon: Icon(icon, color: blueColor),
         labelText: title,
-        labelStyle: TextStyle(fontSize: 16),  // Ensure label text is clear
+        labelStyle: TextStyle(fontSize: 16), // Ensure label text is clear
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
           borderSide: BorderSide(color: blueColor),
@@ -516,77 +502,15 @@ Widget buildInputField(IconData icon, String title, TextEditingController contro
 class SummaryCard extends StatelessWidget {
   final String title;
   final String value;
-  final IconData icon;
-  final Color color;
 
   const SummaryCard({
     super.key,
     required this.title,
     required this.value,
-    required this.icon,
-    required this.color,
   });
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: 200,
-      padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        color: color.withOpacity(0.1),
-        borderRadius: BorderRadius.circular(20),
-        boxShadow: [
-          BoxShadow(
-            color: color.withOpacity(0.4),
-            blurRadius: 12,
-            offset: const Offset(0, 6),
-          ),
-        ],
-        gradient: LinearGradient(
-          colors: [color.withOpacity(0.9), color.withOpacity(0.6)],
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-        ),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Icon(icon, size: 30, color: Colors.white),
-          const SizedBox(height: 12),
-          Text(
-            value,
-            style: const TextStyle(
-              fontSize: 24,
-              fontWeight: FontWeight.bold,
-              color: Colors.white,
-              shadows: [
-                Shadow(
-                  blurRadius: 4,
-                  color: Colors.black26,
-                  offset: Offset(1, 2),
-                ),
-              ],
-            ),
-          ),
-          const SizedBox(height: 8),
-          Text(
-            title,
-            style: const TextStyle(
-              fontSize: 14,
-              color: Colors.white70,
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-
-
-  @override
-  Widget build(BuildContext context, IconData? icon, String value, String title) {
-    var color;
     return ConstrainedBox(
       constraints: const BoxConstraints(
         minWidth: 140,
@@ -594,47 +518,31 @@ class SummaryCard extends StatelessWidget {
       ),
       child: Container(
         padding: const EdgeInsets.all(16),
-        // decoration: BoxDecoration(
-        //   color: Colors.white,
-        //   borderRadius: BorderRadius.circular(16),
-        //   boxShadow: [
-        //     BoxShadow(
-        //       color: Colors.grey.withOpacity(0.1), // subtle shadow
-        //       spreadRadius: 1,
-        //       blurRadius: 4,
-        //       offset: const Offset(0, 2),
-        //     ),
-        //   ],
-        //   border: Border.all(color: color.withOpacity(0.3), width: 1.5),
-        // ),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(12),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.grey.withOpacity(0.15),
+              spreadRadius: 2,
+              blurRadius: 6,
+            ),
+          ],
+        ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Icon(icon, color: color, size: 26),
-            const SizedBox(height: 12),
-            Text(
-              value,
-              style: TextStyle(
-                fontSize: 22,
-                fontWeight: FontWeight.bold,
-                color: color,
-              ),
-            ),
+            Text(value,
+                style:
+                    const TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
             const SizedBox(height: 4),
-            Text(
-              title,
-              style: const TextStyle(
-                fontSize: 14,
-                color: Colors.black54,
-              ),
-            ),
+            Text(title, style: const TextStyle(color: Colors.grey)),
           ],
         ),
       ),
     );
   }
-
-
+}
 
 class BookingTile extends StatelessWidget {
   final String name;
@@ -659,8 +567,7 @@ class BookingTile extends StatelessWidget {
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
       margin: const EdgeInsets.symmetric(vertical: 6),
       child: ListTile(
-        contentPadding:
-        const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+        contentPadding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
         leading: const CircleAvatar(
           backgroundColor: blueColor,
           child: Icon(Icons.person, color: Colors.white),
@@ -674,17 +581,15 @@ class BookingTile extends StatelessWidget {
             Text(status,
                 style: TextStyle(
                     fontWeight: FontWeight.w600,
-                    color: status == 'Confirmed'
-                        ? Colors.green
-                        : Colors.orange)),
+                    color:
+                        status == 'Confirmed' ? Colors.green : Colors.orange)),
             Text(payment,
                 style: TextStyle(
                     color:
-                    payment == 'Paid' ? Colors.green : Colors.redAccent)),
+                        payment == 'Paid' ? Colors.green : Colors.redAccent)),
           ],
         ),
       ),
     );
   }
 }
-
