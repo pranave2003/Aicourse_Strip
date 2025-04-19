@@ -3,6 +3,7 @@ import 'package:course_connect/Controller/Bloc/University_block/University_model
 import 'package:course_connect/Controller/Bloc/University_block/university_bloc.dart';
 import 'package:course_connect/Widget/Constands/Loading.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../Main/Adminmain.dart';
@@ -60,7 +61,7 @@ class _EditUniversityState extends State<EditUniversity> {
   String? selectedCourse;
   String? selectedDuration;
   String? selectedEligibility;
-  String? selectedRank;
+  int? selectedRank;
 
   DateTime? establishedDate;
   DateTime? admissionStartDate;
@@ -594,12 +595,42 @@ class _EditUniversityState extends State<EditUniversity> {
                   ),
                   SizedBox(width: 10),
                   Expanded(
-                    child: buildDropdown(
-                        "Rank", ["Top 10", "Top 50", "Top 100"], selectedRank,
-                            (value) {
-                          setState(() => selectedRank = value);
-                        }, required: true),
+                    child: Container(
+                      height: 60,
+                      padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 25),
+                      child: TextFormField(
+                        decoration: const InputDecoration(
+                          labelText: "QS Rank",
+                          hintText: "Enter QS Rank (e.g., 42)",
+                          border: OutlineInputBorder(),
+                        ),
+                        keyboardType: TextInputType.number,
+                        inputFormatters: [
+                          FilteringTextInputFormatter.digitsOnly, // Only allow digits
+                        ],
+                        initialValue: selectedRank?.toString() ?? '', // Just for displaying initial value
+                        validator: (value) {
+                          if (value == null || value.trim().isEmpty) {
+                            return 'QS Rank is required';
+                          }
+                          final intValue = int.tryParse(value.trim());
+                          if (intValue == null) {
+                            return 'Enter a valid integer';
+                          }
+                          return null;
+                        },
+                        onChanged: (value) {
+                          final intValue = int.tryParse(value.trim());
+                          if (intValue != null) {
+                            setState(() {
+                              selectedRank = intValue; // ✅ Store as integer only
+                            });
+                          }
+                        },
+                      ),
+                    ),
                   ),
+
                 ],
               ),
 

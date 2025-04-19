@@ -1,5 +1,5 @@
 class University_model {
-  String? Rank;
+  int? Rank;
   String? Established_date;
   String? Universityname;
   String? Description;

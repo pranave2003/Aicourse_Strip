@@ -62,6 +62,10 @@ class MyApp extends StatelessWidget {
   }
 }
 
+
+
+//dashboard
+
 class AdminPage extends StatefulWidget {
   const AdminPage({super.key});
 
@@ -261,14 +265,265 @@ class _AdminPageState extends State<AdminPage> {
   }
 }
 
+
+
+
+
+
+
+
+
 class Dashboard extends StatelessWidget {
   const Dashboard({super.key});
 
   @override
   Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Admin Dashboard',
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+        scaffoldBackgroundColor: const Color(0xFFF5F6FA),
+      ),
+      home: const AdminDashboard(),
+      debugShowCheckedModeBanner: false,
+    );
+  }
+}
+
+class AdminDashboard extends StatelessWidget {
+  const AdminDashboard({super.key});
+
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey,
-      body: const Center(child: Text("Dashboard")),
+
+      body: SingleChildScrollView(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(left: 25),
+                  child: Row(
+                    children: const [
+                      Text("Welcome ",
+                          style: TextStyle(
+                              fontSize: 24, fontWeight: FontWeight.bold)),
+                      Text("Admin, ",
+                          style: TextStyle(
+                              fontSize: 24,
+                              fontWeight: FontWeight.bold,
+                              color: Color(0xff0A71CB))),
+                    ],
+                  ),
+                ),
+                Row(
+                  children: [
+                    const CircleAvatar(
+                        backgroundColor: Color(0xffD9D9D9),
+                        child: Icon(Icons.notification_add)),
+                    const SizedBox(width: 10),
+                    Container(
+                      padding:
+                      const EdgeInsets.symmetric(horizontal: 14, vertical: 6),
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(20),
+                        border: Border.all(width: 0.5, color: Colors.grey),
+                      ),
+                      child: Row(
+                        children: const [
+                          CircleAvatar(
+                            radius: 20,
+                            backgroundColor: Colors.grey,
+                            backgroundImage:
+                            AssetImage('assets/Profile/img_4.png'),
+                          ),
+                          SizedBox(width: 10),
+                          Text("Admin",
+                              style: TextStyle(
+                                  fontSize: 16, fontWeight: FontWeight.bold)),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+            SizedBox(height: 30,),
+            Wrap(
+              spacing: 16,
+              runSpacing: 16,
+              children: const [
+                SummaryCard(
+                  title: 'Total Universities',
+                  value: '12',
+                  icon: Icons.account_balance,
+                  color: Colors.indigo,
+                ),
+                SummaryCard(
+                  title: 'Total Colleges',
+                  value: '45',
+                  icon: Icons.school,
+                  color: Colors.deepPurple,
+                ),
+                SummaryCard(
+                  title: 'Total Users',
+                  value: '1080',
+                  icon: Icons.people,
+                  color: Colors.green,
+                ),
+                SummaryCard(
+                  title: 'Total Landlords',
+                  value: '56',
+                  icon: Icons.person_pin,
+                  color: Colors.blue,
+                ),
+                SummaryCard(
+                  title: 'Payments Received',
+                  value: '\$96,430',
+                  icon: Icons.payment,
+                  color: Colors.orange,
+                ),
+              ],
+            ),
+            const SizedBox(height: 32),
+            const Text('Admin Functionalities',
+                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+            const SizedBox(height: 16),
+            // Wrap(
+            //   spacing: 16,
+            //   runSpacing: 16,
+            //   children: const [
+            //     AdminTile(title: 'University Management', icon: Icons.account_balance),
+            //     AdminTile(title: 'Course Management', icon: Icons.book),
+            //     AdminTile(title: 'Document Verification', icon: Icons.verified_user),
+            //     AdminTile(title: 'Manage Landlords', icon: Icons.people_alt),
+            //     AdminTile(title: 'View Houses', icon: Icons.home_work),
+            //     AdminTile(title: 'Approved Landlords', icon: Icons.verified),
+            //     AdminTile(title: 'Payment Status', icon: Icons.payments),
+            //     AdminTile(title: 'Manage Users', icon: Icons.supervised_user_circle),
+            //   ],
+            // ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class SummaryCard extends StatelessWidget {
+  final String title;
+  final String value;
+  final IconData icon;
+  final Color color;
+
+  const SummaryCard({
+    super.key,
+    required this.title,
+    required this.value,
+    required this.icon,
+    required this.color,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: 200,
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          colors: [color.withOpacity(0.85), color.withOpacity(0.65)],
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+        ),
+        borderRadius: BorderRadius.circular(20),
+        boxShadow: [
+          BoxShadow(
+            color: color.withOpacity(0.4),
+            blurRadius: 12,
+            offset: const Offset(0, 6),
+          ),
+        ],
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Icon(icon, size: 30, color: Colors.white),
+          const SizedBox(height: 12),
+          Text(
+            value,
+            style: const TextStyle(
+              fontSize: 24,
+              fontWeight: FontWeight.bold,
+              color: Colors.white,
+              shadows: [
+                Shadow(
+                  blurRadius: 4,
+                  color: Colors.black26,
+                  offset: Offset(1, 2),
+                ),
+              ],
+            ),
+          ),
+          const SizedBox(height: 8),
+          Text(
+            title,
+            style: const TextStyle(
+              fontSize: 14,
+              color: Colors.white70,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class AdminTile extends StatelessWidget {
+  final String title;
+  final IconData icon;
+
+  const AdminTile({super.key, required this.title, required this.icon});
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: () {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Clicked on $title')),
+        );
+      },
+      child: Container(
+        width: 160,
+        padding: const EdgeInsets.all(16),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(16),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.grey.withOpacity(0.15),
+              spreadRadius: 2,
+              blurRadius: 6,
+              offset: const Offset(0, 4),
+            ),
+          ],
+        ),
+        child: Column(
+          children: [
+            Icon(icon, size: 30, color: Colors.blue),
+            const SizedBox(height: 12),
+            Text(
+              title,
+              textAlign: TextAlign.center,
+              style: const TextStyle(fontWeight: FontWeight.bold),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }
