@@ -61,6 +61,8 @@ class PropertyAuthBlock extends Bloc<PropertyAuthEvent, PropertyAuthState> {
             "billStatus": event.Property.billStatus, // ✅ Fixed
             "pets": event.Property.pets,
             "smoking": event.Property.smoking,
+            "location":event.Property.location,
+
           });
           print("done...");
 
@@ -184,6 +186,7 @@ class PropertyAuthBlock extends Bloc<PropertyAuthEvent, PropertyAuthState> {
             "billStatus": event.Property.billStatus, // ✅ Fixed
             "pets": event.Property.pets,
             "smoking": event.Property.smoking,
+            "location": event.Property.location,
           }); // Generate ID
           emit(RefreshProperty());
         } catch (e) {

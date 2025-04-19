@@ -15,11 +15,13 @@ int currentIndex = 0;
 
 class PropertyInfoScreenWrapper extends StatelessWidget {
   const PropertyInfoScreenWrapper(
-      {super.key, required this.propertyId, this.availableFrom ,this.owneremail,});
+      {super.key, required this.propertyId, this.availableFrom ,this.owneremail, this.location,});
+
 
   final propertyId;
   final availableFrom;
   final owneremail;
+  final location;
 
   @override
   Widget build(BuildContext context) {
@@ -212,13 +214,18 @@ class _PropertyDetailsPageState extends State<PropertyDetailsPage> {
                             ),
                           ],
                         ),
-                        Text(
-                          property.tokenAmount ?? '/week',
-                          style: TextStyle(
-                              fontSize: 10,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.black),
-                        ),
+            //             ElevatedButton(
+            //               onPressed: googleMapsUrl.isEmpty ? null : _launchURL, // Disable button if URL is not available
+            //               style: ElevatedButton.styleFrom(
+            //                 foregroundColor: Colors.white, backgroundColor: Colors.green, // Set text color to white
+            //                 padding: EdgeInsets.symmetric(horizontal: 24, vertical: 12), // Add padding to button
+            //                 shape: RoundedRectangleBorder(
+            //                   borderRadius: BorderRadius.circular(8), // Rounded corners for the button
+            //                 ),
+            //               ), child: googleMapsUrl.isEmpty
+            //                 ? CircularProgressIndicator() // Show loader until URL is fetched
+            //           : Text('View Location'), // Button text
+            // ),
                       ],
                     ),
                     const SizedBox(height: 12),

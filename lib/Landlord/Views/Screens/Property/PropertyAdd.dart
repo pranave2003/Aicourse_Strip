@@ -1,3 +1,4 @@
+import 'package:course_connect/Admin/Main/Adminmain.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -25,13 +26,15 @@ class _PropertyAddState extends State<PropertyAdd> {
   final TextEditingController _ownerEmailController = TextEditingController();
   final TextEditingController _phoneController = TextEditingController();
   final TextEditingController _aboutPropertyController =
-      TextEditingController();
+  TextEditingController();
   final TextEditingController _selectedCityController = TextEditingController();
   final TextEditingController _availableFromController =
-      TextEditingController();
+  TextEditingController();
   final TextEditingController _moveInController = TextEditingController();
   final TextEditingController _tokenAmountController = TextEditingController();
   final TextEditingController _propertyTotalController = TextEditingController();
+  final TextEditingController _locationController = TextEditingController();
+
 
   void dispose() {
     _propertyNameController.dispose();
@@ -64,6 +67,8 @@ class _PropertyAddState extends State<PropertyAdd> {
   String? _selectedSexualOrientation;
 
   List<String> photos_Url = [];
+  List<String> location = [];
+
 
   DateTime? availableFrom;
   DateTime? moveInDate;
@@ -115,7 +120,7 @@ class _PropertyAddState extends State<PropertyAdd> {
                     Text(
                       "Welcome ",
                       style:
-                          TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                      TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
                     ),
                     Text(
                       "Landlord,",
@@ -148,7 +153,7 @@ class _PropertyAddState extends State<PropertyAdd> {
                             radius: 20,
                             backgroundColor: Colors.grey,
                             backgroundImage:
-                                AssetImage('assets/Profile/img_3.png'),
+                            AssetImage('assets/Profile/img_3.png'),
                           ),
                           SizedBox(width: 10),
                           Text(
@@ -171,7 +176,7 @@ class _PropertyAddState extends State<PropertyAdd> {
                 if (state is RefreshProperty) {
                   Navigator.push(context, MaterialPageRoute(
                     builder: (context) {
-                      return LandlordPage();
+                      return AdminPage(); // Navigate to AdminPage instead of LandlordPage
                     },
                   ));
 
@@ -193,7 +198,9 @@ class _PropertyAddState extends State<PropertyAdd> {
                       Text(
                         "Property Adding Page",
                         style: TextStyle(
-                            fontSize: 24, fontWeight: FontWeight.bold),
+                          fontSize: 24,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                       SizedBox(width: 20),
                       InkWell(
@@ -219,13 +226,13 @@ class _PropertyAddState extends State<PropertyAdd> {
                                 moveInDate: _moveInController.text,
                                 propertyImageURL: photos_Url,
                                 aboutProperty: _aboutPropertyController.text,
+                                location: _locationController.text,
                                 bedroom: _selectedBedroom,
                                 bathroom: _selectedBathroom,
                                 kitchen: _selectedKitchen,
                                 furnishingOptions: _selectedFurnishing,
                                 propertyAmountWeek: _amountWeekController.text,
-                                propertyAmountMonth:
-                                    _amountMonthController.text,
+                                propertyAmountMonth: _amountMonthController.text,
                                 tokenAmount: _tokenAmountController.text,
                                 stayDurations: _selectedMinStay,
                                 sexualOrientations: _selectedSexualOrientation,
@@ -233,13 +240,14 @@ class _PropertyAddState extends State<PropertyAdd> {
                                 maximumStay: _selectedMaxStay,
                                 ownerName: _ownerNameController.text,
                                 ownerPhone: _phoneController.text,
-                                propertyTotal:_propertyTotalController.text ,
+                                propertyTotal: _propertyTotalController.text,
                                 parking: _parkingAvailable ? "Yes" : "No",
                                 billStatus: _billsIncluded ? "Yes" : "No",
                                 pets: _petsAllowed ? "Yes" : "No",
                                 smoking: _smokingAllowed ? "Yes" : "No",
-                                owneremail:_ownerEmailController.text,
+                                owneremail: _ownerEmailController.text,
                               );
+
                               context
                                   .read<PropertyAuthBlock>()
                                   .add(Property_Add_Event(Property: property));
@@ -248,8 +256,7 @@ class _PropertyAddState extends State<PropertyAdd> {
                         },
                         borderRadius: BorderRadius.circular(8),
                         child: Container(
-                          padding:
-                              EdgeInsets.symmetric(vertical: 8, horizontal: 36),
+                          padding: EdgeInsets.symmetric(vertical: 8, horizontal: 36),
                           decoration: BoxDecoration(
                             color: Colors.blue,
                             borderRadius: BorderRadius.circular(8),
@@ -257,12 +264,13 @@ class _PropertyAddState extends State<PropertyAdd> {
                           child: state is PropertyaddSuccess
                               ? Loading_Widget()
                               : Text(
-                                  "+Add",
-                                  style: TextStyle(
-                                      fontSize: 18,
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.bold),
-                                ),
+                            "+Add",
+                            style: TextStyle(
+                              fontSize: 18,
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
                         ),
                       ),
                     ],
@@ -277,36 +285,24 @@ class _PropertyAddState extends State<PropertyAdd> {
             _buildSectionTitle("Property Details"),
             SizedBox(height: 5),
 
-            Form(
-              key: _formKey,
-              child: Column(
-                children: [
-                  Row(
-                    children: [
-                      Expanded(
-                        child: _buildTextField(
-                            "Property Name", _propertyNameController, true),
-                      ),
-                      SizedBox(width: 10),
-                      Expanded(
-                        child: _buildTextField(
-                            "Address", _addressController, true),
-                      ),
-                    ],
+            Row(
+              children: [
+                Expanded(
+                  child: _buildTextField(
+                      "Property Name",
+                      _propertyNameController,
+                      true // This indicates that this field is required
                   ),
-                  SizedBox(height: 20),
-                  ElevatedButton(
-                    onPressed: () {
-                      if (_formKey.currentState!.validate()) {
-                        // All validations passed
-                        print("Property Name: ${_propertyNameController.text}");
-                        print("Address: ${_addressController.text}");
-                      }
-                    },
-                    child: Text("Submit"),
+                ),
+                SizedBox(width: 10), // Adds spacing between the two text fields
+                Expanded(
+                  child: _buildTextField(
+                      "Address",
+                      _addressController,
+                      true // This indicates that this field is also required
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
 
             SizedBox(height: 10),
@@ -325,20 +321,36 @@ class _PropertyAddState extends State<PropertyAdd> {
             if (_selectedCountry != null)
               _buildDropdown("State", _getStatesForCountry(_selectedCountry!),
                   _selectedState, (value) {
-                setState(() {
-                  _selectedState = value;
-                });
-              }, true),
+                    setState(() {
+                      _selectedState = value;
+                    });
+                  }, true),
             const SizedBox(height: 15),
             Row(
               children: [
                 Expanded(
                     child:
-                        _buildTextField("City", _selectedCityController, true)),
+                    _buildTextField("City", _selectedCityController, true)),
                 SizedBox(width: 10),
                 Expanded(child: _buildTextField("Area", _areaController, true)),
               ],
             ),
+            SizedBox(height: 10),
+            TextFormField(
+              controller: _locationController,
+              decoration: InputDecoration(
+                labelText: "Location",
+                border: OutlineInputBorder(),
+                prefixIcon: Icon(Icons.location_on),
+              ),
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return 'Please enter location';
+                }
+                return null;
+              },
+            ),
+
 
             Divider(thickness: 2),
             SizedBox(height: 10),
@@ -354,20 +366,20 @@ class _PropertyAddState extends State<PropertyAdd> {
                         "Room Type",
                         ["House", "Apartment", "Townhouse"],
                         _selectedRoomType, (value) {
-                  setState(() {
-                    _selectedRoomType = value;
-                  });
-                }, true)),
+                      setState(() {
+                        _selectedRoomType = value;
+                      });
+                    }, true)),
                 SizedBox(width: 10),
                 Expanded(
                     child: _buildDropdown(
                         "Room Size",
                         ['Small', 'Medium', 'Large'],
                         _selectedRoomSize, (value) {
-                  setState(() {
-                    _selectedRoomSize = value;
-                  });
-                }, true)),
+                      setState(() {
+                        _selectedRoomSize = value;
+                      });
+                    }, true)),
               ],
             ),
             SizedBox(height: 10),
@@ -375,11 +387,11 @@ class _PropertyAddState extends State<PropertyAdd> {
               children: [
                 Expanded(
                   child:
-                      _buildDatePicker("Available From", availableFrom, (date) {
+                  _buildDatePicker("Available From", availableFrom, (date) {
                     setState(() {
                       availableFrom = date;
                       _availableFromController.text =
-                          "${date?.toLocal()}".split(' ')[0];
+                      "${date?.toLocal()}".split(' ')[0];
                     });
                   }, _availableFromController),
                 ),
@@ -389,7 +401,7 @@ class _PropertyAddState extends State<PropertyAdd> {
                     setState(() {
                       moveInDate = date;
                       _moveInController.text =
-                          "${date?.toLocal()}".split(' ')[0];
+                      "${date?.toLocal()}".split(' ')[0];
                     });
                   }, _moveInController),
                 ),
@@ -398,11 +410,63 @@ class _PropertyAddState extends State<PropertyAdd> {
 
             Divider(thickness: 2),
             SizedBox(height: 10),
-            Text("Images:",
+            Text("Property Details:",
                 style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+
             SizedBox(height: 20),
+            BlocConsumer<PropertyAuthBlock, PropertyAuthState>(
+              listener: (context, state) {
+                if (state is UploadSuccess) {
+                  photos_Url = state.downloadUrls;
+                  print("my photos : $photos_Url");
+                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                    content:
+                    Text("Uploaded: ${state.downloadUrls.length} files"),
+                  ));
+                } else if (state is UploadFailure) {
+                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                    content: Text("Upload failed: ${state.error}"),
+                  ));
+                }
+              },
+              builder: (context, state) {
+                if (state is UploadLoading) {
+                  return const Center(child: CircularProgressIndicator());
+                }
+
+                return Container(
+                  height: 100,
+                  decoration: BoxDecoration(
+                      border: Border.all(
+                          color: state is UploadSuccess
+                              ? Colors.green
+                              : Colors.red)),
+                  child: ElevatedButton.icon(
+                    style:
+                    ElevatedButton.styleFrom(backgroundColor: Colors.white),
+                    onPressed: () => pickAndUpload(context),
+                    icon: state is UploadSuccess
+                        ? Icon(
+                      Icons.image,
+                      color: Colors.green,
+                    )
+                        : Icon(Icons.upload_file),
+                    label: state is UploadSuccess
+                        ? Text(
+                      "Uploaded",
+                      style: TextStyle(
+                          color: Colors.green,
+                          fontWeight: FontWeight.bold),
+                    )
+                        : Text("Pick & Upload Images"),
+                  ),
+                );
+              },
+            ),
+            SizedBox(
+              height: 50,
+            ),
             // _buildImageContainer(),
-            SizedBox(height: 10),
             Row(
               children: [
                 Expanded(
@@ -443,10 +507,10 @@ class _PropertyAddState extends State<PropertyAdd> {
                         "Sexual Orientation",
                         ['Any', 'LGBTQ+ Friendly', 'Male Only', 'Female Only'],
                         _selectedSexualOrientation, (value) {
-                  setState(() {
-                    _selectedSexualOrientation = value;
-                  });
-                }, true)),
+                      setState(() {
+                        _selectedSexualOrientation = value;
+                      });
+                    }, true)),
               ],
             ),
             SizedBox(height: 10),
@@ -457,18 +521,18 @@ class _PropertyAddState extends State<PropertyAdd> {
                         "Minimum Stay",
                         ['1', "2", "3", "4", "5", "6", "7", "8", "9", "10"],
                         _selectedMinStay, (value) {
-                  setState(() {
-                    _selectedMinStay = value;
-                  });
-                }, true)),
+                      setState(() {
+                        _selectedMinStay = value;
+                      });
+                    }, true)),
                 SizedBox(width: 10),
                 Expanded(
                     child: _buildDropdown("Maximum Stay",
                         ["6", "7", "8", "9", "10"], _selectedMaxStay, (value) {
-                  setState(() {
-                    _selectedMaxStay = value;
-                  });
-                }, true)),
+                          setState(() {
+                            _selectedMaxStay = value;
+                          });
+                        }, true)),
               ],
             ),
 
@@ -487,20 +551,20 @@ class _PropertyAddState extends State<PropertyAdd> {
                         "Furnishing",
                         ["Furnished", "Unfurnished", "Semi-furnished"],
                         _selectedFurnishing, (value) {
-                  setState(() {
-                    _selectedFurnishing = value;
-                  });
-                }, true)),
+                      setState(() {
+                        _selectedFurnishing = value;
+                      });
+                    }, true)),
                 SizedBox(width: 10), // Adds spacing
                 Expanded(
                     child: _buildDropdown(
                         "Bedroom",
                         ['1', '2', '3', '4', '5', '6 and above'],
                         _selectedBedroom, (value) {
-                  setState(() {
-                    _selectedBedroom = value;
-                  });
-                }, true)),
+                      setState(() {
+                        _selectedBedroom = value;
+                      });
+                    }, true)),
               ],
             ),
 
@@ -514,20 +578,20 @@ class _PropertyAddState extends State<PropertyAdd> {
                         "Bathroom",
                         ['1', '2', '3', '4', '5', '6 and above'],
                         _selectedBathroom, (value) {
-                  setState(() {
-                    _selectedBathroom = value;
-                  });
-                }, true)),
+                      setState(() {
+                        _selectedBathroom = value;
+                      });
+                    }, true)),
                 SizedBox(width: 10),
                 Expanded(
                     child: _buildDropdown(
                         "Kitchen",
                         ['1', '2', '3', '4', '5', '6 and above'],
                         _selectedKitchen, (value) {
-                  setState(() {
-                    _selectedKitchen = value;
-                  });
-                }, true)),
+                      setState(() {
+                        _selectedKitchen = value;
+                      });
+                    }, true)),
               ],
             ),
 
@@ -544,18 +608,18 @@ class _PropertyAddState extends State<PropertyAdd> {
                 Expanded(
                     child: _buildCheckbox(
                         "Parking Available", _parkingAvailable, (value) {
-                  setState(() {
-                    _parkingAvailable = value!;
-                  });
-                }, required: true)),
+                      setState(() {
+                        _parkingAvailable = value!;
+                      });
+                    }, required: true)),
                 SizedBox(width: 10), // Adds spacing
                 Expanded(
                     child: _buildCheckbox("Bills Included", _billsIncluded,
-                        (value) {
-                  setState(() {
-                    _billsIncluded = value!;
-                  });
-                }, required: true)),
+                            (value) {
+                          setState(() {
+                            _billsIncluded = value!;
+                          });
+                        }, required: true)),
               ],
             ),
 
@@ -567,19 +631,19 @@ class _PropertyAddState extends State<PropertyAdd> {
               children: [
                 Expanded(
                     child:
-                        _buildCheckbox("Pets Allowed", _petsAllowed, (value) {
-                  setState(() {
-                    _petsAllowed = value!;
-                  });
-                }, required: true)),
+                    _buildCheckbox("Pets Allowed", _petsAllowed, (value) {
+                      setState(() {
+                        _petsAllowed = value!;
+                      });
+                    }, required: true)),
                 SizedBox(width: 10), // Adds spacing
                 Expanded(
                     child: _buildCheckbox("Smoking Allowed", _smokingAllowed,
-                        (value) {
-                  setState(() {
-                    _smokingAllowed = value!;
-                  });
-                }, required: true)),
+                            (value) {
+                          setState(() {
+                            _smokingAllowed = value!;
+                          });
+                        }, required: true)),
               ],
             ),
             SizedBox(height: 15),
@@ -606,122 +670,9 @@ class _PropertyAddState extends State<PropertyAdd> {
             SizedBox(height: 10),
 
 
-
-
-            BlocConsumer<PropertyAuthBlock, PropertyAuthState>(
-              listener: (context, state) {
-                if (state is UploadSuccess) {
-                  photos_Url = state.downloadUrls;
-                  print("my photos : $photos_Url");
-                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                    content:
-                        Text("Uploaded: ${state.downloadUrls.length} files"),
-                  ));
-                } else if (state is UploadFailure) {
-                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                    content: Text("Upload failed: ${state.error}"),
-                  ));
-                }
-              },
-              builder: (context, state) {
-                if (state is UploadLoading) {
-                  return const Center(child: CircularProgressIndicator());
-                }
-
-                return Container(
-                  height: 100,
-                  decoration: BoxDecoration(
-                      border: Border.all(
-                          color: state is UploadSuccess
-                              ? Colors.green
-                              : Colors.red)),
-                  child: ElevatedButton.icon(
-                    style:
-                        ElevatedButton.styleFrom(backgroundColor: Colors.white),
-                    onPressed: () => pickAndUpload(context),
-                    icon: state is UploadSuccess
-                        ? Icon(
-                            Icons.image,
-                            color: Colors.green,
-                          )
-                        : Icon(Icons.upload_file),
-                    label: state is UploadSuccess
-                        ? Text(
-                            "Uploaded",
-                            style: TextStyle(
-                                color: Colors.green,
-                                fontWeight: FontWeight.bold),
-                          )
-                        : Text("Pick & Upload Images"),
-                  ),
-                );
-              },
-            ),
-            SizedBox(
-              height: 50,
-            )
           ],
         ),
       ),
-    );
-  }
-
-  // Widget _buildTextField(
-  //     String label, TextEditingController controller, bool isRequired) {
-  //   return Padding(
-  //     padding: EdgeInsets.only(bottom: 15),
-  //     child: TextFormField(
-  //       controller: controller,
-  //       decoration:
-  //           InputDecoration(labelText: label, border: OutlineInputBorder()),
-  //       validator: (value) {
-  //         if (isRequired && (value == null || value.isEmpty)) {
-  //           return "$label cannot be empty";
-  //         }
-  //         if (label == "Phone Number" &&
-  //             !RegExp(r'^\+?[0-9]{10,15}$').hasMatch(value!)) {
-  //           return "Enter a valid phone number";
-  //         }
-  //         if ((label == "Amount /Week" ||
-  //                 label == "Amount /Month" ||
-  //                 label == "Token Amount") &&
-  //             double.tryParse(value!) == null) {
-  //           return "Enter a valid amount";
-  //         }
-  //         return null;
-  //       },
-  //     ),
-  //   );
-  // }
-
-  // Widget _buildDropdown(String label, List<String> items, String? selectedValue,
-  //     Function(String?) onChanged, bool isRequired) {
-  //   return Padding(
-  //     padding: EdgeInsets.only(bottom: 15),
-  //     child: DropdownButtonFormField<String>(
-  //       decoration:
-  //           InputDecoration(labelText: label, border: OutlineInputBorder()),
-  //       value: selectedValue,
-  //       items: items
-  //           .map((item) => DropdownMenuItem(value: item, child: Text(item)))
-  //           .toList(),
-  //       onChanged: onChanged,
-  //       validator: (value) {
-  //         if (isRequired && value == null) {
-  //           return "$label cannot be empty";
-  //         }
-  //         return null;
-  //       },
-  //     ),
-  //   );
-  // }
-
-  Widget _buildCheckbox(String label, bool value, Function(bool?) onChanged,
-      {bool required = true}) {
-    return CheckboxListTile(
-      title: Text(label),
-      value: value,
-      onChanged: onChanged,
     );
   }
 
@@ -741,7 +692,7 @@ class _PropertyAddState extends State<PropertyAdd> {
           ),
         ),
         validator: (value) {
-          if (date == null) {
+          if (value == null || value.isEmpty) {
             return "$label cannot be empty";
           }
           return null;
@@ -750,40 +701,65 @@ class _PropertyAddState extends State<PropertyAdd> {
     );
   }
 }
+
 Widget _buildTextField(
     String label, TextEditingController controller, bool isRequired) {
   return Padding(
     padding: EdgeInsets.only(bottom: 15),
     child: TextFormField(
       controller: controller,
-      decoration:
-      InputDecoration(labelText: label, border: OutlineInputBorder()),
+      decoration: InputDecoration(labelText: label, border: OutlineInputBorder()),
+      autovalidateMode: AutovalidateMode.onUserInteraction,
       validator: (value) {
-        if (isRequired && (value == null || value.trim().isEmpty)) {
+        final trimmedValue = value?.trim() ?? "";
+
+        if (isRequired && trimmedValue.isEmpty) {
           return "$label cannot be empty";
         }
 
-        if (label == "Phone Number" &&
-            !RegExp(r'^\+?[0-9]{10,15}\$').hasMatch(value!.trim())) {
+        // Validate phone number
+        if (label == "Phone Number" && trimmedValue.isNotEmpty &&
+            !RegExp(r'^\+?[0-9]{10,15}$').hasMatch(trimmedValue)) {
           return "Enter a valid phone number";
         }
 
-        if ((label == "Amount /Week" ||
-            label == "Amount /Month" ||
-            label == "Token Amount" ||
-            label == "Total Amount") &&
-            double.tryParse(value!.trim()) == null) {
-          return "Enter a valid amount";
+        // Validate email
+        if (label == "Owner Email" && trimmedValue.isNotEmpty &&
+            !RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$').hasMatch(trimmedValue)) {
+          return "Enter a valid email address";
         }
 
-        if (label == "Property Name") {
-          final regex = RegExp(r'^([A-Z][a-z]*)(\s[A-Z][a-z]*)*\$');
-          if (!regex.hasMatch(value!.trim())) {
+        // Validate amounts
+        if (["Amount /Week", "Amount /Month", "Token Amount", "Total Amount"].contains(label) && trimmedValue.isNotEmpty) {
+          if (double.tryParse(trimmedValue) == null) {
+            return "Enter a valid amount";
+          }
+        }
+
+        // Validate property name
+        if (label == "Property Name" && trimmedValue.isNotEmpty) {
+          // Capitalize each word
+          String capitalizedValue = trimmedValue.split(' ').map((word) {
+            if (word.isEmpty) return '';
+            return word[0].toUpperCase() + word.substring(1).toLowerCase();
+          }).join(' ');
+
+          // Validation regex
+          final regex = RegExp(r'^([A-Z][a-z]+)(\s[A-Z][a-z]+)*$');
+          if (!regex.hasMatch(capitalizedValue)) {
             return "Each word in Property Name must start with a capital letter";
           }
         }
 
-        return null;
+        // Validate owner name
+        if (label == "Owner Name" && trimmedValue.isNotEmpty) {
+          final regex = RegExp(r'^[A-Z][a-z]+(\s[A-Z][a-z]+)*$');
+          if (!regex.hasMatch(trimmedValue)) {
+            return "Enter a valid Owner Name";
+          }
+        }
+
+        return null; // valid
       },
     ),
   );
@@ -813,44 +789,35 @@ Widget _buildDropdown(String label, List<String> items, String? selectedValue,
 
 Widget _buildCheckbox(String label, bool value, Function(bool?) onChanged,
     {bool required = true}) {
-  return CheckboxListTile(
-    title: Text(label),
-    value: value,
-    onChanged: onChanged,
-    subtitle: required && !value
-        ? Text(
-      "$label must be selected",
-      style: TextStyle(color: Colors.red),
-    )
-        : null,
+  return FormField<bool>(
+    initialValue: value,
+    validator: (val) {
+      if (required && val == false) {
+        return 'Please select $label';
+      }
+      return null;
+    },
+    builder: (state) => Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        CheckboxListTile(
+          title: Text(label),
+          value: value,
+          onChanged: onChanged,
+          controlAffinity: ListTileControlAffinity.leading,
+        ),
+        if (state.hasError)
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16.0),
+            child: Text(
+              state.errorText ?? '',
+              style: TextStyle(color: Colors.red, fontSize: 12),
+            ),
+          )
+      ],
+    ),
   );
 }
-
-// Widget _buildDatePicker(String label, DateTime? date,
-//     Function(DateTime) onDateSelected, TextEditingController controller) {
-//   return Padding(
-//     padding: EdgeInsets.only(bottom: 15),
-//     child: TextFormField(
-//       controller: controller,
-//       readOnly: true,
-//       decoration: InputDecoration(
-//         labelText: date == null ? label : "${date.toLocal()}".split(' ')[0],
-//         border: OutlineInputBorder(),
-//         suffixIcon: IconButton(
-//           icon: Icon(Icons.calendar_today),
-//           onPressed: () => _selectDate(context, onDateSelected),
-//         ),
-//       ),
-//       validator: (value) {
-//         if (date == null) {
-//           return "$label cannot be empty";
-//         }
-//         return null;
-//       },
-//     ),
-//   );
-// }
-
 
 Widget _buildSectionTitle(String title) {
   return Padding(
@@ -967,7 +934,7 @@ List<String> _getStatesForCountry(String country) {
         "Wisconsin",
         "Wyoming"
       ];
-    case "UK":
+    case "United Kingdom":
       return [
         "England",
         "Scotland",
