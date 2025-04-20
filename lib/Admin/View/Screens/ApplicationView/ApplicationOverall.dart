@@ -1,4 +1,3 @@
-import 'package:course_connect/User/Apply/SuccessScreen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -40,7 +39,6 @@ class ApplicationOverall extends StatelessWidget {
         foregroundColor: Colors.black, // Sets icon/text color
         elevation: 1,
       ),
-
       backgroundColor: Colors.grey[100],
       body: BlocConsumer<ApplicationBloc, ApplicationState>(
         listener: (context, state) {
@@ -73,7 +71,6 @@ class ApplicationOverall extends StatelessWidget {
                   const SizedBox(height: 10),
 
                   // Profile Top Section (optional)
-
 
                   // Info Cards Row
                   Row(
@@ -250,7 +247,8 @@ class ApplicationOverall extends StatelessWidget {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) =>  Viewapplicationsmainwrapper()),
+                                  builder: (context) =>
+                                      Viewapplicationsmainwrapper()),
                             );
 
                             // Approve logic
@@ -276,7 +274,7 @@ class ApplicationOverall extends StatelessWidget {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) =>  ViewApplications()),
+                                  builder: (context) => ViewApplications()),
                             );
                           },
                           icon: const Icon(Icons.cancel_outlined),

@@ -9,7 +9,6 @@ import '../University_block/university_bloc.dart';
 // Define Coursefinder Events
 @immutable
 
-
 // class FetchAllUniversites extends CoursefinderEvent {
 //   final String? searchQuery;
 //   final String? Country;
@@ -75,27 +74,30 @@ class FetchAllUniversites extends CoursefinderEvent {
   });
 }
 
-
-
 class CoursefinderBlock extends Bloc<CoursefinderEvent, CoursefinderState> {
   CoursefinderBlock() : super(CoursefinderInitial()) {
     on<FetchAllUniversites>((event, emit) async {
       emit(CoursefinderLoading());
 
       try {
-        Query query = FirebaseFirestore.instance.collection('University');
+        Query query = FirebaseFirestore.instance
+            .collection('University')
+            .orderBy("Rank", descending: false);
 
         if (event.Country?.isNotEmpty ?? false) {
           query = query.where('Country', isEqualTo: event.Country);
         }
         if (event.Degree_offered?.isNotEmpty ?? false) {
-          query = query.where('Degree_offered', isEqualTo: event.Degree_offered);
+          query =
+              query.where('Degree_offered', isEqualTo: event.Degree_offered);
         }
         if (event.highestEducation?.isNotEmpty ?? false) {
-          query = query.where('highestEducation', isEqualTo: event.highestEducation);
+          query = query.where('highestEducation',
+              isEqualTo: event.highestEducation);
         }
         if (event.Course_offered?.isNotEmpty ?? false) {
-          query = query.where('Course_offered', isEqualTo: event.Course_offered);
+          query =
+              query.where('Course_offered', isEqualTo: event.Course_offered);
         }
         if (event.Englishtest?.isNotEmpty ?? false) {
           query = query.where('Englishtest', isEqualTo: event.Englishtest);
@@ -116,12 +118,15 @@ class CoursefinderBlock extends Bloc<CoursefinderEvent, CoursefinderState> {
         if (event.searchQuery?.isNotEmpty ?? false) {
           universities = universities.where((univ) {
             return univ.Country != null &&
-                univ.Country!.toLowerCase().contains(event.searchQuery!.toLowerCase());
+                univ.Country!
+                    .toLowerCase()
+                    .contains(event.searchQuery!.toLowerCase());
           }).toList();
         }
 
         emit(CoursefinderLoaded(universities));
       } catch (e) {
+        print(e);
         emit(CoursefinderFailError(e.toString()));
       }
     });

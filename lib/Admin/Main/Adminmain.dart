@@ -43,12 +43,12 @@ class MyApp extends StatelessWidget {
         BlocProvider<ApplicationBloc>(
           create: (context) =>
               ApplicationBloc()..add(FetchApplication(searchQuery: null)),
-        ), BlocProvider<PropertyAuthBlock>(
+        ),
+        BlocProvider<PropertyAuthBlock>(
           create: (context) =>
-          PropertyAuthBlock()..add(FetchProperty(searchQuery: null)),
+              PropertyAuthBlock()..add(FetchProperty(searchQuery: null)),
         ),
       ],
-
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'Course Connect Admin',
@@ -61,8 +61,6 @@ class MyApp extends StatelessWidget {
     );
   }
 }
-
-
 
 //dashboard
 
@@ -265,14 +263,6 @@ class _AdminPageState extends State<AdminPage> {
   }
 }
 
-
-
-
-
-
-
-
-
 class Dashboard extends StatelessWidget {
   const Dashboard({super.key});
 
@@ -296,7 +286,6 @@ class AdminDashboard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16.0),
         child: Column(
@@ -327,8 +316,8 @@ class AdminDashboard extends StatelessWidget {
                         child: Icon(Icons.notification_add)),
                     const SizedBox(width: 10),
                     Container(
-                      padding:
-                      const EdgeInsets.symmetric(horizontal: 14, vertical: 6),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 14, vertical: 6),
                       decoration: BoxDecoration(
                         color: Colors.white,
                         borderRadius: BorderRadius.circular(20),
@@ -340,7 +329,7 @@ class AdminDashboard extends StatelessWidget {
                             radius: 20,
                             backgroundColor: Colors.grey,
                             backgroundImage:
-                            AssetImage('assets/Profile/img_4.png'),
+                                AssetImage('assets/Profile/img_4.png'),
                           ),
                           SizedBox(width: 10),
                           Text("Admin",
@@ -353,7 +342,9 @@ class AdminDashboard extends StatelessWidget {
                 ),
               ],
             ),
-            SizedBox(height: 30,),
+            SizedBox(
+              height: 30,
+            ),
             Wrap(
               spacing: 16,
               runSpacing: 16,

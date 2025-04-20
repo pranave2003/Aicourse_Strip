@@ -77,7 +77,7 @@ class UniversityBloc extends Bloc<UniversityEvent, UniversityState> {
             FirebaseFirestore.instance.collection('University');
 
         Query query = Universitycollection;
-        query = query.orderBy("Rank");
+        query = query.orderBy("Rank", descending: false);
         QuerySnapshot snapshot = await query.get();
 
         List<University_model> userss = snapshot.docs.map((doc) {
@@ -134,7 +134,7 @@ class UniversityBloc extends Bloc<UniversityEvent, UniversityState> {
             FirebaseFirestore.instance.collection('University');
 
         Query query = Universitycollection;
-        query = query.orderBy("Rank", descending: true);
+        query = query.orderBy("Rank", descending: false);
 
         QuerySnapshot snapshot = await query.get();
 
