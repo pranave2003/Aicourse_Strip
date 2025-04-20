@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../Controller/Bloc/Applycourse/application_bloc.dart';
+import '../../../../Controller/Bloc/User_Authbloc/auth_bloc.dart';
 import '../../../../Widget/Constands/Loading.dart';
 import 'ViewApplications.dart';
 
@@ -86,12 +87,37 @@ class ApplicationOverall extends StatelessWidget {
                             Row(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                CircleAvatar(
-                                  radius: 40,
-                                  backgroundImage: NetworkImage(ApplicationState
-                                      .userprofilephoto
-                                      .toString()),
+                                SizedBox(
+                                  width: 80,
+                                  height: 80,
+                                  child: ClipOval(
+                                    child: Image.network(
+                                      ApplicationState.userprofilephoto.toString(),
+                                      fit: BoxFit.cover,
+                                      errorBuilder: (context, error, stackTrace) {
+                                        return state is ProfileImageLoading
+                                            ? Loading_Widget()
+                                            : Container(
+                                          color: Colors.grey[300],
+                                          child: Icon(
+                                            Icons.image_not_supported,
+                                            size: 40,
+                                            color: Colors.grey[600],
+                                          ),
+                                        );
+                                      },
+                                      loadingBuilder: (context, child, loadingProgress) {
+                                        if (loadingProgress == null) return child;
+                                        return Loading_Widget(); // Show loading while image is being fetched
+                                      },
+                                    ),
+                                  ),
                                 ),
+
+                                //   backgroundImage: NetworkImage(ApplicationState
+                                //       .userprofilephoto
+                                //       .toString()),
+                                // ),
                                 const SizedBox(width: 20),
                                 Expanded(
                                   child: Column(
