@@ -5,6 +5,7 @@ import 'package:course_connect/Controller/Bloc/Applycourse/application_bloc.dart
 import 'package:course_connect/Controller/Bloc/Property/Property/Property_auth_block.dart';
 import 'package:course_connect/Controller/Bloc/University_block/university_bloc.dart';
 import 'package:course_connect/Widget/Constands/colors.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:course_connect/Admin/View/Screens/Landlord/New_Landlords.dart';
@@ -56,7 +57,13 @@ class MyApp extends StatelessWidget {
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
           useMaterial3: true,
         ),
-        home: const AdminPage(),
+        home:  StreamBuilder(stream: FirebaseAuth.instance.authStateChanges(), builder: (context, snapshot) {
+          if(snapshot.hasData){
+         return AdminPage();
+          }else{
+           return Adminlogin();
+          }
+        },),
       ),
     );
   }

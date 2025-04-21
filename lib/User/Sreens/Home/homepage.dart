@@ -189,7 +189,7 @@ class _HomepageState extends State<Homepage> {
                             },
                             child: Container(
                               height: 84,
-                              width: 180,
+                              width: 155,
                               decoration: BoxDecoration(
                                 color: Colors.white, // Background color
                                 border: Border.all(
@@ -205,14 +205,14 @@ class _HomepageState extends State<Homepage> {
                                 children: [
                                   Icon(
                                     Icons.school,
-                                    size: 30,
+                                    size: 20,
                                     color: Colors.lightBlueAccent,
                                   ),
                                   SizedBox(width: 10),
                                   Text(
                                     'AI \nCourse Finder',
                                     style: TextStyle(
-                                        fontSize: 16,
+                                        fontSize: 14,
                                         fontWeight: FontWeight.bold),
                                   ),
                                   SizedBox(height: 24),
@@ -221,7 +221,7 @@ class _HomepageState extends State<Homepage> {
                             ),
                           ),
                           SizedBox(
-                            width: 10,
+                            width: 5,
                           ),
                           GestureDetector(
                             onTap: () {
@@ -234,7 +234,7 @@ class _HomepageState extends State<Homepage> {
                             },
                             child: Container(
                               height: 84,
-                              width: 180,
+                              width: 160,
                               decoration: BoxDecoration(
                                 color: Colors.white, // Background color
                                 border: Border.all(
@@ -249,12 +249,12 @@ class _HomepageState extends State<Homepage> {
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   Icon(Icons.house_outlined,
-                                      size: 30, color: Colors.blue),
+                                      size: 25, color: Colors.blue),
                                   SizedBox(width: 10),
                                   Text(
                                     'Get \nAccommodation',
                                     style: TextStyle(
-                                        fontSize: 16,
+                                        fontSize: 14,
                                         fontWeight: FontWeight.bold),
                                   ),
                                   SizedBox(height: 24),
@@ -395,12 +395,14 @@ class _HomepageState extends State<Homepage> {
                                         horizontal: 5, vertical: 10),
                                     gridDelegate:
                                         SliverGridDelegateWithFixedCrossAxisCount(
+
                                       crossAxisCount: 2, // Two columns
+
                                       crossAxisSpacing:
                                           10, // Space between columns
                                       mainAxisSpacing: 10, // Space between rows
-                                      childAspectRatio:
-                                          0.75, // Adjusted for better image fit
+
+
                                     ),
                                     itemCount: state.University.length,
                                     itemBuilder: (context, index) {
@@ -419,6 +421,7 @@ class _HomepageState extends State<Homepage> {
                                           ));
                                         },
                                         child: Container(
+
                                           decoration: BoxDecoration(
                                             borderRadius:
                                                 BorderRadius.circular(12),
@@ -432,96 +435,99 @@ class _HomepageState extends State<Homepage> {
                                               ),
                                             ],
                                           ),
-                                          child: Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.center,
-                                            children: [
-                                              SizedBox(height: 10),
-                                              ClipRRect(
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          10), // Uncomment if needed
-                                                  child: CachedNetworkImage(
-                                                    imageUrl: university
-                                                            .UniversityimageURL
-                                                        .toString(),
+                                          child: Center(
+                                            child: Column(
+                                              mainAxisAlignment: MainAxisAlignment.center,
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.center,
+                                              children: [
+                                                SizedBox(height: 10),
+                                                ClipRRect(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            10), // Uncomment if needed
+                                                    child: CachedNetworkImage(
+                                                      imageUrl: university
+                                                              .UniversityimageURL
+                                                          .toString(),
 
-                                                    // imageUrl: university
-                                                    //         .UniversityimageURL
-                                                    //     .toString(),
-                                                    height: 140,
-                                                    width: 160,
-                                                    fit: BoxFit.cover,
+                                                      // imageUrl: university
+                                                      //         .UniversityimageURL
+                                                      //     .toString(),
+                                                      height: 120,
+                                                      width: 160,
+                                                      fit: BoxFit.cover,
 
-                                                    // Show a loading indicator while fetching the image
-                                                    placeholder:
-                                                        (context, url) =>
-                                                            Center(
-                                                      child: Loading_Widget(),
-                                                    ),
+                                                      // Show a loading indicator while fetching the image
+                                                      placeholder:
+                                                          (context, url) =>
+                                                              Center(
+                                                        child: Loading_Widget(),
+                                                      ),
 
-                                                    // Show an error icon if the image fails to load
-                                                    errorWidget:
-                                                        (context, url, error) =>
-                                                            Icon(
-                                                      Icons.image_not_supported,
-                                                      size: 50,
-                                                      color: Colors.grey,
-                                                    ),
-                                                  )),
-                                              SizedBox(height: 8),
-                                              Padding(
-                                                  padding: EdgeInsets.symmetric(
-                                                      horizontal: 8),
-                                                  child: Text(
-                                                    university.Universityname
-                                                        .toString(),
-                                                    style: TextStyle(
-                                                        fontSize: 16,
-                                                        fontWeight:
-                                                            FontWeight.bold),
-                                                    textAlign: TextAlign.left,
-                                                  )),
-                                              SizedBox(height: 4),
-                                              Padding(
-                                                  padding: EdgeInsets.symmetric(
-                                                      horizontal: 8),
-                                                  child: Text(
-                                                    university.Country
-                                                            .toString()
-                                                        .toString(),
-                                                    style: TextStyle(
-                                                        fontSize: 12,
-                                                        color:
-                                                            Colors.grey[700]),
-                                                    textAlign: TextAlign.left,
-                                                  )),
-                                              Row(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.end,
-                                                children: [
-                                                  Text(
-                                                    "Rank ",
-                                                    style: TextStyle(
+                                                      // Show an error icon if the image fails to load
+                                                      errorWidget:
+                                                          (context, url, error) =>
+                                                              Icon(
+                                                        Icons.image_not_supported,
+                                                        size: 50,
                                                         color: Colors.grey,
-                                                        fontSize: 10),
-                                                  ),
-                                                  Text(
-                                                    "${university.Rank}",
-                                                    style: TextStyle(
-                                                        color: Colors.black,
-                                                        fontSize: 12,
-                                                        fontWeight:
-                                                            FontWeight.bold),
-                                                  ),
-                                                  Icon(
-                                                    Icons.star,
-                                                    color: Colors.amber,
-                                                    size: 10,
-                                                  )
-                                                ],
-                                              )
-                                            ],
+                                                      ),
+                                                    )),
+                                                SizedBox(height: 8),
+                                                Padding(
+                                                    padding: EdgeInsets.symmetric(
+                                                        horizontal: 8),
+                                                    child: Text(
+                                                      university.Universityname
+                                                          .toString(),
+                                                      style: TextStyle(
+                                                          fontSize: 14,
+                                                          fontWeight:
+                                                              FontWeight.bold),
+                                                      textAlign: TextAlign.left,
+                                                    )),
+                                                SizedBox(height: 4),
+                                                Padding(
+                                                    padding: EdgeInsets.symmetric(
+                                                        horizontal: 8),
+                                                    child: Text(
+                                                      university.Country
+                                                              .toString()
+                                                          .toString(),
+                                                      style: TextStyle(
+                                                          fontSize: 12,
+                                                          color:
+                                                              Colors.grey[700]),
+                                                      textAlign: TextAlign.left,
+                                                    )),
+                                                Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.end,
+                                                  children: [
+                                                    Text(
+                                                      "Rank ",
+                                                      style: TextStyle(
+                                                          color: Colors.grey,
+                                                          fontSize: 10),
+                                                    ),
+                                                    Text(
+                                                      "${university.Rank}",
+                                                      style: TextStyle(
+                                                          color: Colors.black,
+                                                          fontSize: 12,
+                                                          fontWeight:
+                                                              FontWeight.bold),
+                                                    ),
+                                                    Icon(
+                                                      Icons.star,
+                                                      color: Colors.amber,
+                                                      size: 10,
+                                                    )
+                                                  ],
+                                                )
+                                              ],
+                                            ),
                                           ),
                                         ),
                                       );

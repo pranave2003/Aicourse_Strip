@@ -16,6 +16,7 @@ import 'Sreens/BottomNavigation/Bottom_Nav.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  print("main() called");
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
 
   runApp(MyApp());
@@ -26,6 +27,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print("MyApp build");
     return MultiBlocProvider(
       providers: [
         BlocProvider<AuthBloc>(

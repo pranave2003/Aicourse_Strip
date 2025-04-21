@@ -52,17 +52,17 @@ class _Bachelors_activitiesState extends State<Bachelors_activities> {
                 ),
               ),
             ),
-            const SizedBox(height: 20),
+            const SizedBox(height: 5),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 const Icon(Icons.light_mode_rounded, color: Colors.yellowAccent, size: 24),
                 const SizedBox(width: 10),
-                const Text(
-                  "Higher the level of representation, better \nthe impact on your profile.",
-                  textAlign: TextAlign.center,
-                  style: TextStyle(fontSize: 18),
-                ),
+                // const Text(
+                //   "Higher the level of representation,\n better the impact on your profile.",
+                //   textAlign: TextAlign.center,
+                //   style: TextStyle(fontSize: 18),
+                // ),
               ],
             ),
             const SizedBox(height: 20),

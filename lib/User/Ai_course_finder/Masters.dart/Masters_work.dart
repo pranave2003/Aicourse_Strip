@@ -125,7 +125,7 @@ class _MastersWorkState extends State<MastersWork> {
               ),
             ],
 
-            const SizedBox(height: 180),
+            const SizedBox(height: 120),
 
             InkWell(
               onTap: () {

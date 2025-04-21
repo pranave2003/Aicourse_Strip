@@ -163,7 +163,7 @@ class BookingConfirmformpageScreenWrapper extends StatelessWidget {
                                 color: Colors.blue, size: 14),
                             SizedBox(width: 4),
                             Text(
-                              "${city}, ${state}${country}",
+                              "${city},${state}\n${country}",
                               style: TextStyle(
                                   color: Colors.grey.shade700, fontSize: 12),
                             ),
@@ -278,7 +278,7 @@ class BookingConfirmformpageScreenWrapper extends StatelessWidget {
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(30),
                       ),
-                      padding: EdgeInsets.symmetric(horizontal: 80, vertical: 15),
+                      padding: EdgeInsets.symmetric(horizontal: 50, vertical: 15),
                     ),
                     child: state is BookingLoading
                         ? Loading_Widget()

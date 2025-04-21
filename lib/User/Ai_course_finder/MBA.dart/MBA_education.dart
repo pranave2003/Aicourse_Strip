@@ -64,7 +64,7 @@ class _MbaEducationState extends State<MbaEducation> {
                   ),
                 ],
               ),
-              SizedBox(height: 10),
+              SizedBox(height: 5),
               _buildEducationOption("Undergraduate Degree", 0),
               _buildEducationOption("Undergraduate Diploma", 1),
               _buildEducationOption("Postgraduate Degree", 2),
@@ -80,10 +80,10 @@ class _MbaEducationState extends State<MbaEducation> {
                   ),
                 ),
 
-              SizedBox(height: 30),
+              SizedBox(height: 10),
               Text(
                 "What is your expected or gained \n percentage?",
-                style: TextStyle(color: Color(0xff0B1F50), fontSize: 20),
+                style: TextStyle(color: Color(0xff0B1F50), fontSize: 16),
               ),
               SizedBox(height: 20),
 
@@ -93,11 +93,11 @@ class _MbaEducationState extends State<MbaEducation> {
                   padding: const EdgeInsets.only(top: 5),
                   child: Text(
                     "Valid Score Range: ${educationRanges[selectedEducation]}",
-                    style: TextStyle(fontSize: 16, color: Colors.red), // Red font
+                    style: TextStyle(fontSize: 14, color: Colors.red), // Red font
                   ),
                 ),
 
-              SizedBox(height: 20),
+              SizedBox(height: 10),
               Container(
                 width: 200, // Adjust this value to control the underline length
                 child: TextFormField(
@@ -117,7 +117,7 @@ class _MbaEducationState extends State<MbaEducation> {
                   keyboardType: TextInputType.number, // Optional: Allow only numbers
                 ),
               ),
-              SizedBox(height: 180),
+              SizedBox(height: 60),
               InkWell(
                 onTap: () {
                   // Validation logic based on selected education level

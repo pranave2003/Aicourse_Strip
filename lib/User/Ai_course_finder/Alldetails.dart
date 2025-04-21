@@ -13,7 +13,7 @@ class BachelorsDetailsOverall extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        title: Text("Bachelors_detailsoverall", style: TextStyle(fontSize: 16)),
+        title: Text("Details Overall", style: TextStyle(fontSize: 16)),
         backgroundColor: Colors.white,
       ),
       body: BlocBuilder<SelectionCubit, SelectionState>(
@@ -53,12 +53,12 @@ class BachelorsDetailsOverall extends StatelessWidget {
                                       "Not Selected",
                                 ),
                                 SelectionBox(
-                                  label: "English Test",
+                                  label: "English \nTest",
                                   value: state.selections["EnglishTest"] ??
                                       "Not Selected",
                                 ),
                                 SelectionBox(
-                                  label: "English Test Percentage",
+                                  label: "English \n Test Percentage",
                                   value: state.selections[
                                           "EnglishTest_percentage"] ??
                                       "Not Selected",
@@ -69,7 +69,7 @@ class BachelorsDetailsOverall extends StatelessWidget {
                                       "Not Selected",
                                 ),
                                 SelectionBox(
-                                  label: "Academic Test Percentage",
+                                  label: "Academic \nTest Percentage",
                                   value: state.selections[
                                           "AcadamicTestpercentage"] ??
                                       "Not Selected",
@@ -128,7 +128,7 @@ class BachelorsDetailsOverall extends StatelessWidget {
                                           "Not Selected",
                                     ),
                                     SelectionBox(
-                                      label: "English Test Percentage",
+                                      label: "English Test \nPercentage",
                                       value: state.selections[
                                               "EnglishTest_percentage"] ??
                                           "Not Selected",
@@ -139,7 +139,7 @@ class BachelorsDetailsOverall extends StatelessWidget {
                                           "Not Selected",
                                     ),
                                     SelectionBox(
-                                      label: "Academic Test Percentage",
+                                      label: "Academic Test \nPercentage",
                                       value: state.selections[
                                               "AcadamicTestpercentage"] ??
                                           "Not Selected",
@@ -197,7 +197,7 @@ class BachelorsDetailsOverall extends StatelessWidget {
                                           "Not Selected",
                                     ),
                                     SelectionBox(
-                                      label: "English Test Percentage",
+                                      label: "English Test \nPercentage",
                                       value: state.selections[
                                               "EnglishTest_percentage"] ??
                                           "Not Selected",
@@ -208,7 +208,7 @@ class BachelorsDetailsOverall extends StatelessWidget {
                                           "Not Selected",
                                     ),
                                     SelectionBox(
-                                      label: "Academic Test Percentage",
+                                      label: "Academic Test\n Percentage",
                                       value: state.selections[
                                               "AcadamicTestpercentage"] ??
                                           "Not Selected",
@@ -224,7 +224,7 @@ class BachelorsDetailsOverall extends StatelessWidget {
                                           "Not Selected",
                                     ),
                                     SelectionBox(
-                                      label: "Months of Experience",
+                                      label: "Months of \nExperience",
                                       value: state.selections["Month"] ??
                                           "Not Selected",
                                     ),

@@ -128,7 +128,7 @@ class _MBA_workState extends State<MBA_work> {
               ),
             ],
 
-            const SizedBox(height: 180),
+            const SizedBox(height: 150),
 
             InkWell(
               onTap: () {

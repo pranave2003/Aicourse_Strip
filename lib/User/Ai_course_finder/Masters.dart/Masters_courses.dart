@@ -21,7 +21,7 @@ class _Masters_CoursesState extends State<Masters_Courses> {
   final List<String> courses = [
     "MSc in Finance",
     "MSc in Economics",
-    "MSc in Human Resource Management",
+    "MSc in Human Resource\n Management",
     "MSc in Marketing",
     "MSc in Digital Business",
     "MSc in Project Management",
@@ -37,7 +37,7 @@ class _Masters_CoursesState extends State<Masters_Courses> {
     "MSc in Mathematics",
     "MA in Psychology",
     "MA in Sociology",
-    "MA in Journalism & Mass Communication",
+    "MA in Journalism & Mass\n Communication",
     "MA in English Literature",
     "MA in History",
     "MA in Political Science",

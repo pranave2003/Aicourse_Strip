@@ -75,7 +75,8 @@ class ApplicationStatusPage extends StatelessWidget {
     return Center(child: Loading_Widget());
     } else if (state is Applicationfailerror) {
     return Center(child: Text(state.error.toString()));
-    } else if (state is Application_loaded) {
+    }
+    else if (state is Application_loaded) {
       return ListView.builder(
         shrinkWrap: true,
         itemCount: state.Application.length,

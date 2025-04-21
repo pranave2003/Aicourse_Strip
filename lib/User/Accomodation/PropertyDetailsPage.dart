@@ -120,7 +120,7 @@ class _PropertyDetailsPageState extends State<PropertyDetailsPage> {
               {"icon": Icons.bathtub, "name": "${property.bathroom} Bathroom"},
               {
                 "icon": Icons.book,
-                "name": "Bills included:\n  ${property.billStatus}"
+                "name": "Bills included: ${property.billStatus}"
               },
               // Add more services as needed
             ];
@@ -128,9 +128,9 @@ class _PropertyDetailsPageState extends State<PropertyDetailsPage> {
               {"icon": Icons.king_bed, "name": "${property.bedroom} Bedroom"},
               {
                 "icon": Icons.smoke_free,
-                "name": "Smoking Allowed:\n  ${property.smoking}"
+                "name": "Smoking \nAllowed : ${property.smoking}"
               },
-              {"icon": Icons.pets, "name": "Pets Allowed:\n  ${property.pets}"},
+              {"icon": Icons.pets, "name": "Pets \nAllowed : ${property.pets}"},
             ];
 
             return SingleChildScrollView(
@@ -143,7 +143,7 @@ class _PropertyDetailsPageState extends State<PropertyDetailsPage> {
                       height: 250,
                       width: 600,
                       child: Stack(
-                        alignment: Alignment.center,
+                        // alignment: Alignment.,
                         children: [
                           CarouselSlider(
                             options: CarouselOptions(
@@ -163,7 +163,7 @@ class _PropertyDetailsPageState extends State<PropertyDetailsPage> {
                                 borderRadius: BorderRadius.circular(10),
                                 child: CachedNetworkImage(
                                   imageUrl: imageUrl,
-                                  width: 250,
+                                  width: 400,
                                   height: 250,
                                   fit: BoxFit.cover,
                                   placeholder: (context, url) => Container(
@@ -261,12 +261,21 @@ class _PropertyDetailsPageState extends State<PropertyDetailsPage> {
 
                     const SizedBox(height: 12),
                     // Features (3 bedroom, smoking, pets)
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: featureList
-                          .map((feature) => _buildFeatureChip(feature))
-                          .toList(),
+                    SingleChildScrollView(
+                      scrollDirection: Axis.horizontal,
+                      child: Row(
+                        children: featureList
+                            .map((feature) => _buildFeatureChip(feature))
+                            .toList(),
+                      ),
                     ),
+
+                    // Row(
+                    //   // mainAxisAlignment: MainAxisAlignment.start,
+                    //   children: featureList
+                    //       .map((feature) => _buildFeatureChip(feature))
+                    //       .toList(),
+                    // ),
                     const SizedBox(height: 16),
 
                     // Property Information
@@ -476,7 +485,7 @@ Widget _buildFeatureChip(Map<String, dynamic> feature) {
 
 Widget _buildAmenityTile(Map<String, dynamic> amenity) {
   return Container(
-    height: 200,
+    height: 300,
     width: 400,
     padding: const EdgeInsets.all(8),
     // Increased padding
@@ -539,7 +548,7 @@ Widget _buildDetailText(String title, String value) {
 
 Widget _buildInfoCard(Map<String, dynamic> service) {
   return Container(
-    height: 49,
+    height: 200,
     width: 40,
     padding: const EdgeInsets.all(8),
     margin: EdgeInsets.all(8),
@@ -558,12 +567,12 @@ Widget _buildInfoCard(Map<String, dynamic> service) {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Icon(service['icon'], size: 40, color: Colors.black),
+          Icon(service['icon'], size: 35, color: Colors.black),
           const SizedBox(height: 5),
           Text(
             service['name'],
             textAlign: TextAlign.center,
-            style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w600),
+            style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w600),
           ),
         ],
       ),

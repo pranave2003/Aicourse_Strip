@@ -154,7 +154,7 @@ class _UniversitiesState extends State<Universities> {
                                         child: CachedNetworkImage(
                                           imageUrl: university
                                               .UniversityimageURL.toString(),
-                                          height: 140,
+                                          height: 120,
                                           width: 160,
                                           fit: BoxFit.cover,
 
@@ -178,7 +178,7 @@ class _UniversitiesState extends State<Universities> {
                                         child: Text(
                                           university.Universityname.toString(),
                                           style: TextStyle(
-                                              fontSize: 16,
+                                              fontSize: 14,
                                               fontWeight: FontWeight.bold),
                                           textAlign: TextAlign.left,
                                         )),

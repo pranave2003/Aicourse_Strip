@@ -126,7 +126,7 @@ class _DegreeState extends State<Degree> {
                   );
                 }),
               ),
-              const SizedBox(height: 280),
+              const SizedBox(height: 120),
 
               // Continue Button with Validation
               InkWell(

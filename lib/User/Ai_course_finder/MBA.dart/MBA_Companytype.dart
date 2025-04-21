@@ -101,7 +101,7 @@ class _MBA_companytypeState extends State<MBA_companytype> {
                 underline: SizedBox(), // Removes the default underline
               ),
             ),
-            SizedBox(height: 390),
+            SizedBox(height: 290),
             InkWell(
               onTap: () {
                 // Validation logic to check if a company type is selected

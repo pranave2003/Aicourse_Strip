@@ -36,15 +36,15 @@ class _UniversityInfoScreenState extends State<UniversityInfoScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back),
-          onPressed: () => Navigator.pop(context),
+      // appBar: AppBar(
+      //   leading: IconButton(
+      //     icon: const Icon(Icons.arrow_back),
+      //     onPressed: () => Navigator.pop(context),
 
-        ),
-        // title: Text(' ${university.Established_date'}', style: TextStyle(color: Colors.black)),
-        //   iconTheme: IconThemeData(color: Colors.black),
-        ),
+        // ),
+        // // title: Text(' ${university.Established_date'}', style: TextStyle(color: Colors.black)),
+        // //   iconTheme: IconThemeData(color: Colors.black),
+        // ),
 
       backgroundColor: Colors.white,
       // appBar: AppBar(
@@ -171,7 +171,7 @@ class _UniversityInfoScreenState extends State<UniversityInfoScreen> {
                                     'Application Start date',
                                     style: TextStyle(
                                       fontWeight: FontWeight.bold,
-                                      fontSize: 16,
+                                      fontSize: 14,
                                       color: Colors.black,
                                     ),
                                   ),
@@ -179,14 +179,14 @@ class _UniversityInfoScreenState extends State<UniversityInfoScreen> {
                                   Text(
                                     '${university.Admission_startdate}',
                                     style: TextStyle(
-                                      fontSize: 14,
+                                      fontSize: 12,
                                       color: Colors.black,
                                     ),
                                   ),
                                 ],
                               ),
                               SizedBox(
-                                width: 10,
+                                width: 5,
                               ),
                               Container(
                                 height: 30,
@@ -206,14 +206,14 @@ class _UniversityInfoScreenState extends State<UniversityInfoScreen> {
                                     'Application Due Date',
                                     style: TextStyle(
                                       fontWeight: FontWeight.bold,
-                                      fontSize: 16,
+                                      fontSize: 14,
                                       color: Colors.black,
                                     ),
                                   ),
                                   Text(
                                     '${university.Admission_enddate}',
                                     style: TextStyle(
-                                      fontSize: 14,
+                                      fontSize: 12,
                                       color: Colors.black,
                                     ),
                                   ),
@@ -334,8 +334,8 @@ class _UniversityInfoScreenState extends State<UniversityInfoScreen> {
 
   Widget _buildInfoCard(Map<String, dynamic> service) {
     return Container(
-      height: 49,
-      width: 40,
+      height: 130,
+      width: 50,
       padding: const EdgeInsets.all(8),
       margin: EdgeInsets.all(8),
       decoration: BoxDecoration(
@@ -353,12 +353,12 @@ class _UniversityInfoScreenState extends State<UniversityInfoScreen> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(service['icon'], size: 40, color: Colors.black),
+            Icon(service['icon'], size: 30, color: Colors.black),
             const SizedBox(height: 5),
             Text(
               service['name'],
               textAlign: TextAlign.center,
-              style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w600),
+              style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w600),
             ),
           ],
         ),

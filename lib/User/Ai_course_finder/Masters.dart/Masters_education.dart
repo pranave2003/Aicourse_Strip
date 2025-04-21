@@ -114,7 +114,7 @@ class _Masters_educationState extends State<Masters_education> {
                         fontWeight: FontWeight.w500),
                   ),
                 ),
-              const SizedBox(height: 180),
+              const SizedBox(height: 100),
               InkWell(
                 onTap: () {
                   if (selectedEducation == null) {

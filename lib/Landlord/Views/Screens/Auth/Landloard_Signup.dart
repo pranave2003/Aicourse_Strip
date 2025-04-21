@@ -140,7 +140,7 @@ class _SignupState extends State<Signup> {
         if (state is Authenticated) {
           WidgetsBinding.instance.addPostFrameCallback((_) {
             Navigator.pushNamedAndRemoveUntil(
-                context, '/home', (route) => false);
+                context, '/login', (route) => false);
           });
         }
         if (state is AuthenticatedError) {
@@ -264,27 +264,7 @@ class _SignupState extends State<Signup> {
                                 confirmPasswordController,
                                 _validateConfirmPassword,
                                 obscureText: true),
-                            DropdownButtonFormField(
-                              decoration: InputDecoration(
-                                labelText: "Nearby University",
-                                border: OutlineInputBorder(),
-                              ),
-                              value: selectedUniversity,
-                              items: universities.map((String university) {
-                                return DropdownMenuItem(
-                                  value: university,
-                                  child: Text(university),
-                                );
-                              }).toList(),
-                              onChanged: (value) {
-                                setState(() {
-                                  selectedUniversity = value as String?;
-                                });
-                              },
-                              validator: (value) => value == null
-                                  ? "Please select a university"
-                                  : null,
-                            ),
+
                             SizedBox(height: 10),
                             BlocConsumer<LandloardAuthBloc, LandloardAuthState>(
                               listener: (context, state) {
@@ -348,7 +328,7 @@ class _SignupState extends State<Signup> {
                                               ? Loading_Widget()
                                               : (state is Imageuploadedurl
                                               ? Text("Uploaded ✅", style: TextStyle(color: Colors.green))
-                                              : Text("Upload image")),
+                                              : Text("Upload id proof image")),
                                         )
                                       ],
                                     ),
