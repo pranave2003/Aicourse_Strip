@@ -1,3 +1,6 @@
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:carousel_slider/carousel_options.dart';
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:course_connect/Controller/Bloc/Booking/BookingAuthEvent.dart';
 import 'package:course_connect/Controller/Bloc/Booking/BookingState.dart';
 import 'package:course_connect/Controller/Bloc/Booking/Booking_authblock.dart';
@@ -143,11 +146,12 @@ class Bookingstate extends StatelessWidget {
                           dataRowMaxHeight: 100,
                           columns: [
                             _buildColumn('S/NO'),
-                            _buildColumn('Name'),
-                            _buildColumn('Email'),
-                            _buildColumn('Phone number'),
+                            _buildColumn('User Details'),
+                            // _buildColumn('Payment Details'),
+                            _buildColumn('Property Images'),
+
                             _buildColumn('Property Details'),
-                            _buildColumn('Rental Period'),
+                            _buildColumn('Booking date and time'),
                             _buildColumn('Action'),
                           ],
                           rows: List.generate(state.booking.length, (index) {
@@ -157,10 +161,135 @@ class Bookingstate extends StatelessWidget {
                                 DataCell(Text("${index + 1}",
                                     style:
                                     TextStyle(fontWeight: FontWeight.bold))),
-                                DataCell(Text(booking.username.toString())),
-                                DataCell(Text(booking.useremail.toString())),
+                            DataCell(
+                            SizedBox(
+                            width: 250,
+                            child: Column(
+                            crossAxisAlignment:
+                            CrossAxisAlignment.start,
+                            children: [
+                            Text(
+                            booking.username.toString(),
+                            style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 14),
+                            ),
+                            SizedBox(height: 4),
+                            Text(
+                            booking.useremail.toString(),
+                            style: TextStyle(
+                            fontSize: 13,
+                            color: Colors.grey[700]),
+                            ), Text(
+                            booking.userphonenumber.toString(),
+                            style: TextStyle(
+                            fontSize: 13,
+                            color: Colors.grey[700]),
+                            ),
+                            ],
+                            ),
+                            ),
+                            ),
                                 DataCell(
-                                    Text(booking.userphonenumber.toString())),
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        vertical: 10.0),
+                                    child: Container(
+                                      height: 80,
+                                      child: ClipRRect(
+                                        borderRadius: BorderRadius.circular(
+                                            5), // Rounded corners for image
+                                        child: CachedNetworkImage(
+                                          imageUrl: booking.propertyImageURL
+                                              .toString(),
+                                          width: 100, // Adjusted width
+                                          height: 50, // Adjusted height
+                                          fit: BoxFit.cover,
+                                          placeholder: (context, url) =>
+                                              Container(
+                                                width: 50,
+                                                height: 50,
+                                                color: Colors.grey[
+                                                300], // Placeholder background
+                                                child: Center(
+                                                  child:
+                                                  Loading_Widget(), // Loading indicator
+                                                ),
+                                              ),
+                                          errorWidget: (context, url, error) =>
+                                              Container(
+                                                width: 50,
+                                                height: 50,
+                                                color: Colors.grey[
+                                                300], // Placeholder background
+                                                child: Icon(
+                                                  Icons.image_not_supported,
+                                                  size: 50,
+                                                  color: Colors.grey[600],
+                                                ),
+                                              ),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+
+
+
+
+                                // DataCell(
+                                //   Padding(
+                                //     padding: const EdgeInsets.symmetric(vertical: 10.0),
+                                //     child: SizedBox(
+                                //       height: 100,
+                                //       width: 250,
+                                //       child: (booking.propertyImageURL != null && booking.propertyImageURL!.isNotEmpty)
+                                //           ? CarouselSlider(
+                                //         options: CarouselOptions(
+                                //           autoPlay: true,
+                                //           height: 100,
+                                //           viewportFraction: 1.0,
+                                //           enableInfiniteScroll: false,
+                                //           enlargeCenterPage: true,
+                                //         ),
+                                //         items: booking.propertyImageURL!.map((imageUrl) {
+                                //           return CachedNetworkImage(
+                                //             imageUrl: imageUrl,
+                                //             width: 200,
+                                //             height: 100,
+                                //             fit: BoxFit.cover,
+                                //             placeholder: (context, url) => Container(
+                                //               width: 50,
+                                //               height: 50,
+                                //               color: Colors.grey[50],
+                                //               child: const Center(child: Loading_Widget()),
+                                //             ),
+                                //             errorWidget: (context, url, error) => Container(
+                                //               width: 50,
+                                //               height: 50,
+                                //               color: Colors.grey[300],
+                                //               child: Icon(
+                                //                 Icons.image_not_supported,
+                                //                 size: 50,
+                                //                 color: Colors.grey[600],
+                                //               ),
+                                //             ),
+                                //           );
+                                //         }).toList(),
+                                //       )
+                                //           : Container(
+                                //         height: 100,
+                                //         width: 250,
+                                //         color: Colors.grey[200],
+                                //         child: const Center(
+                                //           child: Text("No images available"),
+                                //         ),
+                                //       ),
+                                //     ),
+                                //   ),
+                                // ),
+
+
                                 DataCell(
                                   SizedBox(
                                     width: 250,
@@ -188,6 +317,12 @@ class Bookingstate extends StatelessWidget {
                                           style: TextStyle(
                                               fontSize: 13,
                                               color: Colors.grey[700]),
+                                        ),Text(
+                                          booking.tokenamount.toString(),
+                                          softWrap: true,
+                                          style: TextStyle(
+                                              fontSize: 13,
+                                              color: Colors.grey[700]),
                                         ),
                                       ],
                                     ),
@@ -201,10 +336,25 @@ class Bookingstate extends StatelessWidget {
                                       CrossAxisAlignment.start,
                                       children: [
                                         Text(
+                                          booking.bookingid.toString(),
+                                          style: TextStyle(
+                                              fontSize: 13,
+                                             ),
+                                        ),Text(
+                                          booking.checkindate.toString(),
+                                          style: TextStyle(
+                                              fontSize: 13,
+                                             ),
+                                        ),Text(
+                                          booking.checkoutdate.toString(),
+                                          style: TextStyle(
+                                              fontSize: 13,
+                                             ),
+                                        ),Text(
                                           booking.bookingdate.toString(),
                                           style: TextStyle(
-                                              fontWeight: FontWeight.bold,
-                                              fontSize: 14),
+                                              fontSize: 13,
+                                             ),
                                         ),
                                         SizedBox(height: 4),
                                         Text(
@@ -217,6 +367,7 @@ class Bookingstate extends StatelessWidget {
                                     ),
                                   ),
                                 ),
+
 
                                 DataCell(
                                   Row(
@@ -296,6 +447,8 @@ class Bookingstate extends StatelessWidget {
     );
   }
 }
+
+
 
 
 

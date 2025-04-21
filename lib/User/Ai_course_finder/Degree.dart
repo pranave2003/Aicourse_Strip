@@ -36,6 +36,45 @@ class _DegreeState extends State<Degree> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      floatingActionButton: InkWell(
+        onTap: () {
+          if (selectedDegree != null) {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => category[selectedIndex!]["page"](selectedDegree),
+              ),
+            );
+          } else {
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(
+                content: Text("Please select a degree before proceeding."),
+                backgroundColor: Colors.red,
+              ),
+            );
+          }
+        },
+        child: Container(
+          margin: const EdgeInsets.only(bottom: 20),
+          height: 51,
+          width: 231,
+          decoration: BoxDecoration(
+            color: blueColor,
+            borderRadius: BorderRadius.circular(30),
+          ),
+          child: const Center(
+            child: Text(
+              "Continue",
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ),
+        ),
+      ),
       appBar: AppBar(
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
@@ -129,44 +168,7 @@ class _DegreeState extends State<Degree> {
               const SizedBox(height: 120),
 
               // Continue Button with Validation
-              InkWell(
-                onTap: () {
-                  if (selectedDegree != null) {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => category[selectedIndex!]["page"](selectedDegree),
-                      ),
-                    );
-                  } else {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(
-                        content: Text("Please select a degree before proceeding."),
-                        backgroundColor: Colors.red,
-                      ),
-                    );
-                  }
-                },
-                child: Container(
-                  margin: const EdgeInsets.only(bottom: 20),
-                  height: 51,
-                  width: 231,
-                  decoration: BoxDecoration(
-                    color: blueColor,
-                    borderRadius: BorderRadius.circular(30),
-                  ),
-                  child: const Center(
-                    child: Text(
-                      "Continue",
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ),
-                ),
-              ),
+
             ],
           ),
         ),

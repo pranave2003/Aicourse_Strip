@@ -1,3 +1,4 @@
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_options.dart';
 import 'package:carousel_slider/carousel_slider.dart';
@@ -58,7 +59,7 @@ class BookingformpageScreenWrapper extends StatelessWidget {
         landloardname: landloardname,
         landloardphone: landloardphone,
         propertyAddress: propertyAddress,
-          owneremail:owneremail,
+        owneremail:owneremail,
         userid:userid,
       ),
     );
@@ -160,8 +161,8 @@ class _BookingFormPageState extends State<BookingFormPage> {
           username: user.name.toString(),
           userphonenumber: user.phone.toString(),
           useremail: user.email.toString(),
-            propertyAddress: widget.propertyAddress.toString(),
-            owneremail: widget.owneremail.toString(),
+          propertyAddress: widget.propertyAddress.toString(),
+          owneremail: widget.owneremail.toString(),
           userid_global: userid_global,
 
         ),

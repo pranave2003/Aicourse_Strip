@@ -239,17 +239,17 @@ class _ViewApplicationsState extends State<ViewApplications> {
                                           color: Colors.red),
                                       iconSize: 30.0,
                                       onPressed: () {
-                                        // _showDeleteConfirmationDialog(context,
-                                        //         () {
-                                        //       context.read<UniversityBloc>()
-                                        //           .add(
-                                        //         DeleteUniversity(
-                                        //           Universityid:
-                                        //           student.Universityid ??
-                                        //               '',
-                                        //         ),
-                                        //       );
-                                        //     });
+                                        _showDeleteConfirmationDialog(context,
+                                                () {
+                                              context.read<ApplicationBloc>()
+                                                  .add(
+                                                DeleteApplication(
+                                                  applicationid:
+                                                  student.applicationid ??
+                                                      '',
+                                                ),
+                                              );
+                                            });
                                       },
                                     ),
                                   ],
@@ -280,6 +280,33 @@ class _ViewApplicationsState extends State<ViewApplications> {
             fontWeight: FontWeight.bold,
             fontSize: 16),
       ),
+    );
+  }
+  void _showDeleteConfirmationDialog(
+      BuildContext context, VoidCallback onDeleteConfirmed) {
+    showDialog(
+      context: context,
+      builder: (BuildContext dialogContext) {
+        return AlertDialog(
+          title: const Text("Confirm Deletion"),
+          content: const Text("Are you sure you want to delete this university?"),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(dialogContext).pop();
+              },
+              child: const Text("Cancel"),
+            ),
+            TextButton(
+              onPressed: () {
+                onDeleteConfirmed();
+                Navigator.of(dialogContext).pop();
+              },
+              child: const Text("Delete", style: TextStyle(color: Colors.red)),
+            ),
+          ],
+        );
+      },
     );
   }
 }

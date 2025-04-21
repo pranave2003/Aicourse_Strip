@@ -1,3 +1,4 @@
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_options.dart';
 import 'package:carousel_slider/carousel_slider.dart';
@@ -132,13 +133,13 @@ class BookingConfirmformpageScreenWrapper extends StatelessWidget {
                                   ),
                                   errorWidget: (context, url, error) =>
                                       Container(
-                                    color: Colors.grey[300],
-                                    child: Icon(
-                                      Icons.image_not_supported,
-                                      size: 50,
-                                      color: Colors.grey[600],
-                                    ),
-                                  ),
+                                        color: Colors.grey[300],
+                                        child: Icon(
+                                          Icons.image_not_supported,
+                                          size: 50,
+                                          color: Colors.grey[600],
+                                        ),
+                                      ),
                                 ),
                               ),
                             ],
@@ -226,11 +227,11 @@ class BookingConfirmformpageScreenWrapper extends StatelessWidget {
               listener: (context, state) {
                 if (state is BookingaddSuccess) {
                   Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => SuccessScreenwrapper2(booking: Bookingmodel(),
-                    ),
-                  ));
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => SuccessScreenwrapper2(booking: Bookingmodel(),
+                        ),
+                      ));
                 } else if (state is Bookingfailerror) {
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(content: Text('Booking failed: ${state.error}')),

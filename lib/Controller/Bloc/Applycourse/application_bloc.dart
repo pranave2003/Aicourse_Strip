@@ -14,7 +14,7 @@ final userid_global = FirebaseAuth.instance.currentUser!.uid;
 class ApplicationBloc extends Bloc<ApplicationEvent, ApplicationState> {
   ApplicationBloc() : super(ApplicationInitial()) {
     on<Applicationaddevent>(
-      (event, emit) async {
+          (event, emit) async {
         print("object");
         emit(addapplicationloadingstate());
         try {
@@ -53,16 +53,38 @@ class ApplicationBloc extends Bloc<ApplicationEvent, ApplicationState> {
           emit(addapplicationAddSuccessstate());
         } catch (e) {
           emit(addapplicationFailerrorstate(
-              error: e.toString().split("]").last));
+              error: e
+                  .toString()
+                  .split("]")
+                  .last));
+          print("Authenticated Error : ${e
+              .toString()
+              .split(']')
+              .last}");
+        }
+      },
+    );
+    on<DeleteApplication>(
+          (event, emit) async {
+        emit(ApplicationLoading());
+        try {
+          FirebaseFirestore.instance
+              .collection("Applications")
+              .doc(event.applicationid)
+              .delete(); // Generate ID
+          emit(RefreshApplication());
+        } catch (e) {
+          emit(Applicationfailerror(e.toString().split("]").last));
           print("Authenticated Error : ${e.toString().split(']').last}");
         }
       },
     );
+
     on<FetchApplication>((event, emit) async {
       emit(ApplicationLoading());
       try {
         CollectionReference Applicationcollection =
-            FirebaseFirestore.instance.collection('Applications');
+        FirebaseFirestore.instance.collection('Applications');
 
         Query query = Applicationcollection;
         query = query.where("uaser_uid", isEqualTo: event.uaser_uid);
@@ -126,7 +148,9 @@ class ApplicationBloc extends Bloc<ApplicationEvent, ApplicationState> {
         //   emit(ImageDownloaded(url));
         // }
         if (kIsWeb) {
-          final fileName = event.firebasePath.split('/').last;
+          final fileName = event.firebasePath
+              .split('/')
+              .last;
           triggerDownload(
               url, fileName); // This comes from image_downloader.dart
           emit(ImageDownloaded(url));
@@ -152,3 +176,4 @@ class ApplicationBloc extends Bloc<ApplicationEvent, ApplicationState> {
     });
   }
 }
+

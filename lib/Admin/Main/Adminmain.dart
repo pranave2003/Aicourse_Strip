@@ -57,13 +57,16 @@ class MyApp extends StatelessWidget {
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
           useMaterial3: true,
         ),
-        home:  StreamBuilder(stream: FirebaseAuth.instance.authStateChanges(), builder: (context, snapshot) {
-          if(snapshot.hasData){
-         return AdminPage();
-          }else{
-           return Adminlogin();
-          }
-        },),
+        home: StreamBuilder(
+          stream: FirebaseAuth.instance.authStateChanges(),
+          builder: (context, snapshot) {
+            if (snapshot.hasData) {
+              return AdminPage();
+            } else {
+              return Adminlogin();
+            }
+          },
+        ),
       ),
     );
   }

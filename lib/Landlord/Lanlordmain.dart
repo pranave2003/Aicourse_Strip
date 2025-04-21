@@ -315,12 +315,12 @@ class Dashboard extends StatelessWidget {
                     ),
                     child: Row(
                       children: const [
-                        CircleAvatar(
-                          radius: 20,
-                          backgroundColor: Colors.grey,
-                          backgroundImage:
-                              AssetImage('assets/Profile/img_3.png'),
-                        ),
+                        // CircleAvatar(
+                        //   radius: 20,
+                        //   backgroundColor: Colors.grey,
+                        //   backgroundImage:
+                        //       AssetImage('assets/Profile/img_3.png'),
+                        // ),
                         SizedBox(width: 10),
                         Text("Landlord",
                             style: TextStyle(

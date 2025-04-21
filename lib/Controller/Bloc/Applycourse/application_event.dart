@@ -38,3 +38,8 @@ class AcceptOrRejectApplication extends ApplicationEvent {
   final String? Status;
   AcceptOrRejectApplication({this.applicationid, this.Status});
 }
+class DeleteApplication extends ApplicationEvent {
+  final String? applicationid;
+
+  DeleteApplication({required this.applicationid});
+}

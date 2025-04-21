@@ -24,6 +24,8 @@ class Bookingmodel {
   String? propertyTotal;
   String? propertyImageURL;
 
+  // String? propertyImageURL;
+
   Bookingmodel({
     this.bookingid,
     this.propertyId,

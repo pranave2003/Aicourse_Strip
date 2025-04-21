@@ -28,7 +28,7 @@ class _Bottom_nav2State extends State<Bottom_nav2> {
   final List<Widget> _pages = [
     PropertyWrapper(),
     Viewbookingmainwrapper1(),
-    FeedbackScreen(),
+    // FeedbackScreen(),
     Profile(),
   ];
 

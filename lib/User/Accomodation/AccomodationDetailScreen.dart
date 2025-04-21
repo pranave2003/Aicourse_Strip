@@ -154,14 +154,14 @@ class _AccommodationDetailScreenState extends State<AccommodationDetailScreen> {
                     : SizedBox(),
               ],
             ),
-            Text(
-              "Student housing near Yale University",
-              style: TextStyle(
-                color: Colors.black,
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
+            // Text(
+            //   "Student housing near Yale University",
+            //   style: TextStyle(
+            //     color: Colors.black,
+            //     fontSize: 20,
+            //     fontWeight: FontWeight.bold,
+            //   ),
+            // ),
             SizedBox(height: 10),
             BlocConsumer<PropertyAuthBlock, PropertyAuthState>(
               listener: (context, state) {},

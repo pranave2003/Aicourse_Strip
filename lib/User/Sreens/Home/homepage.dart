@@ -189,7 +189,7 @@ class _HomepageState extends State<Homepage> {
                             },
                             child: Container(
                               height: 84,
-                              width: 155,
+                              width: 180,
                               decoration: BoxDecoration(
                                 color: Colors.white, // Background color
                                 border: Border.all(
@@ -221,7 +221,7 @@ class _HomepageState extends State<Homepage> {
                             ),
                           ),
                           SizedBox(
-                            width: 5,
+                            width: 10,
                           ),
                           GestureDetector(
                             onTap: () {
@@ -234,7 +234,7 @@ class _HomepageState extends State<Homepage> {
                             },
                             child: Container(
                               height: 84,
-                              width: 160,
+                              width: 180,
                               decoration: BoxDecoration(
                                 color: Colors.white, // Background color
                                 border: Border.all(
@@ -395,13 +395,12 @@ class _HomepageState extends State<Homepage> {
                                         horizontal: 5, vertical: 10),
                                     gridDelegate:
                                         SliverGridDelegateWithFixedCrossAxisCount(
-
                                       crossAxisCount: 2, // Two columns
 
                                       crossAxisSpacing:
                                           10, // Space between columns
+                                          mainAxisExtent: 200,
                                       mainAxisSpacing: 10, // Space between rows
-
 
                                     ),
                                     itemCount: state.University.length,
@@ -421,7 +420,6 @@ class _HomepageState extends State<Homepage> {
                                           ));
                                         },
                                         child: Container(
-
                                           decoration: BoxDecoration(
                                             borderRadius:
                                                 BorderRadius.circular(12),
@@ -437,7 +435,8 @@ class _HomepageState extends State<Homepage> {
                                           ),
                                           child: Center(
                                             child: Column(
-                                              mainAxisAlignment: MainAxisAlignment.center,
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
                                               crossAxisAlignment:
                                                   CrossAxisAlignment.center,
                                               children: [
@@ -466,18 +465,20 @@ class _HomepageState extends State<Homepage> {
                                                       ),
 
                                                       // Show an error icon if the image fails to load
-                                                      errorWidget:
-                                                          (context, url, error) =>
-                                                              Icon(
-                                                        Icons.image_not_supported,
+                                                      errorWidget: (context,
+                                                              url, error) =>
+                                                          Icon(
+                                                        Icons
+                                                            .image_not_supported,
                                                         size: 50,
                                                         color: Colors.grey,
                                                       ),
                                                     )),
                                                 SizedBox(height: 8),
                                                 Padding(
-                                                    padding: EdgeInsets.symmetric(
-                                                        horizontal: 8),
+                                                    padding:
+                                                        EdgeInsets.symmetric(
+                                                            horizontal: 8),
                                                     child: Text(
                                                       university.Universityname
                                                           .toString(),
@@ -489,8 +490,9 @@ class _HomepageState extends State<Homepage> {
                                                     )),
                                                 SizedBox(height: 4),
                                                 Padding(
-                                                    padding: EdgeInsets.symmetric(
-                                                        horizontal: 8),
+                                                    padding:
+                                                        EdgeInsets.symmetric(
+                                                            horizontal: 8),
                                                     child: Text(
                                                       university.Country
                                                               .toString()

@@ -427,7 +427,7 @@ class _PropertyDetailsPageState extends State<PropertyDetailsPage> {
                                 landloardphone: property.ownerPhone,
                                 propertyName: property.propertyName,
                                 tokenAmount: property.tokenAmount,
-                                propertyImageURL: property.propertyImageURL![0],
+                                propertyImageURL: property.propertyImageURL![0].toString(),
                                 country: property.country,
                                 state: property.state,
                                 city: property.city,
