@@ -10,6 +10,11 @@ class University_Add_Event extends UniversityEvent {
   University_Add_Event({required this.University});
 }
 
+class Collage_Add_Event extends UniversityEvent {
+  final Collagemodel collage;
+  Collage_Add_Event({required this.collage});
+}
+
 class FetchUniversity extends UniversityEvent {
   final String? searchQuery;
   FetchUniversity({required this.searchQuery});
@@ -51,9 +56,27 @@ class FetchCourseDetailsById extends UniversityEvent {
   final String? searchQuery;
 
   final String? CourseUniversity_id;
-  FetchCourseDetailsById({required this.CourseUniversity_id, required this.searchQuery});
+  FetchCourseDetailsById(
+      {required this.CourseUniversity_id, required this.searchQuery});
 }
 
 /**/
 
 class UploadUniversityphoto extends UniversityEvent {}
+
+//add university
+
+class AddUniversity extends UniversityEvent {
+  String? universityname;
+
+  AddUniversity({
+    required this.universityname,
+  });
+}
+
+class MasterFetchUniversitys extends UniversityEvent {}
+
+class deleteMasteruniversity extends UniversityEvent {
+  String? id;
+  deleteMasteruniversity({required this.id});
+}

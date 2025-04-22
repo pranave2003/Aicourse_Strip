@@ -10,6 +10,7 @@ import 'package:flutter/foundation.dart';
 import 'package:meta/meta.dart';
 
 import 'University_model/University_model.dart';
+import 'University_model/Universitycollage.dart';
 
 part 'university_event.dart';
 part 'university_state.dart';
@@ -61,8 +62,43 @@ class UniversityBloc extends Bloc<UniversityEvent, UniversityState> {
             // "state": event.University.state,
             // "city": event.University.city
           });
-          print("done...");
+
           emit(UniversityaddSuccess());
+        } catch (e) {
+          emit(Universityfailerror(e.toString().split("]").last));
+          print("Authenticated Error : ${e.toString().split(']').last}");
+        }
+      },
+    );
+
+    on<Collage_Add_Event>(
+      (event, emit) async {
+        emit(Collage_Add_Eventloading());
+        try {
+          var orderRef = FirebaseFirestore.instance
+              .collection("Collage_university")
+              .doc(); // Generate ID
+          String university_collageid = orderRef.id; // Get the generated ID
+
+          await orderRef.set({
+            "Universityid": university_collageid,
+            "Universityimage": event.collage.UniversityimageURL,
+            "Rank": event.collage.Rank,
+            "Established_date": event.collage.Established_date,
+            "Universityname": event.collage.Universityname,
+            "Admission_startdate": event.collage.Admission_startdate,
+            "Admission_enddate": event.collage.Admission_enddate,
+            "Country": event.collage.Country,
+            "Ban": "0",
+            "status": "1",
+            "collagecode": event.collage.collagecode,
+            "Collegename": event.collage.Collegename
+
+            // "state": event.University.state,
+            // "city": event.University.city
+          });
+
+          emit(Collage_Add_EventSuccess());
         } catch (e) {
           emit(Universityfailerror(e.toString().split("]").last));
           print("Authenticated Error : ${e.toString().split(']').last}");
@@ -345,5 +381,64 @@ class UniversityBloc extends Bloc<UniversityEvent, UniversityState> {
         emit(ProfileImageFailure("Failed to upload image"));
       }
     });
+
+    on<AddUniversity>((event, emit) async {
+      emit(Adduniversitymasterloading());
+      try {
+        FirebaseFirestore.instance
+            .collection("University_Master")
+            .add({"University": event.universityname});
+        emit(Adduniversitysucess());
+      } catch (e) {
+        emit(Mastererror(error: e.toString()));
+      }
+    });
+
+    on<MasterFetchUniversitys>((event, emit) async {
+      emit(MAsterUniversityLoading());
+      try {
+        final snapshot = await FirebaseFirestore.instance
+            .collection("University_Master")
+            .get();
+
+        final universities = snapshot.docs.map((doc) {
+          return MAsteruniversitymodel(
+            id: doc.id,
+            name: doc['University'].toString(),
+          );
+        }).toList();
+
+        emit(MasterUniversityLoaded(universityList: universities));
+      } catch (e) {
+        emit(Mastererror(error: e.toString()));
+      }
+    });
+
+    on<MasterFetchUniversitys>((event, emit) async {
+      emit(MAsterUniversityLoading());
+      try {
+        final snapshot = await FirebaseFirestore.instance
+            .collection("University_Master")
+            .get();
+
+        final universities = snapshot.docs.map((doc) {
+          return MAsteruniversitymodel(
+            id: doc.id,
+            name: doc['University'].toString(),
+          );
+        }).toList();
+
+        emit(MasterUniversityLoaded(universityList: universities));
+      } catch (e) {
+        emit(Mastererror(error: e.toString()));
+      }
+    });
   }
+}
+
+class MAsteruniversitymodel {
+  final String id;
+  final String name;
+
+  MAsteruniversitymodel({required this.id, required this.name});
 }

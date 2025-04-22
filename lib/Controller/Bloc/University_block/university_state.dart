@@ -19,6 +19,10 @@ final class UniversitysLoading extends UniversityState {}
 
 final class RefreshUniversity extends UniversityState {}
 
+final class Collage_Add_Eventloading extends UniversityState {}
+
+final class Collage_Add_EventSuccess extends UniversityState {}
+
 final class Universitysfailerror extends UniversityState {
   final String error;
 
@@ -32,6 +36,7 @@ class University_loaded extends UniversityState {
     this.University,
   );
 }
+
 class Course_loaded extends UniversityState {
   final List<University_model> course;
 
@@ -68,3 +73,21 @@ final class ProfileImageFailure extends UniversityState {
 }
 
 final class Imageuploadsuccss extends UniversityState {}
+
+//add university master
+
+final class Adduniversitymasterloading extends UniversityState {}
+
+final class Adduniversitysucess extends UniversityState {}
+
+final class Mastererror extends UniversityState {
+  String? error;
+  Mastererror({required this.error});
+}
+
+class MAsterUniversityLoading extends UniversityState {}
+
+class MasterUniversityLoaded extends UniversityState {
+  final List<MAsteruniversitymodel> universityList;
+  MasterUniversityLoaded({required this.universityList});
+}

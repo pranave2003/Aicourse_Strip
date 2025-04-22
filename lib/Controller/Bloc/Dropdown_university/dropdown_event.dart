@@ -3,7 +3,6 @@ part of 'dropdown_bloc.dart';
 @immutable
 sealed class DropdownEvent {}
 
-
 class Fetchcatogorybydropdown extends DropdownEvent {
   final String? service;
 
@@ -11,3 +10,7 @@ class Fetchcatogorybydropdown extends DropdownEvent {
     this.service,
   });
 }
+
+class Fetchcatcollagebydropdown extends DropdownEvent {}
+
+

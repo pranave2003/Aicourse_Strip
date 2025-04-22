@@ -12,9 +12,13 @@ import 'package:course_connect/Admin/View/Screens/Landlord/New_Landlords.dart';
 import 'package:course_connect/Admin/View/Screens/University/AddUniversity.dart';
 import 'package:course_connect/Admin/View/Screens/University/Universitymain.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import '../../Controller/Bloc/Dropdown_university/CollagemasterBloc/collagedropdown_bloc.dart';
+import '../../Controller/Bloc/Dropdown_university/dropdown_bloc.dart';
 import '../../Controller/Bloc/Landloard_auth/landloard_auth_bloc.dart';
 import '../../Controller/Bloc/User_Authbloc/auth_bloc.dart';
 import '../../firebase_options.dart';
+import '../View/Screens/University/AddUniversityname.dart';
+import '../View/Screens/University/Addcollage.dart';
 import '../View/Screens/House.dart/ViewHouses.dart';
 import '../View/Screens/Payment.dart/Payment_View.dart';
 import '../View/Screens/Users.dart/UserView.dart';
@@ -49,6 +53,11 @@ class MyApp extends StatelessWidget {
           create: (context) =>
               PropertyAuthBlock()..add(FetchProperty(searchQuery: null)),
         ),
+        BlocProvider<DropdownBloc>(
+          create: (context) => DropdownBloc()..add(Fetchcatcollagebydropdown()),
+        ),
+        BlocProvider<CollagedropdownBloc>(
+            create: (context) => CollagedropdownBloc())
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
@@ -135,7 +144,9 @@ class _AdminPageState extends State<AdminPage> {
                   icon: Icons.school_outlined,
                   children: [
                     _buildSubListTile("View Courses", Universitymainwrapper()),
-                    _buildSubListTile("Add Courses", AddUniversity()),
+                    _buildSubListTile("Add Courses", Fetchcolladropdowrapper()),
+                    _buildSubListTile("Add Collage", Addcollage()),
+                    _buildSubListTile("Add University", Adduniversitywrapper()),
                     // _buildSubListTile("Edit Courses", EditUniversity(universityname: '', universityid: '', Collegename: '', Collegecode: '',  highestEducationpercentage: '', establishedDate: '', admissionEndDate: '', Admission_startdate: '', Terms_and_conditions: '', scholarshipFee: '', courseFee: '', Discription: '', AcadamicTest: '', AcadamicTestPercentage: '', highestEducation: '', Englishtest: '', Englishtestpercentage: '', )),
                   ],
                 ),

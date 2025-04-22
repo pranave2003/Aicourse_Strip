@@ -5,7 +5,28 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../../Controller/Bloc/Dropdown_university/CollagemasterBloc/collagedropdown_bloc.dart';
+import '../../../../Controller/Bloc/Dropdown_university/dropdown_bloc.dart';
+import '../../../../Controller/Bloc/University_block/University_model/Universitycollage.dart';
 import '../../../Main/Adminmain.dart';
+
+class Fetchcolladropdowrapper extends StatefulWidget {
+  const Fetchcolladropdowrapper({super.key});
+
+  @override
+  State<Fetchcolladropdowrapper> createState() =>
+      _FetchcolladropdowrapperState();
+}
+
+class _FetchcolladropdowrapperState extends State<Fetchcolladropdowrapper> {
+  @override
+  Widget build(BuildContext context) {
+    return BlocProvider<DropdownBloc>(
+      create: (context) => DropdownBloc()..add(Fetchcatcollagebydropdown()),
+      child: AddUniversity(),
+    );
+  }
+}
 
 class AddUniversity extends StatefulWidget {
   @override
@@ -14,15 +35,13 @@ class AddUniversity extends StatefulWidget {
 
 class _AddUniversityState extends State<AddUniversity> {
   final _formKey = GlobalKey<FormState>(); // Form key for validation
-  String? selectedCountry;
+
   String? selectedDegree;
   String? selectedCourse;
   String? selectedDuration;
   String? selectedEligibility;
   int? selectedRank;
-  DateTime? establishedDate;
-  DateTime? admissionStartDate;
-  DateTime? admissionEndDate;
+
   // education
   String? highestEducation;
   String? highestEducationpercentage;
@@ -34,26 +53,19 @@ class _AddUniversityState extends State<AddUniversity> {
   String? Englishtest;
   String? Englishtestpercentage;
 
-  final TextEditingController establishedDateController =
-  TextEditingController();
-  final TextEditingController admissionStartDateController =
-  TextEditingController();
-  final TextEditingController admissionEndDateController =
-  TextEditingController();
   final TextEditingController DiscriptionController = TextEditingController();
-  final TextEditingController UniversitynameController =
-  TextEditingController();
+
   final TextEditingController Terms_and_conditions = TextEditingController();
   final TextEditingController courseFeeController = TextEditingController();
   final TextEditingController scholarshipFeeController =
-  TextEditingController();
-  final TextEditingController collegenamectrl = TextEditingController();
-  final TextEditingController collegecodectrl = TextEditingController();
+      TextEditingController();
 
   // String university_image = '1';
   bool isImageMissing = false; // Define at the top of your state class
-  String? university_image; // Your image URL variable
 
+  String? Nearbycollage;
+
+  late Collagemodel college;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -61,12 +73,10 @@ class _AddUniversityState extends State<AddUniversity> {
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(20),
         child: Form(
-          // Wrap the form fields in a Form widget
           key: _formKey,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              /// **Header Section**
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -121,7 +131,7 @@ class _AddUniversityState extends State<AddUniversity> {
               SizedBox(height: 20),
               BlocConsumer<UniversityBloc, UniversityState>(
                 listener: (context, state) {
-                  if (state is RefreshUniversity) {
+                  if (state is UniversityaddSuccess) {
                     Navigator.push(context, MaterialPageRoute(
                       builder: (context) {
                         return AdminPage();
@@ -151,69 +161,48 @@ class _AddUniversityState extends State<AddUniversity> {
                         SizedBox(width: 20),
                         InkWell(
                           onTap: () {
-
-                              if (_formKey.currentState!.validate()) {
-                                {
-                                  University_model university =
-                                  University_model(
-                                      UniversityimageURL: university_image??"https://firebasestorage.googleapis.com/v0/b/courseconnectai.firebasestorage.app/o/universitydummy%2F360_F_110530499_pjM3zKDTmbwdsUbduglVzAsl4HGVUzDA.jpg?alt=media&token=631596e2-7e4f-4bf1-ad30-9a2c8193f6ac",
-                                      Country: selectedCountry,
-                                      Admission_enddate:
-                                      admissionEndDateController.text,
-                                      Admission_startdate:
-                                      admissionStartDateController.text,
-                                      Course_offered: selectedCourse,
-                                      Degree_offered: selectedDegree,
-                                      Description:
-                                      DiscriptionController.text,
-                                      Duration: selectedDuration,
-                                      Eligibility_criteria:
-                                      selectedEligibility,
-                                      Established_date:
-                                      establishedDateController.text,
-                                      Schoolarship_details:
-                                      scholarshipFeeController.text,
-                                      Terms_and_conditions:
-                                      Terms_and_conditions.text,
-                                      Tuition_fees:
-                                      courseFeeController.text,
-                                      Universityname:
-                                      UniversitynameController.text,
-                                      Rank: selectedRank,
-                                      highestEducationpercentage:
-                                      highestEducationpercentage,
-                                      highestEducation: highestEducation,
-                                      Englishtestpercentage:
-                                      Englishtestpercentage,
-                                      Englishtest: Englishtest,
-                                      AcadamicTestPercentage:
-                                      AcadamicTestPercentage,
-                                      AcadamicTest: AcadamicTest,
-                                      Collegename: collegenamectrl.text,
-                                      collagecode: collegecodectrl.text);
-                                  context.read<UniversityBloc>().add(
-                                      University_Add_Event(
-                                          University: university));
-                                }
+                            if (_formKey.currentState!.validate()) {
+                              {
+                                University_model university = University_model(
+                                    UniversityimageURL: college
+                                            .UniversityimageURL ??
+                                        "https://firebasestorage.googleapis.com/v0/b/courseconnectai.firebasestorage.app/o/universitydummy%2F360_F_110530499_pjM3zKDTmbwdsUbduglVzAsl4HGVUzDA.jpg?alt=media&token=631596e2-7e4f-4bf1-ad30-9a2c8193f6ac",
+                                    Country: college.Country,
+                                    Admission_enddate:
+                                        college.Admission_enddate,
+                                    Admission_startdate:
+                                        college.Admission_startdate,
+                                    Course_offered: selectedCourse,
+                                    Degree_offered: selectedDegree,
+                                    Description: DiscriptionController.text,
+                                    Duration: selectedDuration,
+                                    Eligibility_criteria: selectedEligibility,
+                                    Established_date: college.Established_date,
+                                    Schoolarship_details:
+                                        scholarshipFeeController.text,
+                                    Terms_and_conditions:
+                                        Terms_and_conditions.text,
+                                    Tuition_fees: courseFeeController.text,
+                                    Universityname: college.Universityname,
+                                    Rank: selectedRank,
+                                    highestEducationpercentage:
+                                        highestEducationpercentage,
+                                    highestEducation: highestEducation,
+                                    Englishtestpercentage:
+                                        Englishtestpercentage,
+                                    Englishtest: Englishtest,
+                                    AcadamicTestPercentage:
+                                        AcadamicTestPercentage,
+                                    AcadamicTest: AcadamicTest,
+                                    Collegename: college.Collegename,
+                                    collagecode: college.collagecode);
+                                context.read<UniversityBloc>().add(
+                                    University_Add_Event(
+                                        University: university));
                               }
+                            }
 
-                                 if (university_image == null || university_image!.isEmpty) {
-                                  setState(() {
-                                    isImageMissing = true;
-                                  });
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                    SnackBar(
-                                      content: Text("Please upload a university image."),
-                                      backgroundColor: Colors.red,
-                                    ),
-                                  );
-                                  return; // Prevent form submission
-                                }
-
-                                // Proceed with the rest of the form submission
-
-
-
+                            // Proceed with the rest of the form submission
                           },
                           borderRadius: BorderRadius.circular(
                               8), // Smooth border effect on tap
@@ -223,17 +212,17 @@ class _AddUniversityState extends State<AddUniversity> {
                             decoration: BoxDecoration(
                               color: Colors.blue, // Blue background
                               borderRadius:
-                              BorderRadius.circular(8), // Rounded corners
+                                  BorderRadius.circular(8), // Rounded corners
                             ),
-                            child: state is UniversityaddSuccess
+                            child: state is UniversityLoading
                                 ? Loading_Widget()
                                 : Text(
-                              "+Add",
-                              style: TextStyle(
-                                  fontSize: 18,
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.bold),
-                            ),
+                                    "+Add",
+                                    style: TextStyle(
+                                        fontSize: 18,
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.bold),
+                                  ),
                           ),
                         ),
                       ],
@@ -247,272 +236,130 @@ class _AddUniversityState extends State<AddUniversity> {
               Divider(thickness: 2, color: Colors.grey),
 
               SizedBox(height: 20),
-              Row(
-                children: [
-                  // University Name Field
-                  Expanded(
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 25),
-                      child: TextFormField(
-                        controller: UniversitynameController,
-                        maxLines: 1,
-                        decoration: InputDecoration(
-                          labelText: "University Name",
-                          border: OutlineInputBorder(),
-                        ),
-                        onChanged: (value) {
-                          final formatted = value
-                              .split(' ')
-                              .map((word) => word.isNotEmpty
-                              ? '${word[0].toUpperCase()}${word.substring(1).toLowerCase()}'
-                              : '')
-                              .join(' ');
-
-                          if (value != formatted) {
-                            UniversitynameController.value = UniversitynameController.value.copyWith(
-                              text: formatted,
-                              selection: TextSelection.collapsed(offset: formatted.length),
-                            );
-                          }
-                        },
-                        validator: (value) {
-                          if (value == null || value.trim().isEmpty) {
-                            return 'University Name is required';
-                          }
-                          return null;
-                        },
-                      ),
-                    ),
-                  ),
-
-                  // University Image Upload Section
-                  Expanded(
-                    child: Padding(
-                      padding: const EdgeInsets.only(right: 25, top: 8, bottom: 8),
-                      child: BlocConsumer<UniversityBloc, UniversityState>(
-                        listener: (context, state) {
-                          if (state is Imageuploadedurl) {
-                            university_image = state.Imageurl;
-                            isImageMissing = false;
-                            print("University image: $university_image");
-                          }
-                        },
-                        builder: (context, state) {
-                          String? imageUrl;
-
-                          if (state is Imageuploadedurl) {
-                            imageUrl = state.Imageurl;
-                          }
-
-                          return Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Card(
-                                child: Container(
-                                  height: 100,
-                                  width: double.infinity,
-                                  decoration: BoxDecoration(
-                                    border: Border.all(
-                                      color: state is Imageuploadedurl ? Colors.green : Colors.red,
-                                    ),
-                                    color: Colors.white,
-                                  ),
-                                  child: Row(
-                                    children: [
-                                      Padding(
-                                        padding: const EdgeInsets.all(8.0),
-                                        child: ClipRRect(
-                                          borderRadius: BorderRadius.circular(10),
-                                          child: imageUrl != null && imageUrl.isNotEmpty
-                                              ? Image.network(
-                                            imageUrl,
-                                            width: 100,
-                                            height: 100,
-                                            fit: BoxFit.fill,
-                                            errorBuilder: (context, error, stackTrace) {
-                                              return Container(
-                                                width: 100,
-                                                height: 100,
-                                                color: Colors.grey[300],
-                                                child: Icon(
-                                                  Icons.image_not_supported,
-                                                  size: 50,
-                                                  color: Colors.grey[600],
-                                                ),
-                                              );
-                                            },
-                                          )
-                                              : Container(
-                                            width: 100,
-                                            height: 100,
-                                            color: Colors.grey[300],
-                                            child: Icon(
-                                              Icons.image,
-                                              size: 40,
-                                              color: Colors.grey[600],
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                      TextButton(
-                                        onPressed: () {
-                                          context.read<UniversityBloc>().add(UploadUniversityphoto());
-                                        },
-                                        child: state is ImageuploadLoading
-                                            ? CircularProgressIndicator()
-                                            : (state is Imageuploadedurl
-                                            ? Text(
-                                          "Uploaded ✅",
-                                          style: TextStyle(color: Colors.green),
-                                        )
-                                            : Text("Upload Image")),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                              if (isImageMissing)
-                                Padding(
-                                  padding: const EdgeInsets.only(top: 5, left: 8),
-                                  child: Text(
-                                    "University image is required",
-                                    style: TextStyle(color: Colors.red, fontSize: 12),
-                                  ),
-                                ),
-                            ],
-                          );
-                        },
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-
-              Row(
-                children: [
-                  Expanded(
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 25),
-                      child: TextFormField(
-                        controller: collegenamectrl,
-                        maxLines: 1,
-                        decoration: InputDecoration(
-                          labelText: "College Name",
-                          border: OutlineInputBorder(),
-                        ),
-                        onChanged: (value) {
-                          final formatted = value
-                              .split(' ')
-                              .map((word) => word.isNotEmpty
-                              ? '${word[0].toUpperCase()}${word.substring(1).toLowerCase()}'
-                              : '')
-                              .join(' ');
-
-                          if (value != formatted) {
-                            collegenamectrl.value = collegenamectrl.value.copyWith(
-                              text: formatted,
-                              selection: TextSelection.collapsed(offset: formatted.length),
-                            );
-                          }
-                        },
-                        validator: (value) {
-                          if (value == null || value.trim().isEmpty) {
-                            return 'College Name is required';
-                          }
-                          return null;
-                        },
-                      ),
-                    ),
-                  ),
-
-                  Expanded(
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 25),
-                      child: TextFormField(
-                        controller: collegecodectrl,
-                        maxLines: 1,
-                        decoration: InputDecoration(
-                          labelText: "College Code",
-                          border: OutlineInputBorder(),
-                        ),
-                        onChanged: (value) {
-                          final upper = value.toUpperCase();
-                          if (value != upper) {
-                            collegecodectrl.value = collegecodectrl.value.copyWith(
-                              text: upper,
-                              selection: TextSelection.collapsed(offset: upper.length),
-                            );
-                          }
-                        },
-                        validator: (value) {
-                          if (value == null || value.trim().isEmpty) {
-                            return 'College Code is required';
-                          }
-                          return null;
-                        },
-                      ),
-                    ),
-                  ),
-
-                ],
-              ),
-
-              /// **Admission Type (Radio Buttons)**
-
-              Row(
-                children: [
-                  Expanded(
-                    child: buildDropdown(
-                        "Country",
-                        [
-                          "United States",
-                          "United Kingdom",
-                          "Canada",
-                          "India",
-                        ],
-                        selectedCountry, (value) {
-                      setState(() => selectedCountry = value);
-                    }, required: true),
-                  ),
-                  SizedBox(width: 10),
-                  Expanded(
-                    child: buildDatePicker("Established Date", establishedDate,
-                            (date) {
-                          setState(() {
-                            establishedDate = date;
-                            establishedDateController.text = "${date?.toLocal()}"
-                                .split(' ')[0]; // Format the date
-                          });
-                        }, required: true),
-                  ),
-                ],
-              ),
 
               // Admission Start & End Date in the Same Row
-              Row(
-                children: [
-                  Expanded(
-                    child: buildDatePicker(
-                        "Admission Start Date", admissionStartDate, (date) {
-                      setState(() {
-                        admissionStartDate = date;
-                        admissionStartDateController.text = "${date?.toLocal()}"
-                            .split(' ')[0]; // Format the date
-                      });
-                    }, required: true),
+              Padding(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 25, vertical: 8),
+                child: BlocProvider<DropdownBloc>(
+                  create: (context) =>
+                      DropdownBloc()..add(Fetchcatcollagebydropdown()),
+                  child: BlocConsumer<DropdownBloc, DropdownState>(
+                    listener: (context, state) {
+                      if (state is Fetchcatcollagebydropdown) {}
+                    },
+                    builder: (context, state) {
+                      if (state is fetchcollagedropdownloading) {
+                        return Loading_Widget();
+                      } else if (state is CollageLoadedDOMAIN) {
+                        return Container(
+                          padding:
+                              EdgeInsets.symmetric(horizontal: 10, vertical: 2),
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            border: Border.all(
+                                color: Nearbycollage == null
+                                    ? Colors.grey
+                                    : Colors.grey,
+                                width: 1.5),
+                            borderRadius: BorderRadius.circular(5),
+                          ),
+                          child: DropdownButtonHideUnderline(
+                            child: DropdownButton<String>(
+                              hint: Text("Select College"),
+                              value: Nearbycollage,
+                              isExpanded: true,
+                              items: state.catogory.map((domain) {
+                                return DropdownMenuItem<String>(
+                                  value: domain,
+                                  child: Text(domain),
+                                );
+                              }).toList(),
+                              onChanged: (newValue) {
+                                setState(() {
+                                  Nearbycollage = newValue;
+
+                                  context.read<CollagedropdownBloc>().add(
+                                      FetchCollegeDetailsByName(newValue!));
+                                });
+                              },
+                            ),
+                          ),
+                        );
+                      } else if (state is FetchcatogotyError) {
+                        return Text('Error: ${state.msg}');
+                      } else {
+                        return SizedBox();
+                      }
+                    },
                   ),
-                  SizedBox(width: 10),
-                  Expanded(
-                    child: buildDatePicker(
-                        "Admission End Date", admissionEndDate, (date) {
-                      setState(() {
-                        admissionEndDate = date;
-                        admissionEndDateController.text = "${date?.toLocal()}"
-                            .split(' ')[0]; // Format the date
-                      });
-                    }, required: true),
-                  ),
-                ],
+                ),
+              ),
+
+              Padding(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 25, vertical: 8),
+                child: BlocConsumer<CollagedropdownBloc, CollagedropdownState>(
+                  listener: (context, state) {},
+                  builder: (context, state) {
+                    if (state is fetchcollagedropdownloading) {
+                      return Loading_Widget();
+                    }
+                    if (state is CollageFullDataLoaded) {
+                      college = state.college;
+                      return Row(
+                        children: [
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text("College Name: ${college.Collegename}"),
+                              Text("University: ${college.Universityname}"),
+                              Text("Rank: ${college.Rank}"),
+                              Text("Country: ${college.Country}"),
+                              Text("Established: ${college.Established_date}"),
+                              Text(
+                                  "Admission Start: ${college.Admission_startdate}"),
+                              Text(
+                                  "Admission End: ${college.Admission_enddate}"),
+                            ],
+                          ),
+                          SizedBox(
+                            width: 100,
+                          ),
+                          if (college.UniversityimageURL != null)
+                            Image.network(
+                              college.UniversityimageURL!,
+                              width: 300,
+                              height: 200,
+                              fit: BoxFit.fill,
+                              loadingBuilder:
+                                  (context, child, loadingProgress) {
+                                if (loadingProgress == null) return child;
+                                return Center(
+                                  child: CircularProgressIndicator(
+                                    value: loadingProgress.expectedTotalBytes !=
+                                            null
+                                        ? loadingProgress
+                                                .cumulativeBytesLoaded /
+                                            loadingProgress.expectedTotalBytes!
+                                        : null,
+                                  ),
+                                );
+                              },
+                              errorBuilder: (context, error, stackTrace) {
+                                return const Icon(Icons.broken_image,
+                                    size: 100, color: Colors.grey);
+                              },
+                            ),
+                        ],
+                      );
+                    } else if (state is FetchcatogotyError) {
+                      return Text('Error: ${state}');
+                    } else {
+                      return SizedBox();
+                    }
+                  },
+                ),
               ),
 
               Padding(
@@ -526,8 +373,8 @@ class _AddUniversityState extends State<AddUniversity> {
               // Dropdown for Degree Type
               buildDropdown("Degree Type", ["Bachelors", "Masters", "MBA"],
                   selectedDegree, (value) {
-                    setState(() => selectedDegree = value);
-                  }, required: true),
+                setState(() => selectedDegree = value);
+              }, required: true),
 
               // Dropdown for Bachelor's Courses
               if (selectedDegree == "Bachelors")
@@ -599,16 +446,16 @@ class _AddUniversityState extends State<AddUniversity> {
                         print(AcadamicTest);
                       });
                     }),
-                    if(AcadamicTest != "Not Required")
-                    buildDropdown(
-                        "AcademicTestPercentage minimum",
-                        ["50", "60", "70", "80", "90", "100"],
-                        AcadamicTestPercentage, (value) {
-                      setState(() {
-                        AcadamicTestPercentage = value;
-                        print(AcadamicTestPercentage);
-                      });
-                    }),
+                    if (AcadamicTest != "Not Required")
+                      buildDropdown(
+                          "AcademicTestPercentage minimum",
+                          ["50", "60", "70", "80", "90", "100"],
+                          AcadamicTestPercentage, (value) {
+                        setState(() {
+                          AcadamicTestPercentage = value;
+                          print(AcadamicTestPercentage);
+                        });
+                      }),
                   ],
                 ),
 
@@ -675,7 +522,6 @@ class _AddUniversityState extends State<AddUniversity> {
                         print(highestEducationpercentage);
                       });
                     }),
-
                     buildDropdown(
                       "Academic Test",
                       [
@@ -688,27 +534,25 @@ class _AddUniversityState extends State<AddUniversity> {
                         "Not Required" // Removed trailing space here
                       ],
                       AcadamicTest,
-                          (value) {
+                      (value) {
                         setState(() {
                           AcadamicTest = value;
                           print(AcadamicTest);
                         });
                       },
                     ),
-
                     if (AcadamicTest != "Not Required")
                       buildDropdown(
                         "Academic Test Percentage Minimum",
                         ["50", "60", "70", "80", "90", "100"],
                         AcadamicTestPercentage,
-                            (value) {
+                        (value) {
                           setState(() {
                             AcadamicTestPercentage = value;
                             print(AcadamicTestPercentage);
                           });
                         },
                       ),
-
                   ],
                 ),
 
@@ -795,130 +639,95 @@ class _AddUniversityState extends State<AddUniversity> {
                         "Academic Test Percentage Minimum",
                         ["50", "60", "70", "80", "90", "100"],
                         AcadamicTestPercentage,
-                            (value) {
+                        (value) {
                           setState(() {
                             AcadamicTestPercentage = value;
                             print(AcadamicTestPercentage);
                           });
                         },
                       ),
-
-
                   ],
                 ),
-
 
               // Dropdown for Course Duration
               // Padding(
               //   padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 15),
               //   child:
 
-    Column(
-                  children: [
-                    // First Row (Course Duration and QS Rank)
-                    Row(
-                      children: [
-                        // First Dropdown (Course Duration)
-                        Expanded(
-                          child: buildDropdown(
-                            "Course Duration",
-                            ["1 Year", "2 Years", "3 Years","4 Years","5 Years"],
-                            selectedDuration,
-                                (value) {
-                              setState(() => selectedDuration = value);
-                            },
-                            required: true,
-                          ),
+              Column(
+                children: [
+                  // First Row (Course Duration and QS Rank)
+                  Row(
+                    children: [
+                      // First Dropdown (Course Duration)
+                      Expanded(
+                        child: buildDropdown(
+                          "Course Duration",
+                          [
+                            "1 Year",
+                            "2 Years",
+                            "3 Years",
+                            "4 Years",
+                            "5 Years"
+                          ],
+                          selectedDuration,
+                          (value) {
+                            setState(() => selectedDuration = value);
+                          },
+                          required: true,
                         ),
-                        const SizedBox(width: 15), // Same width as the second row's space
+                      ),
+                      const SizedBox(
+                          width: 15), // Same width as the second row's space
 
-                        // Second Field (QS Rank)
+                      // Second Field (QS Rank)
+                    ],
+                  ),
 
-    Expanded(
-    child: Container(
-    height: 60,
-    padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 25),
-    child: TextFormField(
-    decoration: const InputDecoration(
-    labelText: "QS Rank",
-    hintText: "Enter QS Rank (e.g., 42)",
-    border: OutlineInputBorder(),
-    ),
-    keyboardType: TextInputType.number,
-    inputFormatters: [
-    FilteringTextInputFormatter.digitsOnly, // Only allow digits
-    ],
-    initialValue: selectedRank?.toString() ?? '', // Just for displaying initial value
-    validator: (value) {
-    if (value == null || value.trim().isEmpty) {
-    return 'QS Rank is required';
-    }
-    final intValue = int.tryParse(value.trim());
-    if (intValue == null) {
-    return 'Enter a valid integer';
-    }
-    return null;
-    },
-    onChanged: (value) {
-    final intValue = int.tryParse(value.trim());
-    if (intValue != null) {
-    setState(() {
-    selectedRank = intValue; // ✅ Store as integer only
-    });
-    }
-    },
-    ),
-    ),
-    ),
-
-    ],
-                    ),
-
-                    SizedBox(height: 15), // Add a small space between rows
+                  SizedBox(height: 15), // Add a small space between rows
 
 // Second Row (English Test and Required Percentage)
-                    Row(
-                      children: [
-                        // English Test Dropdown
+                  Row(
+                    children: [
+                      // English Test Dropdown
+                      Expanded(
+                        child: buildDropdown(
+                          "English Test",
+                          ["PTE", "IELTS", "TOEFL", "Not Required"],
+                          Englishtest,
+                          (value) {
+                            setState(() {
+                              Englishtest = value;
+                              print(Englishtest);
+                            });
+                          },
+                          required: true,
+                        ),
+                      ),
+                      const SizedBox(
+                          width: 15), // Same width as the first row's space
+
+                      // Show "Required Percentage" only if English Test is not "Not Required"
+                      if (Englishtest != "Not Required")
                         Expanded(
                           child: buildDropdown(
-                            "English Test",
-                            ["PTE", "IELTS", "TOEFL", "Not Required"],
-                            Englishtest,
-                                (value) {
+                            "Required Percentage",
+                            ["50", "60", "70", "80", "90", "100"],
+                            Englishtestpercentage,
+                            (value) {
                               setState(() {
-                                Englishtest = value;
-                                print(Englishtest);
+                                Englishtestpercentage = value;
+                                print(Englishtestpercentage);
                               });
                             },
                             required: true,
                           ),
                         ),
-                        const SizedBox(width: 15), // Same width as the first row's space
-
-                        // Show "Required Percentage" only if English Test is not "Not Required"
-                        if (Englishtest != "Not Required")
-                          Expanded(
-                            child: buildDropdown(
-                              "Required Percentage",
-                              ["50", "60", "70", "80", "90", "100"],
-                              Englishtestpercentage,
-                                  (value) {
-                                setState(() {
-                                  Englishtestpercentage = value;
-                                  print(Englishtestpercentage);
-                                });
-                              },
-                              required: true,
-                            ),
-                          ),
-                      ],
-                    ),
-
-                  ],
-                ),
+                    ],
+                  ),
+                ],
+              ),
               // ),
-
 
               // Row(
               //   children: [
@@ -951,7 +760,7 @@ class _AddUniversityState extends State<AddUniversity> {
               SizedBox(height: 10),
               Padding(
                 padding:
-                const EdgeInsets.symmetric(vertical: 8, horizontal: 25),
+                    const EdgeInsets.symmetric(vertical: 8, horizontal: 25),
                 child: TextFormField(
                   controller: DiscriptionController,
                   maxLines: 3,
@@ -965,7 +774,7 @@ class _AddUniversityState extends State<AddUniversity> {
 
               Padding(
                 padding:
-                const EdgeInsets.symmetric(vertical: 8, horizontal: 25),
+                    const EdgeInsets.symmetric(vertical: 8, horizontal: 25),
                 child: TextFormField(
                   controller: Terms_and_conditions,
                   maxLines: 3,
@@ -979,7 +788,7 @@ class _AddUniversityState extends State<AddUniversity> {
               ),
               Padding(
                 padding:
-                const EdgeInsets.symmetric(vertical: 8, horizontal: 25),
+                    const EdgeInsets.symmetric(vertical: 8, horizontal: 25),
                 child: Row(
                   children: [
                     Expanded(
@@ -1042,40 +851,7 @@ class _AddUniversityState extends State<AddUniversity> {
           );
         }).toList(),
         validator: (value) =>
-        required && value == null ? '$label is required' : null,
-      ),
-    );
-  }
-
-  Widget buildDatePicker(
-      String label, DateTime? selectedDate, ValueChanged<DateTime?> onChanged,
-      {bool required = false}) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 8),
-      child: TextFormField(
-        controller: selectedDate == establishedDate
-            ? establishedDateController
-            : selectedDate == admissionStartDate
-            ? admissionStartDateController
-            : admissionEndDateController,
-        decoration: InputDecoration(
-          labelText: label,
-          border: OutlineInputBorder(),
-        ),
-        readOnly: true,
-        onTap: () async {
-          DateTime? pickedDate = await showDatePicker(
-            context: context,
-            initialDate: DateTime.now(),
-            firstDate: DateTime(1900),
-            lastDate: DateTime(2100),
-          );
-          if (pickedDate != null) {
-            onChanged(pickedDate);
-          }
-        },
-        validator: (value) =>
-        required && selectedDate == null ? '$label is required' : null,
+            required && value == null ? '$label is required' : null,
       ),
     );
   }
@@ -1083,15 +859,15 @@ class _AddUniversityState extends State<AddUniversity> {
   /// **Reusable Text Field Widget**
   Widget buildTextField(String label,
       {int maxLines = 1,
-        TextInputType keyboardType = TextInputType.text,
-        bool required = false}) {
+      TextInputType keyboardType = TextInputType.text,
+      bool required = false}) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 25),
       child: TextFormField(
         maxLines: maxLines,
         keyboardType: keyboardType,
         decoration:
-        InputDecoration(labelText: label, border: OutlineInputBorder()),
+            InputDecoration(labelText: label, border: OutlineInputBorder()),
         validator: (value) => required && (value == null || value.isEmpty)
             ? '$label is required'
             : null,

@@ -44,10 +44,13 @@ class CourseFinderScreen extends StatelessWidget {
                   ),
                   Row(
                     children: [
-                      CircleAvatar(backgroundColor: Color(0xffD9D9D9), child: Icon(Icons.notification_add)),
+                      CircleAvatar(
+                          backgroundColor: Color(0xffD9D9D9),
+                          child: Icon(Icons.notification_add)),
                       SizedBox(width: 10),
                       Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 6),
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 14, vertical: 6),
                         decoration: BoxDecoration(
                           color: Colors.white,
                           borderRadius: BorderRadius.circular(20),
@@ -58,12 +61,14 @@ class CourseFinderScreen extends StatelessWidget {
                             const CircleAvatar(
                               radius: 20, // Ensure a proper radius is set
                               backgroundColor: Colors.grey, // Fallback color
-                              backgroundImage: AssetImage('assets/Profile/img.png'), // Corrected Path
+                              backgroundImage: AssetImage(
+                                  'assets/Profile/img.png'), // Corrected Path
                             ),
                             const SizedBox(width: 10),
                             const Text(
                               "Admin",
-                              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                              style: TextStyle(
+                                  fontSize: 16, fontWeight: FontWeight.bold),
                             ),
                           ],
                         ),
@@ -82,30 +87,36 @@ class CourseFinderScreen extends StatelessWidget {
                   children: [
                     Text(
                       "AI Course Management",
-                      style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                      style:
+                          TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
                     ),
                     SizedBox(width: 20),
                     InkWell(
                       onTap: () {
                         // Add action here
                       },
-                      borderRadius: BorderRadius.circular(8), // Smooth border effect on tap
+                      borderRadius: BorderRadius.circular(
+                          8), // Smooth border effect on tap
                       child: Container(
-                        padding: EdgeInsets.symmetric(vertical: 8, horizontal: 36),
+                        padding:
+                            EdgeInsets.symmetric(vertical: 8, horizontal: 36),
                         decoration: BoxDecoration(
                           color: Colors.blue, // Blue background
-                          borderRadius: BorderRadius.circular(8), // Rounded corners
+                          borderRadius:
+                              BorderRadius.circular(8), // Rounded corners
                         ),
                         child: Text(
                           "+Add",
-                          style: TextStyle(fontSize: 18, color: Colors.white, fontWeight: FontWeight.bold),
+                          style: TextStyle(
+                              fontSize: 18,
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold),
                         ),
                       ),
                     ),
                   ],
                 ),
               ),
-
 
               SizedBox(height: 20),
 
@@ -154,7 +165,12 @@ class CourseFinderScreen extends StatelessWidget {
 // **Data for Dropdowns**
 List<String> countryList = ["USA", "Canada", "UK", "Germany"];
 List<String> courseList = ["Computer Science", "Business", "Engineering"];
-List<String> experienceList = ["No Experience", "1-2 Years", "3-5 Years", "5+ Years"];
+List<String> experienceList = [
+  "No Experience",
+  "1-2 Years",
+  "3-5 Years",
+  "5+ Years"
+];
 
 List<String> educationLevels = ["High School", "Bachelor’s", "Master’s"];
 List<String> boards = ["CBSE", "ICSE", "State Board", "IB"];
@@ -164,11 +180,10 @@ List<String> englishTests = ["IELTS", "TOEFL", "PTE"];
 List<String> scores = ["Below 5.5", "5.5 - 6.5", "6.5 - 7.5", "7.5+"];
 
 List<String> companyTypes = ["Startup", "MNC", "Government", "Freelancer"];
-List<String>orgnizationTypes  = ["YES", "NO"];
+List<String> orgnizationTypes = ["YES", "NO"];
 
 List<String> durations = ["6 months", "1 year", "2 years", "More than 2 years"];
 List<String> Research_paper = ["YES", "NO"];
-
 
 // **Page 1: Bachelors**
 class CourseAdding1 extends StatelessWidget {
@@ -188,8 +203,9 @@ class CourseAdding1 extends StatelessWidget {
           DropdownField(label: "Score", options: scores),
           DropdownField(label: "Academic Test", options: englishTests),
           DropdownField(label: "Score", options: scores),
-          DropdownField(label: "Extracurricular activities", options: companyTypes),
-          DropdownField(label: "Organization",options:orgnizationTypes),
+          DropdownField(
+              label: "Extracurricular activities", options: companyTypes),
+          DropdownField(label: "Organization", options: orgnizationTypes),
           DropdownField(label: "Choose Duration", options: durations),
         ],
       ),
@@ -215,7 +231,6 @@ class CourseAdding2 extends StatelessWidget {
           DropdownField(label: "Academic Test", options: englishTests),
           DropdownField(label: "Score", options: scores),
           DropdownField(label: "Research Paper", options: Research_paper),
-
         ],
       ),
     );
@@ -241,8 +256,9 @@ class CourseAdding3 extends StatelessWidget {
           DropdownField(label: "Academic Test", options: englishTests),
           DropdownField(label: "Score", options: scores),
           DropdownField(label: "Company Type", options: companyTypes),
-          DropdownField(label: "Organization",options:orgnizationTypes),
-          DropdownField(label: "Choose Duration", options: durations),],
+          DropdownField(label: "Organization", options: orgnizationTypes),
+          DropdownField(label: "Choose Duration", options: durations),
+        ],
       ),
     );
   }
@@ -280,7 +296,6 @@ class _DropdownFieldState extends State<DropdownField> {
             ),
           ),
           SizedBox(width: 10),
-
           Expanded(
             child: Container(
               padding: EdgeInsets.symmetric(horizontal: 10),
@@ -310,6 +325,3 @@ class _DropdownFieldState extends State<DropdownField> {
     );
   }
 }
-
-
-
