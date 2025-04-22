@@ -414,25 +414,25 @@ class UniversityBloc extends Bloc<UniversityEvent, UniversityState> {
       }
     });
 
-    on<MasterFetchUniversitys>((event, emit) async {
-      emit(MAsterUniversityLoading());
-      try {
-        final snapshot = await FirebaseFirestore.instance
-            .collection("University_Master")
-            .get();
-
-        final universities = snapshot.docs.map((doc) {
-          return MAsteruniversitymodel(
-            id: doc.id,
-            name: doc['University'].toString(),
-          );
-        }).toList();
-
-        emit(MasterUniversityLoaded(universityList: universities));
-      } catch (e) {
-        emit(Mastererror(error: e.toString()));
-      }
-    });
+    // on<MasterFetchUniversitys>((event, emit) async {
+    //   emit(MAsterUniversityLoading());
+    //   try {
+    //     final snapshot = await FirebaseFirestore.instance
+    //         .collection("University_Master")
+    //         .get();
+    //
+    //     final universities = snapshot.docs.map((doc) {
+    //       return MAsteruniversitymodel(
+    //         id: doc.id,
+    //         name: doc['University'].toString(),
+    //       );
+    //     }).toList();
+    //
+    //     emit(MasterUniversityLoaded(universityList: universities));
+    //   } catch (e) {
+    //     emit(Mastererror(error: e.toString()));
+    //   }
+    // });
   }
 }
 

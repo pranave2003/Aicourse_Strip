@@ -1,4 +1,3 @@
-
 import 'package:course_connect/Admin/View/Screens/University/AddUniversity.dart';
 import 'package:course_connect/Admin/View/Screens/University/OverallPage1.dart';
 import 'package:course_connect/Admin/View/Screens/University/Universitymain.dart';
@@ -6,7 +5,7 @@ import 'package:course_connect/Widget/Constands/colors.dart';
 import 'package:flutter/material.dart';
 
 class Alertbox extends StatefulWidget {
-  const Alertbox({super.key, required this.id });
+  const Alertbox({super.key, required this.id});
   final id;
 
   @override
@@ -21,7 +20,8 @@ class _AlertboxState extends State<Alertbox> {
       content: SizedBox(
         width: 1600,
         height: 1000,
-        child: AdminInfoWrapper(universityid: widget.id), // Ensure this widget fits properly
+        child: AdminInfoWrapper(
+            universityid: widget.id), // Ensure this widget fits properly
       ),
       actions: [
         TextButton(
