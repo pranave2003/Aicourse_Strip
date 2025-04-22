@@ -146,7 +146,7 @@ class _AdminPageState extends State<AdminPage> {
                     _buildSubListTile("View Courses", Universitymainwrapper()),
                     _buildSubListTile("Add Courses", Fetchcolladropdowrapper()),
                     _buildSubListTile("Add Collage", Addcollage()),
-                    _buildSubListTile("Add University", Adduniversitywrapper()),
+                    _buildSubListTile("Add University's", Adduniversitywrapper()),
                     // _buildSubListTile("Edit Courses", EditUniversity(universityname: '', universityid: '', Collegename: '', Collegecode: '',  highestEducationpercentage: '', establishedDate: '', admissionEndDate: '', Admission_startdate: '', Terms_and_conditions: '', scholarshipFee: '', courseFee: '', Discription: '', AcadamicTest: '', AcadamicTestPercentage: '', highestEducation: '', Englishtest: '', Englishtestpercentage: '', )),
                   ],
                 ),
