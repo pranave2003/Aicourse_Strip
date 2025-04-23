@@ -29,8 +29,6 @@ class _AddcollageState extends State<Addcollage> {
       TextEditingController();
   final TextEditingController admissionEndDateController =
       TextEditingController();
-  final TextEditingController UniversitynameController =
-      TextEditingController();
   final TextEditingController collegenamectrl = TextEditingController();
   final TextEditingController collegecodectrl = TextEditingController();
 
@@ -147,8 +145,7 @@ class _AddcollageState extends State<Addcollage> {
                                         admissionStartDateController.text,
                                     Established_date:
                                         establishedDateController.text,
-                                    Universityname:
-                                        UniversitynameController.text,
+                                    Universityname: NearbyUniversity,
                                     Rank: selectedRank,
                                     Collegename: collegenamectrl.text,
                                     collagecode: collegecodectrl.text);
