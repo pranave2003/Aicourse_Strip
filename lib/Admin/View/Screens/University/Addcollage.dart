@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import '../../../../Controller/Bloc/Dropdown_university/dropdown_bloc.dart';
 import '../../../../Controller/Bloc/University_block/University_model/Universitycollage.dart';
 import '../../../../Controller/Bloc/University_block/university_bloc.dart';
 import '../../../../Widget/Constands/Loading.dart';
@@ -36,6 +37,7 @@ class _AddcollageState extends State<Addcollage> {
   // String university_image = '1';
   bool isImageMissing = false; // Define at the top of your state class
   String? university_image; // Your image URL variable
+  String? NearbyUniversity;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -126,7 +128,7 @@ class _AddcollageState extends State<Addcollage> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          "University Adding Page",
+                          "Collage Adding Page",
                           style: TextStyle(
                               fontSize: 24, fontWeight: FontWeight.bold),
                         ),
@@ -204,43 +206,66 @@ class _AddcollageState extends State<Addcollage> {
               Divider(thickness: 2, color: Colors.grey),
 
               SizedBox(height: 20),
+
               Row(
                 children: [
                   // University Name Field
                   Expanded(
                     child: Padding(
                       padding: const EdgeInsets.symmetric(
-                          vertical: 8, horizontal: 25),
-                      child: TextFormField(
-                        controller: UniversitynameController,
-                        maxLines: 1,
-                        decoration: InputDecoration(
-                          labelText: "University Name",
-                          border: OutlineInputBorder(),
-                        ),
-                        onChanged: (value) {
-                          final formatted = value
-                              .split(' ')
-                              .map((word) => word.isNotEmpty
-                                  ? '${word[0].toUpperCase()}${word.substring(1).toLowerCase()}'
-                                  : '')
-                              .join(' ');
+                          horizontal: 25, vertical: 8),
+                      child: BlocProvider<DropdownBloc>(
+                        create: (context) => DropdownBloc()
+                          ..add(FetchchUniversitynamebydropdown()),
+                        child: BlocConsumer<DropdownBloc, DropdownState>(
+                          listener: (context, state) {
+                            if (state is Fetchcatcollagebydropdown) {}
+                          },
+                          builder: (context, state) {
+                            if (state is fetchcollagedropdownloading) {
+                              return Loading_Widget();
+                            } else if (state is UniversitymasterLoadedDOMAIN) {
+                              return Container(
+                                padding: EdgeInsets.symmetric(
+                                    horizontal: 10, vertical: 2),
+                                decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  border: Border.all(
+                                      color: NearbyUniversity == null
+                                          ? Colors.grey
+                                          : Colors.grey,
+                                      width: 1.5),
+                                  borderRadius: BorderRadius.circular(5),
+                                ),
+                                child: DropdownButtonHideUnderline(
+                                  child: DropdownButton<String>(
+                                    hint: Text("Select University"),
+                                    value: NearbyUniversity,
+                                    isExpanded: true,
+                                    items: state.universitymaster.map((domain) {
+                                      return DropdownMenuItem<String>(
+                                        value: domain,
+                                        child: Text(domain),
+                                      );
+                                    }).toList(),
+                                    onChanged: (newValue) {
+                                      setState(() {
+                                        NearbyUniversity = newValue;
 
-                          if (value != formatted) {
-                            UniversitynameController.value =
-                                UniversitynameController.value.copyWith(
-                              text: formatted,
-                              selection: TextSelection.collapsed(
-                                  offset: formatted.length),
-                            );
-                          }
-                        },
-                        validator: (value) {
-                          if (value == null || value.trim().isEmpty) {
-                            return 'University Name is required';
-                          }
-                          return null;
-                        },
+                                        // context.read<CollagedropdownBloc>().add(
+                                        //     FetchCollegeDetailsByName(newValue!));
+                                      });
+                                    },
+                                  ),
+                                ),
+                              );
+                            } else if (state is FetchcatogotyError) {
+                              return Text('Error: ${state.msg}');
+                            } else {
+                              return SizedBox();
+                            }
+                          },
+                        ),
                       ),
                     ),
                   ),

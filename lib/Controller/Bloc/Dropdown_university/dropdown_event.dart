@@ -13,4 +13,6 @@ class Fetchcatogorybydropdown extends DropdownEvent {
 
 class Fetchcatcollagebydropdown extends DropdownEvent {}
 
+class FetchchUniversitynamebydropdown extends DropdownEvent {}
+
 

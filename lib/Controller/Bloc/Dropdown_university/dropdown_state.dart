@@ -20,6 +20,10 @@ class CollageLoadedDOMAIN extends DropdownState {
   final List<String> catogory;
   CollageLoadedDOMAIN(this.catogory);
 }
+class UniversitymasterLoadedDOMAIN extends DropdownState {
+  final List<String> universitymaster;
+  UniversitymasterLoadedDOMAIN(this.universitymaster);
+}
 
 // class CollageFullDataLoaded extends DropdownState {
 //   final Collagemodel college;

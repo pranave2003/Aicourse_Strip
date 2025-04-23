@@ -64,5 +64,33 @@ class DropdownBloc extends Bloc<DropdownEvent, DropdownState> {
         }
       }
     });
+
+    on<FetchchUniversitynamebydropdown>((event, emit) async {
+      try {
+        emit(
+            fetchcollagedropdownloading()); // Emit loading state before fetching data
+
+        await for (var snapshot in FirebaseFirestore.instance
+            .collection('University_Master')
+            // .where("service", isEqualTo: event.service)
+            .snapshots()) {
+          // Use a Set to avoid duplicate categories
+          Set<String> domainSet =
+              snapshot.docs.map((doc) => doc['University'] as String).toSet();
+
+          List<String> uniqueDomain = domainSet.toList();
+
+          print("Unique universityname: $uniqueDomain");
+
+          if (!emit.isDone) {
+            emit(UniversitymasterLoadedDOMAIN(uniqueDomain));
+          }
+        }
+      } catch (e) {
+        if (!emit.isDone) {
+          emit(FetchcatogotyError(e.toString()));
+        }
+      }
+    });
   }
 }

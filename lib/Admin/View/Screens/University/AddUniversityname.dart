@@ -114,7 +114,11 @@ class _AdduniversitynameState extends State<Adduniversityname> {
                             leading: Text('1'),
                             title: Text(state.universityList[index].name),
                             trailing: IconButton(
-                                onPressed: () {},
+                                onPressed: () {
+                                  context.read<UniversityBloc>().add(
+                                      deleteMasteruniversity(
+                                          id: state.universityList[index].id));
+                                },
                                 icon: Icon(
                                   Icons.delete,
                                   color: Colors.red,
