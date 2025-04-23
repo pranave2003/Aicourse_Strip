@@ -1,5 +1,4 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:course_connect/Admin/View/Screens/Courses/Addcourses.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../Controller/Bloc/University_block/university_bloc.dart';
@@ -7,7 +6,7 @@ import '../../../Widget/Constands/Loading.dart';
 import 'Course.dart';
 
 class Collages_Wrapper extends StatelessWidget {
-  const Collages_Wrapper({super.key, this.university,this.Universityname});
+  const Collages_Wrapper({super.key, this.university, this.Universityname});
   final university;
   final Universityname;
   @override
@@ -40,16 +39,15 @@ class _CollegesState extends State<Colleges> {
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
           onPressed: () => Navigator.pop(context),
-
         ),
-    title: Text(
-    "Colleges",
-    style: TextStyle(
-    color: Colors.black,
-    fontSize: 32,
-    fontWeight: FontWeight.bold,
-    ),
-      ),
+        title: Text(
+          "Colleges",
+          style: TextStyle(
+            color: Colors.black,
+            fontSize: 32,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
       ),
       body: Padding(
         padding: const EdgeInsets.all(10),

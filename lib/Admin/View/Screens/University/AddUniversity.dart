@@ -40,7 +40,6 @@ class _AddUniversityState extends State<AddUniversity> {
   String? selectedCourse;
   String? selectedDuration;
   String? selectedEligibility;
-  int? selectedRank;
 
   // education
   String? highestEducation;
@@ -184,7 +183,7 @@ class _AddUniversityState extends State<AddUniversity> {
                                         Terms_and_conditions.text,
                                     Tuition_fees: courseFeeController.text,
                                     Universityname: college.Universityname,
-                                    Rank: selectedRank,
+                                    Rank: college.Rank,
                                     highestEducationpercentage:
                                         highestEducationpercentage,
                                     highestEducation: highestEducation,
