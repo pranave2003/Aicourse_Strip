@@ -1,12 +1,12 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../../Controller/Bloc/University_block/university_bloc.dart';
-import '../../../Widget/Constands/Loading.dart';
-import '../../Ai_course_finder/UniversityInfoScreen.dart';
 
-class Coursewrapper extends StatelessWidget {
-  const Coursewrapper({super.key, this.university, this.collage});
+import '../../../../../Controller/Bloc/University_block/university_bloc.dart';
+import '../../../../../Widget/Constands/Loading.dart';
+
+class Admin_Coursewrapper extends StatelessWidget {
+  const Admin_Coursewrapper({super.key, this.university, this.collage});
   final university;
   final collage;
   @override
@@ -15,7 +15,7 @@ class Coursewrapper extends StatelessWidget {
       create: (context) => UniversityBloc()
         ..add(Fetchcourse_colleges(
             University: university, searchQuery: null, college: collage)),
-      child: Course(
+      child: Admin_Course(
         collagename: collage,
         university: university,
       ),
@@ -23,15 +23,15 @@ class Coursewrapper extends StatelessWidget {
   }
 }
 
-class Course extends StatefulWidget {
-  const Course({super.key, this.collagename, this.university});
+class Admin_Course extends StatefulWidget {
+  const Admin_Course({super.key, this.collagename, this.university});
   final collagename;
   final university;
   @override
-  State<Course> createState() => _CourseState();
+  State<Admin_Course> createState() => _Admin_CourseState();
 }
 
-class _CourseState extends State<Course> {
+class _Admin_CourseState extends State<Admin_Course> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -106,14 +106,13 @@ class _CourseState extends State<Course> {
 
                         return ListTile(
                           onTap: () {
-                            Navigator.push(context, MaterialPageRoute(
-                              builder: (context) {
-                                return UniversityInfoScreenWrapper(
-                                  universityid: university.Universityid,
-                                  university: university.Universityname,
-                                );
-                              },
-                            ));
+                            // Navigator.push(context, MaterialPageRoute(
+                            //   builder: (context) {
+                            //     return UniversityInfoScreenWrapper(
+                            //       universityid: university.Universityid,
+                            //       university: university.Universityname,                                );
+                            //   },
+                            // ));
                           },
                           leading: ClipRRect(
                               borderRadius: BorderRadius.circular(

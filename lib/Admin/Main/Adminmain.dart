@@ -17,10 +17,11 @@ import '../../Controller/Bloc/Dropdown_university/dropdown_bloc.dart';
 import '../../Controller/Bloc/Landloard_auth/landloard_auth_bloc.dart';
 import '../../Controller/Bloc/User_Authbloc/auth_bloc.dart';
 import '../../firebase_options.dart';
-import '../View/Screens/University/AddUniversityname.dart';
-import '../View/Screens/University/Addcollage.dart';
+import '../View/Screens/University/Admin_course_collage_universitymaster/AddUniversityname.dart';
+import '../View/Screens/University/Admin_course_collage_universitymaster/Addcollage.dart';
 import '../View/Screens/House.dart/ViewHouses.dart';
 import '../View/Screens/Payment.dart/Payment_View.dart';
+import '../View/Screens/University/Admin_course_collage_universitymaster/ViewCollage_and_Course.dart';
 import '../View/Screens/Users.dart/UserView.dart';
 
 void main() async {
@@ -144,6 +145,7 @@ class _AdminPageState extends State<AdminPage> {
                   icon: Icons.school_outlined,
                   children: [
                     _buildSubListTile("View Courses", Universitymainwrapper()),
+                    _buildSubListTile("View All", Viewcollagewrapper()),
                     _buildSubListTile("Add Courses", Fetchcolladropdowrapper()),
                     _buildSubListTile("Add Collage", Addcollage()),
                     _buildSubListTile(

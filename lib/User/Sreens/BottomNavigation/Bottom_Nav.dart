@@ -1,12 +1,9 @@
 import 'package:course_connect/Controller/Bloc/User_Authbloc/auth_bloc.dart';
-import 'package:course_connect/User/Accomodation/BookingStatus.dart';
 import 'package:course_connect/User/Sreens/Application/ApplicationStatusPage.dart';
 import 'package:course_connect/User/Sreens/Home/Universities.dart';
 import 'package:course_connect/User/Sreens/Home/homepage.dart';
-// import 'package:course_connect/User/Profile/Profile.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
 import '../Profile/Profile.dart';
 
 class BottomNavWrapper extends StatelessWidget {

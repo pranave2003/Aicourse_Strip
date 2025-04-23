@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../../../Controller/Bloc/Dropdown_university/dropdown_bloc.dart';
-import '../../../../Controller/Bloc/University_block/University_model/Universitycollage.dart';
-import '../../../../Controller/Bloc/University_block/university_bloc.dart';
-import '../../../../Widget/Constands/Loading.dart';
-import '../../../Main/Adminmain.dart';
+import '../../../../../Controller/Bloc/Dropdown_university/dropdown_bloc.dart';
+import '../../../../../Controller/Bloc/University_block/University_model/Universitycollage.dart';
+import '../../../../../Controller/Bloc/University_block/university_bloc.dart';
+import '../../../../../Widget/Constands/Loading.dart';
+import '../../../../Main/Adminmain.dart';
 
 class Addcollage extends StatefulWidget {
   const Addcollage({super.key});

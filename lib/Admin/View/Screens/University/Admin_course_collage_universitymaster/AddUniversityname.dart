@@ -1,7 +1,7 @@
 import 'package:course_connect/Widget/Constands/Loading.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../../../Controller/Bloc/University_block/university_bloc.dart';
+import '../../../../../Controller/Bloc/University_block/university_bloc.dart';
 
 class Adduniversitywrapper extends StatefulWidget {
   const Adduniversitywrapper({super.key});
