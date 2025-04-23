@@ -102,17 +102,17 @@ class _LandloardloginState extends State<Landloardlogin> {
                           SizedBox(height: 10),
                           Row(
                             children: [
-                              Checkbox(
-                                value: rememberMe,
-                                onChanged: (value) {
-                                  setState(() {
-                                    rememberMe = value!;
-                                  });
-                                },
-                                activeColor: Colors.blueAccent,
-                              ),
-                              Text("Remember me",
-                                  style: TextStyle(fontSize: 14)),
+                              // Checkbox(
+                              //   value: rememberMe,
+                              //   onChanged: (value) {
+                              //     setState(() {
+                              //       rememberMe = value!;
+                              //     });
+                              //   },
+                              //   activeColor: Colors.blueAccent,
+                              // ),
+                              // Text("Remember me",
+                              //     style: TextStyle(fontSize: 14)),
                               Spacer(),
                               TextButton(
                                 onPressed: () {},

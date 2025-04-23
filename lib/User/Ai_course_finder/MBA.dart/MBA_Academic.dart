@@ -1,4 +1,5 @@
 import 'package:course_connect/User/Ai_course_finder/MBA.dart/MBA_Companytype.dart';
+import 'package:course_connect/User/Ai_course_finder/MBA.dart/MBA_work.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -18,14 +19,12 @@ class _MbaAcademicState extends State<MbaAcademic> {
   final TextEditingController percentageController = TextEditingController();
 
   final List<String> englishTests = [
-    "GMAT",
-    "GRE",
-    "CAT",
-    "XAT",
-    "CMAT",
-    "MAT",
-    "NMAT",
-    "TEST NOT TAKEN",
+      "GRE",
+      "GMAT",
+      "CAT",
+      "CMAT",
+      "Not Required",
+
   ];
 
   final Map<String, String> testRanges = {
@@ -189,7 +188,7 @@ class _MbaAcademicState extends State<MbaAcademic> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => MBA_companytype(),
+                        builder: (context) => MBA_work(),
                       ),
                     );
                   } else {

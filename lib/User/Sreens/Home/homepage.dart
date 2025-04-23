@@ -178,90 +178,75 @@ class _HomepageState extends State<Homepage> {
                           SizedBox(
                             height: 40,
                           ),
-                          GestureDetector(
-                            onTap: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => ChooseCountry(),
-                                ),
-                              );
-                            },
-                            child: Container(
-                              height: 84,
-                              width: 180,
-                              decoration: BoxDecoration(
-                                color: Colors.white, // Background color
-                                border: Border.all(
-                                  // Border settings
-                                  color: Colors.grey, // Border color
-                                  width: 2, // Border width
-                                ),
-                                borderRadius: BorderRadius.circular(
-                                    12), // Optional: Rounded corners
-                              ),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Icon(
-                                    Icons.school,
-                                    size: 20,
-                                    color: Colors.lightBlueAccent,
+                          Center(
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                // AI Course Finder
+                                GestureDetector(
+                                  onTap: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(builder: (context) => ChooseCountry()),
+                                    );
+                                  },
+                                  child: Container(
+                                    height: 84,
+                                    width: 160 ,
+                                    decoration: BoxDecoration(
+                                      color: Colors.white,
+                                      border: Border.all(color: Colors.grey, width: 2),
+                                      borderRadius: BorderRadius.circular(12),
+                                    ),
+                                    child: Row(
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      children: [
+                                        Icon(Icons.school, size: 20, color: Colors.lightBlueAccent),
+                                        SizedBox(width: 10),
+                                        Text(
+                                          'AI \nCourse Finder',
+                                          style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
+                                        ),
+                                      ],
+                                    ),
                                   ),
-                                  SizedBox(width: 10),
-                                  Text(
-                                    'AI \nCourse Finder',
-                                    style: TextStyle(
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.bold),
+                                ),
+
+                                SizedBox(width: 16), // Space between the two cards
+
+                                // Get Accommodation
+                                GestureDetector(
+                                  onTap: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(builder: (context) => Bottom_nav2()),
+                                    );
+                                  },
+                                  child: Container(
+                                    height: 84,
+                                    width: 160,
+                                    decoration: BoxDecoration(
+                                      color: Colors.white,
+                                      border: Border.all(color: Colors.grey, width: 2),
+                                      borderRadius: BorderRadius.circular(12),
+                                    ),
+                                    child: Row(
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      children: [
+                                        Icon(Icons.house_outlined, size: 25, color: Colors.blue),
+                                        SizedBox(width: 10),
+                                        Text(
+                                          'Get \nAccommodation',
+                                          style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
+                                        ),
+                                      ],
+                                    ),
                                   ),
-                                  SizedBox(height: 24),
-                                ],
-                              ),
+                                ),
+                              ],
                             ),
                           ),
-                          SizedBox(
-                            width: 10,
-                          ),
-                          GestureDetector(
-                            onTap: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => Bottom_nav2(),
-                                ),
-                              );
-                            },
-                            child: Container(
-                              height: 84,
-                              width: 180,
-                              decoration: BoxDecoration(
-                                color: Colors.white, // Background color
-                                border: Border.all(
-                                  // Border settings
-                                  color: Colors.grey, // Border color
-                                  width: 2, // Border width
-                                ),
-                                borderRadius: BorderRadius.circular(
-                                    12), // Optional: Rounded corners
-                              ),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Icon(Icons.house_outlined,
-                                      size: 25, color: Colors.blue),
-                                  SizedBox(width: 10),
-                                  Text(
-                                    'Get \nAccommodation',
-                                    style: TextStyle(
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.bold),
-                                  ),
-                                  SizedBox(height: 24),
-                                ],
-                              ),
-                            ),
-                          ),
+
                         ],
                       ),
 

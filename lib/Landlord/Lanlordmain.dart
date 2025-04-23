@@ -147,8 +147,8 @@ class _LandlordPageState extends State<LandlordPage> {
 
                 _buildMainListTile('Bookings', Pending_Booking_wrapper(),
                     icon: Icons.book_online),
-                _buildMainListTile('Payment', ViewPayment(),
-                    icon: Icons.payments_outlined),
+                // _buildMainListTile('Payment', ViewPayment(),
+                //     icon: Icons.payments_outlined),
                 // _buildMainExpansionTile(
                 //   title: 'Account',
                 //   icon: Icons.person,

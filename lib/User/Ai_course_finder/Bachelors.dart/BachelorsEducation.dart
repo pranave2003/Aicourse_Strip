@@ -124,23 +124,23 @@ class _BachelorsEducationState extends State<BachelorsEducation> {
                   borderRadius: BorderRadius.circular(8),
                 ),
                 padding: const EdgeInsets.symmetric(horizontal: 12),
-                child: DropdownButton<String>(
-                  value: _selectedValue,
-                  hint: const Text('Select Board'),
-                  dropdownColor: Colors.grey[300],
-                  items: items.map((String item) {
-                    return DropdownMenuItem<String>(
-                      value: item,
-                      child: Text(item),
-                    );
-                  }).toList(),
-                  onChanged: (String? newValue) {
-                    setState(() {
-                      _selectedValue = newValue;
-                    });
-                  },
-                  underline: const SizedBox(),
-                ),
+                // child: DropdownButton<String>(
+                //   value: _selectedValue,
+                //   hint: const Text('Select Board'),
+                //   dropdownColor: Colors.grey[300],
+                //   items: items.map((String item) {
+                //     return DropdownMenuItem<String>(
+                //       value: item,
+                //       child: Text(item),
+                //     );
+                //   }).toList(),
+                //   onChanged: (String? newValue) {
+                //     setState(() {
+                //       _selectedValue = newValue;
+                //     });
+                //   },
+                //   underline: const SizedBox(),
+                // ),
               ),
               const SizedBox(height: 10),
               // Display the percentage range message

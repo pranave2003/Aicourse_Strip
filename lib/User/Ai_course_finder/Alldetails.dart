@@ -74,17 +74,17 @@ class BachelorsDetailsOverall extends StatelessWidget {
                                           "AcadamicTestpercentage"] ??
                                       "Not Selected",
                                 ),
-                                SelectionBox(
-                                  label: "Activity",
-                                  value: state.selections["selectedactivity"] ??
-                                      "Not Selected",
-                                ),
-                                SelectionBox(
-                                  label: "Organization ",
-                                  value: state
-                                          .selections["selectedOrganization"] ??
-                                      "Not Selected",
-                                ),
+                                // SelectionBox(
+                                //   label: "Activity",
+                                //   value: state.selections["selectedactivity"] ??
+                                //       "Not Selected",
+                                // ),
+                                // SelectionBox(
+                                //   label: "Organization ",
+                                //   value: state
+                                //           .selections["selectedOrganization"] ??
+                                //       "Not Selected",
+                                // ),
                                 SelectionBox(
                                   label:
                                       "Knowledge About \n Application Deadlines",
@@ -213,11 +213,11 @@ class BachelorsDetailsOverall extends StatelessWidget {
                                               "AcadamicTestpercentage"] ??
                                           "Not Selected",
                                     ),
-                                    SelectionBox(
-                                      label: "Company Type",
-                                      value: state.selections["Companytype"] ??
-                                          "Not Selected",
-                                    ),
+                                    // SelectionBox(
+                                    //   label: "Company Type",
+                                    //   value: state.selections["Companytype"] ??
+                                    //       "Not Selected",
+                                    // ),
                                     SelectionBox(
                                       label: "Work Experience",
                                       value: state.selections["Work"] ??

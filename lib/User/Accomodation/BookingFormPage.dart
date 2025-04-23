@@ -255,7 +255,7 @@ class _BookingFormPageState extends State<BookingFormPage> {
           borderRadius: BorderRadius.circular(8),
           child: SizedBox(
             height: 250,
-            width: 200,
+            width: 160,
             child: CarouselSlider(
               options: CarouselOptions(
                 height: 250,

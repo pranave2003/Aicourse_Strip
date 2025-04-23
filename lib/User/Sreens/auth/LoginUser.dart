@@ -168,8 +168,8 @@ class _LoginUserState extends State<LoginUser> {
                           });
                         },
                       ),
-                      SizedBox(height: 30),
-                      Text("Remember Me?")
+                      // SizedBox(height: 30),
+                      // Text("Remember Me?")
                     ],
                   ),
                   SizedBox(height: 20),

@@ -128,7 +128,7 @@ class _AddcollageState extends State<Addcollage> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          "Collage Adding Page",
+                          "College Adding Page",
                           style: TextStyle(
                               fontSize: 24, fontWeight: FontWeight.bold),
                         ),

@@ -51,7 +51,8 @@ class _Masters_educationState extends State<Masters_education> {
             },
           ),
         ),
-        body: Container(
+        body:SingleChildScrollView(scrollDirection: Axis.vertical,
+            child: Container(
           decoration: const BoxDecoration(
             image: DecorationImage(
               image: AssetImage("assets/country/main.png"),
@@ -170,7 +171,7 @@ class _Masters_educationState extends State<Masters_education> {
               )
             ],
           ),
-        ));
+        )));
   }
 
   Widget _buildEducationOption(String text, int index) {

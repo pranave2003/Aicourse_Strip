@@ -33,154 +33,161 @@ class _AdduniversitynameState extends State<Adduniversityname> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
-      body: Column(
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Row(
-                children: [
-                  Text("Welcome ",
-                      style:
-                          TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
-                  Text("Admin,",
-                      style: TextStyle(
-                          fontSize: 24,
-                          fontWeight: FontWeight.bold,
-                          color: Color(0xff0A71CB))),
-                ],
-              ),
-              Row(
-                children: [
-                  CircleAvatar(
+      backgroundColor: Colors.grey[100],
+      body: Padding(
+        padding: const EdgeInsets.all(24.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            // Header
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Row(
+                  children: [
+                    Text("Welcome ",
+                        style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
+                    Text("Admin,",
+                        style: TextStyle(
+                            fontSize: 24,
+                            fontWeight: FontWeight.bold,
+                            color: Color(0xff0A71CB))),
+                  ],
+                ),
+                Row(
+                  children: [
+                    CircleAvatar(
                       backgroundColor: Color(0xffD9D9D9),
-                      child: Icon(Icons.notification_add)),
-                  SizedBox(width: 10),
-                  Container(
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: 14, vertical: 6),
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(20),
-                      border: Border.all(width: 0.5, color: Colors.grey),
+                      child: Icon(Icons.notifications),
                     ),
-                    child: Row(
-                      children: [
-                        const CircleAvatar(
-                          radius: 20, // Ensure a proper radius is set
-                          backgroundColor: Colors.grey, // Fallback color
-                          backgroundImage: AssetImage(
-                              'assets/Profile/img.png'), // Corrected Path
-                        ),
-                        const SizedBox(width: 10),
-                        Text(
-                          "Admin",
-                          style: TextStyle(
-                              fontSize: 16, fontWeight: FontWeight.bold),
-                        ),
-                      ],
+                    SizedBox(width: 10),
+                    Container(
+                      padding: EdgeInsets.symmetric(horizontal: 14, vertical: 6),
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(30),
+                        border: Border.all(width: 0.5, color: Colors.grey),
+                      ),
+                      child: Row(
+                        children: [
+                          CircleAvatar(
+                            radius: 20,
+                            backgroundColor: Colors.grey[300],
+                            backgroundImage: AssetImage('assets/Profile/img.png'),
+                          ),
+                          SizedBox(width: 10),
+                          Text(
+                            "Admin",
+                            style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                          ),
+                        ],
+                      ),
                     ),
-                  ),
-                ],
-              ),
-            ],
-          ),
-          SizedBox(height: 20),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              BlocConsumer<UniversityBloc, UniversityState>(
+                  ],
+                ),
+              ],
+            ),
+            SizedBox(height: 40),
+
+            // University List Section
+            Expanded(
+              child: BlocConsumer<UniversityBloc, UniversityState>(
                 listener: (context, state) {
                   if (state is Adduniversitysucess) {
-                    context.read<UniversityBloc>()
-                      ..add(MasterFetchUniversitys());
+                    context.read<UniversityBloc>()..add(MasterFetchUniversitys());
                     Universitymastercontroller.clear();
                   }
                 },
                 builder: (context, state) {
                   if (state is MAsterUniversityLoading) {
-                    return Loading_Widget();
+                    return Center(child: Loading_Widget());
                   }
                   if (state is MasterUniversityLoaded) {
-                    return Container(
-                      height: 400,
-                      width: 600,
-                      color: Colors.blue.shade50,
-                      child: ListView.builder(
-                        itemCount: state.universityList.length,
-                        itemBuilder: (context, index) {
-                          return ListTile(
-                            leading: Text('1'),
-                            title: Text(state.universityList[index].name),
-                            trailing: IconButton(
+                    return Card(
+                      elevation: 4,
+                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                      child: Padding(
+                        padding: const EdgeInsets.all(16.0),
+                        child: ListView.separated(
+                          itemCount: state.universityList.length,
+                          separatorBuilder: (_, __) => Divider(),
+                          itemBuilder: (context, index) {
+                            final university = state.universityList[index];
+                            return ListTile(
+                              leading: CircleAvatar(
+                                backgroundColor: Colors.blue.shade100,
+                                child: Text("${index + 1}"),
+                              ),
+                              title: Text(university.name,
+                                  style: TextStyle(fontWeight: FontWeight.w500)),
+                              trailing: IconButton(
+                                icon: Icon(Icons.delete, color: Colors.red),
                                 onPressed: () {
                                   context.read<UniversityBloc>().add(
-                                      deleteMasteruniversity(
-                                          id: state.universityList[index].id));
+                                      deleteMasteruniversity(id: university.id));
                                 },
-                                icon: Icon(
-                                  Icons.delete,
-                                  color: Colors.red,
-                                )),
-                          );
-                        },
+                              ),
+                            );
+                          },
+                        ),
                       ),
                     );
                   }
-                  return SizedBox();
+                  return Center(child: Text("No universities found."));
                 },
               ),
-            ],
-          ),
-          SizedBox(
-            height: 40,
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Container(
-                width: 300,
-                child: TextFormField(
-                  controller: Universitymastercontroller,
-                  decoration: InputDecoration(
-                      border: OutlineInputBorder(),
-                      hintText: "Enter University"),
+            ),
+
+            SizedBox(height: 30),
+
+            // Add University Section
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Container(
+                  width: 320,
+                  child: TextFormField(
+                    controller: Universitymastercontroller,
+                    decoration: InputDecoration(
+                      hintText: "Enter University",
+                      filled: true,
+                      fillColor: Colors.white,
+                      contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                    ),
+                  ),
                 ),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: BlocConsumer<UniversityBloc, UniversityState>(
+                SizedBox(width: 12),
+                BlocConsumer<UniversityBloc, UniversityState>(
                   listener: (context, state) {},
                   builder: (context, state) {
                     return ElevatedButton(
                       onPressed: () {
-                        context.read<UniversityBloc>()
-                          ..add(AddUniversity(
-                              universityname: Universitymastercontroller.text));
+                        final name = Universitymastercontroller.text.trim();
+                        if (name.isNotEmpty) {
+                          context.read<UniversityBloc>()
+                            ..add(AddUniversity(universityname: name));
+                        }
                       },
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.blue, // Background color
+                        backgroundColor: Colors.blue,
+                        padding:
+                        EdgeInsets.symmetric(horizontal: 24, vertical: 16),
                         shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.zero, // Square shape
-                        ),
-                        padding: EdgeInsets.symmetric(
-                            horizontal: 24,
-                            vertical: 16), // Optional: controls size
+                            borderRadius: BorderRadius.circular(10)),
                       ),
                       child: state is Adduniversitymasterloading
                           ? Loading_Widget()
-                          : Text(
-                              "Add",
-                              style: TextStyle(color: Colors.white),
-                            ),
+                          : Text("Add", style: TextStyle(color: Colors.white)),
                     );
                   },
                 ),
-              ),
-            ],
-          )
-        ],
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }

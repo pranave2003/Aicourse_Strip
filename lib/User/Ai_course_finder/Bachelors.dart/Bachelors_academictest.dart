@@ -1,3 +1,4 @@
+import 'package:course_connect/User/Ai_course_finder/Bachelors.dart/Bachelors_Knowledge.dart';
 import 'package:course_connect/User/Ai_course_finder/Bachelors.dart/Bachelors_activities.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -15,14 +16,12 @@ class _Bachelors_academictestState extends State<Bachelors_academictest> {
   String? selectedacademicTest;
   final TextEditingController percentageController = TextEditingController();
 
-  final List<String> academicTests = ["ACT", "SAT", "JEE", "NEET", "CUET", "TEST NOT TAKEN"];
+  final List<String> academicTests = ["ACT", "SAT", "CUET", "TEST NOT TAKEN"];
 
   // Score ranges for validation
   final Map<String, String> testScoreRanges = {
     "ACT": "1 - 36",
     "SAT": "400 - 1600",
-    "JEE": "0 - 300",
-    "NEET": "0 - 720",
     "CUET": "0 - 800",
   };
 
@@ -36,10 +35,6 @@ class _Bachelors_academictestState extends State<Bachelors_academictest> {
         return value >= 1 && value <= 36;
       case "SAT":
         return value >= 400 && value <= 1600;
-      case "JEE":
-        return value >= 0 && value <= 300;
-      case "NEET":
-        return value >= 0 && value <= 720;
       case "CUET":
         return value >= 0 && value <= 800;
       case "TEST NOT TAKEN":
@@ -171,7 +166,7 @@ class _Bachelors_academictestState extends State<Bachelors_academictest> {
                   context.read<SelectionCubit>().updateSelection(
                       "AcadamicTestpercentage", percentageController.text);
                 };
-                Navigator.push(context, MaterialPageRoute(builder: (context) => Bachelors_activities()));
+                Navigator.push(context, MaterialPageRoute(builder: (context) => Bachelors_Knowledge()));
               },
               child: Container(
                 height: 51,

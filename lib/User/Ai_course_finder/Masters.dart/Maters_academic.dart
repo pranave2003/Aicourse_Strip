@@ -17,16 +17,14 @@ class _Maters_academicState extends State<Maters_academic> {
   final TextEditingController scoreController = TextEditingController();
 
   final List<String> englishTests = [
-    "GRE", "GMAT", "GATE", "IIT JAM", "NEET", "LSAT", "TEST NOT TAKEN"
+    "GRE", "GMAT", "IIT JAM", "TEST NOT TAKEN"
   ];
 
   final Map<String, String> testScoreRanges = {
     "GRE": "130 - 170",
     "GMAT": "200 - 800",
-    "GATE": "0 - 100",
     "IIT JAM": "0 - 100",
-    "NEET": "0 - 720",
-    "LSAT": "120 - 180",
+
   };
 
   @override
@@ -65,10 +63,10 @@ class _Maters_academicState extends State<Maters_academic> {
               children: [
                 Icon(Icons.light_mode_rounded, color: Colors.yellowAccent, size: 24),
                 SizedBox(width: 10),
-                Text(
-                  "Scoring high in tests increases your options.",
-                  style: TextStyle(fontSize: 18),
-                ),
+                // Text(
+                //   "Scoring high in tests increases your options.",
+                //   style: TextStyle(fontSize: 18),
+                // ),
               ],
             ),
             const SizedBox(height: 20),

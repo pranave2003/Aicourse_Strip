@@ -162,16 +162,20 @@ class ApplicationStatusPage extends StatelessWidget {
                   ],
                 ),
                 SizedBox(height: 8),
-                Row(
-                  children: [
-                    Icon(Icons.book, size: 20, color: Colors.grey[800]),
-                    SizedBox(width: 6),
-                    Text(
-                      "${application.Coursename ?? 'N/A'}",
-                      style: TextStyle(fontSize: 15),
-                    ),
-                  ],
+                SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: Row(
+                    children: [
+                      Icon(Icons.book, size: 20, color: Colors.grey[800]),
+                      SizedBox(width: 6),
+                      Text(
+                        "${application.Coursename ?? 'N/A'}",
+                        style: TextStyle(fontSize: 15),
+                      ),
+                    ],
+                  ),
                 ),
+
                 SizedBox(height: 4),
                 Row(
                   children: [

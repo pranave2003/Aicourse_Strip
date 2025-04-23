@@ -432,14 +432,7 @@ class _AddUniversityState extends State<AddUniversity> {
                     }),
                     buildDropdown(
                         "AcademicTest",
-                        [
-                          "ACT",
-                          "SAT",
-                          "JEE",
-                          "NEET",
-                          "CUET",
-                          "Not Required",
-                        ],
+                        ["ACT", "SAT", "CUET", "TEST NOT TAKEN"],
                         AcadamicTest, (value) {
                       setState(() {
                         AcadamicTest = value;
@@ -525,13 +518,7 @@ class _AddUniversityState extends State<AddUniversity> {
                     buildDropdown(
                       "Academic Test",
                       [
-                        "GRE",
-                        "GMAT",
-                        "GATE",
-                        "IIT JAM",
-                        "NEET",
-                        "LSAT",
-                        "Not Required" // Removed trailing space here
+                        "GRE", "GMAT", "IIT JAM", "TEST NOT TAKEN"
                       ],
                       AcadamicTest,
                       (value) {
@@ -623,7 +610,6 @@ class _AddUniversityState extends State<AddUniversity> {
                           "GRE",
                           "GMAT",
                           "CAT",
-                          "IIT JAM",
                           "CMAT",
                           "Not Required",
                         ],
