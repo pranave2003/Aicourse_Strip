@@ -64,7 +64,7 @@ class _Bachelors_academictestState extends State<Bachelors_academictest> {
           children: [
             const SizedBox(height: 20),
             const Text(
-              "Which Academic test have you \n taken OR planning to take?",
+              "Which Academic test have you  taken ?",
               textAlign: TextAlign.center,
               style: TextStyle(color: Color(0xff0A1F52), fontSize: 20, fontWeight: FontWeight.bold),
             ),

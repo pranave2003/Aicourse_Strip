@@ -57,6 +57,26 @@ class _AddUniversityState extends State<AddUniversity> {
   final TextEditingController courseFeeController = TextEditingController();
   final TextEditingController scholarshipFeeController =
       TextEditingController();
+  final Map<String, List<String>> testScoreRanges = {
+    "ACT": List.generate(36, (i) => "${i + 1}"),          // 1 to 36
+    "SAT": ["400", "600", "800", "1000", "1200", "1400", "1600"], // Valid SAT milestones
+    "CUET": List.generate(17, (i) => "${i * 50}"),        // 0 to 800 in steps of 50
+    "TEST NOT TAKEN": [],
+  };
+  Map<String, List<String>> testWiseScoreRange = {
+    "GRE": ["260-290", "290-310", "310-320", "320-330", "330-340", "340"],
+    "GMAT": ["480-500", "500-540", "540-600", "600-650", "650-700", "700-750", "750-800"],
+    "IIT JAM": ["50-55", "55-60", "60-65", "65-70", "70-75", "75-80"],
+    "TEST NOT TAKEN": ["N/A", "N/A", "N/A", "N/A", "N/A", "N/A"],
+  };
+
+  Map<String, List<String>> englishTestScoreRange = {
+    "PTE": ["30-40", "40-50", "50-58", "58-65", "65-75", "75-90"],
+    "IELTS": ["4.0", "4.5", "5.0", "5.5", "6.0", "6.5", "7.0", "7.5", "8.0", "9.0"],
+    "TOEFL": ["40-50", "50-60", "60-70", "70-80", "80-90", "90-100", "100-120"],
+    "Not Required": ["N/A"],
+  };
+
 
   // String university_image = '1';
   bool isImageMissing = false; // Define at the top of your state class
@@ -444,24 +464,31 @@ class _AddUniversityState extends State<AddUniversity> {
                       });
                     }),
                     buildDropdown(
-                        "AcademicTest",
-                        ["ACT", "SAT", "CUET", "TEST NOT TAKEN"],
-                        AcadamicTest, (value) {
-                      setState(() {
-                        AcadamicTest = value;
-                        print(AcadamicTest);
-                      });
-                    }),
-                    if (AcadamicTest != "Not Required")
-                      buildDropdown(
-                          "AcademicTestPercentage minimum",
-                          ["50", "60", "70", "80", "90", "100"],
-                          AcadamicTestPercentage, (value) {
+                      "Academic Test",
+                      ["ACT", "SAT", "CUET", "TEST NOT TAKEN"],
+                      AcadamicTest,
+                          (value) {
                         setState(() {
-                          AcadamicTestPercentage = value;
-                          print(AcadamicTestPercentage);
+                          AcadamicTest = value;
+                          AcadamicTestPercentage = null; // Reset on test change
+                          print("Selected Test: $AcadamicTest");
                         });
-                      }),
+                      },
+                    ),
+
+                    if (AcadamicTest != "TEST NOT TAKEN")
+                      buildDropdown(
+                        "Minimum Required Score",
+                        testScoreRanges[AcadamicTest] ?? [],
+                        AcadamicTestPercentage,
+                            (value) {
+                          setState(() {
+                            AcadamicTestPercentage = value;
+                            print("Score: $AcadamicTestPercentage");
+                          });
+                        },
+                      ),
+
                   ],
                 ),
 
@@ -519,6 +546,8 @@ class _AddUniversityState extends State<AddUniversity> {
                         print(highestEducation);
                       });
                     }),
+
+
                     buildDropdown(
                         "Minimum Required Percentage ",
                         ["50", "60", "70", "80", "90", "100"],
@@ -532,14 +561,16 @@ class _AddUniversityState extends State<AddUniversity> {
                       "Academic Test",
                       ["GRE", "GMAT", "IIT JAM", "TEST NOT TAKEN"],
                       AcadamicTest,
-                      (value) {
+                          (value) {
                         setState(() {
                           AcadamicTest = value;
                           print(AcadamicTest);
                         });
                       },
                     ),
-                    if (AcadamicTest != "Not Required")
+
+
+    if (AcadamicTest != "Not Required")
                       buildDropdown(
                         "Academic Test Percentage Minimum",
                         ["50", "60", "70", "80", "90", "100"],
@@ -690,28 +721,27 @@ class _AddUniversityState extends State<AddUniversity> {
                       Expanded(
                         child: buildDropdown(
                           "English Test",
-                          ["PTE", "IELTS", "TOEFL", "Not Required"],
+                          englishTestScoreRange.keys.toList(),
                           Englishtest,
-                          (value) {
+                              (value) {
                             setState(() {
                               Englishtest = value;
-                              print(Englishtest);
+                              Englishtestpercentage = englishTestScoreRange[value]!.first;
                             });
                           },
                           required: true,
                         ),
                       ),
-                      const SizedBox(
-                          width: 15), // Same width as the first row's space
+                      const SizedBox(width: 15),
 
                       // Show "Required Percentage" only if English Test is not "Not Required"
                       if (Englishtest != "Not Required")
                         Expanded(
                           child: buildDropdown(
-                            "Required Percentage",
-                            ["50", "60", "70", "80", "90", "100"],
+                            "Minimum Required Percentage",
+                            englishTestScoreRange[Englishtest] ?? ["N/A"], // fallback to ["N/A"]
                             Englishtestpercentage,
-                            (value) {
+                                (value) {
                               setState(() {
                                 Englishtestpercentage = value;
                                 print(Englishtestpercentage);
@@ -719,9 +749,11 @@ class _AddUniversityState extends State<AddUniversity> {
                             },
                             required: true,
                           ),
-                        ),
+                        )
+
                     ],
-                  ),
+                  )
+
                 ],
               ),
               // ),
