@@ -60,7 +60,7 @@ class _MbaAcademicState extends State<MbaAcademic> {
           children: [
             const SizedBox(height: 20),
             const Text(
-              "Which Standardized MBA entrance \n exams have you taken OR planning to take?",
+              "Which Standardized MBA entrance \n exams have you taken?",
               textAlign: TextAlign.center,
               style: TextStyle(
                 color: Color(0xff0A1F52),

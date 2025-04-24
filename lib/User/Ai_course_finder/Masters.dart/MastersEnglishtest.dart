@@ -80,7 +80,7 @@ class _MastersEnglishtestState extends State<MastersEnglishtest> {
           children: [
             const SizedBox(height: 20),
             const Text(
-              "What English language test have\nyou taken OR planning to take?",
+              "What English language test have\nyou taken?",
               textAlign: TextAlign.center,
               style: TextStyle(
                 color: Color(0xff0A1F52),

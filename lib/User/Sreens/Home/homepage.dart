@@ -270,7 +270,7 @@ class _HomepageState extends State<Homepage> {
                       //search query
                       Container(
                         height: 40,
-                        width: 400,
+                        width: 600,
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(18)),
                         child: TextField(
@@ -377,7 +377,7 @@ class _HomepageState extends State<Homepage> {
                                         NeverScrollableScrollPhysics(), // Prevents extra scrolling
                                     shrinkWrap: true,
                                     padding: EdgeInsets.symmetric(
-                                        horizontal: 5, vertical: 10),
+                                        horizontal: 5, vertical: 15),
                                     gridDelegate:
                                         SliverGridDelegateWithFixedCrossAxisCount(
                                       crossAxisCount: 2, // Two columns
@@ -438,7 +438,7 @@ class _HomepageState extends State<Homepage> {
                                                       // imageUrl: university
                                                       //         .UniversityimageURL
                                                       //     .toString(),
-                                                      height: 120,
+                                                      height: 100,
                                                       width: 160,
                                                       fit: BoxFit.cover,
 

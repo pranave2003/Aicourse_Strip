@@ -49,7 +49,7 @@ class _Maters_academicState extends State<Maters_academic> {
           children: [
             const SizedBox(height: 20),
             const Text(
-              "Which Academic test have you \n taken OR planning to take?",
+              "Which Academic test have you \n taken?",
               textAlign: TextAlign.center,
               style: TextStyle(
                 color: Color(0xff0A1F52),
