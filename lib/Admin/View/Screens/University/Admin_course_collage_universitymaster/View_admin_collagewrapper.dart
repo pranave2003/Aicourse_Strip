@@ -35,6 +35,31 @@ class Admin_view_collage extends StatefulWidget {
 }
 
 class _Admin_view_collageState extends State<Admin_view_collage> {
+  int _getCrossAxisCount(BuildContext context) {
+    double width = MediaQuery.of(context).size.width;
+    if (width >= 1200)
+      return 6; // Desktop
+    else if (width >= 900)
+      return 5; // Large tablet
+    else if (width >= 600)
+      return 4; // Tablet
+    else
+      return 2; // Mobile
+  }
+
+  double _getAspectRatio(BuildContext context) {
+    double width = MediaQuery.of(context).size.width;
+    if (width >= 600) return 0.8;
+    return 0.75;
+  }
+
+  double _getImageHeight(BuildContext context) {
+    double width = MediaQuery.of(context).size.width;
+    if (width >= 900) return 180;
+    if (width >= 600) return 160;
+    return 140;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -113,112 +138,123 @@ class _Admin_view_collageState extends State<Admin_view_collage> {
                             ),
                           );
                         }
-                        return GridView.builder(
-                          physics:
-                              NeverScrollableScrollPhysics(), // Prevents extra scrolling
-                          shrinkWrap: true,
-                          padding:
-                              EdgeInsets.symmetric(horizontal: 5, vertical: 10),
-                          gridDelegate:
-                              SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 5, // Two columns
-                            crossAxisSpacing: 10, // Space between columns
-                            mainAxisSpacing: 10, // Space between rows
-                            childAspectRatio:
-                                0.75, // Adjusted for better image fit
-                          ),
-                          itemCount: state.University.length,
-                          itemBuilder: (context, index) {
-                            final university = state.University[index];
+                        return LayoutBuilder(
+                          builder: (context, constraints) {
+                            int crossAxisCount;
+                            double aspectRatio;
+                            double imageHeight;
 
-                            return state.University.isEmpty
-                                ? Text("data")
-                                : InkWell(
-                                    onTap: () {
-                                      Navigator.push(context, MaterialPageRoute(
-                                        builder: (context) {
-                                          return Admin_Coursewrapper(
-                                            university:
-                                                university.Universityname,
-                                            collage: university.Collegename,
-                                          );
-                                        },
-                                      ));
-                                    },
-                                    child: Container(
-                                      decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(12),
-                                        color: Colors.white,
-                                        boxShadow: [
-                                          BoxShadow(
-                                            color: Colors.grey.withOpacity(0.2),
-                                            blurRadius: 5,
-                                            spreadRadius: 2,
-                                          ),
-                                        ],
-                                      ),
-                                      child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.center,
-                                        children: [
-                                          SizedBox(height: 10),
-                                          ClipRRect(
-                                              borderRadius:
-                                                  BorderRadius.circular(
-                                                      10), // Uncomment if needed
-                                              child: CachedNetworkImage(
-                                                imageUrl: university
-                                                        .UniversityimageURL
-                                                    .toString(),
-                                                height: 140,
-                                                width: 160,
-                                                fit: BoxFit.cover,
+                            if (constraints.maxWidth >= 1200) {
+                              crossAxisCount = 5;
+                              aspectRatio = 0.75;
+                              imageHeight = 140;
+                            } else if (constraints.maxWidth >= 800) {
+                              crossAxisCount = 4;
+                              aspectRatio = 0.7;
+                              imageHeight = 130;
+                            } else if (constraints.maxWidth >= 600) {
+                              crossAxisCount = 3;
+                              aspectRatio = 0.65;
+                              imageHeight = 120;
+                            } else {
+                              crossAxisCount = 2;
+                              aspectRatio = 0.6;
+                              imageHeight = 110;
+                            }
 
-                                                // Show a loading indicator while fetching the image
-                                                placeholder: (context, url) =>
-                                                    Center(
-                                                  child: Loading_Widget(),
-                                                ),
+                            return GridView.builder(
+                              physics: NeverScrollableScrollPhysics(),
+                              shrinkWrap: true,
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: 5, vertical: 10),
+                              gridDelegate:
+                                  SliverGridDelegateWithFixedCrossAxisCount(
+                                crossAxisCount: crossAxisCount,
+                                crossAxisSpacing: 10,
+                                mainAxisSpacing: 10,
+                                childAspectRatio: aspectRatio,
+                              ),
+                              itemCount: state.University.length,
+                              itemBuilder: (context, index) {
+                                final university = state.University[index];
 
-                                                // Show an error icon if the image fails to load
-                                                errorWidget:
-                                                    (context, url, error) =>
-                                                        Icon(
-                                                  Icons.image_not_supported,
-                                                  size: 50,
-                                                  color: Colors.grey,
-                                                ),
-                                              )),
-                                          SizedBox(height: 8),
-                                          Padding(
-                                              padding: EdgeInsets.symmetric(
-                                                  horizontal: 8),
-                                              child: Text(
-                                                university.Collegename
-                                                    .toString(),
-                                                style: TextStyle(
-                                                    fontSize: 15,
-                                                    fontWeight:
-                                                        FontWeight.bold),
-                                                textAlign: TextAlign.left,
-                                              )),
-                                          SizedBox(height: 4),
-                                          Padding(
-                                              padding: EdgeInsets.symmetric(
-                                                  horizontal: 8),
-                                              child: Text(
-                                                university.collagecode
-                                                    .toString()
-                                                    .toString(),
-                                                style: TextStyle(
-                                                    fontSize: 12,
-                                                    color: Colors.grey[700]),
-                                                textAlign: TextAlign.left,
-                                              )),
-                                        ],
-                                      ),
+                                return InkWell(
+                                  onTap: () {
+                                    Navigator.push(context, MaterialPageRoute(
+                                      builder: (context) {
+                                        return Admin_Coursewrapper(
+                                          university: university.Universityname,
+                                          collage: university.Collegename,
+                                        );
+                                      },
+                                    ));
+                                  },
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(12),
+                                      color: Colors.white,
+                                      boxShadow: [
+                                        BoxShadow(
+                                          color: Colors.grey.withOpacity(0.2),
+                                          blurRadius: 5,
+                                          spreadRadius: 2,
+                                        ),
+                                      ],
                                     ),
-                                  );
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      children: [
+                                        SizedBox(height: 10),
+                                        ClipRRect(
+                                          borderRadius:
+                                              BorderRadius.circular(10),
+                                          child: CachedNetworkImage(
+                                            imageUrl: university
+                                                .UniversityimageURL.toString(),
+                                            height: imageHeight,
+                                            width: double.infinity,
+                                            fit: BoxFit.cover,
+                                            placeholder: (context, url) =>
+                                                Center(child: Loading_Widget()),
+                                            errorWidget:
+                                                (context, url, error) => Icon(
+                                              Icons.image_not_supported,
+                                              size: 50,
+                                              color: Colors.grey,
+                                            ),
+                                          ),
+                                        ),
+                                        SizedBox(height: 8),
+                                        Padding(
+                                          padding: EdgeInsets.symmetric(
+                                              horizontal: 8),
+                                          child: Text(
+                                            university.Collegename.toString(),
+                                            style: TextStyle(
+                                                fontSize: 15,
+                                                fontWeight: FontWeight.bold),
+                                            textAlign: TextAlign.left,
+                                          ),
+                                        ),
+                                        SizedBox(height: 4),
+                                        Padding(
+                                          padding: EdgeInsets.symmetric(
+                                              horizontal: 8),
+                                          child: Text(
+                                            university.collagecode.toString(),
+                                            style: TextStyle(
+                                                fontSize: 12,
+                                                color: Colors.grey[700]),
+                                            textAlign: TextAlign.left,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                );
+                              },
+                            );
                           },
                         );
                       }

@@ -10,6 +10,7 @@ class BachelorsEducation extends StatefulWidget {
     super.key,
     required this.selecteddegree,
   });
+
   final selecteddegree;
 
   @override
@@ -18,7 +19,14 @@ class BachelorsEducation extends StatefulWidget {
 
 class _BachelorsEducationState extends State<BachelorsEducation> {
   String? _selectedValue; // Selected value
+  String? _selectedscheme; // Selected value
   List<String> items = ['IB', 'ICSE', 'CBSC', 'State'];
+  List<String> Schemes = [
+    "Science",
+    "Commerce",
+    "Humanities",
+    "VHSC",
+  ];
   int selectedIndex = -1; // Track selected container index
   String? seletedEducation;
   TextEditingController highesteducationpercentage = TextEditingController();
@@ -118,30 +126,63 @@ class _BachelorsEducationState extends State<BachelorsEducation> {
               const Text("What is your expected or gained \n percentage?",
                   style: TextStyle(color: Color(0xff0B1F50), fontSize: 20)),
               const SizedBox(height: 20),
-              Container(
-                decoration: BoxDecoration(
-                  color: Colors.grey,
-                  borderRadius: BorderRadius.circular(8),
-                ),
-                padding: const EdgeInsets.symmetric(horizontal: 12),
-                // child: DropdownButton<String>(
-                //   value: _selectedValue,
-                //   hint: const Text('Select Board'),
-                //   dropdownColor: Colors.grey[300],
-                //   items: items.map((String item) {
-                //     return DropdownMenuItem<String>(
-                //       value: item,
-                //       child: Text(item),
-                //     );
-                //   }).toList(),
-                //   onChanged: (String? newValue) {
-                //     setState(() {
-                //       _selectedValue = newValue;
-                //     });
-                //   },
-                //   underline: const SizedBox(),
-                // ),
+              seletedEducation == "Grade 12"
+                  ? Container(
+                      decoration: BoxDecoration(
+                        color: Colors.grey,
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      padding: const EdgeInsets.symmetric(horizontal: 12),
+                      child: DropdownButton<String>(
+                        value: _selectedValue,
+                        hint: const Text('Select Board'),
+                        dropdownColor: Colors.grey[300],
+                        items: items.map((String item) {
+                          return DropdownMenuItem<String>(
+                            value: item,
+                            child: Text(item),
+                          );
+                        }).toList(),
+                        onChanged: (String? newValue) {
+                          setState(() {
+                            _selectedValue = newValue;
+                          });
+                        },
+                        underline: const SizedBox(),
+                      ),
+                    )
+                  : SizedBox(),
+
+///////////////////////////////////
+              SizedBox(
+                height: 50,
               ),
+              seletedEducation == "Grade 12"
+                  ? Container(
+                      decoration: BoxDecoration(
+                        color: Colors.grey.shade100,
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      padding: const EdgeInsets.symmetric(horizontal: 12),
+                      child: DropdownButton<String>(
+                        value: _selectedscheme,
+                        hint: const Text('Select Scheme'),
+                        dropdownColor: Colors.grey[300],
+                        items: Schemes.map((String item) {
+                          return DropdownMenuItem<String>(
+                            value: item,
+                            child: Text(item),
+                          );
+                        }).toList(),
+                        onChanged: (String? newValue) {
+                          setState(() {
+                            _selectedscheme = newValue;
+                          });
+                        },
+                        underline: const SizedBox(),
+                      ),
+                    )
+                  : SizedBox(),
               const SizedBox(height: 10),
               // Display the percentage range message
               Text(
@@ -172,7 +213,7 @@ class _BachelorsEducationState extends State<BachelorsEducation> {
               InkWell(
                 onTap: () {
                   double? percentage =
-                  double.tryParse(highesteducationpercentage.text);
+                      double.tryParse(highesteducationpercentage.text);
 
                   if (seletedEducation == null) {
                     ScaffoldMessenger.of(context).showSnackBar(
@@ -235,7 +276,8 @@ class _BachelorsEducationState extends State<BachelorsEducation> {
                         builder: (context) => BachelorsCourse(),
                       ),
                     );
-                  };
+                  }
+                  ;
                 },
                 child: Container(
                   height: 51,
