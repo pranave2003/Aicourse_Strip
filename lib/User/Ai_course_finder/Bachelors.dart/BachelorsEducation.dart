@@ -77,12 +77,12 @@ class _BachelorsEducationState extends State<BachelorsEducation> {
                   margin: const EdgeInsets.symmetric(vertical: 10),
                   child: Center(
                       child: Text(
-                    "Grade 12",
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      color: selectedIndex == 0 ? Colors.white : Colors.black,
-                    ),
-                  )),
+                        "Grade 12",
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: selectedIndex == 0 ? Colors.white : Colors.black,
+                        ),
+                      )),
                 ),
               ),
               GestureDetector(
@@ -91,7 +91,7 @@ class _BachelorsEducationState extends State<BachelorsEducation> {
                     selectedIndex = 1;
                     seletedEducation = "Undergraduate diploma";
                     percentageRangeMessage =
-                        "Percentage must be between 30-100";
+                    "Percentage must be between 30-100";
                   });
                 },
                 child: Container(
@@ -106,42 +106,44 @@ class _BachelorsEducationState extends State<BachelorsEducation> {
                   margin: const EdgeInsets.symmetric(vertical: 10),
                   child: Center(
                       child: Text(
-                    "Undergraduate diploma",
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      color: selectedIndex == 1 ? Colors.white : Colors.black,
-                    ),
-                  )),
+                        "Undergraduate diploma",
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: selectedIndex == 1 ? Colors.white : Colors.black,
+                        ),
+                      )),
                 ),
               ),
               const SizedBox(height: 30),
               const Text("What is your expected or gained \n percentage?",
                   style: TextStyle(color: Color(0xff0B1F50), fontSize: 20)),
               const SizedBox(height: 20),
-              Container(
-                decoration: BoxDecoration(
-                  color: Colors.grey,
-                  borderRadius: BorderRadius.circular(8),
+              // Conditionally show the board dropdown for Grade 12 only
+              if (seletedEducation == "Grade 12")
+                Container(
+                  decoration: BoxDecoration(
+                    color: Colors.grey,
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                  padding: const EdgeInsets.symmetric(horizontal: 12),
+                  child: DropdownButton<String>(
+                    value: _selectedValue,
+                    hint: const Text('Select Board'),
+                    dropdownColor: Colors.grey[300],
+                    items: items.map((String item) {
+                      return DropdownMenuItem<String>(
+                        value: item,
+                        child: Text(item),
+                      );
+                    }).toList(),
+                    onChanged: (String? newValue) {
+                      setState(() {
+                        _selectedValue = newValue;
+                      });
+                    },
+                    underline: const SizedBox(),
+                  ),
                 ),
-                padding: const EdgeInsets.symmetric(horizontal: 12),
-                // child: DropdownButton<String>(
-                //   value: _selectedValue,
-                //   hint: const Text('Select Board'),
-                //   dropdownColor: Colors.grey[300],
-                //   items: items.map((String item) {
-                //     return DropdownMenuItem<String>(
-                //       value: item,
-                //       child: Text(item),
-                //     );
-                //   }).toList(),
-                //   onChanged: (String? newValue) {
-                //     setState(() {
-                //       _selectedValue = newValue;
-                //     });
-                //   },
-                //   underline: const SizedBox(),
-                // ),
-              ),
               const SizedBox(height: 10),
               // Display the percentage range message
               Text(
@@ -245,12 +247,12 @@ class _BachelorsEducationState extends State<BachelorsEducation> {
                       borderRadius: BorderRadius.circular(30)),
                   child: const Center(
                       child: Text(
-                    "Continue",
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 22,
-                        fontWeight: FontWeight.bold),
-                  )),
+                        "Continue",
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 22,
+                            fontWeight: FontWeight.bold),
+                      )),
                 ),
               )
             ],

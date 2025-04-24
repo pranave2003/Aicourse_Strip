@@ -28,10 +28,12 @@ class ResultAicoursefinder extends StatelessWidget {
                   Englishtest: state.selections["EnglishTest"],
                   highestEducation: state.selections["highestEducation"],
 
-                  // AcadamicTestPercentage:
-                  //     state.selections["AcadamicTestpercentage"],
-                  // Englishtestpercentage:
-                  //     state.selections["EnglishTest_percentage"],
+                  AcadamicTestPercentage:
+
+
+                      state.selections["AcadamicTestpercentage"],
+                  Englishtestpercentage:
+                      state.selections["EnglishTest_percentage"],
                   // highestEducationpercentage:
                   //     state.selections["highestEducation_percentage"],
                 )),

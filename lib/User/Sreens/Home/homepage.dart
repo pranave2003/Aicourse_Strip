@@ -224,7 +224,7 @@ class _HomepageState extends State<Homepage> {
                                   },
                                   child: Container(
                                     height: 84,
-                                    width: 160,
+                                    width: 180,
                                     decoration: BoxDecoration(
                                       color: Colors.white,
                                       border: Border.all(color: Colors.grey, width: 2),

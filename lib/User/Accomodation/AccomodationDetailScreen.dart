@@ -93,7 +93,7 @@ class _AccommodationDetailScreenState extends State<AccommodationDetailScreen> {
                   },
                 ),
                 Text(
-                  "Tap to Nearby University",
+                  "Tap to Nearby College",
                   style: TextStyle(color: Colors.grey),
                 )
               ],

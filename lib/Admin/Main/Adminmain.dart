@@ -147,7 +147,7 @@ class _AdminPageState extends State<AdminPage> {
                     _buildSubListTile("View Courses", Universitymainwrapper()),
                     _buildSubListTile("View All", Viewcollagewrapper()),
                     _buildSubListTile("Add Courses", Fetchcolladropdowrapper()),
-                    _buildSubListTile("Add Collage", Addcollage()),
+                    _buildSubListTile("Add College", Addcollage()),
                     _buildSubListTile(
                         "Add University's", Adduniversitywrapper()),
                     // _buildSubListTile("Edit Courses", EditUniversity(universityname: '', universityid: '', Collegename: '', Collegecode: '',  highestEducationpercentage: '', establishedDate: '', admissionEndDate: '', Admission_startdate: '', Terms_and_conditions: '', scholarshipFee: '', courseFee: '', Discription: '', AcadamicTest: '', AcadamicTestPercentage: '', highestEducation: '', Englishtest: '', Englishtestpercentage: '', )),
@@ -174,27 +174,27 @@ class _AdminPageState extends State<AdminPage> {
                 //     icon: Icons.feedback),
                 // _buildMainListTile('Knowledge Bank', CountryRules(),
                 //     icon: Icons.my_library_books_rounded),
-                _buildMainExpansionTile(
-                  title: 'Account',
-                  icon: Icons.person,
-                  children: [
-                    // SubListTile("Account", FeedbackView()),
-                  ],
-                ),
-                _buildMainExpansionTile(
-                  title: 'Settings',
-                  icon: Icons.settings,
-                  children: [
-                    // SubListTile("Account", FeedbackView()),
-                  ],
-                ),
-                _buildMainExpansionTile(
-                  title: 'Log Out',
-                  icon: Icons.login_outlined,
-                  children: [
-                    // SubListTile("Account", FeedbackView()),
-                  ],
-                ),
+                // _buildMainExpansionTile(
+                //   title: 'Account',
+                //   icon: Icons.person,
+                //   children: [
+                //     // SubListTile("Account", FeedbackView()),
+                //   ],
+                // ),
+                // _buildMainExpansionTile(
+                //   title: 'Settings',
+                //   icon: Icons.settings,
+                //   children: [
+                //     // SubListTile("Account", FeedbackView()),
+                //   ],
+                // ),
+                // _buildMainExpansionTile(
+                //   title: 'Log Out',
+                //   icon: Icons.login_outlined,
+                //   children: [
+                //     // SubListTile("Account", FeedbackView()),
+                //   ],
+                // ),
               ],
             ),
           ),
@@ -405,9 +405,9 @@ class AdminDashboard extends StatelessWidget {
                 ),
               ],
             ),
-            const SizedBox(height: 32),
-            const Text('Admin Functionalities',
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+            // const SizedBox(height: 32),
+            // const Text('Admin Functionalities',
+            //     style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
             const SizedBox(height: 16),
             // Wrap(
             //   spacing: 16,
