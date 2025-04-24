@@ -35,6 +35,31 @@ class ViewcollageAndCourse extends StatefulWidget {
 }
 
 class _ViewcollageAndCourseState extends State<ViewcollageAndCourse> {
+  int _getCrossAxisCount(BuildContext context) {
+    double width = MediaQuery.of(context).size.width;
+    if (width >= 1200)
+      return 5;
+    else if (width >= 900)
+      return 5;
+    else if (width >= 600)
+      return 4;
+    else
+      return 2;
+  }
+
+  double _getAspectRatio(BuildContext context) {
+    double width = MediaQuery.of(context).size.width;
+    if (width >= 600) return 0.85;
+    return 0.75;
+  }
+
+  double _getImageHeight(BuildContext context) {
+    double width = MediaQuery.of(context).size.width;
+    if (width >= 900) return 160;
+    if (width >= 600) return 140;
+    return 120;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -112,136 +137,157 @@ class _ViewcollageAndCourseState extends State<ViewcollageAndCourse> {
                             ),
                           );
                         }
-                        return GridView.builder(
-                          physics:
-                              NeverScrollableScrollPhysics(), // Prevents extra scrolling
-                          shrinkWrap: true,
-                          padding:
-                              EdgeInsets.symmetric(horizontal: 5, vertical: 10),
-                          gridDelegate:
-                              SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 5, // Two columns
-                            crossAxisSpacing: 10, // Space between columns
-                            mainAxisSpacing: 10, // Space between rows
-                            childAspectRatio:
-                                0.75, // Adjusted for better image fit
-                          ),
-                          itemCount: state.University.length,
-                          itemBuilder: (context, index) {
-                            final university = state.University[index];
+                        return LayoutBuilder(
+                          builder: (context, constraints) {
+                            int crossAxisCount;
+                            double aspectRatio;
+                            double imageHeight;
 
-                            return InkWell(
-                              onTap: () {
-                                Navigator.push(context, MaterialPageRoute(
-                                  builder: (context) {
-                                    return Admin_view_Collages_Wrapper(
-                                        university: university.Universityname);
+                            // Responsive rules based on maxWidth
+                            if (constraints.maxWidth >= 1200) {
+                              crossAxisCount = 5;
+                              aspectRatio = 0.75;
+                              imageHeight = 140;
+                            } else if (constraints.maxWidth >= 800) {
+                              crossAxisCount = 4;
+                              aspectRatio = 0.7;
+                              imageHeight = 130;
+                            } else if (constraints.maxWidth >= 600) {
+                              crossAxisCount = 3;
+                              aspectRatio = 0.65;
+                              imageHeight = 120;
+                            } else if (constraints.maxWidth >= 300) {
+                              crossAxisCount = 1;
+                              aspectRatio = 0.65;
+                              imageHeight = 120;
+                            } else {
+                              crossAxisCount = 1;
+                              aspectRatio = 0.4;
+                              imageHeight = 100;
+                            }
+
+                            return GridView.builder(
+                              physics: NeverScrollableScrollPhysics(),
+                              shrinkWrap: true,
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: 5, vertical: 10),
+                              gridDelegate:
+                                  SliverGridDelegateWithFixedCrossAxisCount(
+                                crossAxisCount: crossAxisCount,
+                                crossAxisSpacing: 10,
+                                mainAxisSpacing: 10,
+                                childAspectRatio: aspectRatio,
+                              ),
+                              itemCount: state.University.length,
+                              itemBuilder: (context, index) {
+                                final university = state.University[index];
+
+                                return InkWell(
+                                  onTap: () {
+                                    Navigator.push(context, MaterialPageRoute(
+                                      builder: (context) {
+                                        return Admin_view_Collages_Wrapper(
+                                          university: university.Universityname,
+                                        );
+                                      },
+                                    ));
                                   },
-                                ));
-                              },
-                              child: Container(
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(12),
-                                  color: Colors.white,
-                                  boxShadow: [
-                                    BoxShadow(
-                                      color: Colors.grey.withOpacity(0.2),
-                                      blurRadius: 5,
-                                      spreadRadius: 2,
-                                    ),
-                                  ],
-                                ),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: [
-                                    SizedBox(height: 10),
-                                    ClipRRect(
-                                        borderRadius: BorderRadius.circular(
-                                            10), // Uncomment if needed
-                                        child: CachedNetworkImage(
-                                          imageUrl: university
-                                              .UniversityimageURL.toString(),
-                                          height: 120,
-                                          width: MediaQuery.of(context)
-                                                  .size
-                                                  .width *
-                                              0.4, // 40% of screen width
-                                          fit: BoxFit.cover,
-
-                                          // Show a loading indicator while fetching the image
-                                          placeholder: (context, url) => Center(
-                                            child: CircularProgressIndicator(),
-                                          ),
-
-                                          // Show an error icon if the image fails to load
-                                          errorWidget: (context, url, error) =>
-                                              Icon(
-                                            Icons.image_not_supported,
-                                            size: 50,
-                                            color: Colors.grey,
-                                          ),
-                                        )),
-                                    SizedBox(height: 8),
-                                    Padding(
-                                        padding:
-                                            EdgeInsets.symmetric(horizontal: 8),
-                                        child: Text(
-                                          university.Universityname.toString(),
-                                          style: TextStyle(
-                                              fontSize: 14,
-                                              fontWeight: FontWeight.bold),
-                                          textAlign: TextAlign.left,
-                                        )),
-                                    SizedBox(height: 4),
-                                    Padding(
-                                        padding:
-                                            EdgeInsets.symmetric(horizontal: 8),
-                                        child: Text(
-                                          university.Country.toString()
-                                              .toString(),
-                                          style: TextStyle(
-                                              fontSize: 12,
-                                              color: Colors.grey[700]),
-                                          textAlign: TextAlign.left,
-                                        )),
-                                    Padding(
-                                        padding:
-                                            EdgeInsets.symmetric(horizontal: 8),
-                                        child: Text(
-                                          university.collagecode
-                                              .toString()
-                                              .toString(),
-                                          style: TextStyle(
-                                              fontSize: 12,
-                                              color: Colors.grey[700]),
-                                          textAlign: TextAlign.left,
-                                        )),
-                                    Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: [
-                                        Text(
-                                          "Rank ",
-                                          style: TextStyle(
-                                              color: Colors.grey, fontSize: 10),
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(12),
+                                      color: Colors.white,
+                                      boxShadow: [
+                                        BoxShadow(
+                                          color: Colors.grey.withOpacity(0.2),
+                                          blurRadius: 5,
+                                          spreadRadius: 2,
                                         ),
-                                        Text(
-                                          "${university.Rank}",
-                                          style: TextStyle(
-                                              color: Colors.black,
-                                              fontSize: 12,
-                                              fontWeight: FontWeight.bold),
-                                        ),
-                                        Icon(
-                                          Icons.star,
-                                          color: Colors.amber,
-                                          size: 10,
-                                        )
                                       ],
                                     ),
-                                  ],
-                                ),
-                              ),
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      children: [
+                                        SizedBox(height: 10),
+                                        ClipRRect(
+                                          borderRadius:
+                                              BorderRadius.circular(10),
+                                          child: CachedNetworkImage(
+                                            imageUrl: university
+                                                .UniversityimageURL.toString(),
+                                            height: imageHeight,
+                                            width: double.infinity,
+                                            fit: BoxFit.cover,
+                                            placeholder: (context, url) => Center(
+                                                child:
+                                                    CircularProgressIndicator()),
+                                            errorWidget:
+                                                (context, url, error) => Icon(
+                                              Icons.image_not_supported,
+                                              size: 50,
+                                              color: Colors.grey,
+                                            ),
+                                          ),
+                                        ),
+                                        SizedBox(height: 8),
+                                        Padding(
+                                          padding: EdgeInsets.symmetric(
+                                              horizontal: 8),
+                                          child: Text(
+                                            university.Universityname
+                                                .toString(),
+                                            style: TextStyle(
+                                                fontSize: 14,
+                                                fontWeight: FontWeight.bold),
+                                            textAlign: TextAlign.left,
+                                          ),
+                                        ),
+                                        SizedBox(height: 4),
+                                        Padding(
+                                          padding: EdgeInsets.symmetric(
+                                              horizontal: 8),
+                                          child: Text(
+                                            university.Country.toString(),
+                                            style: TextStyle(
+                                                fontSize: 12,
+                                                color: Colors.grey[700]),
+                                            textAlign: TextAlign.left,
+                                          ),
+                                        ),
+                                        Padding(
+                                          padding: EdgeInsets.symmetric(
+                                              horizontal: 8),
+                                          child: Text(
+                                            university.collagecode.toString(),
+                                            style: TextStyle(
+                                                fontSize: 12,
+                                                color: Colors.grey[700]),
+                                            textAlign: TextAlign.left,
+                                          ),
+                                        ),
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            Text("Rank ",
+                                                style: TextStyle(
+                                                    color: Colors.grey,
+                                                    fontSize: 10)),
+                                            Text("${university.Rank}",
+                                                style: TextStyle(
+                                                    color: Colors.black,
+                                                    fontSize: 12,
+                                                    fontWeight:
+                                                        FontWeight.bold)),
+                                            Icon(Icons.star,
+                                                color: Colors.amber, size: 10),
+                                          ],
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                );
+                              },
                             );
                           },
                         );

@@ -4,7 +4,6 @@ import 'package:course_connect/Widget/Constands/Loading.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
 import '../../../../Controller/Bloc/Dropdown_university/CollagemasterBloc/collagedropdown_bloc.dart';
 import '../../../../Controller/Bloc/Dropdown_university/dropdown_bloc.dart';
 import '../../../../Controller/Bloc/University_block/University_model/Universitycollage.dart';
@@ -85,6 +84,21 @@ class _AddUniversityState extends State<AddUniversity> {
   String? Nearbycollage;
 
   late Collagemodel college;
+
+  bool isDropdownOpen = false;
+  bool isDropdownBoardOpen = false;
+
+  List<String> selectedCountries = [];
+  List<String> selectedBoards = [];
+
+  final List<String> countries = [
+    "Science",
+    "Commerce",
+    "Humanities",
+    "VHSC",
+  ];
+  final List<String> Boards = ['IB', 'ICSE', 'CBSC', 'State'];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -545,9 +559,7 @@ class _AddUniversityState extends State<AddUniversity> {
                     }),
                     buildDropdown(
                       "Academic Test",
-                      [
-                        "GRE", "GMAT", "IIT JAM", "TEST NOT TAKEN"
-                      ],
+                      ["GRE", "GMAT", "IIT JAM", "TEST NOT TAKEN"],
                       AcadamicTest,
                           (value) {
                         setState(() {
@@ -745,6 +757,207 @@ class _AddUniversityState extends State<AddUniversity> {
                 ],
               ),
               // ),
+              Padding(
+                padding: const EdgeInsets.only(left: 20),
+                child: Text(
+                  "choose  scheme..",
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+                ),
+              ),
+
+              Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Column(
+                  children: [
+                    /// Selected countries shown as chips
+                    if (selectedCountries.isNotEmpty)
+                      Wrap(
+                        spacing: 8,
+                        runSpacing: 8,
+                        children: selectedCountries.map((country) {
+                          return Chip(
+                            label: Text(country),
+                            deleteIcon: Icon(
+                              Icons.close,
+                              color: Colors.red,
+                            ),
+                            onDeleted: () {
+                              setState(() {
+                                selectedCountries.remove(country);
+                              });
+                            },
+                          );
+                        }).toList(),
+                      ),
+
+                    SizedBox(height: 20),
+
+                    /// Dropdown container
+                    GestureDetector(
+                      onTap: () {
+                        setState(() {
+                          isDropdownOpen = !isDropdownOpen;
+                        });
+                      },
+                      child: Container(
+                        padding:
+                            EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          border: Border.all(color: Colors.grey),
+                          borderRadius: BorderRadius.circular(2),
+                        ),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            /// Header Row
+                            Row(
+                              children: [
+                                Icon(Icons.golf_course, color: Colors.black),
+                                SizedBox(width: 10),
+                                Expanded(
+                                  child: Text(
+                                    selectedCountries.isEmpty
+                                        ? "Select Countries"
+                                        : selectedCountries.join(", "),
+                                    style: TextStyle(
+                                        fontSize: 16, color: Colors.black54),
+                                    overflow: TextOverflow.ellipsis,
+                                  ),
+                                ),
+                                Icon(Icons.arrow_drop_down)
+                              ],
+                            ),
+
+                            /// Dropdown List
+                            if (isDropdownOpen)
+                              Column(
+                                children: countries.map((country) {
+                                  return CheckboxListTile(
+                                    title: Text(country),
+                                    value: selectedCountries.contains(country),
+                                    onChanged: (bool? selected) {
+                                      setState(() {
+                                        if (selected == true) {
+                                          if (!selectedCountries
+                                              .contains(country)) {
+                                            selectedCountries.add(country);
+                                          }
+                                        } else {
+                                          selectedCountries.remove(country);
+                                        }
+                                      });
+                                    },
+                                  );
+                                }).toList(),
+                              ),
+                          ],
+                        ),
+                      ),
+                    ),
+
+                    //   ////
+                  ],
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(left: 20),
+                child: Text(
+                  "Choose Board..",
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+                ),
+              ),
+
+              Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Column(
+                  children: [
+                    /// Selected countries shown as chips
+                    if (selectedBoards.isNotEmpty)
+                      Wrap(
+                        spacing: 8,
+                        runSpacing: 8,
+                        children: selectedBoards.map((country) {
+                          return Chip(
+                            label: Text(country),
+                            deleteIcon: Icon(Icons.close),
+                            onDeleted: () {
+                              setState(() {
+                                selectedBoards.remove(country);
+                              });
+                            },
+                          );
+                        }).toList(),
+                      ),
+
+                    SizedBox(height: 20),
+
+                    /// Dropdown container
+                    GestureDetector(
+                      onTap: () {
+                        setState(() {
+                          isDropdownBoardOpen = !isDropdownBoardOpen;
+                        });
+                      },
+                      child: Container(
+                        padding:
+                            EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          border: Border.all(color: Colors.grey),
+                          borderRadius: BorderRadius.circular(2),
+                        ),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            /// Header Row
+                            Row(
+                              children: [
+                                Icon(Icons.bookmark_add, color: Colors.black),
+                                SizedBox(width: 10),
+                                Expanded(
+                                  child: Text(
+                                    selectedBoards.isEmpty
+                                        ? "Select Countries"
+                                        : selectedBoards.join(", "),
+                                    style: TextStyle(
+                                        fontSize: 16, color: Colors.black54),
+                                    overflow: TextOverflow.ellipsis,
+                                  ),
+                                ),
+                                Icon(Icons.arrow_drop_down)
+                              ],
+                            ),
+
+                            /// Dropdown List
+                            if (isDropdownBoardOpen)
+                              Column(
+                                children: Boards.map((country) {
+                                  return CheckboxListTile(
+                                    title: Text(country),
+                                    value: selectedBoards.contains(country),
+                                    onChanged: (bool? selected) {
+                                      setState(() {
+                                        if (selected == true) {
+                                          if (!selectedBoards
+                                              .contains(country)) {
+                                            selectedBoards.add(country);
+                                          }
+                                        } else {
+                                          selectedBoards.remove(country);
+                                        }
+                                      });
+                                    },
+                                  );
+                                }).toList(),
+                              ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
 
               // Row(
               //   children: [
