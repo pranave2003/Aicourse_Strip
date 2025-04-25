@@ -26,11 +26,11 @@ class _DegreeState extends State<Degree> {
       "image": "assets/Country/img_7.png",
       "page": (String? selectedDegree) => Masters_education(selecteddegree: selectedDegree),
     },
-    {
-      "name": "MBA",
-      "image": "assets/Country/img_7.png",
-      "page": (String? selectedDegree) => MbaEducation(selecteddegree: selectedDegree),
-    },
+    // {
+    //   "name": "MBA",
+    //   "image": "assets/Country/img_7.png",
+    //   "page": (String? selectedDegree) => MbaEducation(selecteddegree: selectedDegree),
+    // },
   ];
 
   @override

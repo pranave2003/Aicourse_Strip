@@ -121,16 +121,16 @@ class _UserLogin_authState extends State<UserLogin_auth> {
                         ),
                         Row(
                           children: [
-                            Checkbox(
-                              activeColor: blueColor,
-                              value: isChecked,
-                              onChanged: (val) {
-                                setState(() {
-                                  isChecked = !isChecked;
-                                });
-                              },
-                            ),
-                            Text("Remember Me?")
+                            // Checkbox(
+                            //   activeColor: blueColor,
+                            //   value: isChecked,
+                            //   onChanged: (val) {
+                            //     setState(() {
+                            //       isChecked = !isChecked;
+                            //     });
+                            //   },
+                            // ),
+                            // Text("Remember Me?")
                           ],
                         ),
                         SizedBox(height: 20),

@@ -17,7 +17,8 @@ class _Maters_academicState extends State<Maters_academic> {
   final TextEditingController scoreController = TextEditingController();
 
   final List<String> englishTests = [
-    "GRE", "GMAT", "IIT JAM", "TEST NOT TAKEN"
+    "GRE", "GMAT", "IIT JAM","CAT",
+    "CMAT", "TEST NOT TAKEN"
   ];
 
   final Map<String, String> testScoreRanges = {
