@@ -1,9 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:course_connect/Admin/View/Screens/Courses/Addcourses.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../../Controller/Bloc/University_block/university_bloc.dart';
-import '../../../../../User/Sreens/Home/Course.dart';
 import '../../../../../Widget/Constands/Loading.dart';
 import 'View_admin_course.dart';
 

@@ -46,7 +46,8 @@ class _AdduniversitynameState extends State<Adduniversityname> {
                 Row(
                   children: [
                     Text("Welcome ",
-                        style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
+                        style: TextStyle(
+                            fontSize: 24, fontWeight: FontWeight.bold)),
                     Text("Admin,",
                         style: TextStyle(
                             fontSize: 24,
@@ -62,7 +63,8 @@ class _AdduniversitynameState extends State<Adduniversityname> {
                     ),
                     SizedBox(width: 10),
                     Container(
-                      padding: EdgeInsets.symmetric(horizontal: 14, vertical: 6),
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 14, vertical: 6),
                       decoration: BoxDecoration(
                         color: Colors.white,
                         borderRadius: BorderRadius.circular(30),
@@ -73,12 +75,14 @@ class _AdduniversitynameState extends State<Adduniversityname> {
                           CircleAvatar(
                             radius: 20,
                             backgroundColor: Colors.grey[300],
-                            backgroundImage: AssetImage('assets/Profile/img.png'),
+                            backgroundImage:
+                                AssetImage('assets/Profile/img.png'),
                           ),
                           SizedBox(width: 10),
                           Text(
                             "Admin",
-                            style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                            style: TextStyle(
+                                fontSize: 16, fontWeight: FontWeight.bold),
                           ),
                         ],
                       ),
@@ -94,7 +98,8 @@ class _AdduniversitynameState extends State<Adduniversityname> {
               child: BlocConsumer<UniversityBloc, UniversityState>(
                 listener: (context, state) {
                   if (state is Adduniversitysucess) {
-                    context.read<UniversityBloc>()..add(MasterFetchUniversitys());
+                    context.read<UniversityBloc>()
+                      ..add(MasterFetchUniversitys());
                     Universitymastercontroller.clear();
                   }
                 },
@@ -105,7 +110,8 @@ class _AdduniversitynameState extends State<Adduniversityname> {
                   if (state is MasterUniversityLoaded) {
                     return Card(
                       elevation: 4,
-                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12)),
                       child: Padding(
                         padding: const EdgeInsets.all(16.0),
                         child: ListView.separated(
@@ -119,12 +125,14 @@ class _AdduniversitynameState extends State<Adduniversityname> {
                                 child: Text("${index + 1}"),
                               ),
                               title: Text(university.name,
-                                  style: TextStyle(fontWeight: FontWeight.w500)),
+                                  style:
+                                      TextStyle(fontWeight: FontWeight.w500)),
                               trailing: IconButton(
                                 icon: Icon(Icons.delete, color: Colors.red),
                                 onPressed: () {
                                   context.read<UniversityBloc>().add(
-                                      deleteMasteruniversity(id: university.id));
+                                      deleteMasteruniversity(
+                                          id: university.id));
                                 },
                               ),
                             );
@@ -152,7 +160,8 @@ class _AdduniversitynameState extends State<Adduniversityname> {
                       hintText: "Enter University",
                       filled: true,
                       fillColor: Colors.white,
-                      contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+                      contentPadding:
+                          EdgeInsets.symmetric(horizontal: 16, vertical: 14),
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(12),
                       ),
@@ -174,7 +183,7 @@ class _AdduniversitynameState extends State<Adduniversityname> {
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.blue,
                         padding:
-                        EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+                            EdgeInsets.symmetric(horizontal: 24, vertical: 16),
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(10)),
                       ),

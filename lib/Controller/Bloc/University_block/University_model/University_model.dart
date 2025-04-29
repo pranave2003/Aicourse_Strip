@@ -81,15 +81,13 @@ class University_model {
       Universityid: data['Universityid'],
       UniversityimageURL: data['Universityimage'],
       AcadamicTest: data['AcadamicTest'],
-      AcadamicTestPercentage: data['AcadamicTestPercentage'],
+      AcadamicTestPercentage: data['AcadamicTestPercentage'] ?? 0,
       Englishtest: data['Englishtest'],
-      Englishtestpercentage: data['Englishtestpercentage'],
+      Englishtestpercentage: data['Englishtestpercentage'] ?? 0,
       highestEducation: data['highestEducation'],
-      highestEducationpercentage: data['highestEducationpercentage'],
+      highestEducationpercentage: data['highestEducationpercentage'] ?? 0,
       collagecode: data['collagecode'],
       Collegename: data['Collegename'],
     );
   }
-
-
 }
