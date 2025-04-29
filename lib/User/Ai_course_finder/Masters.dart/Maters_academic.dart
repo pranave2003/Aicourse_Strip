@@ -25,6 +25,9 @@ class _Maters_academicState extends State<Maters_academic> {
     "GRE": "130 - 170",
     "GMAT": "200 - 800",
     "IIT JAM": "0 - 100",
+    "CAT": "0 - 100",
+    "CMAT": "0 - 100",
+    "TEST NOT TAKEN": "No Score Required",
 
   };
 

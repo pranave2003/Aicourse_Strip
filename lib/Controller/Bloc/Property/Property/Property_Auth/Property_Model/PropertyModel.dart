@@ -36,6 +36,8 @@ class Property_Model {
   String? oneSignalId;
   String? location;
   String? NearestUniversity;
+  String? Review;
+  String? Ratingstatus;
 
   Property_Model({
     this.propertyId,
@@ -75,6 +77,8 @@ class Property_Model {
     this.oneSignalId,
     this.location,
     this.NearestUniversity,
+    this.Review,
+    this.Ratingstatus,
   });
 
   factory Property_Model.fromMap(Map<String, dynamic> data) {
@@ -116,6 +120,9 @@ class Property_Model {
         ban: data['ban'],
         oneSignalId: data['oneSignalId'],
         location: data['location'],
+        Review: data["Review"],
+    Ratingstatus: data["Ratingstatus"],
         NearestUniversity: data["NearestUniversity"]);
+
   }
 }

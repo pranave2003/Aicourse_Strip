@@ -28,6 +28,7 @@ class EditUniversity extends StatefulWidget {
     required this.highestEducation,
     required this.Englishtest,
     required this.Englishtestpercentage,
+
   });
 
   final String universityname;
@@ -47,6 +48,7 @@ class EditUniversity extends StatefulWidget {
   final String AcadamicTestPercentage;
   final String Englishtest;
   final String Englishtestpercentage;
+
 
   @override
   _EditUniversityState createState() => _EditUniversityState();
@@ -69,9 +71,12 @@ class _EditUniversityState extends State<EditUniversity> {
 
   String? highestEducation;
   String? highestEducationpercentage;
+  double? highestEducationPercentageValue;
+  double?EnglishtestpercentageValue;
 
   String? AcadamicTest;
   String? AcadamicTestPercentage;
+  double?AcadamicTestPercentageValue;
 
   String? Englishtest;
   String? Englishtestpercentage;
@@ -227,11 +232,11 @@ class _EditUniversityState extends State<EditUniversity> {
                                 Terms_and_conditions: Terms_and_conditions.text,
                                 Tuition_fees: courseFeeController.text,
                                 Rank: selectedRank,
-                                highestEducationpercentage: highestEducationpercentage,
+                                highestEducationpercentage: highestEducationPercentageValue,
                                 highestEducation: highestEducation,
-                                Englishtestpercentage: Englishtestpercentage,
+                                Englishtestpercentage: EnglishtestpercentageValue,
                                 Englishtest: Englishtest,
-                                AcadamicTestPercentage: AcadamicTestPercentage,
+                                AcadamicTestPercentage: AcadamicTestPercentageValue,
                                 AcadamicTest: AcadamicTest,
                               );
 

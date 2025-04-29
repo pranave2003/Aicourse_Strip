@@ -47,7 +47,30 @@ class _Masters_CoursesState extends State<Masters_Courses> {
     "MSc in International Relations",
     "MSc in Public Policy",
     "Master in Social Work (MSW)",
-    "MSc in Industrial Engineering"
+    "MSc in Industrial Engineering",
+    "General MBA",
+    "MBA in Finance",
+    "MBA in Marketing",
+    "MBA in Human Resource Management",
+    "MBA in International Business",
+    "MBA in Entrepreneurship",
+    "MBA in Business Analytics",
+    "MBA in Supply Chain Management",
+    "MBA in Digital Marketing",
+    "MBA in Operations Management",
+    "MBA in Healthcare Management",
+    "MBA in Hospitality & Tourism Management",
+    "MBA in Retail Management",
+    "MBA in Agribusiness Management",
+    "MBA in Sports Management",
+    "MBA in Luxury Brand Management",
+    "MBA in Real Estate Management",
+    "MBA in Information Technology",
+    "MBA in Data Science",
+    "MBA in Cybersecurity Management",
+    "MBA in AI & Machine Learning",
+    "MBA in Blockchain & FinTech",
+    "Executive MBA (EMBA)"
   ];
 
   // For storing filtered list based on search query

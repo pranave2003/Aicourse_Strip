@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:course_connect/Admin/View/Screens/University/EditUniversity.dart';
+import 'package:course_connect/Controller/Bloc/Applycourse/application_bloc.dart';
 import 'package:course_connect/Widget/Constands/Loading.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -256,7 +257,7 @@ class _University_mainState extends State<University_main> {
                                               Collegecode:
                                                   student.collagecode ?? '',
                                               highestEducationpercentage: student
-                                                      .highestEducationpercentage ??
+                                                      .highestEducationpercentage.toString() ??
                                                   '',
                                               establishedDate:
                                                   student.Established_date ??
@@ -278,7 +279,7 @@ class _University_mainState extends State<University_main> {
                                                       .Schoolarship_details ??
                                                   '',
                                               AcadamicTestPercentage: student
-                                                      .AcadamicTestPercentage ??
+                                                      .AcadamicTestPercentage.toString() ??
                                                   '',
                                               AcadamicTest:
                                                   student.AcadamicTest ?? '',
@@ -289,8 +290,9 @@ class _University_mainState extends State<University_main> {
                                               Englishtest:
                                                   student.Englishtest ?? '',
                                               Englishtestpercentage: student
-                                                      .highestEducationpercentage ??
+                                                      .Englishtestpercentage.toString() ??
                                                   '',
+
                                               // AcademicTestPercentage:student.AcadamicTestPercentage??'',
                                               // AcadamicTest:student.AcadamicTest??'',
 

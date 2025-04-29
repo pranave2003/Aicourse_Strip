@@ -1,42 +1,50 @@
+import 'package:course_connect/Controller/Bloc/Applycourse/application_bloc.dart';
+import 'package:course_connect/Controller/Bloc/Property/Property/Property_auth_block.dart';
+import 'package:course_connect/Controller/Bloc/Property/Property/Property_auth_state.dart';
+import 'package:course_connect/User/Sreens/BottomNavigation/Bottom_nav2.dart';
+import 'package:course_connect/User/Sreens/Home/homepage.dart';
 import 'package:course_connect/Widget/Constands/colors.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
-void main() {
-  runApp(const Feedback());
-}
+import '../../Widget/Constands/Loading.dart';
 
-class Feedback extends StatelessWidget {
-  const Feedback({super.key});
+
+class FeedbackApp extends StatelessWidget {
+  final String propertyId;
+  const FeedbackApp({super.key, required this.propertyId});
+
+
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: FeedbackScreen(),
+      home: FeedbackScreen(id: propertyId),
     );
   }
 }
 
-class FeedbackScreen extends StatelessWidget {
-  const FeedbackScreen({super.key});
+class FeedbackScreen extends StatefulWidget {
+  const FeedbackScreen({super.key, required this.id});
+  final dynamic id;
+
+  @override
+  _FeedbackScreenState createState() => _FeedbackScreenState();
+}
+
+class _FeedbackScreenState extends State<FeedbackScreen> {
+  String rating = "0";
+  TextEditingController feedbackController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-
-            automaticallyImplyLeading:false,
+        automaticallyImplyLeading: false,
         backgroundColor: Colors.white,
         elevation: 0,
-        // leading: IconButton(
-          // icon: const Icon(Icons.arrow_back, color: Colors.black),
-          // onPressed: () {},
-        // ),
-        // title: const Text(
-        //   "Feedback",
-        //   style: TextStyle(color: Colors.black),
-        // ),
         centerTitle: false,
       ),
       body: Padding(
@@ -45,7 +53,7 @@ class FeedbackScreen extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             const SizedBox(height: 20),
-            Image.asset('assets/img_14.png', height: 200),
+            Image.asset('assets/img_6.png', height: 200),
             const SizedBox(height: 10),
             const Text(
               "Share Your Feedback",
@@ -74,19 +82,27 @@ class FeedbackScreen extends StatelessWidget {
             ),
             const SizedBox(height: 20),
             const Text(
-              "Give us your  feedback",
+              "Give us your house feedback",
               style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
             ),
             const SizedBox(height: 20),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                starIcon(true),
-                starIcon(true),
-                starIcon(true),
-                starIcon(true),
-                starIcon(false),
-              ],
+              children: List.generate(5, (index) {
+                return IconButton(
+                  onPressed: () {
+                    setState(() {
+                      rating = (index + 1).toString();
+                    });
+                  },
+                  icon: Icon(
+                    int.parse(rating) > index
+                        ? Icons.star
+                        : Icons.star_border,
+                    color: Colors.amber,
+                  ),
+                );
+              }),
             ),
             const SizedBox(height: 20),
             Align(
@@ -101,11 +117,12 @@ class FeedbackScreen extends StatelessWidget {
               padding: const EdgeInsets.all(10),
               height: 150,
               decoration: BoxDecoration(
-                color: Colors.grey.withOpacity(0.6),
+                color: Colors.grey.withOpacity(0.2),
                 borderRadius: BorderRadius.circular(10),
               ),
-              child: const TextField(
-                decoration: InputDecoration(
+              child: TextField(
+                controller: feedbackController,
+                decoration: const InputDecoration(
                   hintText: "Please write here",
                   border: InputBorder.none,
                 ),
@@ -113,23 +130,54 @@ class FeedbackScreen extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 30),
-            SizedBox(
-              width: double.infinity,
-              child: ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: blueColor,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(8),
+            BlocConsumer<PropertyAuthBlock, PropertyAuthState>(
+              listener: (context, state) {
+                if (state is UserSendreviewandratingSuccess) {
+                  Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) =>HomepageWrapper(),
+                    ),
+                  );
+                }
+              },
+              builder: (context, state) {
+                return ElevatedButton(
+                  onPressed: () {
+                    if (rating == "0") {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                          content: Text("Please give a star rating."),
+                        ),
+                      );
+                      return;
+                    }
+
+                    context.read<PropertyAuthBlock>().add(
+                      UserSendreviewandratingevent(
+                        id: widget.id,
+                        Review: feedbackController.text,
+                        Ratingstatus: rating,
+                      ),
+                    );
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.blue,
+                    minimumSize: const Size(double.infinity, 50),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12),
+                    ),
                   ),
-                  padding: const EdgeInsets.symmetric(vertical: 15),
-                ),
-                onPressed: () {},
-                child: const Text(
-                  "Submit",
-                  style: TextStyle(color: Colors.white, fontSize: 26),
-                ),
-              ),
+                  child: state is UserSendreviewandratingloading
+                      ? const Loading_Widget()
+                      : const Text(
+                    "Submit",
+                    style: TextStyle(fontSize: 18, color: Colors.white),
+                  ),
+                );
+              },
             ),
+            const SizedBox(height: 30),
           ],
         ),
       ),
@@ -144,14 +192,6 @@ class FeedbackScreen extends StatelessWidget {
         backgroundColor: isSelected ? Colors.blue : Colors.white,
         child: Icon(icon, color: isSelected ? Colors.white : Colors.orange),
       ),
-    );
-  }
-
-  Widget starIcon(bool isFilled) {
-    return Icon(
-      isFilled ? Icons.star : Icons.star_border,
-      color: Colors.orange,
-      size: 28,
     );
   }
 }

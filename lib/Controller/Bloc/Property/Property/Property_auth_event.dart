@@ -39,3 +39,14 @@ class UploadImagesEvent extends PropertyAuthEvent {
 
   List<Object?> get props => [files];
 }
+//event//
+
+class UserSendreviewandratingevent extends PropertyAuthEvent {
+  final String? id;
+  final String? Review;
+  final String? Ratingstatus;
+  UserSendreviewandratingevent(
+      {required this.id,
+        this.Review,
+        this.Ratingstatus,});
+}

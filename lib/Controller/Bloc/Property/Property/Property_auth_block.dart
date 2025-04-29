@@ -62,7 +62,9 @@ class PropertyAuthBlock extends Bloc<PropertyAuthEvent, PropertyAuthState> {
             "pets": event.Property.pets,
             "smoking": event.Property.smoking,
             "location": event.Property.location,
-            "NearestUniversity": event.Property.NearestUniversity
+            "NearestUniversity": event.Property.NearestUniversity,
+            "Review":event.Property.Review,
+            "Ratingstatus":event.Property.Ratingstatus,
           });
           print("done...");
 
@@ -196,6 +198,27 @@ class PropertyAuthBlock extends Bloc<PropertyAuthEvent, PropertyAuthState> {
       },
     );
 
+    on<UserSendreviewandratingevent>((event, emit) async {
+      emit(UserSendreviewandratingloading());
+
+      try {
+        // await FirebaseFirestore.instance
+        //     .collection("Property")
+        //     .doc(event.id);
+        await FirebaseFirestore.instance.collection("feedback").add({
+          "id": event.id,
+          "review": event.Review,
+          "rating": event.Ratingstatus,
+          "timestamp": Timestamp.now(),
+        });
+
+        emit(UserSendreviewandratingSuccess());
+      } catch (e) {
+        emit(Propertyfailerror("Failed to submit feedback"));
+      }
+    });
+
+
     on<UploadImagesEvent>(
       (event, emit) async {
         emit(UploadLoading());
@@ -231,3 +254,4 @@ class PropertyAuthBlock extends Bloc<PropertyAuthEvent, PropertyAuthState> {
     );
   }
 }
+

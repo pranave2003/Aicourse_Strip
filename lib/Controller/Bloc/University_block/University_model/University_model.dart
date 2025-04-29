@@ -20,11 +20,11 @@ class University_model {
   String? UniversityimageURL;
   String? Universityid;
   String? highestEducation;
-  String? highestEducationpercentage;
+  double? highestEducationpercentage;
   String? AcadamicTest;
-  String? AcadamicTestPercentage;
+  double? AcadamicTestPercentage;
   String? Englishtest;
-  String? Englishtestpercentage;
+  double? Englishtestpercentage;
   String? Collegename;
   String? collagecode;
 

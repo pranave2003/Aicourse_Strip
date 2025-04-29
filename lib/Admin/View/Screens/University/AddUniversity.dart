@@ -42,14 +42,21 @@ class _AddUniversityState extends State<AddUniversity> {
 
   // education
   String? highestEducation;
-  String? highestEducationpercentage;
+// for dropdown selection
+  String? highestEducationpercentage; // for selected percentage (as String)
+  double? highestEducationPercentageValue; // parsed float value
+
 
   String? AcadamicTest;
   String? AcadamicTestPercentage;
+ double? AcadamicTestPercentageValue;
 
   // common
   String? Englishtest;
-  String? Englishtestpercentage;
+  String? Englishtestpercentage; // for dropdown selection (continue keeping this for UI)
+  double? EnglishtestpercentageValue;
+  // new variable to store double value
+
 
   final TextEditingController DiscriptionController = TextEditingController();
 
@@ -76,6 +83,26 @@ class _AddUniversityState extends State<AddUniversity> {
     "TOEFL": ["40-50", "50-60", "60-70", "70-80", "80-90", "90-100", "100-120"],
     "Not Required": ["N/A"],
   };
+  Map<String, List<String>> testScoreRanges2 = {
+    "GRE": List.generate(9, (i) => (260 + i * 10).toString()), // 260 to 340
+    "GMAT": List.generate(13, (i) => (200 + i * 50).toString()), // 200 to 800
+    "IIT JAM": ["0", "10", "20", "30", "40", "50", "60", "70", "80", "90", "100"],
+    "CAT": ["40", "50", "60", "70", "80", "90", "95", "98", "99", "100"],
+    "CMAT": ["100", "150", "200", "250", "300", "350", "400"],
+    "TEST NOT TAKEN": [],
+  };
+  Map<String, List<String>> educationScoreRanges = {
+    "Grade 12": ["50.0", "55.0", "60.0", "65.0", "70.0", "75.0", "80.0", "85.0", "90.0", "95.0", "100.0"],
+    "Undergraduate diploma": ["50", "60", "65", "70", "75", "80", "85", "90", "95", "100"],
+  };
+  Map<String, List<String>> educationScoreRanges2 = {
+    "Undergraduate Degree": ["50", "55", "60", "65", "70", "75", "80", "85", "90", "95", "100"],
+    "Undergraduate Diploma": ["50", "55", "60", "65", "70", "75", "80", "85", "90"],
+    "Postgraduate Degree": ["60", "65", "70", "75", "80", "85", "90", "95", "100"],
+    "Postgraduate Diploma": ["60", "65", "70", "75", "80", "85", "90"],
+  };
+
+
 
 
   // String university_image = '1';
@@ -219,13 +246,13 @@ class _AddUniversityState extends State<AddUniversity> {
                                     Universityname: college.Universityname,
                                     Rank: college.Rank,
                                     highestEducationpercentage:
-                                        highestEducationpercentage,
+                                    highestEducationPercentageValue,
                                     highestEducation: highestEducation,
                                     Englishtestpercentage:
-                                        Englishtestpercentage,
+                                        EnglishtestpercentageValue,
                                     Englishtest: Englishtest,
                                     AcadamicTestPercentage:
-                                        AcadamicTestPercentage,
+                                        AcadamicTestPercentageValue,
                                     AcadamicTest: AcadamicTest,
                                     Collegename: college.Collegename,
                                     collagecode: college.collagecode);
@@ -404,7 +431,7 @@ class _AddUniversityState extends State<AddUniversity> {
               ),
 
               // Dropdown for Degree Type
-              buildDropdown("Degree Type", ["Bachelors", "Masters", "MBA"],
+              buildDropdown("Degree Type", ["Bachelors", "Masters",],
                   selectedDegree, (value) {
                 setState(() => selectedDegree = value);
               }, required: true),
@@ -446,23 +473,36 @@ class _AddUniversityState extends State<AddUniversity> {
                       setState(() => selectedCourse = value);
                     }),
                     buildDropdown(
-                        "Education Level",
-                        ["Grade 12", "Undergraduate diploma"],
-                        highestEducation, (value) {
-                      setState(() {
-                        highestEducation = value;
-                        print(highestEducation);
-                      });
-                    }),
-                    buildDropdown(
-                        "Minimum Required Percentage ",
-                        ["50", "60", "70", "80", "90", "100"],
-                        highestEducationpercentage, (value) {
-                      setState(() {
-                        highestEducationpercentage = value;
-                        print(highestEducationpercentage);
-                      });
-                    }),
+                      "Education Level",
+                      ["Grade 12", "Undergraduate diploma"],
+                      highestEducation,
+                          (value) {
+                        setState(() {
+                          highestEducation = value;
+                          highestEducationpercentage = null;
+                          highestEducationPercentageValue = null; // Also reset float
+                          print(highestEducation);
+                        });
+                      },
+                    ),
+
+                    if (highestEducation != null)
+                      buildDropdown(
+                        "Minimum Required Percentage",
+                        educationScoreRanges[highestEducation] ?? [],
+                        highestEducationpercentage,
+                            (value) {
+                          setState(() {
+                            highestEducationpercentage = value;
+                            if (value != null) {
+                              highestEducationPercentageValue = double.tryParse(value);
+                              print("Float value: $highestEducationPercentageValue");
+                            }
+                          });
+                        },
+                      ),
+
+
                     buildDropdown(
                       "Academic Test",
                       ["ACT", "SAT", "CUET", "TEST NOT TAKEN"],
@@ -481,12 +521,24 @@ class _AddUniversityState extends State<AddUniversity> {
                         "Minimum Required Score",
                         testScoreRanges[AcadamicTest] ?? [],
                         AcadamicTestPercentage,
-                            (value) {
-                          setState(() {
-                            AcadamicTestPercentage = value;
-                            print("Score: $AcadamicTestPercentage");
-                          });
-                        },
+                              (value) {
+                            setState(() {
+                              AcadamicTestPercentage = value;
+
+                              // Parse float from range string
+                              if (value != null) {
+                                if (value.contains("-")) {
+                                  AcadamicTestPercentageValue = double.tryParse(value.split("-").first);
+                                } else {
+                                  AcadamicTestPercentageValue = double.tryParse(value);
+                                }
+                              }
+
+                              print("Selected Score: $AcadamicTestPercentage");
+                              print("Parsed Float: $AcadamicTestPercentageValue");
+                            });
+                          }
+
                       ),
 
                   ],
@@ -527,39 +579,73 @@ class _AddUniversityState extends State<AddUniversity> {
                           "MSc in International Relations",
                           "MSc in Public Policy",
                           "Master in Social Work (MSW)",
-                          "MSc in Industrial Engineering"
+                          "MSc in Industrial Engineering",
+                          "General MBA",
+                                      "MBA in Finance",
+                                      "MBA in Marketing",
+                                      "MBA in Human Resource Management",
+                                      "MBA in International Business",
+                                      "MBA in Entrepreneurship",
+                                      "MBA in Business Analytics",
+                                      "MBA in Supply Chain Management",
+                                      "MBA in Digital Marketing",
+                                      "MBA in Operations Management",
+                                      "MBA in Healthcare Management",
+                                      "MBA in Hospitality & Tourism Management",
+                                      "MBA in Retail Management",
+                                      "MBA in Agribusiness Management",
+                                      "MBA in Sports Management",
+                                      "MBA in Luxury Brand Management",
+                                      "MBA in Real Estate Management",
+                                      "MBA in Information Technology",
+                                      "MBA in Data Science",
+                                      "MBA in Cybersecurity Management",
+                                      "MBA in AI & Machine Learning",
+                                      "MBA in Blockchain & FinTech",
+                                      "Executive MBA (EMBA)",
                         ],
                         selectedCourse, (value) {
                       setState(() => selectedCourse = value);
                     }),
                     buildDropdown(
-                        "Education Level",
-                        [
-                          "Undergraduate Degree",
-                          "Undergraduate Diploma",
-                          "Postgraduate Degree",
-                          "Postgraduate Diploma",
-                        ],
-                        highestEducation, (value) {
-                      setState(() {
-                        highestEducation = value;
-                        print(highestEducation);
-                      });
-                    }),
+                      "Education Level",
+                      [
+                        "Undergraduate Degree",
+                        "Undergraduate Diploma",
+                        "Postgraduate Degree",
+                        "Postgraduate Diploma",
+                      ],
+                      highestEducation,
+                          (value) {
+                        setState(() {
+                          highestEducation = value;
+                          highestEducationpercentage = null;
+                          highestEducationPercentageValue = null; // Also reset float
+                          print(highestEducation);
+                        });
+                      },
+                    ),
 
+                    if (highestEducation != null)
+                      buildDropdown(
+                        "Minimum Required Percentage",
+                        educationScoreRanges2[highestEducation] ?? [],
+                        highestEducationpercentage,
+                            (value) {
+                          setState(() {
+                            highestEducationpercentage = value;
+                            if (value != null) {
+                              highestEducationPercentageValue = double.tryParse(value);
+                              print("Float value: $highestEducationPercentageValue");
+                            }
+                          });
+                        },
+                      ),
 
-                    buildDropdown(
-                        "Minimum Required Percentage ",
-                        ["50", "60", "70", "80", "90", "100"],
-                        highestEducationpercentage, (value) {
-                      setState(() {
-                        highestEducationpercentage = value;
-                        print(highestEducationpercentage);
-                      });
-                    }),
                     buildDropdown(
                       "Academic Test",
-                      ["GRE", "GMAT", "IIT JAM", "TEST NOT TAKEN"],
+                      ["GRE", "GMAT", "IIT JAM", "CAT",
+                "CMAT", "TEST NOT TAKEN"],
                       AcadamicTest,
                           (value) {
                         setState(() {
@@ -570,117 +656,129 @@ class _AddUniversityState extends State<AddUniversity> {
                     ),
 
 
-    if (AcadamicTest != "Not Required")
+                    if (AcadamicTest != "TEST NOT TAKEN")
                       buildDropdown(
-                        "Academic Test Percentage Minimum",
-                        ["50", "60", "70", "80", "90", "100"],
+                        "Academic Test Score Minimum",
+                        testScoreRanges2[AcadamicTest] ?? [],
                         AcadamicTestPercentage,
-                        (value) {
-                          setState(() {
-                            AcadamicTestPercentage = value;
-                            print(AcadamicTestPercentage);
-                          });
-                        },
+                              (value) {
+                            setState(() {
+                              AcadamicTestPercentage = value;
+
+                              // Parse float from range string
+                              if (value != null) {
+                                if (value.contains("-")) {
+                                  AcadamicTestPercentageValue = double.tryParse(value.split("-").first);
+                                } else {
+                                  AcadamicTestPercentageValue = double.tryParse(value);
+                                }
+                              }
+
+                              print("Selected Score: $AcadamicTestPercentage");
+                              print("Parsed Float: $AcadamicTestPercentageValue");
+                            });
+                          }
                       ),
+
                   ],
                 ),
 
               // Dropdown for MBA Courses
-              if (selectedDegree == "MBA")
-                Column(
-                  children: [
-                    buildDropdown(
-                        "Course Name",
-                        [
-                          "General MBA",
-                          "MBA in Finance",
-                          "MBA in Marketing",
-                          "MBA in Human Resource Management",
-                          "MBA in International Business",
-                          "MBA in Entrepreneurship",
-                          "MBA in Business Analytics",
-                          "MBA in Supply Chain Management",
-                          "MBA in Digital Marketing",
-                          "MBA in Operations Management",
-                          "MBA in Healthcare Management",
-                          "MBA in Hospitality & Tourism Management",
-                          "MBA in Retail Management",
-                          "MBA in Agribusiness Management",
-                          "MBA in Sports Management",
-                          "MBA in Luxury Brand Management",
-                          "MBA in Real Estate Management",
-                          "MBA in Information Technology",
-                          "MBA in Data Science",
-                          "MBA in Cybersecurity Management",
-                          "MBA in AI & Machine Learning",
-                          "MBA in Blockchain & FinTech",
-                          "Executive MBA (EMBA)"
-                        ],
-                        selectedCourse, (value) {
-                      setState(() {
-                        selectedCourse = value;
-                        print(selectedCourse);
-                      });
-                    }),
-                    buildDropdown(
-                        "Education Level",
-                        [
-                          "Undergraduate Degree",
-                          "Undergraduate Diploma",
-                          "Postgraduate Degree",
-                          "Postgraduate Diploma",
-                        ],
-                        highestEducation, (value) {
-                      setState(() {
-                        highestEducation = value;
-                        print(highestEducation);
-                      });
-                    }),
-                    buildDropdown(
-                        "Minimum Required Percentage ",
-                        ["50", "60", "70", "80", "90", "100"],
-                        highestEducationpercentage, (value) {
-                      setState(() {
-                        highestEducationpercentage = value;
-                        print(highestEducationpercentage);
-                      });
-                    }),
-
-                    buildDropdown(
-                        "AcadamicTest",
-                        [
-                          "GRE",
-                          "GMAT",
-                          "CAT",
-                          "CMAT",
-                          "Not Required",
-                        ],
-                        AcadamicTest, (value) {
-                      setState(() {
-                        AcadamicTest = value;
-                        print(AcadamicTest);
-                      });
-                    }),
-                    // Only show Academic Test Percentage dropdown if AcadamicTest is not "Not Required"
-                    if (AcadamicTest != "Not Required")
-                      buildDropdown(
-                        "Academic Test Percentage Minimum",
-                        ["50", "60", "70", "80", "90", "100"],
-                        AcadamicTestPercentage,
-                        (value) {
-                          setState(() {
-                            AcadamicTestPercentage = value;
-                            print(AcadamicTestPercentage);
-                          });
-                        },
-                      ),
-                  ],
-                ),
-
-              // Dropdown for Course Duration
-              // Padding(
-              //   padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 15),
-              //   child:
+              // if (selectedDegree == "MBA")
+              //   Column(
+              //     children: [
+              //       buildDropdown(
+              //           "Course Name",
+              //           [
+              //             "General MBA",
+              //             "MBA in Finance",
+              //             "MBA in Marketing",
+              //             "MBA in Human Resource Management",
+              //             "MBA in International Business",
+              //             "MBA in Entrepreneurship",
+              //             "MBA in Business Analytics",
+              //             "MBA in Supply Chain Management",
+              //             "MBA in Digital Marketing",
+              //             "MBA in Operations Management",
+              //             "MBA in Healthcare Management",
+              //             "MBA in Hospitality & Tourism Management",
+              //             "MBA in Retail Management",
+              //             "MBA in Agribusiness Management",
+              //             "MBA in Sports Management",
+              //             "MBA in Luxury Brand Management",
+              //             "MBA in Real Estate Management",
+              //             "MBA in Information Technology",
+              //             "MBA in Data Science",
+              //             "MBA in Cybersecurity Management",
+              //             "MBA in AI & Machine Learning",
+              //             "MBA in Blockchain & FinTech",
+              //             "Executive MBA (EMBA)"
+              //           ],
+              //           selectedCourse, (value) {
+              //         setState(() {
+              //           selectedCourse = value;
+              //           print(selectedCourse);
+              //         });
+              //       }),
+              //       buildDropdown(
+              //           "Education Level",
+              //           [
+              //             "Undergraduate Degree",
+              //             "Undergraduate Diploma",
+              //             "Postgraduate Degree",
+              //             "Postgraduate Diploma",
+              //           ],
+              //           highestEducation, (value) {
+              //         setState(() {
+              //           highestEducation = value;
+              //           print(highestEducation);
+              //         });
+              //       }),
+              //       buildDropdown(
+              //           "Minimum Required Percentage ",
+              //           ["50", "60", "70", "80", "90", "100"],
+              //           highestEducationpercentage, (value) {
+              //         setState(() {
+              //           highestEducationpercentage = value;
+              //           print(highestEducationpercentage);
+              //         });
+              //       }),
+              //
+              //       buildDropdown(
+              //           "AcadamicTest",
+              //           [
+              //             "GRE",
+              //             "GMAT",
+              //             "CAT",
+              //             "CMAT",
+              //             "Not Required",
+              //           ],
+              //           AcadamicTest, (value) {
+              //         setState(() {
+              //           AcadamicTest = value;
+              //           print(AcadamicTest);
+              //         });
+              //       }),
+              //       // Only show Academic Test Percentage dropdown if AcadamicTest is not "Not Required"
+              //       if (AcadamicTest != "Not Required")
+              //         buildDropdown(
+              //           "Academic Test Percentage Minimum",
+              //           ["50", "60", "70", "80", "90", "100"],
+              //           AcadamicTestPercentage,
+              //           (value) {
+              //             setState(() {
+              //               AcadamicTestPercentage = value;
+              //               print(AcadamicTestPercentage);
+              //             });
+              //           },
+              //         ),
+              //     ],
+              //   ),
+              //
+              // // Dropdown for Course Duration
+              // // Padding(
+              // //   padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 15),
+              // //   child:
 
               Column(
                 children: [
@@ -726,12 +824,30 @@ class _AddUniversityState extends State<AddUniversity> {
                               (value) {
                             setState(() {
                               Englishtest = value;
-                              Englishtestpercentage = englishTestScoreRange[value]!.first;
+
+                              if (value != null) {
+                                Englishtestpercentage = englishTestScoreRange[value]!.first;
+
+                                // Parse double value based on first item
+                                if (Englishtestpercentage != null) {
+                                  if (Englishtestpercentage!.contains("-")) {
+                                    // If it's a range like "40-50", take the first value
+                                    EnglishtestpercentageValue = double.tryParse(Englishtestpercentage!.split("-").first);
+                                  } else {
+                                    EnglishtestpercentageValue = double.tryParse(Englishtestpercentage!);
+                                  }
+                                }
+
+                                print("Selected English test: $Englishtest");
+                                print("Selected String value: $Englishtestpercentage");
+                                print("Parsed double value: $EnglishtestpercentageValue");
+                              }
                             });
                           },
                           required: true,
                         ),
                       ),
+
                       const SizedBox(width: 15),
 
                       // Show "Required Percentage" only if English Test is not "Not Required"
@@ -744,12 +860,25 @@ class _AddUniversityState extends State<AddUniversity> {
                                 (value) {
                               setState(() {
                                 Englishtestpercentage = value;
-                                print(Englishtestpercentage);
+
+                                if (value != null) {
+                                  if (value.contains("-")) {
+                                    // If it's a range, take the first value
+                                    EnglishtestpercentageValue = double.tryParse(value.split("-").first);
+                                  } else {
+                                    EnglishtestpercentageValue = double.tryParse(value);
+                                  }
+                                }
+
+                                print("Updated String value: $Englishtestpercentage");
+                                print("Updated Parsed double value: $EnglishtestpercentageValue");
                               });
                             },
+
                             required: true,
                           ),
                         )
+
 
                     ],
                   )

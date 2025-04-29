@@ -59,3 +59,15 @@ class UploadFailure extends PropertyAuthState {
 
   List<Object?> get props => [error];
 }
+//UserSendreviewandratingSuccess_State//
+
+final class UserSendreviewandratingSuccess extends PropertyAuthState {}
+
+final class UserSendreviewandratingfailerror extends PropertyAuthState {
+  final String error;
+
+  UserSendreviewandratingfailerror(this.error);
+}
+final class UserSendreviewandratingloading extends PropertyAuthState {}
+
+final class UserSendreviewandratingRefresh extends PropertyAuthState {}

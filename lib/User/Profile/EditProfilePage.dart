@@ -1,5 +1,6 @@
 import 'package:course_connect/Controller/Bloc/User_Authbloc/auth_bloc.dart';
 import 'package:course_connect/Widget/Constands/Loading.dart';
+import 'package:course_connect/Widget/Constands/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -132,6 +133,36 @@ class _EditProfilePageState extends State<EditProfilePage> {
                 buildEditableField("Name", nameController, false),
                 buildEditableField("E-mail Address", emailController, false),
                 buildEditableField("Phone Number", phoneController, false),
+                SizedBox(height: 20),
+                InkWell(
+                  onTap: () {
+                    // Navigator.push(
+                    //   context,
+                    //   MaterialPageRoute(
+                    //     builder: (context) => Bottom_Nav(),
+                    //   ),
+                    // );
+                  },
+
+                  child: Container(
+                    height: 51,
+                    width: 400,
+                    decoration: BoxDecoration(
+                      color: blueColor,
+                      borderRadius: BorderRadius.circular(30),
+                    ),
+                    child: const Center(
+                      child: Text(
+                        "Update",
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 22,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
               ],
             ),
           );
