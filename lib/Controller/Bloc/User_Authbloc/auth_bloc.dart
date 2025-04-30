@@ -136,6 +136,9 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         }
       },
     );
+
+
+
     on<FetchUserDetailsById>((event, emit) async {
       emit(Userloading());
       User? user = _auth.currentUser;

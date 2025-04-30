@@ -35,3 +35,8 @@ class FetchUsers extends AuthEvent {
 }
 class PickAndUploadImageEvent extends AuthEvent {}
 class Removeaccount extends AuthEvent {}
+class  details extends AuthEvent {}
+
+
+
+

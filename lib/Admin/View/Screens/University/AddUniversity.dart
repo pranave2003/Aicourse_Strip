@@ -65,41 +65,43 @@ class _AddUniversityState extends State<AddUniversity> {
   final TextEditingController scholarshipFeeController =
       TextEditingController();
   final Map<String, List<String>> testScoreRanges = {
-    "ACT": List.generate(36, (i) => "${i + 1}"),          // 1 to 36
-    "SAT": ["400", "600", "800", "1000", "1200", "1400", "1600"], // Valid SAT milestones
-    "CUET": List.generate(17, (i) => "${i * 50}"),        // 0 to 800 in steps of 50
+    "ACT": ["20"],
+    // List.generate(36, (i) => "${i + 1}"),          // 1 to 36
+    "SAT": [ "1000",], // Valid SAT milestones
+    "CUET": [ "250",],
+    // List.generate(17, (i) => "${i * 50}"),        // 0 to 800 in steps of 50
     "TEST NOT TAKEN": [],
   };
   Map<String, List<String>> testWiseScoreRange = {
-    "GRE": ["260-290", "290-310", "310-320", "320-330", "330-340", "340"],
-    "GMAT": ["480-500", "500-540", "540-600", "600-650", "650-700", "700-750", "750-800"],
-    "IIT JAM": ["50-55", "55-60", "60-65", "65-70", "70-75", "75-80"],
+    "GRE": ["290"],
+    "GMAT": ["500"],
+    "IIT JAM": ["50"],
     "TEST NOT TAKEN": ["N/A", "N/A", "N/A", "N/A", "N/A", "N/A"],
   };
 
   Map<String, List<String>> englishTestScoreRange = {
-    "PTE": ["30-40", "40-50", "50-58", "58-65", "65-75", "75-90"],
-    "IELTS": ["4.0", "4.5", "5.0", "5.5", "6.0", "6.5", "7.0", "7.5", "8.0", "9.0"],
-    "TOEFL": ["40-50", "50-60", "60-70", "70-80", "80-90", "90-100", "100-120"],
+    "PTE": ["50",],
+    "IELTS": [ "5.5"],
+    "TOEFL": [ "70"],
     "Not Required": ["N/A"],
   };
   Map<String, List<String>> testScoreRanges2 = {
-    "GRE": List.generate(9, (i) => (260 + i * 10).toString()), // 260 to 340
-    "GMAT": List.generate(13, (i) => (200 + i * 50).toString()), // 200 to 800
-    "IIT JAM": ["0", "10", "20", "30", "40", "50", "60", "70", "80", "90", "100"],
-    "CAT": ["40", "50", "60", "70", "80", "90", "95", "98", "99", "100"],
-    "CMAT": ["100", "150", "200", "250", "300", "350", "400"],
+    "GRE":["290"],  // 260 to 340
+    "GMAT":["500"], // 200 to 800
+    "IIT JAM": [ "30",],
+    "CAT": [ "80"],
+    "CMAT": [ "200"],
     "TEST NOT TAKEN": [],
   };
   Map<String, List<String>> educationScoreRanges = {
-    "Grade 12": ["50.0", "55.0", "60.0", "65.0", "70.0", "75.0", "80.0", "85.0", "90.0", "95.0", "100.0"],
-    "Undergraduate diploma": ["50", "60", "65", "70", "75", "80", "85", "90", "95", "100"],
+    "Grade 12": ["50.0", "60.0",],
+    "Undergraduate diploma": ["50", "60",],
   };
   Map<String, List<String>> educationScoreRanges2 = {
-    "Undergraduate Degree": ["50", "55", "60", "65", "70", "75", "80", "85", "90", "95", "100"],
-    "Undergraduate Diploma": ["50", "55", "60", "65", "70", "75", "80", "85", "90"],
-    "Postgraduate Degree": ["60", "65", "70", "75", "80", "85", "90", "95", "100"],
-    "Postgraduate Diploma": ["60", "65", "70", "75", "80", "85", "90"],
+    "Undergraduate Degree": ["50", "60",],
+    "Undergraduate Diploma": ["50", "60", ],
+    "Postgraduate Degree": ["60"],
+    "Postgraduate Diploma": ["60"],
   };
 
 
