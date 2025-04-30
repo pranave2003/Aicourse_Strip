@@ -16,6 +16,7 @@ import '../../Controller/Bloc/Dropdown_university/dropdown_bloc.dart';
 import '../../Controller/Bloc/Landloard_auth/landloard_auth_bloc.dart';
 import '../../Controller/Bloc/User_Authbloc/auth_bloc.dart';
 import '../../firebase_options.dart';
+import '../View/Screens/Notification/Sendnotification.dart';
 import '../View/Screens/University/Admin_course_collage_universitymaster/AddUniversityname.dart';
 import '../View/Screens/University/Admin_course_collage_universitymaster/Addcollage.dart';
 import '../View/Screens/House.dart/ViewHouses.dart';
@@ -164,37 +165,14 @@ class _AdminPageState extends State<AdminPage> {
                 _buildMainListTile(
                     'Applications', Viewapplicationsmainwrapper(),
                     icon: Icons.book_online),
+                _buildMainListTile('Notification', SendNotification(),
+                    icon: Icons.send),
                 _buildMainListTile('Houses', ViewHouses(),
                     icon: Icons.maps_home_work_outlined),
                 // _buildMainListTile('Payment', PaymentView(),
                 //     icon: Icons.payments_outlined),
                 _buildMainListTile('Users', Userview(),
                     icon: Icons.supervised_user_circle_sharp),
-                // _buildMainListTile('Feedback', FeedbackView(),
-                //     icon: Icons.feedback),
-                // _buildMainListTile('Knowledge Bank', CountryRules(),
-                //     icon: Icons.my_library_books_rounded),
-                // _buildMainExpansionTile(
-                //   title: 'Account',
-                //   icon: Icons.person,
-                //   children: [
-                //     // SubListTile("Account", FeedbackView()),
-                //   ],
-                // ),
-                // _buildMainExpansionTile(
-                //   title: 'Settings',
-                //   icon: Icons.settings,
-                //   children: [
-                //     // SubListTile("Account", FeedbackView()),
-                //   ],
-                // ),
-                // _buildMainExpansionTile(
-                //   title: 'Log Out',
-                //   icon: Icons.login_outlined,
-                //   children: [
-                //     // SubListTile("Account", FeedbackView()),
-                //   ],
-                // ),
               ],
             ),
           ),

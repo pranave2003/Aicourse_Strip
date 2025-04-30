@@ -3,8 +3,6 @@ class University_model {
   String? Established_date;
   String? Universityname;
   String? Description;
-  // String? state;
-  // String? city;
   String? Admission_startdate;
   String? Admission_enddate;
   String? Degree_offered;

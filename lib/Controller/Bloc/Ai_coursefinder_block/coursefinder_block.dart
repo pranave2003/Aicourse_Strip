@@ -102,6 +102,9 @@ class CoursefinderBlock extends Bloc<CoursefinderEvent, CoursefinderState> {
         if (event.Englishtest?.isNotEmpty ?? false) {
           query = query.where('Englishtest', isEqualTo: event.Englishtest);
         }
+        query = query.where('Englishtestpercentage',
+            isGreaterThanOrEqualTo: event.Englishtestpercentage);
+
         if (event.AcadamicTest?.isNotEmpty ?? false) {
           query = query.where('AcadamicTest', isEqualTo: event.AcadamicTest);
         }

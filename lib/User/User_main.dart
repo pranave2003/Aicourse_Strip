@@ -4,12 +4,14 @@ import 'package:course_connect/Controller/Bloc/University_block/university_bloc.
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:onesignal_flutter/onesignal_flutter.dart';
 import '../../../firebase_options.dart';
 import '../Controller/Bloc/Applycourse/application_bloc.dart';
 import '../Controller/Bloc/Booking/Booking_authblock.dart';
 import '../Controller/Bloc/Dropdown_university/dropdown_bloc.dart';
 import '../Controller/Bloc/User_Authbloc/auth_bloc.dart';
 import '../Controller/Bloc/selection_cubit.dart';
+import '../Service/Notification_onesignal/onesignal_service.dart';
 import 'Sreens/Authentication/LoginUser.dart';
 import 'Sreens/Authentication/Spashview.dart';
 import 'Sreens/BottomNavigation/Bottom_Nav.dart';
@@ -18,8 +20,24 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   print("main() called");
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
-
+  OneSignal.Debug.setLogLevel(OSLogLevel.verbose);
+  OneSignal.initialize("d9c1ddc3-bf3e-4f1f-9ab7-220a46ada041");
+  OneSignal.Notifications.requestPermission(true);
+  await initOneSignal();
   runApp(MyApp());
+}
+
+Future<void> initOneSignal() async {
+  await Future.delayed(const Duration(seconds: 2));
+
+  final id = OneSignal.User.pushSubscription.id;
+
+  if (id != null) {
+    print('✅ OneSignal Player ID: $id');
+    OneSignalService().setPlayerId(id); // Store in the service
+  } else {
+    print("❌ Player ID is null. The user may not be subscribed yet......");
+  }
 }
 
 class MyApp extends StatelessWidget {
