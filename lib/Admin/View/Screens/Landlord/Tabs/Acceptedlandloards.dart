@@ -101,6 +101,7 @@ class _Accept_LandloardState extends State<Accept_Landloard> {
                               child: ClipRRect(
                                 borderRadius: BorderRadius.circular(
                                     5), // Rounded corners for image
+
                                 child: CachedNetworkImage(
                                   imageUrl:landlord.idproofimage
                                       .toString(),
@@ -177,4 +178,39 @@ class _Accept_LandloardState extends State<Accept_Landloard> {
       ),
     );
   }
+}
+void _showProofDialog(BuildContext context, String imageUrl) {
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return AlertDialog(
+        title: Text('View Proof Image'),
+        content: Container(
+          width: 600, // Adjust the width
+          height: 900, // Adjust the height
+          child: InteractiveViewer(
+            child: CachedNetworkImage(
+              imageUrl: imageUrl,
+              fit: BoxFit.contain,
+              placeholder: (context, url) => Center(child: Loading_Widget()),
+              errorWidget: (context, url, error) => Center(
+                child: Icon(
+                  Icons.image_not_supported,
+                  size: 60,
+                  color: Colors.grey[600],
+                ),
+              ),
+            ),
+          ),
+        ),
+        actions: <Widget>[
+          TextButton(
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+            child: Text('Close'),
+          ),
+        ],
+      );},
+  );
 }

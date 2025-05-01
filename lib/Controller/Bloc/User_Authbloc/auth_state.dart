@@ -76,3 +76,34 @@ class ProfileImageFailure extends AuthState {
   @override
   List<Object?> get props => [error];
 }
+
+
+//
+
+
+
+
+
+
+class UserByidLoaded1 extends AuthState {
+  final UserModel Userdata;
+  UserByidLoaded1({required this.Userdata});
+}
+class ProfileUpdateLoading extends AuthState {}
+
+class profileaddSuccess extends AuthState {}
+
+class UserError1 extends AuthState {
+  final String message;
+  UserError1(this.message);
+}
+
+
+// final class ProfileUpdateLoading extends AuthState {}
+//
+// final class profileaddSuccess extends AuthState {}
+// final class profilefailerror extends AuthState {
+//   final String error;
+//
+//   profilefailerror(this.error);
+// }

@@ -5,6 +5,7 @@ class Landloard_Model {
   String? name;
   String? phone;
   String? gender;
+  String? image;
   String? DOB;
   String? Place;
   String? Adress;
@@ -22,6 +23,7 @@ class Landloard_Model {
       this.phone,
       this.DOB,
       this.gender,
+      this.image,
       this.Adress,
       this.idproofimage,
       this.status,
@@ -45,6 +47,7 @@ class Landloard_Model {
         gender: data['gender'],
         DOB: data['dob'],
       Adress : data['address'],
+      image : data['image'],
 
 
 

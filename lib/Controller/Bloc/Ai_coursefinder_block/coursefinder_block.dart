@@ -95,6 +95,8 @@ class CoursefinderBlock extends Bloc<CoursefinderEvent, CoursefinderState> {
           query = query.where('highestEducation',
               isEqualTo: event.highestEducation);
         }
+        query = query.where('highestEducationpercentage',
+            isGreaterThanOrEqualTo: event.highestEducationpercentage);
         if (event.Course_offered?.isNotEmpty ?? false) {
           query =
               query.where('Course_offered', isEqualTo: event.Course_offered);
@@ -102,12 +104,16 @@ class CoursefinderBlock extends Bloc<CoursefinderEvent, CoursefinderState> {
         if (event.Englishtest?.isNotEmpty ?? false) {
           query = query.where('Englishtest', isEqualTo: event.Englishtest);
         }
+
+
         query = query.where('Englishtestpercentage',
             isGreaterThanOrEqualTo: event.Englishtestpercentage);
 
         if (event.AcadamicTest?.isNotEmpty ?? false) {
           query = query.where('AcadamicTest', isEqualTo: event.AcadamicTest);
         }
+        query = query.where('AcadamicTestPercentage',
+            isGreaterThanOrEqualTo: event.AcadamicTestPercentage);
         if (event.Rank?.isNotEmpty ?? false) {
           query = query.where('Rank', isEqualTo: event.Rank);
         }
@@ -133,6 +139,10 @@ class CoursefinderBlock extends Bloc<CoursefinderEvent, CoursefinderState> {
         emit(CoursefinderFailError(e.toString()));
       }
     });
+
+
+
+
   }
 }
 

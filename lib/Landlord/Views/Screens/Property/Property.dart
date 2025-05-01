@@ -65,78 +65,77 @@ class _PropertyState extends State<Property> {
                       backgroundColor: Color(0xffD9D9D9),
                       child: Icon(Icons.notification_add)),
                   const SizedBox(width: 10),
-                  Container(
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: 14, vertical: 6),
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(20),
-                      border: Border.all(width: 0.5, color: Colors.grey),
-                    ),
-                    child: Row(
-    //                   children: [
-    // BlocBuilder<LandloardAuthBloc, LandloardAuthState>(
-    // builder: (context, state) {
-    // if (state is Landlordloading) {
-    // return const Center(child: Loading_Widget());
-    // } else if (state is LandlordByidLoaded) {
-    // final user = state.;
-    // return Padding(
-    // padding: EdgeInsets.all(16.0),
-    // child: Column(
-    // children: [
-    // ClipRRect(
-    // borderRadius: BorderRadius.circular(
-    // 30), // Rounded corners for image
-    // child: Center(
-    // child: CachedNetworkImage(
-    // imageUrl: user.image.toString(),
-    // width: 100, // Adjusted width
-    // height: 100, // Adjusted height
-    // fit: BoxFit.fill,
-    // placeholder: (context, url) => Container(
-    // width: 100,
-    // height: 100,
-    // color:
-    // Colors.transparent, // Placeholder background
-    // child: Center(
-    // child: Loading_Widget(), // Loading indicator
-    // ),
-    // ),
-    // errorWidget: (context, url, error) => Container(
-    // width: 100,
-    // height: 100,
-    // color: Colors.grey[300], // Placeholder background
-    // child: Icon(
-    // Icons.image_not_supported,
-    // size: 50,
-    // color: Colors.grey[600],
-    // ),
-    // ),
-    // ),
-    // ),
-    // ),
-    // ],
-    // ),
-                      children: const [
-                        CircleAvatar(
-                          radius: 20,
-                          backgroundColor: Colors.grey,
-                          backgroundImage:
-                              AssetImage('assets/Profile/img_3.png'),
-                        ),
-                        SizedBox(width: 10),
-                        Text("Landlord",
-                            style: TextStyle(
-                                fontSize: 16, fontWeight: FontWeight.bold)),
-                      ],
-                    ),
-                  ),
-                ],
+    Container(
+    padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 6),
+    decoration: BoxDecoration(
+    color: Colors.white,
+    borderRadius: BorderRadius.circular(20),
+    border: Border.all(width: 0.5, color: Colors.grey),
+    ),
+    child: Row(
+    children: [
+    BlocBuilder<LandloardAuthBloc, LandloardAuthState>(
+    builder: (context, state) {
+    if (state is Landlordloading) {
+    return const Center(child: Loading_Widget());
+    } else if (state is LandlordByidLoaded) {
+    final user = state.Userdata;
+    return Padding(
+    padding: const EdgeInsets.all(16.0),
+    child: Column(
+    children: [
+    ClipRRect(
+    borderRadius: BorderRadius.circular(30),
+    child: CachedNetworkImage(
+    imageUrl: user.image.toString(),
+    width: 100,
+    height: 100,
+    fit: BoxFit.fill,
+    placeholder: (context, url) => Container(
+    width: 100,
+    height: 100,
+    color: Colors.transparent,
+    child: const Center(
+    child: Loading_Widget(),
+    ),
+    ),
+    errorWidget: (context, url, error) => Container(
+    width: 100,
+    height: 100,
+    color: Colors.grey[300],
+    child: Icon(
+    Icons.image_not_supported,
+    size: 50,
+    color: Colors.grey[600],
+    ),
+    ),
+    ),
+    ),
+    const SizedBox(height: 10),
+    Text(
+    "Landlord",
+    style: const TextStyle(
+    fontSize: 16,
+    fontWeight: FontWeight.bold,
+    ),
+    ),
+    ],
+    ),
+    );
+    } else {
+    return const SizedBox(); // default case to avoid build errors
+    }
+    },
+    ),
+    ],
+    ),
+    ),
+    ]
               ),
-            ],
+              ],
           ),
-          const SizedBox(height: 10),
+
+    const SizedBox(height: 10),
           const Padding(
             padding: EdgeInsets.only(left: 25),
             child: Row(

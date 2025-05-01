@@ -40,6 +40,7 @@ class _AddUniversityState extends State<AddUniversity> {
   String? selectedDuration;
   String? selectedEligibility;
 
+
   // education
   String? highestEducation;
 // for dropdown selection
@@ -234,6 +235,7 @@ class _AddUniversityState extends State<AddUniversity> {
                                         college.Admission_enddate,
                                     Admission_startdate:
                                         college.Admission_startdate,
+
                                     Course_offered: selectedCourse,
                                     Degree_offered: selectedDegree,
                                     Description: DiscriptionController.text,

@@ -35,8 +35,29 @@ class FetchUsers extends AuthEvent {
 }
 class PickAndUploadImageEvent extends AuthEvent {}
 class Removeaccount extends AuthEvent {}
-class  details extends AuthEvent {}
 
 
+// class UpdateProfileEvent extends AuthEvent {
+//   final UserModel profile;
+//
+//
+//   UpdateProfileEvent({required this.profile});
+// }
 
 
+class FetchUserDetailsById1 extends AuthEvent {}
+
+class UpdateProfileEvent extends AuthEvent {
+  final UserModel profile;
+  UpdateProfileEvent({required this.profile});
+}
+
+
+//
+// //
+// class Profile_edit_eevent extends AuthEvent {
+//   final UserModel profile;
+//
+//   Profile_edit_eevent({required this.profile});
+// }
+//

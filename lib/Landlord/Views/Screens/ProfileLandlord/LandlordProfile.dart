@@ -16,62 +16,80 @@ class LandlordProfile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-
       body: SingleChildScrollView(
         padding: EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             BlocBuilder<LandloardAuthBloc, LandloardAuthState>(
-  builder: (context, state) {
-    if (state is Landlordloading) {
-    return const Center(child: CircularProgressIndicator());
-    } else if (state is LandlordByidLoaded) {
-      final user = state.Userdata;
-       TextEditingController nameController = TextEditingController(text: user.name ?? '');
-       TextEditingController emailController = TextEditingController(text: user.email ?? '');
-       TextEditingController addressController = TextEditingController(text: user.Adress ?? '');
+              builder: (context, state) {
+                if (state is Landlordloading) {
+                  return const Center(child: CircularProgressIndicator());
+                } else if (state is LandlordByidLoaded) {
+                  final user = state.Userdata;
+                  TextEditingController nameController =
+                      TextEditingController(text: user.name ?? '');
+                  TextEditingController emailController =
+                      TextEditingController(text: user.email ?? '');
+                  TextEditingController addressController =
+                      TextEditingController(text: user.Adress ?? '');
 
-      return Center(
-        child: Column(
-          children: [
-            CircleAvatar(
-              radius: 60,
-              backgroundImage: AssetImage('assets/profile/img_4.png'),
+                  return Center(
+                    child: Column(
+                      children: [
+                        CircleAvatar(
+                          radius: 60,
+                          backgroundImage:
+                              AssetImage('assets/profile/img_4.png'),
+                        ),
+                        SizedBox(height: 10),
+                        Text(
+                          '${user.name ?? ''}',
+                          style: TextStyle(
+                              fontSize: 22, fontWeight: FontWeight.bold),
+                        ),
+
+                        ElevatedButton.icon(
+                          onPressed: () {
+                            // Navigator.push(
+                            //   context,
+                            //   MaterialPageRoute(
+                            //       // builder: (context) => EditProfilePage2(
+                            //       //       image: state.Userdata.image.toString(),
+                            //       //       name: state.Userdata.name.toString(),
+                            //       //       phone_number:
+                            //       //           state.Userdata.phone.toString(),
+                            //       //       uid: state.Userdata.uid.toString(),
+                            //       //     )
+                            //         ),
+                            // );
+                          },
+                          icon: Icon(Icons.edit),
+                          label: Text('Edit Profile'),
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: blueColor,
+                            foregroundColor: Colors.white,
+
+                            // Adjust space at the bot
+                          ),
+                        ),
+                        buildInputField(
+                            Icons.person, '${user.name ?? ''}', nameController),
+                        buildInputField(Icons.email, '${user.email ?? ''}',
+                            emailController),
+                        buildInputField(Icons.home, '${user.Adress ?? ''}',
+                            addressController),
+                        SizedBox(height: 30), // Adjust space at the bottom
+
+                        SizedBox(height: 30),
+                      ],
+                    ),
+                  );
+                }
+                return SizedBox();
+              },
             ),
-            SizedBox(height: 10),
-            Text(
-                '${user.name ?? ''}',
-              style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
-            ),
-
-            ElevatedButton.icon(
-              onPressed: () {},
-
-              icon: Icon(Icons.edit),
-              label: Text('Edit Profile'),
-              style: ElevatedButton.styleFrom(
-                backgroundColor: blueColor,
-                foregroundColor: Colors.white,
-
-              // Adjust space at the bot
-              ),
-            ),
-            buildInputField(Icons.person, '${user.name ?? ''}',nameController),
-            buildInputField(Icons.email,'${user.email ?? ''}', emailController),
-            buildInputField(Icons.home, '${user.Adress ?? ''}', addressController),
-            SizedBox(height: 30),  // Adjust space at the bottom
-
-            SizedBox(height: 30),
-          ],
-        ),
-      );
-    }
-    return SizedBox();
-  },
-),
             SizedBox(height: 20),
-
           ],
         ),
       ),
@@ -79,17 +97,19 @@ class LandlordProfile extends StatelessWidget {
   }
 
   // Static input fields without editing capability
-  Widget buildInputField(IconData icon, String title, TextEditingController controller) {
+  Widget buildInputField(
+      IconData icon, String title, TextEditingController controller) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 12.0),  // Increased padding for better spacing
+      padding: const EdgeInsets.symmetric(
+          vertical: 12.0), // Increased padding for better spacing
       child: TextField(
         controller: controller,
-        enabled: false,  // Disable editing
-        style: TextStyle(fontSize: 16),  // Ensure text is readable
+        enabled: false, // Disable editing
+        style: TextStyle(fontSize: 16), // Ensure text is readable
         decoration: InputDecoration(
           prefixIcon: Icon(icon, color: blueColor),
           labelText: title,
-          labelStyle: TextStyle(fontSize: 16),  // Ensure label text is clear
+          labelStyle: TextStyle(fontSize: 16), // Ensure label text is clear
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(10),
             borderSide: BorderSide(color: blueColor),
@@ -107,6 +127,7 @@ class LandlordProfile extends StatelessWidget {
     );
   }
 }
+
 Widget buildInfoContainer(String title, String content) {
   return Padding(
     padding: const EdgeInsets.symmetric(vertical: 8.0),

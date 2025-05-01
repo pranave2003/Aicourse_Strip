@@ -144,6 +144,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       User? user = _auth.currentUser;
 
       if (user != null) {
+
         try {
           final user = FirebaseAuth.instance.currentUser;
           if (user != null) {
@@ -334,5 +335,60 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         emit(ProfileImageFailure("Failed to upload image"));
       }
     });
+
+ //profile
+ //    on<UpdateProfileEvent>((event, emit) async {
+ //      emit(ProfileImageLoading()); // Optional loading
+ //
+ //      try {
+ //        await FirebaseFirestore.instance
+ //            .collection('users')
+ //            .doc(event.user.uid)
+ //            .update({
+ //          'name': event.user.name,
+ //          'phone': event.user.phone,
+ //        });
+ //
+ //        emit(ProfileSuccess()); // Update successful
+ //      } catch (e) {
+ //        emit(ProfileError("Failed to update profile"));
+ //      }
+ //    });
+ //    on<UpdateProfileEvent>((event, emit) async {
+ //      try {
+ //        emit(ProfileImageLoading());
+ //        // Simulate updating profile (replace with real logic)
+ //        await Future.delayed(Duration(seconds: 2));
+ //        emit(profileaddSuccess());
+ //      } catch (e) {
+ //        emit(profilefailerror("Failed to update profile"));
+ //      }
+ //    });
+
+    on<UpdateProfileEvent>((event, emit) async {
+      try {
+        emit(ProfileImageLoading());
+
+        // Assuming you update Firestore or any backend
+        await FirebaseFirestore.instance
+            .collection('users')
+            .doc(event.profile.uid)
+            .update({
+          'name': event.profile.name,
+          'phone': event.profile.phone,
+        });
+
+        emit(profileaddSuccess());
+      } catch (e) {
+        // emit(profilefailerror("Failed to update profile"));
+      }
+    });
+
+
+
+
+
+
+
   }
 }
