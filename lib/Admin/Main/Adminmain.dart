@@ -14,13 +14,14 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../Controller/Bloc/Dropdown_university/CollagemasterBloc/collagedropdown_bloc.dart';
 import '../../Controller/Bloc/Dropdown_university/dropdown_bloc.dart';
 import '../../Controller/Bloc/Landloard_auth/landloard_auth_bloc.dart';
+import '../../Controller/Bloc/Notification/admin_notification_bloc.dart';
 import '../../Controller/Bloc/User_Authbloc/auth_bloc.dart';
 import '../../firebase_options.dart';
-import '../View/Screens/Notification/Sendnotification.dart';
+import '../View/Screens/Notification/Admin_Sendnotification.dart';
 import '../View/Screens/University/Admin_course_collage_universitymaster/AddUniversityname.dart';
 import '../View/Screens/University/Admin_course_collage_universitymaster/Addcollage.dart';
 import '../View/Screens/House.dart/ViewHouses.dart';
-import '../View/Screens/University/Admin_course_collage_universitymaster/Test.dart';
+
 import '../View/Screens/University/Admin_course_collage_universitymaster/ViewCollage_and_Course.dart';
 import '../View/Screens/Users.dart/UserView.dart';
 
@@ -58,7 +59,9 @@ class MyApp extends StatelessWidget {
           create: (context) => DropdownBloc()..add(Fetchcatcollagebydropdown()),
         ),
         BlocProvider<CollagedropdownBloc>(
-            create: (context) => CollagedropdownBloc())
+            create: (context) => CollagedropdownBloc()),
+        BlocProvider<AdminNotificationBloc>(
+            create: (context) => AdminNotificationBloc())
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
@@ -165,7 +168,7 @@ class _AdminPageState extends State<AdminPage> {
                 _buildMainListTile(
                     'Applications', Viewapplicationsmainwrapper(),
                     icon: Icons.book_online),
-                _buildMainListTile('Notification', SendNotification(),
+                _buildMainListTile('Notification', Admin_SendNotification(),
                     icon: Icons.send),
                 _buildMainListTile('Houses', ViewHouses(),
                     icon: Icons.maps_home_work_outlined),

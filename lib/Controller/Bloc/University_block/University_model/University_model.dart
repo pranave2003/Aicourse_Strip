@@ -18,11 +18,11 @@ class University_model {
   String? UniversityimageURL;
   String? Universityid;
   String? highestEducation;
-  double? highestEducationpercentage;
+  num? highestEducationpercentage;
   String? AcadamicTest;
-  double? AcadamicTestPercentage;
+  num? AcadamicTestPercentage;
   String? Englishtest;
-  double? Englishtestpercentage;
+  num? Englishtestpercentage;
   String? Collegename;
   String? collagecode;
 
@@ -94,8 +94,8 @@ class University_model {
       Collegename: data['Collegename'],
 
       //////////
-      Selectedboard: List<String>.from(data['Selectedboard'] ?? []),
-      SelectedScheme: List<String>.from(data['SelectedScheme'] ?? []),
+      // Selectedboard: List<String>.from(data['Selectedboard'] ?? []),
+      // SelectedScheme: List<String>.from(data['SelectedScheme'] ?? []),
     );
   }
 }
