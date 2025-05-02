@@ -22,20 +22,23 @@ class FetchAllUniversites extends CoursefinderEvent {
   final String? highestEducation;
   final double? highestEducationpercentage;
   final String? Rank;
+  final String? scheme;
+  final String? board;
 
-  FetchAllUniversites({
-    this.searchQuery,
-    this.Country,
-    this.Course_offered,
-    this.Degree_offered,
-    this.AcadamicTest,
-    this.AcadamicTestPercentage,
-    this.Englishtest,
-    this.Englishtestpercentage,
-    this.highestEducation,
-    this.highestEducationpercentage,
-    this.Rank,
-  });
+  FetchAllUniversites(
+      {this.searchQuery,
+      this.Country,
+      this.Course_offered,
+      this.Degree_offered,
+      this.AcadamicTest,
+      this.AcadamicTestPercentage,
+      this.Englishtest,
+      this.Englishtestpercentage,
+      this.highestEducation,
+      this.highestEducationpercentage,
+      this.Rank,
+      required this.board,
+      required this.scheme});
 }
 
 class CoursefinderBlock extends Bloc<CoursefinderEvent, CoursefinderState> {
@@ -44,7 +47,9 @@ class CoursefinderBlock extends Bloc<CoursefinderEvent, CoursefinderState> {
       emit(CoursefinderLoading());
 
       try {
-        Query query = FirebaseFirestore.instance.collection('University');
+        Query query = FirebaseFirestore.instance
+            .collection('University')
+            .orderBy("Rank", descending: false);
 
         if (event.Country?.isNotEmpty ?? false) {
           query = query.where('Country', isEqualTo: event.Country);
@@ -81,7 +86,11 @@ class CoursefinderBlock extends Bloc<CoursefinderEvent, CoursefinderState> {
         if (event.AcadamicTest?.isNotEmpty ?? false) {
           query = query.where('AcadamicTest', isEqualTo: event.AcadamicTest);
         }
+        print(event.scheme);
+        print(event.board);
 
+        query = query.where("SelectedScheme", arrayContains: event.scheme);
+        // query = query.where("SelectedScheme", arrayContains: event.scheme);
         QuerySnapshot snapshot = await query.get();
 
         List<University_model> universities = snapshot.docs.map((doc) {

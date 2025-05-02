@@ -57,8 +57,9 @@ class UniversityBloc extends Bloc<UniversityEvent, UniversityState> {
             "highestEducationpercentage":
                 event.University.highestEducationpercentage,
             "collagecode": event.University.collagecode,
-            "Collegename": event.University.Collegename
-
+            "Collegename": event.University.Collegename,
+            "Selectedboard": event.University.Selectedboard,
+            "SelectedScheme": event.University.SelectedScheme,
             // "state": event.University.state,
             // "city": event.University.city
           });

@@ -33,7 +33,9 @@ class ResultAicoursefinder extends StatelessWidget {
                       state.selections["EnglishTest_percentage"]!,
                     ),
                     highestEducationpercentage: double.parse(
-                        state.selections["highestEducation_percentage"]!))),
+                        state.selections["highestEducation_percentage"]!),
+                    board: state.selections["SelectedBoard"],
+                    scheme: state.selections["SelectedScheme"])),
               child: Scaffold(
                 appBar: AppBar(
                   leading: IconButton(
@@ -54,6 +56,7 @@ class ResultAicoursefinder extends StatelessWidget {
                         child: Text("Back to Home"))
                   ],
                 ),
+                //
                 body: Padding(
                   padding: const EdgeInsets.all(10),
                   child: Column(

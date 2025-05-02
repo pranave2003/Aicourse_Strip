@@ -1,9 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
 import '../../../../../Controller/Bloc/University_block/university_bloc.dart';
-import '../../../../../User/Sreens/Home/Colleges.dart';
 import '../../../../../Widget/Constands/Loading.dart';
 import 'View_admin_collagewrapper.dart';
 
@@ -35,30 +33,7 @@ class ViewcollageAndCourse extends StatefulWidget {
 }
 
 class _ViewcollageAndCourseState extends State<ViewcollageAndCourse> {
-  int _getCrossAxisCount(BuildContext context) {
-    double width = MediaQuery.of(context).size.width;
-    if (width >= 1200)
-      return 5;
-    else if (width >= 900)
-      return 5;
-    else if (width >= 600)
-      return 4;
-    else
-      return 2;
-  }
 
-  double _getAspectRatio(BuildContext context) {
-    double width = MediaQuery.of(context).size.width;
-    if (width >= 600) return 0.85;
-    return 0.75;
-  }
-
-  double _getImageHeight(BuildContext context) {
-    double width = MediaQuery.of(context).size.width;
-    if (width >= 900) return 160;
-    if (width >= 600) return 140;
-    return 120;
-  }
 
   @override
   Widget build(BuildContext context) {

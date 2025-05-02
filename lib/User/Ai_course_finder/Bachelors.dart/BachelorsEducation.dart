@@ -18,7 +18,7 @@ class BachelorsEducation extends StatefulWidget {
 }
 
 class _BachelorsEducationState extends State<BachelorsEducation> {
-  String? _selectedValue; // Selected value
+  String? _selectedboard; // Selected value
   String? _selectedscheme; // Selected value
   List<String> items = ['IB', 'ICSE', 'CBSC', 'State'];
   List<String> Schemes = [
@@ -134,7 +134,7 @@ class _BachelorsEducationState extends State<BachelorsEducation> {
                       ),
                       padding: const EdgeInsets.symmetric(horizontal: 12),
                       child: DropdownButton<String>(
-                        value: _selectedValue,
+                        value: _selectedboard,
                         hint: const Text('Select Board'),
                         dropdownColor: Colors.grey[300],
                         items: items.map((String item) {
@@ -145,7 +145,7 @@ class _BachelorsEducationState extends State<BachelorsEducation> {
                         }).toList(),
                         onChanged: (String? newValue) {
                           setState(() {
-                            _selectedValue = newValue;
+                            _selectedboard = newValue;
                           });
                         },
                         underline: const SizedBox(),
@@ -268,6 +268,10 @@ class _BachelorsEducationState extends State<BachelorsEducation> {
                     context.read<SelectionCubit>().updateSelection(
                         "highestEducation_percentage",
                         highesteducationpercentage.text);
+                    context.read<SelectionCubit>().updateSelection(
+                        "SelectedScheme", _selectedscheme.toString());
+                    context.read<SelectionCubit>().updateSelection(
+                        "SelectedBoard", _selectedboard.toString());
 
                     // Navigate to the next page
                     Navigator.push(

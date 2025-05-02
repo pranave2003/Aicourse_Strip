@@ -26,36 +26,42 @@ class University_model {
   String? Collegename;
   String? collagecode;
 
-  University_model({
-    this.Universityid,
-    this.Rank,
-    this.Established_date,
-    this.Universityname,
-    this.Description,
-    this.Admission_startdate,
-    this.Admission_enddate,
-    this.Degree_offered,
-    this.Course_offered,
-    this.Duration,
-    // this.state,
-    // this.city,
-    this.Tuition_fees,
-    this.Schoolarship_details,
-    this.Eligibility_criteria,
-    this.Terms_and_conditions,
-    this.Ban,
-    this.Onesignal_id,
-    this.Country,
-    this.UniversityimageURL,
-    this.highestEducation,
-    this.AcadamicTest,
-    this.AcadamicTestPercentage,
-    this.Englishtest,
-    this.Englishtestpercentage,
-    this.highestEducationpercentage,
-    this.Collegename,
-    this.collagecode,
-  });
+  ///
+  List<String>? SelectedScheme;
+  List<String>? Selectedboard;
+
+  University_model(
+      {this.Universityid,
+      this.Rank,
+      this.Established_date,
+      this.Universityname,
+      this.Description,
+      this.Admission_startdate,
+      this.Admission_enddate,
+      this.Degree_offered,
+      this.Course_offered,
+      this.Duration,
+      // this.state,
+      // this.city,
+      this.Tuition_fees,
+      this.Schoolarship_details,
+      this.Eligibility_criteria,
+      this.Terms_and_conditions,
+      this.Ban,
+      this.Onesignal_id,
+      this.Country,
+      this.UniversityimageURL,
+      this.highestEducation,
+      this.AcadamicTest,
+      this.AcadamicTestPercentage,
+      this.Englishtest,
+      this.Englishtestpercentage,
+      this.highestEducationpercentage,
+      this.Collegename,
+      this.collagecode,
+      /////
+      this.Selectedboard,
+      this.SelectedScheme});
   factory University_model.fromMap(Map<String, dynamic> data) {
     return University_model(
       Rank: data['Rank'],
@@ -86,6 +92,10 @@ class University_model {
       highestEducationpercentage: data['highestEducationpercentage'] ?? 0,
       collagecode: data['collagecode'],
       Collegename: data['Collegename'],
+
+      //////////
+      Selectedboard: List<String>.from(data['Selectedboard'] ?? []),
+      SelectedScheme: List<String>.from(data['SelectedScheme'] ?? []),
     );
   }
 }
