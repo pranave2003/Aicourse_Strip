@@ -42,6 +42,17 @@ class BachelorsDetailsOverall extends StatelessWidget {
                                         state.selections["highestEducation"] ??
                                             "Not Selected"),
                                 SelectionBox(
+                                  label: "Board",
+                                  value: state.selections["SelectedBoard"] ??
+                                      "Not Selected",
+                                ),
+                                SelectionBox(
+                                  label: "Scheme",
+                                  value: state.selections["SelectedScheme"] ??
+                                      "Not Selected",
+                                ),
+
+                                SelectionBox(
                                   label: "Education Percentage",
                                   value: state.selections[
                                           "highestEducation_percentage"] ??
@@ -74,11 +85,7 @@ class BachelorsDetailsOverall extends StatelessWidget {
                                           "AcadamicTestpercentage"] ??
                                       "Not Selected",
                                 ),
-                                // SelectionBox(
-                                //   label: "Activity",
-                                //   value: state.selections["selectedactivity"] ??
-                                //       "Not Selected",
-                                // ),
+
                                 // SelectionBox(
                                 //   label: "Organization ",
                                 //   value: state

@@ -94,48 +94,45 @@ class _Accept_LandloardState extends State<Accept_Landloard> {
                         DataCell(Text(landlord.gender.toString())),
                         DataCell(
                           Padding(
-                            padding: const EdgeInsets.symmetric(
-                                vertical: 10.0),
+                            padding: const EdgeInsets.symmetric(vertical: 10.0),
                             child: Container(
                               height: 80,
                               child: ClipRRect(
-                                borderRadius: BorderRadius.circular(
-                                    5), // Rounded corners for image
-
-                                child: CachedNetworkImage(
-                                  imageUrl:landlord.idproofimage
-                                      .toString(),
-                                  width: 100, // Adjusted width
-                                  height: 50, // Adjusted height
-                                  fit: BoxFit.cover,
-                                  placeholder: (context, url) =>
-                                      Container(
-                                        width: 50,
-                                        height: 50,
-                                        color: Colors.grey[
-                                        300], // Placeholder background
-                                        child: Center(
-                                          child:
-                                          Loading_Widget(), // Loading indicator
-                                        ),
+                                borderRadius: BorderRadius.circular(5), // Rounded corners for image
+                                child: GestureDetector(
+                                  onTap: () {
+                                    _showProofDialog(context, landlord.idproofimage.toString());
+                                  },
+                                  child: CachedNetworkImage(
+                                    imageUrl: landlord.idproofimage.toString(),
+                                    width: 100, // Adjusted width
+                                    height: 50, // Adjusted height
+                                    fit: BoxFit.cover,
+                                    placeholder: (context, url) => Container(
+                                      width: 50,
+                                      height: 50,
+                                      color: Colors.grey[300], // Placeholder background
+                                      child: Center(
+                                        child: Loading_Widget(), // Loading indicator
                                       ),
-                                  errorWidget: (context, url, error) =>
-                                      Container(
-                                        width: 50,
-                                        height: 50,
-                                        color: Colors.grey[
-                                        300], // Placeholder background
-                                        child: Icon(
-                                          Icons.image_not_supported,
-                                          size: 50,
-                                          color: Colors.grey[600],
-                                        ),
+                                    ),
+                                    errorWidget: (context, url, error) => Container(
+                                      width: 50,
+                                      height: 50,
+                                      color: Colors.grey[300], // Placeholder background
+                                      child: Icon(
+                                        Icons.image_not_supported,
+                                        size: 50,
+                                        color: Colors.grey[600],
                                       ),
+                                    ),
+                                  ),
                                 ),
                               ),
                             ),
                           ),
-                        ),                           DataCell(Row(
+                        ),
+                        DataCell(Row(
                           children: [
                             OutlinedButton(
                               style: OutlinedButton.styleFrom(

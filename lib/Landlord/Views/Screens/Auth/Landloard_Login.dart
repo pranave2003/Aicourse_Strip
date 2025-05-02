@@ -3,6 +3,7 @@ import 'package:course_connect/Landlord/Views/Screens/Auth/Landloard_Signup.dart
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../../Widget/Constands/CustomTextfield.dart';
 import '../../../../Widget/Constands/Loading.dart';
 
 class Landloardlogin extends StatefulWidget {
@@ -11,10 +12,10 @@ class Landloardlogin extends StatefulWidget {
 }
 
 class _LandloardloginState extends State<Landloardlogin> {
+  bool isChecked = false;
   final _formKey = GlobalKey<FormState>();
-  bool rememberMe = false;
-  final TextEditingController _emailController = TextEditingController();
-  final TextEditingController _passwordController = TextEditingController();
+  final _emailController = TextEditingController();
+  final _passwordController = TextEditingController();
 
   @override
   void dispose() {
@@ -22,6 +23,18 @@ class _LandloardloginState extends State<Landloardlogin> {
     _passwordController.dispose();
     super.dispose();
   }
+  bool _isPasswordVisible = false;
+  // final _formKey = GlobalKey<FormState>();
+  // bool rememberMe = false;
+  // final TextEditingController _emailController = TextEditingController();
+  // final TextEditingController _passwordController = TextEditingController();
+
+  // @override
+  // void dispose() {
+  //   _emailController.dispose();
+  //   _passwordController.dispose();
+  //   super.dispose();
+  // }
 
   void _login() {
     if (_formKey.currentState!.validate()) {
@@ -92,13 +105,73 @@ class _LandloardloginState extends State<Landloardlogin> {
                           SizedBox(height: 5),
                           Text("Login as a Landlord",
                               style: TextStyle(
-                                  fontSize: 16, color: Colors.grey[700])),
+                                  fontSize: 16, color: Colors.white)),
                           SizedBox(height: 25),
-                          buildTextField("Email", Icons.person,
-                              _emailController, validateEmail),
-                          buildTextField("Password", Icons.lock,
-                              _passwordController, validatePassword,
-                              obscureText: true),
+                          Column(
+                            children: [
+                              // Email Field
+                              Container(
+                                width: double.infinity,
+                                margin: EdgeInsets.symmetric(vertical: 8),
+                                padding: EdgeInsets.symmetric(horizontal: 12),
+                                decoration: BoxDecoration(
+                                  color: Colors.grey[200], // Match background
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
+                                child: TextFormField(
+                                  controller: _emailController,
+                                  validator: validateEmail,
+                                  decoration: InputDecoration(
+                                    border: InputBorder.none,
+                                    icon: Icon(Icons.person),
+                                    hintText: "Email",
+                                  ),
+                                ),
+                              ),
+
+                              // Password Field
+                              Container(
+                                width: double.infinity,
+                                margin: EdgeInsets.symmetric(vertical: 8),
+                                padding: EdgeInsets.symmetric(horizontal: 12),
+                                decoration: BoxDecoration(
+                                  color: Colors.grey[200], // Same background
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
+                                child: TextFormField(
+                                  controller: _passwordController,
+                                  obscureText: !_isPasswordVisible,
+                                  validator: (value) {
+                                    if (value == null || value.isEmpty) {
+                                      return "Please enter a password";
+                                    }
+                                    if (value.length < 6) {
+                                      return "Password must be at least 6 characters";
+                                    }
+                                    return null;
+                                  },
+                                  decoration: InputDecoration(
+                                    border: InputBorder.none,
+                                    icon: Icon(Icons.lock),
+                                    hintText: "Password",
+                                    suffixIcon: IconButton(
+                                      icon: Icon(
+                                        _isPasswordVisible
+                                            ? Icons.visibility
+                                            : Icons.visibility_off_outlined,
+                                      ),
+                                      onPressed: () {
+                                        setState(() {
+                                          _isPasswordVisible = !_isPasswordVisible;
+                                        });
+                                      },
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+
                           SizedBox(height: 10),
                           Row(
                             children: [

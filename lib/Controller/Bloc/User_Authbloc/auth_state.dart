@@ -107,3 +107,12 @@ class UserError1 extends AuthState {
 //
 //   profilefailerror(this.error);
 // }
+
+
+class Userload extends AuthState {
+  final UserModel user;
+
+  Userload(
+      this.user,
+      );
+}

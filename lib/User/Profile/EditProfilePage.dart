@@ -250,7 +250,7 @@ class EditProfilePage extends StatefulWidget {
     required this.image,
     required this.name,
     required this.phone_number,
-    required this.uid,
+     required this.uid,
   }) : super(key: key);
 
   @override
@@ -305,8 +305,9 @@ class _EditProfilePageState extends State<EditProfilePage> {
                 final profile = UserModel(
                   name: nameController.text,
                   phone: phoneController.text,
-                  uid: widget.uid, // Include uid for update
+                  uid: widget.uid,
                 );
+
                 context.read<AuthBloc>().add(UpdateProfileEvent(profile: profile));
               }
             },

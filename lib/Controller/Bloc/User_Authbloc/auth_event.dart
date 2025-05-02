@@ -61,3 +61,8 @@ class UpdateProfileEvent extends AuthEvent {
 //   Profile_edit_eevent({required this.profile});
 // }
 //
+//
+class EditProfile extends AuthEvent {
+  final UserModel user;
+  EditProfile({required this.user});
+}

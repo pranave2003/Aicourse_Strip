@@ -105,47 +105,45 @@ class _Reject_LandloardState extends State<Reject_Landloard> {
                         // DataCell(Text(landlord.gender.toString())),
                         DataCell(
                           Padding(
-                            padding: const EdgeInsets.symmetric(
-                                vertical: 10.0),
+                            padding: const EdgeInsets.symmetric(vertical: 10.0),
                             child: Container(
                               height: 80,
                               child: ClipRRect(
-                                borderRadius: BorderRadius.circular(
-                                    5), // Rounded corners for image
-                                child: CachedNetworkImage(
-                                  imageUrl:landlord.idproofimage
-                                      .toString(),
-                                  width: 100, // Adjusted width
-                                  height: 50, // Adjusted height
-                                  fit: BoxFit.cover,
-                                  placeholder: (context, url) =>
-                                      Container(
-                                        width: 50,
-                                        height: 50,
-                                        color: Colors.grey[
-                                        300], // Placeholder background
-                                        child: Center(
-                                          child:
-                                          Loading_Widget(), // Loading indicator
-                                        ),
+                                borderRadius: BorderRadius.circular(5), // Rounded corners for image
+                                child: GestureDetector(
+                                  onTap: () {
+                                    _showProofDialog(context, landlord.idproofimage.toString());
+                                  },
+                                  child: CachedNetworkImage(
+                                    imageUrl: landlord.idproofimage.toString(),
+                                    width: 100, // Adjusted width
+                                    height: 50, // Adjusted height
+                                    fit: BoxFit.cover,
+                                    placeholder: (context, url) => Container(
+                                      width: 50,
+                                      height: 50,
+                                      color: Colors.grey[300], // Placeholder background
+                                      child: Center(
+                                        child: Loading_Widget(), // Loading indicator
                                       ),
-                                  errorWidget: (context, url, error) =>
-                                      Container(
-                                        width: 50,
-                                        height: 50,
-                                        color: Colors.grey[
-                                        300], // Placeholder background
-                                        child: Icon(
-                                          Icons.image_not_supported,
-                                          size: 50,
-                                          color: Colors.grey[600],
-                                        ),
+                                    ),
+                                    errorWidget: (context, url, error) => Container(
+                                      width: 50,
+                                      height: 50,
+                                      color: Colors.grey[300], // Placeholder background
+                                      child: Icon(
+                                        Icons.image_not_supported,
+                                        size: 50,
+                                        color: Colors.grey[600],
                                       ),
+                                    ),
+                                  ),
                                 ),
                               ),
                             ),
                           ),
-                        ),                         DataCell(Row(
+                        ),
+                        DataCell(Row(
                           children: [
                             OutlinedButton(
                               style: OutlinedButton.styleFrom(
@@ -189,4 +187,39 @@ class _Reject_LandloardState extends State<Reject_Landloard> {
       ),
     );
   }
+}
+void _showProofDialog(BuildContext context, String imageUrl) {
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return AlertDialog(
+        title: Text('View Proof Image'),
+        content: Container(
+          width: 600, // Adjust the width
+          height: 900, // Adjust the height
+          child: InteractiveViewer(
+            child: CachedNetworkImage(
+              imageUrl: imageUrl,
+              fit: BoxFit.contain,
+              placeholder: (context, url) => Center(child: Loading_Widget()),
+              errorWidget: (context, url, error) => Center(
+                child: Icon(
+                  Icons.image_not_supported,
+                  size: 60,
+                  color: Colors.grey[600],
+                ),
+              ),
+            ),
+          ),
+        ),
+        actions: <Widget>[
+          TextButton(
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+            child: Text('Close'),
+          ),
+        ],
+      );},
+  );
 }

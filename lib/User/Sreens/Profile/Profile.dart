@@ -407,7 +407,10 @@ class _ProfileState extends State<Profile> {
       context,
       MaterialPageRoute(
         builder: (context) => EditProfilePage(
+
+
           image: state.Userdata.image.toString(),
+
           name: state.Userdata.name.toString(),
           phone_number: state.Userdata.phone.toString(),
           uid: state.Userdata.uid.toString(),
