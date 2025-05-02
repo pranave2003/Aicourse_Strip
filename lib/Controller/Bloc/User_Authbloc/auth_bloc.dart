@@ -365,25 +365,48 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
  //      }
  //    });
 
-    on<UpdateProfileEvent>((event, emit) async {
-      try {
-        emit(ProfileImageLoading());
+    // on<UpdateProfileEvent>((event, emit) async {
+    //   try {
+    //     emit(ProfileImageLoading());
+    //
+    //     // Assuming you update Firestore or any backend
+    //     await FirebaseFirestore.instance
+    //         .collection('users')
+    //         .doc(event.profile.uid)
+    //         .update({
+    //       'name': event.profile.name,
+    //       'phone': event.profile.phone,
+    //     });
+    //
+    //     emit(profileaddSuccess());
+    //   } catch (e) {
+    //     // emit(profilefailerror("Failed to update profile"));
+    //   }
+    // });
 
-        // Assuming you update Firestore or any backend
+    on<UpdateProfileEvent>((event, emit) async {
+      emit(ProfileUpdateLoading());
+      try {
+        final updateData = {
+          "name": event.profile.name,
+          "phone": event.profile.phone,
+        };
+
+        // Only update image if it's not null
+        if (event.profile.image != null) {
+          updateData["imageUrl"] = event.profile.image;
+        }
+
         await FirebaseFirestore.instance
-            .collection('users')
+            .collection("Laundry_Users")
             .doc(event.profile.uid)
-            .update({
-          'name': event.profile.name,
-          'phone': event.profile.phone,
-        });
+            .update(updateData);
 
         emit(profileaddSuccess());
       } catch (e) {
-        // emit(profilefailerror("Failed to update profile"));
+        emit(Usersfailerror(e.toString()));
       }
     });
-
 
 
 

@@ -9,9 +9,10 @@ import '../../../../Controller/Bloc/Property/Property/Property_auth_state.dart';
 class PropertyEdit extends StatefulWidget {
   const PropertyEdit({
     super.key,
-    required this.propertyName,
+     required this.propertyName,
     required this.propertyAddress,
     required this.propertyArea,
+    required this.property_id,
     required this.country,
     required this.state,
     required this.city,
@@ -71,6 +72,7 @@ class PropertyEdit extends StatefulWidget {
   final String oneSignalId;
   final String sexualOrientations;
   final String smoking;
+  final String property_id;
 
   @override
   _PropertyEditState createState() => _PropertyEditState();
@@ -121,6 +123,7 @@ class _PropertyEditState extends State<PropertyEdit> {
   @override
   void initState() {
     super.initState();
+    _tokenAmountController.text=widget.tokenAmount;
     _propertyNameController.text = widget.propertyName;
     _amountWeekController.text = widget.propertyAmountWeek;
     _amountMonthController.text = widget.propertyAmountMonth;
@@ -152,6 +155,11 @@ class _PropertyEditState extends State<PropertyEdit> {
     billsIncluded = widget.billStatus == "Yes";
     petsAllowed = widget.pets == "Yes";
     smokingAllowed = widget.smoking == "Yes";
+    _availableFromController.text = widget.availableFrom;
+    _moveinDateController.text = widget.moveInDate;
+
+
+
   }
 
   Future<void> _selectDate(
@@ -247,18 +255,21 @@ class _PropertyEditState extends State<PropertyEdit> {
               BlocConsumer<PropertyAuthBlock, PropertyAuthState>(
                 listener: (context, state) {
                   if (state is PropertyaddSuccess) {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(
-                        content: Text("Property updated successfully!"),
-                        backgroundColor: Colors.green,
-                        duration: Duration(seconds: 2),
-                      ),
-                    );
-                    Navigator.push(context, MaterialPageRoute(
-                      builder: (context) {
-                        return LandlordPage();
-                      },
-                    ));
+                    // Check if the widget is still mounted before navigating
+                    if (mounted) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text("Property updated successfully!"),
+                          backgroundColor: Colors.green,
+                          duration: Duration(seconds: 2),
+                        ),
+                      );
+                      Navigator.push(context, MaterialPageRoute(
+                        builder: (context) {
+                          return LandlordPage();
+                        },
+                      ));
+                    }
                   }
                 },
                 builder: (context, state) {
@@ -273,12 +284,24 @@ class _PropertyEditState extends State<PropertyEdit> {
                               fontSize: 24, fontWeight: FontWeight.bold),
                         ),
                         SizedBox(width: 20),
-                        InkWell(
+                        BlocConsumer<PropertyAuthBlock, PropertyAuthState>(
+                          listener: (context, state) {
+                            if (state is PropertyaddSuccess) {
+                              Navigator.of(context).pop();
+                            }
+                          },
+                          builder: (context, state) {
+
+         return InkWell(
                           onTap: () {
+
                             if (_formKey.currentState!.validate()) {
                               Property_Model property = Property_Model(
-                                propertyName: _propertyNameController.text,
-                                propertyAddress: _addressController.text,
+                                propertyId: widget.property_id,
+
+
+                                propertyName: _propertyNameController.text??"",
+                                propertyAddress: _addressController.text??"",
                                 propertyArea: _areaController.text,
                                 country: _selectedCountry,
                                 state: _selectedState,
@@ -322,18 +345,19 @@ class _PropertyEditState extends State<PropertyEdit> {
                               color: Colors.blue,
                               borderRadius: BorderRadius.circular(8),
                             ),
-                            child: state is PropertyaddSuccess
-                                ? Loading_Widget()
-                                : Text(
-                                    "+Update",
-                                    style: TextStyle(
-                                        fontSize: 18,
-                                        color: Colors.white,
-                                        fontWeight: FontWeight.bold),
-                                  ),
-                          ),
-                        ),
-                      ],
+                            child: state is PropertyLoading
+                              ? Loading_Widget()
+            : Text("Update",
+        style: TextStyle(
+            fontSize: 16,
+            color: Colors.white,
+            fontWeight: FontWeight.bold)),
+
+                            ),
+                        );
+  },
+
+                        ),],
                     ),
                   );
                 },
@@ -440,22 +464,51 @@ class _PropertyEditState extends State<PropertyEdit> {
                           }, required: true)),
                         ],
                       ),
+                      Row(
+                        children: [
+                          Expanded(
+                            child: _buildDatePicker(
+                              "Available From",
+                              _availableFromController,
+                              availableFrom,
+                                  (date) => setState(() => availableFrom = date),
+                            ),
+                          ),
+                          const SizedBox(width: 10),
+                          Expanded(
+                            child: _buildDatePicker(
+                              "Move-in Date",
+                              _moveinDateController,
+                              moveInDate,
+                                  (date) => setState(() => moveInDate = date),
+                            ),
+                          ),
+                        ],
+                      ),
+
                       SizedBox(height: 10),
                       Row(
                         children: [
                           Expanded(
-                              child: _buildDatePicker(
-                                  "Available From", availableFrom, (date) {
-                            setState(() => availableFrom = date);
-                          })),
-                          SizedBox(width: 10),
+                            child: _buildDatePicker(
+                              "Available From",
+                              _availableFromController, // ✅ This is now a controller
+                              availableFrom,
+                                  (date) => setState(() => availableFrom = date),
+                            ),
+                          ),
+                          const SizedBox(width: 10),
                           Expanded(
-                              child: _buildDatePicker(
-                                  "Move-in Date", moveInDate, (date) {
-                            setState(() => moveInDate = date);
-                          })),
+                            child: _buildDatePicker(
+                              "Move-in Date",
+                              _moveinDateController, // ✅ Also a controller
+                              moveInDate,
+                                  (date) => setState(() => moveInDate = date),
+                            ),
+                          ),
                         ],
                       ),
+
                       Divider(thickness: 2),
                       SizedBox(height: 10),
                       Text("Images:",
@@ -509,15 +562,7 @@ class _PropertyEditState extends State<PropertyEdit> {
                             }
                             return null;
                           })),
-                          SizedBox(width: 10),Expanded(
-                              child: _buildTextField(
-                                  "Token Amount", _propertyTotalController,
-                                  (value) {
-                            if (value!.isEmpty) {
-                              return 'Please enter amount per month';
-                            }
-                            return null;
-                          })),
+
                           SizedBox(width: 10),
                           Expanded(
                               child: _buildDropdown(
@@ -573,12 +618,16 @@ class _PropertyEditState extends State<PropertyEdit> {
                       Row(
                         children: [
                           Expanded(
-                            child: _buildDropdown(
-                                "Furnishing",
-                                ["Furnished", "Semi-Furnished", "Unfurnished"],
-                                _selectedFurnishing, (value) {
-                              setState(() => _selectedFurnishing = value);
-                            }, required: true),
+                            child:// Example of the dropdown for furnishing options
+                            _buildDropdown (
+                      "Furnishing",
+                          ["Furnished", "Unfurnished", "Semi-furnished"],// Ensure these are unique
+                                _selectedFurnishing, // This should match one of the items
+                                    (value) {
+                                  setState(() => _selectedFurnishing = value);
+                                },
+                                required: true
+                            ),
                           ),
                           SizedBox(width: 10),
                           Expanded(
@@ -781,24 +830,39 @@ class _PropertyEditState extends State<PropertyEdit> {
   }
 
   Widget _buildDatePicker(
-      String label, DateTime? date, Function(DateTime) onDateSelected) {
+      String label,
+      TextEditingController controller,
+      DateTime? initialDate,
+      Function(DateTime) onDateSelected,
+      ) {
     return Padding(
-      padding: EdgeInsets.only(bottom: 15),
+      padding: const EdgeInsets.only(bottom: 15),
       child: TextFormField(
         readOnly: true,
+        controller: controller,
         decoration: InputDecoration(
-          labelText:
-              date == null ? label : "$label: ${date.toLocal()}".split(' ')[0],
-          border: OutlineInputBorder(),
-          suffixIcon: IconButton(
-            icon: Icon(Icons.calendar_today),
-            onPressed: () => _selectDate(context, onDateSelected),
-          ),
+          labelText: label,
+          border: const OutlineInputBorder(),
+          suffixIcon: Icon(Icons.calendar_today),
         ),
-        validator: (value) => date == null ? 'Please select a date' : null,
+        onTap: () async {
+          final DateTime? picked = await showDatePicker(
+            context: context,
+            initialDate: initialDate ?? DateTime.now(),
+            firstDate: DateTime(2000),
+            lastDate: DateTime(2100),
+          );
+          if (picked != null) {
+            controller.text = "${picked.toLocal()}".split(' ')[0]; // show only date
+            onDateSelected(picked);
+          }
+        },
+        validator: (value) =>
+        (value == null || value.isEmpty) ? 'Please select a date' : null,
       ),
     );
   }
+
 
   Widget _buildSectionTitle(String title) {
     return Padding(

@@ -35,6 +35,7 @@ class Property extends StatefulWidget {
 }
 
 class _PropertyState extends State<Property> {
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -343,7 +344,7 @@ class _PropertyState extends State<Property> {
                                             smoking: property.smoking ?? '',
                                             sexualOrientations:
                                                 property.sexualOrientations ??
-                                                    '',
+                                                    '', property_id: '',
                                           ),
                                         ),
                                       );

@@ -166,18 +166,28 @@ class _UserSignupState extends State<UserSignup> {
   Widget build(BuildContext context) {
     return BlocConsumer<AuthBloc, AuthState>(
       listener: (context, state) {
-        if (state is Authenticated) {
-          WidgetsBinding.instance.addPostFrameCallback((_) {
-            Navigator.pushNamedAndRemoveUntil(
-                context, '/home', (route) => false);
-          });
-        }
+        // if (state is Authenticated) {
+        //   WidgetsBinding.instance.addPostFrameCallback((_) {
+        //     Navigator.pushNamedAndRemoveUntil(
+        //         context, '/home', (route) => false);
+        //   });
+        // }
         if (state is AuthenticatedError) {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(content: Text(state.message.toString())),
           );
         }
+        if (state is Authenticated) {
+          // Navigate to login page on successful signup (replace SignupSuccess with your success state)
+          WidgetsBinding.instance.addPostFrameCallback((_) {
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(builder: (_) => const UserLogin_auth()),
+            );
+          });
+        }
       },
+
       builder: (context, state) {
         return Scaffold(
           body: Center(
