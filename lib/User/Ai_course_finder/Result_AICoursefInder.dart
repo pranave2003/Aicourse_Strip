@@ -20,23 +20,20 @@ class ResultAicoursefinder extends StatelessWidget {
           return BlocProvider(
               create: (context) => CoursefinderBlock()
                 ..add(FetchAllUniversites(
-                  searchQuery: null,
-                  Country: state.selections["country"],
-                  AcadamicTest: state.selections["Acadamictest"],
-                  Course_offered: state.selections["course"],
-                  Degree_offered: state.selections["selectedDegree"],
-                  Englishtest: state.selections["EnglishTest"],
-                  highestEducation: state.selections["highestEducation"],
-
-                  AcadamicTestPercentage:
-
-
-                      state.selections["AcadamicTestpercentage"],
-                  Englishtestpercentage:
-                      state.selections["EnglishTest_percentage"],
-                  // highestEducationpercentage:
-                  //     state.selections["highestEducation_percentage"],
-                )),
+                    searchQuery: null,
+                    Country: state.selections["country"],
+                    AcadamicTest: state.selections["Acadamictest"],
+                    Course_offered: state.selections["course"],
+                    Degree_offered: state.selections["selectedDegree"],
+                    Englishtest: state.selections["EnglishTest"],
+                    highestEducation: state.selections["highestEducation"],
+                    AcadamicTestPercentage: double.parse(
+                        state.selections["AcadamicTestpercentage"]!),
+                    Englishtestpercentage: double.parse(
+                      state.selections["EnglishTest_percentage"]!,
+                    ),
+                    highestEducationpercentage: double.parse(
+                        state.selections["highestEducation_percentage"]!))),
               child: Scaffold(
                 appBar: AppBar(
                   leading: IconButton(

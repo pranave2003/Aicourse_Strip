@@ -123,7 +123,7 @@ class _AIGenerationScreenState extends State<AIGenerationScreen>
     });
 
     // Navigation timer
-    _navigationTimer = Timer(const Duration(seconds: 10), () {
+    _navigationTimer = Timer(const Duration(seconds: 5), () {
       widget.onGenerationComplete();
     });
   }

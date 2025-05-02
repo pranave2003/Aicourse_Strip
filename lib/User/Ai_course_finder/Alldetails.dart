@@ -233,22 +233,22 @@ class BachelorsDetailsOverall extends StatelessWidget {
                   SizedBox(height: 20),
                   GestureDetector(
                     onTap: () async {
-                      context.read<CoursefinderBlock>().add(FetchAllUniversites(
-                            searchQuery: null,
-                            Country: state.selections["country"],
-                            AcadamicTest: state.selections["Acadamictest"],
-                            AcadamicTestPercentage:
-                                state.selections["AcadamicTestpercentage"],
-                            Course_offered: state.selections["course"],
-                            Degree_offered: state.selections["selectedDegree"],
-                            Englishtest: state.selections["EnglishTest"],
-                            Englishtestpercentage:
-                                state.selections["EnglishTest_percentage"],
-                            highestEducation:
-                                state.selections["highestEducation"],
-                            highestEducationpercentage:
-                                state.selections["highestEducation_percentage"],
-                          ));
+                      // context.read<CoursefinderBlock>().add(FetchAllUniversites(
+                      //       searchQuery: null,
+                      //       Country: state.selections["country"],
+                      //       AcadamicTest: state.selections["Acadamictest"],
+                      //       AcadamicTestPercentage:
+                      //           state.selections["AcadamicTestpercentage"],
+                      //       Course_offered: state.selections["course"],
+                      //       Degree_offered: state.selections["selectedDegree"],
+                      //       Englishtest: state.selections["EnglishTest"],
+                      //       Englishtestpercentage:
+                      //           state.selections["EnglishTest_percentage"],
+                      //       highestEducation:
+                      //           state.selections["highestEducation"],
+                      //       highestEducationpercentage:
+                      //           state.selections["highestEducation_percentage"],
+                      //     ));
                       // await Navigator.push(
                       //   context,
                       //   MaterialPageRoute(
