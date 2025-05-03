@@ -5,7 +5,7 @@ import 'package:course_connect/Widget/Constands/Loading.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../../Controller/Bloc/Notification/admin_notification_state.dart';
+import '../../../../Widget/Constands/colors.dart';
 
 class Admin_SendNotification extends StatefulWidget {
   const Admin_SendNotification({super.key});
@@ -21,8 +21,25 @@ class _Admin_SendNotificationState extends State<Admin_SendNotification> {
   final TextEditingController _searchController = TextEditingController();
 
   AdminNotificationBloc adminnoti = AdminNotificationBloc();
+  DateTime now = DateTime.now();
+  // void _sendNotification() {
+  //
+  //
+  //   String notificationDate =
+  //       "${now.day.toString().padLeft(2, '0')}/${now.month.toString().padLeft(2, '0')}/${now.year}";
+  //   String notificationTime =
+  //       "${now.hour.toString().padLeft(2, '0')}:${now.minute.toString().padLeft(2, '0')}";
+  //
+  //   print('NotificationDate: "$notificationDate"');
+  //   print('NotificationTime: "$notificationTime"');
+  // }
 
-  void _sendNotification() {}
+  @override
+  void initState() {
+    // TODO: implement initState
+
+    super.initState();
+  }
 
   @override
   void dispose() {
@@ -38,7 +55,7 @@ class _Admin_SendNotificationState extends State<Admin_SendNotification> {
       appBar: AppBar(
         title: const Text('Send Notification'),
         centerTitle: true,
-        backgroundColor: Theme.of(context).colorScheme.primary,
+        backgroundColor: blueColor,
         foregroundColor: Colors.white,
         elevation: 2,
       ),
@@ -56,6 +73,7 @@ class _Admin_SendNotificationState extends State<Admin_SendNotification> {
                   children: [
                     // Notification Details Card
                     Card(
+                      color: Colors.white,
                       elevation: 2,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(12),
@@ -138,8 +156,17 @@ class _Admin_SendNotificationState extends State<Admin_SendNotification> {
                     // Send Button
                     BlocConsumer<AdminNotificationBloc, AdminNotificationState>(
                       listener: (context, state) {
-                        if (state is NotificationSend_Success) {
-                          print("ffff");
+                        if (state is NotificationSend_message) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              backgroundColor: Colors.green,
+                              content: Text(
+                                state.message,
+                                style: TextStyle(color: Colors.white),
+                              ),
+                              duration: Duration(seconds: 2),
+                            ),
+                          );
                         }
                       },
                       builder: (context, state) {
@@ -159,8 +186,10 @@ class _Admin_SendNotificationState extends State<Admin_SendNotification> {
                                 final Notification = Notificationmodel(
                                     NotificationContent:
                                         _contentController.text.trim(),
-                                    NotificationDate: "10/5/2025",
-                                    NotificationTime: "10:00",
+                                    NotificationDate:
+                                        "${now.day.toString().padLeft(2, '0')}/${now.month.toString().padLeft(2, '0')}/${now.year}",
+                                    NotificationTime:
+                                        "${now.hour.toString().padLeft(2, '0')}:${now.minute.toString().padLeft(2, '0')}",
                                     NotificationMatter:
                                         _titleController.text.trim());
                                 context.read<AdminNotificationBloc>()
@@ -169,8 +198,7 @@ class _Admin_SendNotificationState extends State<Admin_SendNotification> {
                               }
                             },
                             style: ElevatedButton.styleFrom(
-                              backgroundColor:
-                                  Theme.of(context).colorScheme.primary,
+                              backgroundColor: blueColor,
                               foregroundColor: Colors.white,
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(8),
@@ -180,7 +208,63 @@ class _Admin_SendNotificationState extends State<Admin_SendNotification> {
                           ),
                         );
                       },
-                    )
+                    ),
+                    const SizedBox(height: 20),
+                    SizedBox(
+                      height: 400,
+                      child: Card(
+                        color: Colors.white,
+                        elevation: 2,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        child: Padding(
+                            padding: const EdgeInsets.all(16.0),
+                            child: ListView.builder(
+                              itemBuilder: (context, index) {
+                                return Card(
+                                  child: ListTile(
+                                    title: Text("Title"),
+                                    subtitle: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                            "Matter asdhsajdhah dsasjdgsajhdgadhasgdsjadsgd asjdhgsjdgdhgasdjgsda djsahgsdhdjahjsdghjasgd sajgdsjhdagshjdgasjdgahjsgd sajgsdjhgdasjhdghjdgdajh dsasjhdsgadgashdjsgdgahdsd asdsjdghajhgdsjdgsadajsgdjhg"),
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.end,
+                                          children: [
+                                            Column(
+                                              children: [
+                                                Text(
+                                                  "Date : 10/10/25",
+                                                  style: TextStyle(
+                                                      color: Colors.red),
+                                                ),
+                                                Text(
+                                                  "Time : 10.00",
+                                                  style: TextStyle(
+                                                      color: Colors.green),
+                                                ),
+                                              ],
+                                            ),
+                                          ],
+                                        ),
+                                      ],
+                                    ),
+                                    trailing: IconButton(
+                                        onPressed: () {},
+                                        icon: Icon(
+                                          Icons.delete,
+                                          color: Colors.red,
+                                        )),
+                                  ),
+                                );
+                              },
+                            )),
+                      ),
+                    ),
                   ],
                 ),
               ),
