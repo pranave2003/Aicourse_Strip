@@ -16,31 +16,46 @@ class _BachelorsCourseState extends State<BachelorsCourse> {
   String? selectedCourse;
 
   final List<String> courses = [
-    "BBA (Bachelor of Business Administration)",
-    "BCom (Bachelor of Commerce)",
-    "BA in Business Management",
-    "BSc in International Business",
-    "BBA in Marketing",
-    "BBA in Finance",
-    "BBA in Human Resource Management",
-    "BBA in Entrepreneurship",
-    "BBA in Supply Chain Management",
-    "BSc in Computer Science",
-    "BSc in Information Technology (IT)",
-    "BSc in Data Science",
-    "BSc in AI & Machine Learning",
-    "BSc in Biotechnology",
-    "BSc in Environmental Science",
-    "BA in Political Science",
-    "BA in Sociology",
-    "BA in History",
-    "BA in English Literature",
-    "BA in Journalism & Mass Communication",
-    "BA in Fine Arts",
-    "BA in Criminology",
-    "BA in Public Administration",
-    "BA in Economics",
-    "BA in International Relations"
+    "BSc in Mathematics",
+    "BSc in Physics",
+    "BSc in Chemistry",
+    "BSc in Statistics",
+    "BSc in Computer Applications (BCA)",
+    "BSc in Cybersecurity",
+    "BSc in Software Engineering",
+    "BSc in Game Design and Development",
+    "BSc in Robotics",
+    "BSc in Geology",
+    "BSc in Forensic Science",
+    "BSc in Food Science & Nutrition",
+
+    "Bachelor of Economics (BEcon)",
+    "Bachelor of Accounting",
+    "Bachelor of Business Analytics",
+    "Bachelor of Financial Markets",
+    "Bachelor of International Business and Economics",
+
+    "BA in Psychology",
+    "BA in Anthropology",
+    "BA in Philosophy",
+    "BA in Linguistics",
+    "BA in Gender Studies",
+    "BA in Cultural Studies",
+
+    "BA in Animation and VFX",
+    "BA in Film & Media Studies",
+    "BA in Graphic Design",
+    "BA in Digital Media",
+
+    "BSc in Microbiology",
+    "BSc in Genetics",
+    "BSc in Zoology",
+    "BSc in Agriculture",
+    "BSc in Nursing",
+
+    "BA in Development Studies",
+    "BA in Global Studies",
+    "BA in Peace and Conflict Studies"
   ];
 
   String searchQuery = "";

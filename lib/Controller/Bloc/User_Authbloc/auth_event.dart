@@ -62,7 +62,10 @@ class UpdateProfileEvent extends AuthEvent {
 // }
 //
 //
+//profle
 class EditProfile extends AuthEvent {
   final UserModel user;
   EditProfile({required this.user});
 }
+
+

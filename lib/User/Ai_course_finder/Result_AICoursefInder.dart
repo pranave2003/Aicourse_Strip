@@ -1,3 +1,302 @@
+// import 'package:cached_network_image/cached_network_image.dart';
+// import 'package:course_connect/Controller/Bloc/Ai_coursefinder_block/coursefinder_block.dart';
+// import 'package:flutter/material.dart';
+// import 'package:flutter_bloc/flutter_bloc.dart';
+// import '../../Controller/Bloc/Ai_coursefinder_block/coursefinder_state.dart';
+// import '../../Controller/Bloc/University_block/University_model/University_model.dart';
+// import '../../Controller/Bloc/selection_cubit.dart';
+// import '../../Controller/Bloc/selection_state.dart';
+// import '../Sreens/BottomNavigation/Bottom_Nav.dart';
+// import 'UniversityInfoScreen.dart';
+//
+// class ResultAicoursefinder extends StatelessWidget {
+//   const ResultAicoursefinder({super.key});
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     return BlocBuilder<SelectionCubit, SelectionState>(
+//       builder: (context, state) {
+//         if (state is SelectionUpdated) {
+//           return BlocProvider(
+//               create: (context) => CoursefinderBlock()
+//                 ..add(FetchAllUniversites(
+//                     searchQuery: null,
+//                     Country: state.selections["country"],
+//                     AcadamicTest: state.selections["Acadamictest"],
+//                     Course_offered: state.selections["course"],
+//                     Degree_offered: state.selections["selectedDegree"],
+//                     Englishtest: state.selections["EnglishTest"],
+//                     highestEducation: state.selections["highestEducation"],
+//                     AcadamicTestPercentage: double.parse(
+//                         state.selections["AcadamicTestpercentage"]!),
+//                     Englishtestpercentage: double.parse(
+//                       state.selections["EnglishTest_percentage"]!,
+//                     ),
+//                     highestEducationpercentage: double.parse(
+//                         state.selections["highestEducation_percentage"]!),
+//                     board: state.selections["SelectedBoard"],
+//                     scheme: state.selections["SelectedScheme"])),
+//               child: Scaffold(
+//                 appBar: AppBar(
+//                   leading: IconButton(
+//                     icon: Icon(Icons.arrow_back),
+//                     onPressed: () {
+//                       Navigator.pop(context);
+//                     },
+//                   ),
+//                   actions: [
+//                     TextButton(
+//                         onPressed: () {
+//                           Navigator.push(context, MaterialPageRoute(
+//                             builder: (context) {
+//                               return BottomNavWrapper();
+//                             },
+//                           ));
+//                         },
+//                         child: Text("Back to Home"))
+//                   ],
+//                 ),
+//                 //
+//                 body: Padding(
+//                   padding: const EdgeInsets.all(10),
+//                   child: Column(
+//                     mainAxisAlignment: MainAxisAlignment.start,
+//                     children: [
+//                       // Text(
+//                       //   ' 10 universities found',
+//                       //   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+//                       // ),
+//                       SizedBox(height: 10),
+//                       Row(
+//                         children: [
+//                           Expanded(
+//                             flex: 5,
+//                             child: TextFormField(
+//                               decoration: const InputDecoration(
+//                                 hintText: "Search university or course",
+//                                 prefixIcon: Icon(Icons.search),
+//                                 border: OutlineInputBorder(
+//                                   borderSide:
+//                                       BorderSide(width: 1, color: Colors.black),
+//                                 ),
+//                               ),
+//                             ),
+//                           ),
+//                           SizedBox(width: 10),
+//                           // Expanded(
+//                           //   flex: 1,
+//                           //   child: Container(
+//                           //     height: 50,
+//                           //     width: 50,
+//                           //     decoration: BoxDecoration(
+//                           //       color: Colors.grey[100],
+//                           //       borderRadius: BorderRadius.circular(12),
+//                           //     ),
+//                           //     child: IconButton(
+//                           //       icon: Icon(Icons.tune, color: Colors.brown),
+//                           //       onPressed: () {
+//                           //         // TODO: Implement filter functionality
+//                           //       },
+//                           //     ),
+//                           //   ),
+//                           // ),
+//                         ],
+//                       ),
+//                       SizedBox(height: 20),
+//                       Expanded(
+//                         child:
+//                             BlocConsumer<CoursefinderBlock, CoursefinderState>(
+//                           listener: (context, state) {},
+//                           builder: (context, state) {
+//                             if (state is CoursefinderLoading) {
+//                               return Center(child: CircularProgressIndicator());
+//                             } else if (state is CoursefinderFailError) {
+//                               return Center(child: Text(state.error));
+//                             } else if (state is CoursefinderLoaded) {
+//                               if (state.universities.isEmpty) {
+//                                 return Center(
+//                                   child: Text(
+//                                     "No data found",
+//                                     style: TextStyle(
+//                                         fontSize: 16,
+//                                         fontWeight: FontWeight.bold),
+//                                   ),
+//                                 );
+//                               }
+//
+//                               return ListView.builder(
+//                                 itemCount: state.universities.length,
+//                                 itemBuilder: (context, index) {
+//                                   final University_model university =
+//                                       state.universities[index];
+//                                   return Card(
+//                                       margin: const EdgeInsets.symmetric(
+//                                           horizontal: 10, vertical: 5),
+//                                       shape: RoundedRectangleBorder(
+//                                         borderRadius: BorderRadius.circular(10),
+//                                       ),
+//                                       // child: ListTile(
+//                                       //   leading: ClipRRect(
+//                                       //       borderRadius: BorderRadius.circular(
+//                                       //           10), // Uncomment if needed
+//                                       //       child: CachedNetworkImage(
+//                                       //         imageUrl:
+//                                       //             university.UniversityimageURL.toString(),
+//                                       //         height: 140,
+//                                       //         width: 160,
+//                                       //         fit: BoxFit.cover,
+//                                       //
+//                                       //         // Show a loading indicator while fetching the image
+//                                       //         placeholder: (context, url) => Center(
+//                                       //           child: CircularProgressIndicator(),
+//                                       //         ),
+//                                       //
+//                                       //         // Show an error icon if the image fails to load
+//                                       //         errorWidget: (context, url, error) => Icon(
+//                                       //           Icons.image_not_supported,
+//                                       //           size: 50,
+//                                       //           color: Colors.grey,
+//                                       //         ),
+//                                       //       )),
+//                                       //   title: GestureDetector(
+//                                       //     onTap: () {
+//                                       //       Navigator.push(
+//                                       //         context,
+//                                       //         MaterialPageRoute(
+//                                       //
+//                                       //           builder: (context) =>
+//                                       //               UniversityInfoScreenWrapper(
+//                                       //                   universityid:
+//                                       //                       university.Universityid),
+//                                       //         ),
+//                                       //       );
+//                                       //     },
+//                                       //     child: Text(
+//                                       //       university.Collegename!,
+//                                       //       style: const TextStyle(
+//                                       //         color: Colors.blue,
+//                                       //         fontSize: 16,
+//                                       //         fontWeight: FontWeight.bold,
+//                                       //         decoration: TextDecoration.underline,
+//                                       //       ),
+//                                       //     ),
+//                                       //   ),
+//                                       //   subtitle: Column(
+//                                       //     crossAxisAlignment: CrossAxisAlignment.start,
+//                                       //     children: [
+//                                       //       Text(
+//                                       //           '${university.Universityname}, ${university.Course_offered}'),
+//                                       //       Text("${university.Country}"),
+//                                       //       Row(
+//                                       //         children: [
+//                                       //           const Icon(Icons.star,
+//                                       //               color: Colors.amber, size: 16),
+//                                       //           Text(
+//                                       //             ' ${university.Rank}',
+//                                       //             style: const TextStyle(fontSize: 12),
+//                                       //           ),
+//                                       //         ],
+//                                       //       ),
+//                                       //     ],
+//                                       //   ),
+//                                       // ),
+//                                       child: GestureDetector(
+//                                         onTap: () {
+//                                           Navigator.push(
+//                                             context,
+//                                             MaterialPageRoute(
+//                                               builder: (context) =>
+//                                                   UniversityInfoScreenWrapper(
+//                                                 universityid:
+//                                                     university.Universityid,
+//                                               ),
+//                                             ),
+//                                           );
+//                                         },
+//                                         child: ListTile(
+//                                           leading: ClipRRect(
+//                                             borderRadius:
+//                                                 BorderRadius.circular(10),
+//                                             child: CachedNetworkImage(
+//                                               imageUrl:
+//                                                   university.UniversityimageURL
+//                                                       .toString(),
+//                                               height: 140,
+//                                               width: 160,
+//                                               fit: BoxFit.cover,
+//                                               placeholder: (context, url) =>
+//                                                   Center(
+//                                                 child:
+//                                                     CircularProgressIndicator(),
+//                                               ),
+//                                               errorWidget:
+//                                                   (context, url, error) => Icon(
+//                                                 Icons.image_not_supported,
+//                                                 size: 50,
+//                                                 color: Colors.grey,
+//                                               ),
+//                                             ),
+//                                           ),
+//                                           title: Text(
+//                                             university.Collegename!,
+//                                             style: const TextStyle(
+//                                               color: Colors.blue,
+//                                               fontSize: 16,
+//                                               fontWeight: FontWeight.bold,
+//                                               decoration:
+//                                                   TextDecoration.underline,
+//                                             ),
+//                                           ),
+//                                           subtitle: Column(
+//                                             crossAxisAlignment:
+//                                                 CrossAxisAlignment.start,
+//                                             children: [
+//                                               Column(
+//                                                 children: [
+//                                                   Text(
+//                                                       '${university.Universityname},'
+//                                                       ' ${university.Course_offered}'),
+//                                                 ],
+//                                               ),
+//                                               Column(
+//                                                 children: [
+//                                                   Text("${university.Country}"),
+//                                                 ],
+//                                               ),
+//                                               Row(
+//                                                 children: [
+//                                                   const Icon(Icons.star,
+//                                                       color: Colors.amber,
+//                                                       size: 16),
+//                                                   Text(
+//                                                     ' ${university.Rank}',
+//                                                     style: const TextStyle(
+//                                                         fontSize: 12),
+//                                                   ),
+//                                                 ],
+//                                               ),
+//                                             ],
+//                                           ),
+//                                         ),
+//                                       ));
+//                                 },
+//                               );
+//                             }
+//                             return SizedBox();
+//                           },
+//                         ),
+//                       ),
+//                     ],
+//                   ),
+//                 ),
+//               ));
+//         }
+//         return SizedBox();
+//       },
+//     );
+//     // );
+//   }
+// }
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:course_connect/Controller/Bloc/Ai_coursefinder_block/coursefinder_block.dart';
 import 'package:flutter/material.dart';
@@ -9,8 +308,16 @@ import '../../Controller/Bloc/selection_state.dart';
 import '../Sreens/BottomNavigation/Bottom_Nav.dart';
 import 'UniversityInfoScreen.dart';
 
-class ResultAicoursefinder extends StatelessWidget {
+class ResultAicoursefinder extends StatefulWidget {
   const ResultAicoursefinder({super.key});
+
+  @override
+  State<ResultAicoursefinder> createState() => _ResultAicoursefinderState();
+}
+
+class _ResultAicoursefinderState extends State<ResultAicoursefinder> {
+  final TextEditingController _searchController = TextEditingController();
+  String _searchQuery = '';
 
   @override
   Widget build(BuildContext context) {
@@ -18,282 +325,201 @@ class ResultAicoursefinder extends StatelessWidget {
       builder: (context, state) {
         if (state is SelectionUpdated) {
           return BlocProvider(
-              create: (context) => CoursefinderBlock()
-                ..add(FetchAllUniversites(
-                    searchQuery: null,
-                    Country: state.selections["country"],
-                    AcadamicTest: state.selections["Acadamictest"],
-                    Course_offered: state.selections["course"],
-                    Degree_offered: state.selections["selectedDegree"],
-                    Englishtest: state.selections["EnglishTest"],
-                    highestEducation: state.selections["highestEducation"],
-                    AcadamicTestPercentage: double.parse(
-                        state.selections["AcadamicTestpercentage"]!),
-                    Englishtestpercentage: double.parse(
-                      state.selections["EnglishTest_percentage"]!,
-                    ),
-                    highestEducationpercentage: double.parse(
-                        state.selections["highestEducation_percentage"]!),
-                    board: state.selections["SelectedBoard"],
-                    scheme: state.selections["SelectedScheme"])),
-              child: Scaffold(
-                appBar: AppBar(
-                  leading: IconButton(
-                    icon: Icon(Icons.arrow_back),
-                    onPressed: () {
-                      Navigator.pop(context);
-                    },
-                  ),
-                  actions: [
-                    TextButton(
-                        onPressed: () {
-                          Navigator.push(context, MaterialPageRoute(
-                            builder: (context) {
-                              return BottomNavWrapper();
-                            },
-                          ));
-                        },
-                        child: Text("Back to Home"))
-                  ],
+            create: (context) => CoursefinderBlock()
+              ..add(FetchAllUniversites(
+                searchQuery: null,
+                Country: state.selections["country"],
+                AcadamicTest: state.selections["Acadamictest"],
+                Course_offered: state.selections["course"],
+                Degree_offered: state.selections["selectedDegree"],
+                Englishtest: state.selections["EnglishTest"],
+                highestEducation: state.selections["highestEducation"],
+                AcadamicTestPercentage: double.parse(
+                    state.selections["AcadamicTestpercentage"]!),
+                Englishtestpercentage: double.parse(
+                    state.selections["EnglishTest_percentage"]!),
+                highestEducationpercentage: double.parse(
+                    state.selections["highestEducation_percentage"]!),
+                board: state.selections["SelectedBoard"],
+                scheme: state.selections["SelectedScheme"],
+              )),
+            child: Scaffold(
+              appBar: AppBar(
+                leading: IconButton(
+                  icon: Icon(Icons.arrow_back),
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
                 ),
-                //
-                body: Padding(
-                  padding: const EdgeInsets.all(10),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      // Text(
-                      //   ' 10 universities found',
-                      //   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-                      // ),
-                      SizedBox(height: 10),
-                      Row(
-                        children: [
-                          Expanded(
-                            flex: 5,
-                            child: TextFormField(
-                              decoration: const InputDecoration(
-                                hintText: "Search university or course",
-                                prefixIcon: Icon(Icons.search),
-                                border: OutlineInputBorder(
-                                  borderSide:
-                                      BorderSide(width: 1, color: Colors.black),
-                                ),
+                actions: [
+                  TextButton(
+                    onPressed: () {
+                      Navigator.push(context, MaterialPageRoute(
+                        builder: (context) {
+                          return BottomNavWrapper();
+                        },
+                      ));
+                    },
+                    child: Text("Back to Home"),
+                  )
+                ],
+              ),
+              body: Padding(
+                padding: const EdgeInsets.all(10),
+                child: Column(
+                  children: [
+                    SizedBox(height: 10),
+                    Row(
+                      children: [
+                        Expanded(
+                          flex: 5,
+                          child: TextFormField(
+                            controller: _searchController,
+                            onChanged: (value) {
+                              setState(() {
+                                _searchQuery = value.toLowerCase();
+                              });
+                            },
+                            decoration: const InputDecoration(
+                              hintText: "Search university or course",
+                              prefixIcon: Icon(Icons.search),
+                              border: OutlineInputBorder(
+                                borderSide:
+                                BorderSide(width: 1, color: Colors.black),
                               ),
                             ),
                           ),
-                          SizedBox(width: 10),
-                          // Expanded(
-                          //   flex: 1,
-                          //   child: Container(
-                          //     height: 50,
-                          //     width: 50,
-                          //     decoration: BoxDecoration(
-                          //       color: Colors.grey[100],
-                          //       borderRadius: BorderRadius.circular(12),
-                          //     ),
-                          //     child: IconButton(
-                          //       icon: Icon(Icons.tune, color: Colors.brown),
-                          //       onPressed: () {
-                          //         // TODO: Implement filter functionality
-                          //       },
-                          //     ),
-                          //   ),
-                          // ),
-                        ],
-                      ),
-                      SizedBox(height: 20),
-                      Expanded(
-                        child:
-                            BlocConsumer<CoursefinderBlock, CoursefinderState>(
-                          listener: (context, state) {},
-                          builder: (context, state) {
-                            if (state is CoursefinderLoading) {
-                              return Center(child: CircularProgressIndicator());
-                            } else if (state is CoursefinderFailError) {
-                              return Center(child: Text(state.error));
-                            } else if (state is CoursefinderLoaded) {
-                              if (state.universities.isEmpty) {
-                                return Center(
-                                  child: Text(
-                                    "No data found",
-                                    style: TextStyle(
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.bold),
-                                  ),
-                                );
-                              }
+                        ),
+                        SizedBox(width: 10),
+                      ],
+                    ),
+                    SizedBox(height: 20),
+                    Expanded(
+                      child: BlocConsumer<CoursefinderBlock, CoursefinderState>(
+                        listener: (context, state) {},
+                        builder: (context, state) {
+                          if (state is CoursefinderLoading) {
+                            return Center(child: CircularProgressIndicator());
+                          } else if (state is CoursefinderFailError) {
+                            return Center(child: Text(state.error));
+                          } else if (state is CoursefinderLoaded) {
+                            final filteredUniversities =
+                            state.universities.where((university) {
+                              final name =
+                                  university.Collegename?.toLowerCase() ?? '';
+                              final course =
+                                  university.Course_offered?.toLowerCase() ??
+                                      '';
+                              return name.contains(_searchQuery) ||
+                                  course.contains(_searchQuery);
+                            }).toList();
 
-                              return ListView.builder(
-                                itemCount: state.universities.length,
-                                itemBuilder: (context, index) {
-                                  final University_model university =
-                                      state.universities[index];
-                                  return Card(
-                                      margin: const EdgeInsets.symmetric(
-                                          horizontal: 10, vertical: 5),
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(10),
-                                      ),
-                                      // child: ListTile(
-                                      //   leading: ClipRRect(
-                                      //       borderRadius: BorderRadius.circular(
-                                      //           10), // Uncomment if needed
-                                      //       child: CachedNetworkImage(
-                                      //         imageUrl:
-                                      //             university.UniversityimageURL.toString(),
-                                      //         height: 140,
-                                      //         width: 160,
-                                      //         fit: BoxFit.cover,
-                                      //
-                                      //         // Show a loading indicator while fetching the image
-                                      //         placeholder: (context, url) => Center(
-                                      //           child: CircularProgressIndicator(),
-                                      //         ),
-                                      //
-                                      //         // Show an error icon if the image fails to load
-                                      //         errorWidget: (context, url, error) => Icon(
-                                      //           Icons.image_not_supported,
-                                      //           size: 50,
-                                      //           color: Colors.grey,
-                                      //         ),
-                                      //       )),
-                                      //   title: GestureDetector(
-                                      //     onTap: () {
-                                      //       Navigator.push(
-                                      //         context,
-                                      //         MaterialPageRoute(
-                                      //
-                                      //           builder: (context) =>
-                                      //               UniversityInfoScreenWrapper(
-                                      //                   universityid:
-                                      //                       university.Universityid),
-                                      //         ),
-                                      //       );
-                                      //     },
-                                      //     child: Text(
-                                      //       university.Collegename!,
-                                      //       style: const TextStyle(
-                                      //         color: Colors.blue,
-                                      //         fontSize: 16,
-                                      //         fontWeight: FontWeight.bold,
-                                      //         decoration: TextDecoration.underline,
-                                      //       ),
-                                      //     ),
-                                      //   ),
-                                      //   subtitle: Column(
-                                      //     crossAxisAlignment: CrossAxisAlignment.start,
-                                      //     children: [
-                                      //       Text(
-                                      //           '${university.Universityname}, ${university.Course_offered}'),
-                                      //       Text("${university.Country}"),
-                                      //       Row(
-                                      //         children: [
-                                      //           const Icon(Icons.star,
-                                      //               color: Colors.amber, size: 16),
-                                      //           Text(
-                                      //             ' ${university.Rank}',
-                                      //             style: const TextStyle(fontSize: 12),
-                                      //           ),
-                                      //         ],
-                                      //       ),
-                                      //     ],
-                                      //   ),
-                                      // ),
-                                      child: GestureDetector(
-                                        onTap: () {
-                                          Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                              builder: (context) =>
-                                                  UniversityInfoScreenWrapper(
+                            if (filteredUniversities.isEmpty) {
+                              return Center(
+                                child: Text(
+                                  "No results found",
+                                  style: TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                              );
+                            }
+
+                            return ListView.builder(
+                              itemCount: filteredUniversities.length,
+                              itemBuilder: (context, index) {
+                                final university = filteredUniversities[index];
+                                return Card(
+                                  margin: const EdgeInsets.symmetric(
+                                      horizontal: 10, vertical: 5),
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(10),
+                                  ),
+                                  child: GestureDetector(
+                                    onTap: () {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) =>
+                                              UniversityInfoScreenWrapper(
                                                 universityid:
-                                                    university.Universityid,
+                                                university.Universityid,
                                               ),
-                                            ),
-                                          );
-                                        },
-                                        child: ListTile(
-                                          leading: ClipRRect(
-                                            borderRadius:
-                                                BorderRadius.circular(10),
-                                            child: CachedNetworkImage(
-                                              imageUrl:
-                                                  university.UniversityimageURL
-                                                      .toString(),
-                                              height: 140,
-                                              width: 160,
-                                              fit: BoxFit.cover,
-                                              placeholder: (context, url) =>
-                                                  Center(
-                                                child:
-                                                    CircularProgressIndicator(),
+                                        ),
+                                      );
+                                    },
+                                    child: ListTile(
+                                      leading: ClipRRect(
+                                        borderRadius:
+                                        BorderRadius.circular(10),
+                                        child: CachedNetworkImage(
+                                          imageUrl: university
+                                              .UniversityimageURL
+                                              .toString(),
+                                          height: 140,
+                                          width: 160,
+                                          fit: BoxFit.cover,
+                                          placeholder: (context, url) =>
+                                              Center(
+                                                child: CircularProgressIndicator(),
                                               ),
-                                              errorWidget:
-                                                  (context, url, error) => Icon(
-                                                Icons.image_not_supported,
-                                                size: 50,
-                                                color: Colors.grey,
-                                              ),
-                                            ),
+                                          errorWidget:
+                                              (context, url, error) => Icon(
+                                            Icons.image_not_supported,
+                                            size: 50,
+                                            color: Colors.grey,
                                           ),
-                                          title: Text(
-                                            university.Collegename!,
-                                            style: const TextStyle(
-                                              color: Colors.blue,
-                                              fontSize: 16,
-                                              fontWeight: FontWeight.bold,
-                                              decoration:
-                                                  TextDecoration.underline,
-                                            ),
-                                          ),
-                                          subtitle: Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
+                                        ),
+                                      ),
+                                      title: Text(
+                                        university.Collegename ?? '',
+                                        style: const TextStyle(
+                                          color: Colors.blue,
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.bold,
+                                          decoration:
+                                          TextDecoration.underline,
+                                        ),
+                                      ),
+                                      subtitle: Column(
+                                        crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                              '${university.Universityname}, ${university.Course_offered}'),
+                                          Text("${university.Country}"),
+                                          Row(
                                             children: [
-                                              Column(
-                                                children: [
-                                                  Text(
-                                                      '${university.Universityname},'
-                                                      ' ${university.Course_offered}'),
-                                                ],
-                                              ),
-                                              Column(
-                                                children: [
-                                                  Text("${university.Country}"),
-                                                ],
-                                              ),
-                                              Row(
-                                                children: [
-                                                  const Icon(Icons.star,
-                                                      color: Colors.amber,
-                                                      size: 16),
-                                                  Text(
-                                                    ' ${university.Rank}',
-                                                    style: const TextStyle(
-                                                        fontSize: 12),
-                                                  ),
-                                                ],
+                                              const Icon(Icons.star,
+                                                  color: Colors.amber,
+                                                  size: 16),
+                                              Text(
+                                                ' ${university.Rank}',
+                                                style: const TextStyle(
+                                                    fontSize: 12),
                                               ),
                                             ],
                                           ),
-                                        ),
-                                      ));
-                                },
-                              );
-                            }
-                            return SizedBox();
-                          },
-                        ),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                );
+                              },
+                            );
+                          }
+                          return SizedBox();
+                        },
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
-              ));
+              ),
+            ),
+          );
         }
         return SizedBox();
       },
     );
-    // );
   }
 }

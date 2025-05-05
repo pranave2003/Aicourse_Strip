@@ -60,15 +60,31 @@ class _AccommodationDetailScreenState extends State<AccommodationDetailScreen> {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Expanded(
-                  flex: 5,
-                  child: TextFormField(
+                Container(
+                  height: 40,
+                  width: 380,
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(18)),
+                  child: TextField(
+                    onChanged: (value) {
+                      context
+                          .read<PropertyAuthBlock>()
+                          .add(FetchProperty(searchQuery: value));
+                    },
                     decoration: InputDecoration(
-                      hintText: "Search by university or property",
-                      prefixIcon: Icon(Icons.search),
-                      border: OutlineInputBorder(
-                        borderSide: BorderSide(width: 1, color: Colors.black),
+                      filled: true,
+                      fillColor: Colors.white,
+                      enabledBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.grey),
                       ),
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(18),
+                          borderSide: BorderSide(
+                            width: 1,
+                            color: Colors.black,
+                          )),
+                      hintText: 'Search House',
+                      prefixIcon: Icon(Icons.search, color: Colors.grey),
                     ),
                   ),
                 ),

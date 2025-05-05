@@ -204,7 +204,7 @@ class _BookingFormPageState extends State<BookingFormPage> {
                   SizedBox(height: 10),
                   _buildNameDisplay(user.name.toString()),
                   _buildEmailDisplay(user.email.toString()),
-                  _buildPhoneDisplay(user.phone.toString()),
+                  _buildPhoneDisplay(user.phone_number.toString()),
 
                   _buildDatePickerField(
                     controller: checkin,

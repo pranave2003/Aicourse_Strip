@@ -70,7 +70,7 @@ class _Bottom_NavState extends State<Bottom_Nav> {
           BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home"),
           BottomNavigationBarItem(icon: Icon(Icons.school), label: "Colleges"),
           BottomNavigationBarItem(
-              icon: Icon(Icons.calendar_today), label: "Applications"),
+              icon: Icon(Icons.calendar_today), label: "progress"),
           BottomNavigationBarItem(icon: Icon(Icons.person), label: "Profile"),
         ],
       ),

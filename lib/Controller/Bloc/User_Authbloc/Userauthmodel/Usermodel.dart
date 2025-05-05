@@ -3,7 +3,7 @@ class UserModel {
   String? password;
   String? uid;
   String? name;
-  String? phone;
+  String? phone_number;
   String? status;
   String? Ban;
   String? Country;
@@ -19,7 +19,7 @@ class UserModel {
       this.password,
       this.name,
       this.uid,
-      this.phone,
+      this.phone_number,
       this.status,
       this.Ban,
       this.state,
@@ -36,7 +36,7 @@ class UserModel {
       password: data['password'],
       uid: data['userId'],
       name: data['name'],
-      phone: data['phone_number'],
+      phone_number: data['phone_number'],
       status: data['status'],
       Ban: data['ban'],
       Gender: data['Gender'],

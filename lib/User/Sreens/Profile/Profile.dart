@@ -412,7 +412,7 @@ class _ProfileState extends State<Profile> {
           image: state.Userdata.image.toString(),
 
           name: state.Userdata.name.toString(),
-          phone_number: state.Userdata.phone.toString(),
+          phone_number: state.Userdata.phone_number.toString(),
           uid: state.Userdata.uid.toString(),
         ),
       ),
@@ -489,7 +489,7 @@ class _ProfileState extends State<Profile> {
                         style: const TextStyle(color: Colors.grey),
                       ),
                       Text(
-                        user.phone ?? '',
+                        user.phone_number?? '',
                         style: const TextStyle(color: Colors.grey),
                       ),
                       const SizedBox(height: 10),

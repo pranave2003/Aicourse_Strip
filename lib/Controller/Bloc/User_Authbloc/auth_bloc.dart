@@ -56,7 +56,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
               "userId": user.uid,
               "email": user.email,
               "name": event.user.name,
-              "phone_number": event.user.phone,
+              "phone_number": event.user.phone_number,
               "timestamp": DateTime.now(),
               "state": event.user.state,
               "Country": event.user.Country,
@@ -384,34 +384,46 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     //   }
     // });
 
-    on<UpdateProfileEvent>((event, emit) async {
-      emit(ProfileUpdateLoading());
+    // on<UpdateProfileEvent>((event, emit) async {
+    //   emit(ProfileUpdateLoading());
+    //   try {
+    //     final updateData = {
+    //       "name": event.profile.name,
+    //       "phone": event.profile.phone,
+    //     };
+    //
+    //     // Only update image if it's not null
+    //     if (event.profile.image != null) {
+    //       updateData["imageUrl"] = event.profile.image;
+    //     }
+    //
+    //     await FirebaseFirestore.instance
+    //         .collection("Laundry_Users")
+    //         .doc(event.profile.uid)
+    //         .update(updateData);
+    //
+    //     emit(profileaddSuccess());
+    //   } catch (e) {
+    //     emit(Usersfailerror(e.toString()));
+    //   }
+    // });
+    on<EditProfile>((event, emit) async {
+      emit((ProfileLoading()));
+      print('Updating name: ${event.user.name}, phone: ${event.user.phone_number}'); // 🟡 Add this
       try {
-        final updateData = {
-          "name": event.profile.name,
-          "phone": event.profile.phone,
-        };
+        FirebaseFirestore.instance
+            .collection("Users")
+            .doc(event.user.uid)
+            .update({
+          "name": event.user.name,
+          "phone_number": event.user.phone_number,
 
-        // Only update image if it's not null
-        if (event.profile.image != null) {
-          updateData["imageUrl"] = event.profile.image;
-        }
-
-        await FirebaseFirestore.instance
-            .collection("Laundry_Users")
-            .doc(event.profile.uid)
-            .update(updateData);
-
-        emit(profileaddSuccess());
+        });
+        emit(ProfileSuccess());
       } catch (e) {
-        emit(Usersfailerror(e.toString()));
+        emit(Profilefailerror(e.toString()));
       }
     });
 
-
-
-
-
-
+        }
   }
-}

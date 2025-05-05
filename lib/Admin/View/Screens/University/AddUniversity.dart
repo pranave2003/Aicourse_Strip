@@ -1808,38 +1808,54 @@ class _AddUniversityState extends State<AddUniversity> {
                     buildDropdown(
                         "Course Name",
                         [
-                          "BBA (Bachelor of Business Administration)",
-                          "BCom (Bachelor of Commerce)",
-                          "BA in Business Management",
-                          "BSc in International Business",
-                          "BBA in Marketing",
-                          "BBA in Finance",
-                          "BBA in Human Resource Management",
-                          "BBA in Entrepreneurship",
-                          "BBA in Supply Chain Management",
-                          "BSc in Computer Science",
-                          "BSc in Information Technology (IT)",
-                          "BSc in Data Science",
-                          "BSc in AI & Machine Learning",
-                          "BSc in Biotechnology",
-                          "BSc in Environmental Science",
-                          "BA in Political Science",
-                          "BA in Sociology",
-                          "BA in History",
-                          "BA in English Literature",
-                          "BA in Journalism & Mass Communication",
-                          "BA in Fine Arts",
-                          "BA in Criminology",
-                          "BA in Public Administration",
-                          "BA in Economics",
-                          "BA in International Relations"
+                          "BSc in Mathematics",
+                          "BSc in Physics",
+                          "BSc in Chemistry",
+                          "BSc in Statistics",
+                          "BSc in Computer Applications (BCA)",
+                          "BSc in Cybersecurity",
+                          "BSc in Software Engineering",
+                          "BSc in Game Design and Development",
+                          "BSc in Robotics",
+                          "BSc in Geology",
+                          "BSc in Forensic Science",
+                          "BSc in Food Science & Nutrition",
+
+                          "Bachelor of Economics (BEcon)",
+                          "Bachelor of Accounting",
+                          "Bachelor of Business Analytics",
+                          "Bachelor of Financial Markets",
+                          "Bachelor of International Business and Economics",
+
+                          "BA in Psychology",
+                          "BA in Anthropology",
+                          "BA in Philosophy",
+                          "BA in Linguistics",
+                          "BA in Gender Studies",
+                          "BA in Cultural Studies",
+
+                          "BA in Animation and VFX",
+                          "BA in Film & Media Studies",
+                          "BA in Graphic Design",
+                          "BA in Digital Media",
+
+                          "BSc in Microbiology",
+                          "BSc in Genetics",
+                          "BSc in Zoology",
+                          "BSc in Agriculture",
+                          "BSc in Nursing",
+
+                          "BA in Development Studies",
+                          "BA in Global Studies",
+                          "BA in Peace and Conflict Studies"
                         ],
+
                         selectedCourse, (value) {
                       setState(() => selectedCourse = value);
                     }, required: true),
                     buildDropdown(
                       "Education Level",
-                      ["Grade 12", "Undergraduate diploma"],
+                      ["Grade 12", "Polytechnique Diploma"],
                       highestEducation,
                       (value) {
                         setState(() {
@@ -1916,6 +1932,7 @@ class _AddUniversityState extends State<AddUniversity> {
                   children: [
                     buildDropdown(
                         "Course Name",
+
                         [
                           "MSc in Finance",
                           "MSc in Economics",
@@ -1931,7 +1948,7 @@ class _AddUniversityState extends State<AddUniversity> {
                           "MSc in Information Technology",
                           "MSc in Biotechnology",
                           "MSc in Physics",
-                          "MSc in Chemistry ",
+                          "MSc in Chemistry",
                           "MSc in Mathematics",
                           "MA in Psychology",
                           "MA in Sociology",
@@ -1940,7 +1957,6 @@ class _AddUniversityState extends State<AddUniversity> {
                           "MA in History",
                           "MA in Political Science",
                           "MA in Fine Arts",
-                          "LLM (Master of Laws)",
                           "Master in Criminology",
                           "MSc in International Relations",
                           "MSc in Public Policy",
@@ -1968,8 +1984,9 @@ class _AddUniversityState extends State<AddUniversity> {
                           "MBA in Cybersecurity Management",
                           "MBA in AI & Machine Learning",
                           "MBA in Blockchain & FinTech",
-                          "Executive MBA (EMBA)",
+                          "Executive MBA (EMBA)"
                         ],
+
                         selectedCourse, (value) {
                       setState(() => selectedCourse = value);
                     }, required: true),
@@ -1977,9 +1994,9 @@ class _AddUniversityState extends State<AddUniversity> {
                       "Education Level",
                       [
                         "Undergraduate Degree",
-                        "Undergraduate Diploma",
-                        "Postgraduate Degree",
-                        "Postgraduate Diploma",
+                        // "Undergraduate Diploma",
+                        // "Postgraduate Degree",
+                        // "Postgraduate Diploma",
                       ],
                       highestEducation,
                       (value) {
@@ -2171,7 +2188,7 @@ class _AddUniversityState extends State<AddUniversity> {
                   )
                 ],
               ),
-
+                  if (highestEducation == "Grade 12") ...[
               Padding(
                 padding: const EdgeInsets.only(left: 20),
                 child: Text(
@@ -2437,6 +2454,7 @@ class _AddUniversityState extends State<AddUniversity> {
                   ],
                 ),
               ),
+              ],
 
               SizedBox(height: 10),
               Padding(

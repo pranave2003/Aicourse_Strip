@@ -7,3 +7,5 @@ class SendNotification_event extends AdminNotificationEvent {
   final Notificationmodel nofification;
   SendNotification_event({required this.nofification});
 }
+//
+class FetchNotificationsEvent extends AdminNotificationEvent {}

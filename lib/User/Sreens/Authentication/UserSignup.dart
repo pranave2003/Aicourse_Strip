@@ -59,7 +59,7 @@ class _UserSignupState extends State<UserSignup> {
         name: _nameController.text,
         email: _emailController.text,
         password: _passwordController.text,
-        phone: _mobileController.text,
+        phone_number: _mobileController.text,
         Country: selectedCountry ?? '',
         City: _cityController.text,
         state: selectedState ?? '',

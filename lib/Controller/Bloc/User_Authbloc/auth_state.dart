@@ -61,12 +61,6 @@ class ProfileImageSuccess extends AuthState {
 
   ProfileImageSuccess(this.image);
 }
-class ProfileSuccess extends AuthState {
-  final String name;
-  final String phone_number;
-
-  ProfileSuccess(this.name,this.phone_number);
-}
 
 
 class ProfileImageFailure extends AuthState {
@@ -116,3 +110,27 @@ class Userload extends AuthState {
       this.user,
       );
 }
+
+
+//
+
+//state
+final class ProfileLoading extends AuthState {}
+
+final class ProfileSuccess extends AuthState {}
+
+final class Profilefailerror extends AuthState {
+  final String error;
+
+  Profilefailerror(this.error);
+}
+
+class Profileloaded extends AuthState {
+  final List<UserModel> user;
+
+  Profileloaded(
+      this.user,
+      );
+}
+
+class RefreshProfile extends AuthState {}

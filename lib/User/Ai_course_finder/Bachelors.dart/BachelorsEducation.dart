@@ -97,7 +97,7 @@ class _BachelorsEducationState extends State<BachelorsEducation> {
                 onTap: () {
                   setState(() {
                     selectedIndex = 1;
-                    seletedEducation = "Undergraduate diploma";
+                    seletedEducation = "Polytechnic Diploma";
                     percentageRangeMessage =
                         "Percentage must be between 30-100";
                   });
@@ -114,7 +114,7 @@ class _BachelorsEducationState extends State<BachelorsEducation> {
                   margin: const EdgeInsets.symmetric(vertical: 10),
                   child: Center(
                       child: Text(
-                    "Undergraduate diploma",
+                    "Polytechnic Diploma",
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                       color: selectedIndex == 1 ? Colors.white : Colors.black,

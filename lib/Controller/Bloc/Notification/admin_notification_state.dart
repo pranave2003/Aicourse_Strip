@@ -22,3 +22,9 @@ class NotificationSend_Error extends AdminNotificationState {
   String error;
   NotificationSend_Error({required this.error});
 }
+//
+class AdminNotificationLoaded extends AdminNotificationState {
+  final List<Map<String, dynamic>> notifications;
+
+  AdminNotificationLoaded(this.notifications);
+}

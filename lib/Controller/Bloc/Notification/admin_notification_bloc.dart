@@ -67,5 +67,32 @@ class AdminNotificationBloc
         print("Error Occured : $e");
       }
     });
+    //  fetch notifications
+    on<FetchNotificationsEvent>((event, emit) async {
+      emit(Loadingnotification());
+      try {
+        QuerySnapshot snapshot = await FirebaseFirestore.instance
+            .collection("Notification")
+            .orderBy("Date", descending: true)
+            .get();
+
+        List<Map<String, dynamic>> notifications = snapshot.docs.map((doc) {
+          final data = doc.data() as Map<String, dynamic>;
+          return {
+            "title": data["title"],
+            "message": data["Content"],
+            "date": data["Date"],
+            "time": data["Time"],
+            "isRead": false
+          };
+        }).toList();
+
+        emit(AdminNotificationLoaded(notifications));
+      } catch (e) {
+        emit(NotificationSend_Error(error: e.toString()));
+      }
+    });
+
   }
 }
+//
