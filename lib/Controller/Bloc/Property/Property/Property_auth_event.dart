@@ -20,11 +20,7 @@ class FetchPropertyDetailsById extends PropertyAuthEvent {
   FetchPropertyDetailsById({required this.Property_id});
 }
 
-class Property_Edit_Event extends PropertyAuthEvent {
-  final Property_Model Property;
 
-  Property_Edit_Event({required this.Property});
-}
 
 class DeleteProperty extends PropertyAuthEvent {
   final String? Property_id;
@@ -50,3 +46,17 @@ class UserSendreviewandratingevent extends PropertyAuthEvent {
         this.Review,
         this.Ratingstatus,});
 }
+//edit
+class Property_Edit_Event extends PropertyAuthEvent {
+  final Property_Model Property;
+
+  Property_Edit_Event({required this.Property});
+}
+class EditProperty extends PropertyAuthEvent {
+  final Property_Model user;
+  final String property; // <-- Add this
+
+  EditProperty({required this.user, required this.property});
+}
+
+class PropertyUpdateLoading extends PropertyAuthEvent {}

@@ -157,7 +157,7 @@ class _LandlordPageState extends State<LandlordPage> {
                 //
                 //   ],
                 // ),
-                _buildMainListTile('Account', LandlordProfile(),
+                _buildMainListTile('Account', Profile(),
                     icon: Icons.person),
                 _buildMainExpansionTile(
                   title: 'Settings',

@@ -59,7 +59,7 @@ class LandloardAuthBloc extends Bloc<LandloardAuthEvent, LandloardAuthState> {
               "userId": user.uid,
               "email": user.email,
               "name": event.user.name,
-              "phone_number": event.user.phone,
+              "phone_number": event.user.phone_number,
               "gender": event.user.gender,
               "dob": event.user.DOB,
               "place": event.user.Place,
@@ -288,5 +288,71 @@ class LandloardAuthBloc extends Bloc<LandloardAuthEvent, LandloardAuthState> {
         emit(ProfileImageFailure("Failed to upload image"));
       }
     });
+
+
+
+    //profile
+    on<PickAndUploadImageEvent>((event, emit) async {
+      try {
+        emit(ProfileImageLoading());
+
+        FilePickerResult? result = await FilePicker.platform.pickFiles(
+          type: FileType.image,
+          withData: true,
+        );
+
+        if (result == null) {
+          print("No image selected.");
+          return;
+        }
+
+        String fileName = "Userprofile/${DateTime.now().millisecondsSinceEpoch}.jpg";
+        Reference storageRef = _firebaseStorage.ref().child(fileName);
+        UploadTask uploadTask;
+
+        if (kIsWeb) {
+          Uint8List imageData = result.files.first.bytes!;
+          uploadTask = storageRef.putData(imageData);
+        } else {
+          File imageFile = File(result.files.first.path!);
+          uploadTask = storageRef.putFile(imageFile);
+        }
+
+        TaskSnapshot snapshot = await uploadTask;
+        String downloadUrl = await snapshot.ref.getDownloadURL();
+        print("Uploaded Image URL: $downloadUrl");
+
+        await FirebaseFirestore.instance
+            .collection("Landloard")
+            .doc(event.profile) // ✅ Now resolved
+            .update({"image": downloadUrl});
+
+        emit(ProfileImageSuccess(downloadUrl));
+      } catch (e) {
+        print("Error: $e");
+        emit(ProfileImageFailure("Failed to upload image"));
+      }
+    });
+
+
+
+    on<EditProfile>((event, emit) async {
+      emit(ProfileLoading());
+      print('Updating name: ${event.user.name}, phone: ${event.user.phone_number}');
+      try {
+        await FirebaseFirestore.instance
+            .collection("Landloard")
+            .doc(event.profile)
+            .update({
+          "name": event.user.name,
+          "phone_number": event.user.phone_number,
+        });
+        emit(ProfileSuccess());
+      } catch (e) {
+        emit(Profilefailerror(e.toString()));
+      }
+    });
+
+
   }
 }

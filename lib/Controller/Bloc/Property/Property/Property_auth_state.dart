@@ -6,25 +6,7 @@ import 'Property_Auth/Property_Model/PropertyModel.dart';
 sealed class PropertyAuthState {}
 // import 'package:course_connect/Landlord/Property/Property/PropertyModel.dart';
 
-final class PropertyInitial extends PropertyAuthState {}
 
-final class PropertyLoading extends PropertyAuthState {}
-
-final class PropertyaddSuccess extends PropertyAuthState {}
-
-final class PropertyFailError extends PropertyAuthState {
-  //
-  final String error;
-  PropertyFailError(this.error);
-}
-
-final class Propertygetloading extends PropertyAuthState {}
-
-final class Propertyfailerror extends PropertyAuthState {
-  final String error;
-
-  Propertyfailerror(this.error);
-}
 
 // final class PropertyLoadingstate extends PropertyAuthState {
 //   final Property_Model property;
@@ -40,7 +22,6 @@ final class PropertyLoadedbyid extends PropertyAuthState {
   PropertyLoadedbyid(this.Property);
 }
 
-final class RefreshProperty extends PropertyAuthState {}
 
 class UploadLoading extends PropertyAuthState {}
 
@@ -71,3 +52,41 @@ final class UserSendreviewandratingfailerror extends PropertyAuthState {
 final class UserSendreviewandratingloading extends PropertyAuthState {}
 
 final class UserSendreviewandratingRefresh extends PropertyAuthState {}
+//
+
+
+final class PropertyInitial extends PropertyAuthState {}
+
+final class PropertyLoading extends PropertyAuthState {}
+
+final class PropertyaddSuccess extends PropertyAuthState {}
+final class PropertySuccess extends PropertyAuthState {}
+
+final class PropertyFailError extends PropertyAuthState {
+  //
+  final String error;
+  PropertyFailError(this.error);
+}
+
+final class Propertygetloading extends PropertyAuthState {}
+
+final class Propertyfailerror extends PropertyAuthState {
+  final String error;
+
+  Propertyfailerror(this.error);
+}
+
+
+class Propertyloaded extends PropertyAuthState {
+  final List<Property_Model> user;
+
+  Propertyloaded(
+      this.user,
+      );
+}
+
+
+
+
+
+class RefreshProperty extends PropertyAuthState {}

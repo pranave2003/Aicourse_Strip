@@ -85,7 +85,7 @@ class _Accept_LandloardState extends State<Accept_Landloard> {
                             style: TextStyle(fontWeight: FontWeight.bold))),
                         DataCell(Text(landlord.name.toString())),
                         DataCell(Text(landlord.email.toString())),
-                        DataCell(Text(landlord.phone.toString())),
+                        DataCell(Text(landlord.phone_number.toString())),
                         DataCell(SizedBox(
                           width: 200,
                           child:

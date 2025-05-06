@@ -3,7 +3,7 @@ class Landloard_Model {
   String? password;
   String? uid;
   String? name;
-  String? phone;
+  String? phone_number;
   String? gender;
   String? image;
   String? DOB;
@@ -20,7 +20,7 @@ class Landloard_Model {
       this.password,
       this.name,
       this.uid,
-      this.phone,
+      this.phone_number,
       this.DOB,
       this.gender,
       this.image,
@@ -37,7 +37,7 @@ class Landloard_Model {
       password: data['password'],
       uid: data['userId'],
       name: data['name'],
-      phone: data['phone_number'],
+      phone_number: data['phone_number'],
       status: data['status'],
       Ban: data['ban'],
       Onesignal_id: data['image'],

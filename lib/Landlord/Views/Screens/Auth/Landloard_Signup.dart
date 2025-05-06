@@ -63,7 +63,7 @@ class _SignupState extends State<Signup> {
       Landloard_Model user = Landloard_Model(
         name: _nameController.text,
         email: _emailController.text,
-        phone: _phoneController.text,
+        phone_number: _phoneController.text,
         gender: gender,
         DOB: _dobController.text,
         Place: _placeController.text,

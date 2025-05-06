@@ -74,61 +74,62 @@ class _PropertyState extends State<Property> {
     border: Border.all(width: 0.5, color: Colors.grey),
     ),
     child: Row(
-    children: [
-    BlocBuilder<LandloardAuthBloc, LandloardAuthState>(
-    builder: (context, state) {
-    if (state is Landlordloading) {
-    return const Center(child: Loading_Widget());
-    } else if (state is LandlordByidLoaded) {
-    final user = state.Userdata;
-    return Padding(
-    padding: const EdgeInsets.all(16.0),
-    child: Column(
-    children: [
-    ClipRRect(
-    borderRadius: BorderRadius.circular(30),
-    child: CachedNetworkImage(
-    imageUrl: user.image.toString(),
-    width: 100,
-    height: 100,
-    fit: BoxFit.fill,
-    placeholder: (context, url) => Container(
-    width: 100,
-    height: 100,
-    color: Colors.transparent,
-    child: const Center(
-    child: Loading_Widget(),
-    ),
-    ),
-    errorWidget: (context, url, error) => Container(
-    width: 100,
-    height: 100,
-    color: Colors.grey[300],
-    child: Icon(
-    Icons.image_not_supported,
-    size: 50,
-    color: Colors.grey[600],
-    ),
-    ),
-    ),
-    ),
-    const SizedBox(height: 10),
-    Text(
-    "Landlord",
-    style: const TextStyle(
-    fontSize: 16,
-    fontWeight: FontWeight.bold,
-    ),
-    ),
-    ],
-    ),
-    );
-    } else {
-    return const SizedBox(); // default case to avoid build errors
-    }
-    },
-    ),
-    ],
+      children: [
+        BlocBuilder<LandloardAuthBloc, LandloardAuthState>(
+          builder: (context, state) {
+            if (state is Landlordloading) {
+              return const Center(child: CircularProgressIndicator());
+            } else if (state is LandlordByidLoaded) {
+              final user = state.Userdata;
+              TextEditingController nameController = TextEditingController(text: user.name ?? '');
+              TextEditingController emailController = TextEditingController(text: user.email ?? '');
+              TextEditingController phoneController = TextEditingController(text: user.phone_number ?? '');
+
+              return Column(
+                children: [
+                  Stack(
+                    alignment: Alignment.bottomRight,
+                    children: [
+                      CircleAvatar(
+                        radius: 20,
+                        backgroundColor: Colors.grey[300],
+                        backgroundImage: user.image != null && user.image!.isNotEmpty
+                            ? CachedNetworkImageProvider(user.image!)
+                            : null,
+                        child: user.image == null || user.image!.isEmpty
+                            ? const Icon(Icons.person, size: 50, color: Colors.white)
+                            : null,
+                      ),
+                      Positioned(
+                        bottom: 0,
+                        right: 4,
+                        child: GestureDetector(
+                          onTap: () {
+                            context.read<LandloardAuthBloc>().add(
+                              PickAndUploadImageEvent(profile: user.uid!),
+                            );
+                          },
+
+                        ),
+                      ),
+                    ],
+                  ),
+
+                ],
+              );
+            } else {
+              return const SizedBox.shrink();
+            }
+          },
+        ),
+
+        SizedBox(width: 10),
+        Text(
+          "Landlord",
+          style: TextStyle(
+              fontSize: 16, fontWeight: FontWeight.bold),
+        ),
+      ],
     ),
     ),
     ]

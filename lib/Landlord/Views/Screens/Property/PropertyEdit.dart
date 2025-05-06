@@ -1,7 +1,9 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:course_connect/Landlord/Lanlordmain.dart';
 import 'package:course_connect/Widget/Constands/Loading.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import '../../../../Controller/Bloc/Landloard_auth/landloard_auth_bloc.dart';
 import '../../../../Controller/Bloc/Property/Property/Property_Auth/Property_Model/PropertyModel.dart';
 import '../../../../Controller/Bloc/Property/Property/Property_auth_block.dart';
 import '../../../../Controller/Bloc/Property/Property/Property_auth_state.dart';
@@ -9,7 +11,7 @@ import '../../../../Controller/Bloc/Property/Property/Property_auth_state.dart';
 class PropertyEdit extends StatefulWidget {
   const PropertyEdit({
     super.key,
-     required this.propertyName,
+    required this.propertyName,
     required this.propertyAddress,
     required this.propertyArea,
     required this.property_id,
@@ -87,13 +89,11 @@ class _PropertyEditState extends State<PropertyEdit> {
   final TextEditingController _amountMonthController = TextEditingController();
   final TextEditingController _ownerNameController = TextEditingController();
   final TextEditingController _phoneController = TextEditingController();
-  final TextEditingController _availableFromController =
-      TextEditingController();
+  final TextEditingController _availableFromController = TextEditingController();
   final TextEditingController _moveinDateController = TextEditingController();
   final TextEditingController _selectedCityController = TextEditingController();
   final TextEditingController _moveInController = TextEditingController();
-  final TextEditingController _aboutPropertyController =
-      TextEditingController();
+  final TextEditingController _aboutPropertyController = TextEditingController();
   final TextEditingController _tokenAmountController = TextEditingController();
   final TextEditingController _propertyTotalController = TextEditingController();
 
@@ -123,7 +123,7 @@ class _PropertyEditState extends State<PropertyEdit> {
   @override
   void initState() {
     super.initState();
-    _tokenAmountController.text=widget.tokenAmount;
+    _tokenAmountController.text = widget.tokenAmount;
     _propertyNameController.text = widget.propertyName;
     _amountWeekController.text = widget.propertyAmountWeek;
     _amountMonthController.text = widget.propertyAmountMonth;
@@ -147,7 +147,7 @@ class _PropertyEditState extends State<PropertyEdit> {
     _selectedBathroom = widget.bathroom;
     _selectedKitchen = widget.kitchen;
     _selectedTokenAmount = widget.tokenAmount;
-    _selectedpropertyTotal= widget.propertyTotal;
+    _selectedpropertyTotal = widget.propertyTotal;
     _selectedMinStay = widget.minimumStay;
     _selectedMaxStay = widget.maximumStay;
     _selectedSexualOrientation = widget.sexualOrientations;
@@ -155,32 +155,6 @@ class _PropertyEditState extends State<PropertyEdit> {
     billsIncluded = widget.billStatus == "Yes";
     petsAllowed = widget.pets == "Yes";
     smokingAllowed = widget.smoking == "Yes";
-    _availableFromController.text = widget.availableFrom;
-    _moveinDateController.text = widget.moveInDate;
-
-
-
-  }
-
-  Future<void> _selectDate(
-      BuildContext context, Function(DateTime) onDateSelected) async {
-    DateTime? picked = await showDatePicker(
-      context: context,
-      initialDate: DateTime.now(),
-      firstDate: DateTime(2023),
-      lastDate: DateTime(2030),
-    );
-    if (picked != null) {
-      onDateSelected(picked);
-    }
-  }
-
-  void _submitForm() {
-    if (_formKey.currentState!.validate()) {
-      // Process the data
-      ScaffoldMessenger.of(context)
-          .showSnackBar(SnackBar(content: Text('Processing Data')));
-    }
   }
 
   @override
@@ -188,189 +162,257 @@ class _PropertyEditState extends State<PropertyEdit> {
     return Scaffold(
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(20),
-        child: Form(
-          key: _formKey,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              // Top Row (Welcome Text + Notification Icon)
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  // Welcome Text
-                  Row(
-                    children: [
-                      Text(
-                        "Welcome ",
-                        style: TextStyle(
-                            fontSize: 24, fontWeight: FontWeight.bold),
-                      ),
-                      Text(
-                        "Landlord,",
-                        style: TextStyle(
-                            fontSize: 24,
-                            fontWeight: FontWeight.bold,
-                            color: Color(0xff0A71CB)),
-                      ),
-                    ],
-                  ),
-                  // Notification & Profile Section
-                  Row(
-                    children: [
-                      CircleAvatar(
-                        backgroundColor: Color(0xffD9D9D9),
-                        child: Icon(Icons.notifications, color: Colors.black),
-                      ),
-                      SizedBox(width: 10),
-                      Container(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 14, vertical: 6),
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(20),
-                          border: Border.all(width: 0.5, color: Colors.grey),
-                        ),
-                        child: Row(
-                          children: [
-                            CircleAvatar(
-                              radius: 20,
-                              backgroundColor: Colors.grey,
-                              backgroundImage:
-                                  AssetImage('assets/Profile/img_3.png'),
-                            ),
-                            SizedBox(width: 10),
-                            Text(
-                              "Landlord",
-                              style: TextStyle(
-                                  fontSize: 16, fontWeight: FontWeight.bold),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-              SizedBox(height: 30),
-              BlocConsumer<PropertyAuthBlock, PropertyAuthState>(
-                listener: (context, state) {
-                  if (state is PropertyaddSuccess) {
-                    // Check if the widget is still mounted before navigating
-                    if (mounted) {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                          content: Text("Property updated successfully!"),
-                          backgroundColor: Colors.green,
-                          duration: Duration(seconds: 2),
-                        ),
-                      );
-                      Navigator.push(context, MaterialPageRoute(
-                        builder: (context) {
-                          return LandlordPage();
-                        },
-                      ));
-                    }
-                  }
-                },
-                builder: (context, state) {
-                  return Padding(
-                    padding: const EdgeInsets.only(left: 25, right: 25),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        child: ConstrainedBox(
+          constraints: BoxConstraints(
+            minWidth: double.infinity,
+            // No minHeight needed to avoid forcing height
+          ),
+          child: Form(
+            key: _formKey,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                // Top Row (Welcome Text + Notification Icon)
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Row(
                       children: [
                         Text(
-                          "Property Editing Page",
+                          "Welcome ",
                           style: TextStyle(
                               fontSize: 24, fontWeight: FontWeight.bold),
                         ),
-                        SizedBox(width: 20),
-                        BlocConsumer<PropertyAuthBlock, PropertyAuthState>(
-                          listener: (context, state) {
-                            if (state is PropertyaddSuccess) {
-                              Navigator.of(context).pop();
-                            }
-                          },
-                          builder: (context, state) {
-
-         return InkWell(
-                          onTap: () {
-
-                            if (_formKey.currentState!.validate()) {
-                              Property_Model property = Property_Model(
-                                propertyId: widget.property_id,
-
-
-                                propertyName: _propertyNameController.text??"",
-                                propertyAddress: _addressController.text??"",
-                                propertyArea: _areaController.text,
-                                country: _selectedCountry,
-                                state: _selectedState,
-                                city: _selectedCityController.text,
-                                roomTypes: _selectedRoomType,
-                                roomSizes: _selectedRoomSize,
-                                availableFrom: _availableFromController.text,
-                                moveInDate: _moveInController.text,
-                                aboutProperty: _aboutPropertyController.text,
-                                bedroom: _selectedBedroom,
-                                bathroom: _selectedBathroom,
-                                kitchen: _selectedKitchen,
-                                furnishingOptions: _selectedFurnishing,
-                                propertyAmountWeek: _amountWeekController.text,
-                                propertyAmountMonth:
-                                    _amountMonthController.text,
-                                tokenAmount: _tokenAmountController.text,
-                                stayDurations: _selectedMinStay,
-                                sexualOrientations: _selectedSexualOrientation,
-                                minimumStay: _selectedMinStay,
-                                maximumStay: _selectedMaxStay,
-                                ownerName: _ownerNameController.text,
-                                ownerPhone: _phoneController.text,
-                                propertyTotal: _propertyTotalController.text,
-                                parking: parking ? "Yes" : "No",
-                                billStatus: billsIncluded ? "Yes" : "No",
-                                pets: petsAllowed ? "Yes" : "No",
-                                smoking: smokingAllowed ? "Yes" : "No",
-                              );
-
-                              context
-                                  .read<PropertyAuthBlock>()
-                                  .add(Property_Edit_Event(Property: property));
-                            }
-                          },
-                          borderRadius: BorderRadius.circular(8),
-                          child: Container(
-                            padding: EdgeInsets.symmetric(
-                                vertical: 8, horizontal: 36),
-                            decoration: BoxDecoration(
-                              color: Colors.blue,
-                              borderRadius: BorderRadius.circular(8),
-                            ),
-                            child: state is PropertyLoading
-                              ? Loading_Widget()
-            : Text("Update",
-        style: TextStyle(
-            fontSize: 16,
-            color: Colors.white,
-            fontWeight: FontWeight.bold)),
-
-                            ),
-                        );
-  },
-
-                        ),],
+                        Text(
+                          "Landlord,",
+                          style: TextStyle(
+                              fontSize: 24,
+                              fontWeight: FontWeight.bold,
+                              color: Color(0xff0A71CB)),
+                        ),
+                      ],
                     ),
-                  );
-                },
-              ),
-              SizedBox(height: 5),
-              Divider(thickness: 2, color: Colors.black),
-              SingleChildScrollView(
-                child: Padding(
+                    Row(
+                      children: [
+                        CircleAvatar(
+                          backgroundColor: Color(0xffD9D9D9),
+                          child: Icon(Icons.notifications, color: Colors.black),
+                        ),
+                        SizedBox(width: 10),
+                        Container(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 14, vertical: 6),
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(20),
+                            border: Border.all(width: 0.5, color: Colors.grey),
+                          ),
+                          child: Row(
+                            children: [
+                              BlocBuilder<LandloardAuthBloc, LandloardAuthState>(
+                                builder: (context, state) {
+                                  if (state is Landlordloading) {
+                                    return const Center(
+                                        child: CircularProgressIndicator());
+                                  } else if (state is LandlordByidLoaded) {
+                                    final user = state.Userdata;
+                                    return Stack(
+                                      alignment: Alignment.bottomRight,
+                                      children: [
+                                        CircleAvatar(
+                                          radius: 20,
+                                          backgroundColor: Colors.grey[300],
+                                          backgroundImage:
+                                          user.image != null &&
+                                              user.image!.isNotEmpty
+                                              ? CachedNetworkImageProvider(
+                                              user.image!)
+                                              : null,
+                                          child: user.image == null ||
+                                              user.image!.isEmpty
+                                              ? const Icon(Icons.person,
+                                              size: 50, color: Colors.white)
+                                              : null,
+                                        ),
+                                        Positioned(
+                                          bottom: 0,
+                                          right: 4,
+                                          child: GestureDetector(
+                                            onTap: () {
+                                              context
+                                                  .read<LandloardAuthBloc>()
+                                                  .add(
+                                                PickAndUploadImageEvent(
+                                                    profile: user.uid!),
+                                              );
+                                            },
+                                          ),
+                                        ),
+                                      ],
+                                    );
+                                  } else {
+                                    return const SizedBox.shrink();
+                                  }
+                                },
+                              ),
+                              SizedBox(width: 10),
+                              Text(
+                                "Landlord",
+                                style: TextStyle(
+                                    fontSize: 16, fontWeight: FontWeight.bold),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+                SizedBox(height: 30),
+                BlocConsumer<PropertyAuthBlock, PropertyAuthState>(
+                  listener: (context, state) {
+                    if (state is PropertyaddSuccess) {
+                      if (mounted) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text("Property updated successfully!"),
+                            backgroundColor: Colors.green,
+                            duration: Duration(seconds: 2),
+                          ),
+                        );
+                        Navigator.pushReplacement(context,
+                            MaterialPageRoute(builder: (context) {
+                              return LandlordPage();
+                            }));
+                      }
+                    }
+                  },
+                  builder: (context, state) {
+                    return Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 25),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Flexible(
+                            child: Text(
+                              "Property Editing Page",
+                              style: TextStyle(
+                                  fontSize: 24, fontWeight: FontWeight.bold),
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                          ),
+                          SizedBox(width: 20),
+                          BlocConsumer<PropertyAuthBlock, PropertyAuthState>(
+                            listener: (context, state) {
+                              if (state is PropertySuccess) {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(
+                                    content:
+                                    Text("Profile updated successfully!"),
+                                    backgroundColor: Colors.green,
+                                  ),
+                                );
+                                Navigator.pop(context, true);
+                              }
+                              if (state is Propertyfailerror) {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(
+                                    content: Text(state.error),
+                                    backgroundColor: Colors.red,
+                                  ),
+                                );
+                              }
+                            },
+                            builder: (context, state) {
+                              if (state is PropertyLoading) {
+                                return const Center(child: Loading_Widget());
+                              }
+                              return InkWell(
+                                onTap: () {
+                                  if (_formKey.currentState!.validate()) {
+                                    if (widget.property_id.isEmpty) {
+                                      ScaffoldMessenger.of(context)
+                                          .showSnackBar(
+                                        SnackBar(
+                                            content: Text(
+                                                "Property ID cannot be empty")),
+                                      );
+                                      return; // Stop further processing if empty
+                                    }
+
+                                    Property_Model property = Property_Model(
+                                      propertyId: widget.property_id,
+                                      propertyName:
+                                      _propertyNameController.text.trim(),
+                                      propertyAddress:
+                                      _addressController.text.trim(),
+                                      propertyArea: _areaController.text.trim(),
+                                      country: _selectedCountry,
+                                      state: _selectedState,
+                                      city: _selectedCityController.text.trim(),
+                                      roomTypes: _selectedRoomType,
+                                      roomSizes: _selectedRoomSize,
+                                      availableFrom: _availableFromController.text,
+                                      moveInDate: _moveInController.text,
+                                      aboutProperty:
+                                      _aboutPropertyController.text.trim(),
+                                      bedroom: _selectedBedroom,
+                                      bathroom: _selectedBathroom,
+                                      kitchen: _selectedKitchen,
+                                      furnishingOptions: _selectedFurnishing,
+                                      propertyAmountWeek:
+                                      _amountWeekController.text.trim(),
+                                      propertyAmountMonth:
+                                      _amountMonthController.text.trim(),
+                                      tokenAmount: _tokenAmountController.text.trim(),
+                                      minimumStay: _selectedMinStay,
+                                      maximumStay: _selectedMaxStay,
+                                      sexualOrientations: _selectedSexualOrientation,
+                                      ownerName: _ownerNameController.text.trim(),
+                                      ownerPhone: _phoneController.text.trim(),
+                                      propertyTotal:
+                                      _propertyTotalController.text.trim(),
+                                      parking: parking ? "Yes" : "No",
+                                      billStatus: billsIncluded ? "Yes" : "No",
+                                      pets: petsAllowed ? "Yes" : "No",
+                                      smoking: smokingAllowed ? "Yes" : "No",
+                                    );
+
+                                    context.read<PropertyAuthBlock>().add(
+                                        Property_Edit_Event(Property: property));
+                                  }
+                                },
+                                borderRadius: BorderRadius.circular(8),
+                                child: Container(
+                                  padding: EdgeInsets.symmetric(
+                                      vertical: 8, horizontal: 36),
+                                  decoration: BoxDecoration(
+                                    color: Colors.blue,
+                                    borderRadius: BorderRadius.circular(8),
+                                  ),
+                                  child: state is PropertyLoading
+                                      ? Loading_Widget()
+                                      : Text("Update",
+                                      style: TextStyle(
+                                          fontSize: 16,
+                                          color: Colors.white,
+                                          fontWeight: FontWeight.bold)),
+                                ),
+                              );
+                            },
+                          ),
+                        ],
+                      ),
+                    );
+                  },
+                ),
+                SizedBox(height: 5),
+                Divider(thickness: 2, color: Colors.black),
+                Padding(
                   padding: const EdgeInsets.all(16.0),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      // Property Details
                       _buildSectionTitle("Property Details"),
                       SizedBox(height: 5),
                       Row(
@@ -378,21 +420,22 @@ class _PropertyEditState extends State<PropertyEdit> {
                           Expanded(
                               child: _buildTextField(
                                   "Property Name", _propertyNameController,
-                                  (value) {
-                            if (value!.isEmpty) {
-                              return 'Please enter property name';
-                            }
-                            return null;
-                          })),
+                                      (value) {
+                                    if (value!.isEmpty) {
+                                      return 'Please enter property name';
+                                    }
+                                    return null;
+                                  })),
                           SizedBox(width: 10),
                           Expanded(
-                              child: _buildTextField(
-                                  "Address", _addressController, (value) {
-                            if (value!.isEmpty) {
-                              return 'Please enter address';
-                            }
-                            return null;
-                          })),
+                              child:
+                              _buildTextField("Address", _addressController,
+                                      (value) {
+                                    if (value!.isEmpty) {
+                                      return 'Please enter address';
+                                    }
+                                    return null;
+                                  })),
                         ],
                       ),
                       SizedBox(height: 10),
@@ -414,35 +457,25 @@ class _PropertyEditState extends State<PropertyEdit> {
                           _selectedCountry, (value) {
                         setState(() {
                           _selectedCountry = value;
-                          _selectedState =
-                              null; // Reset state when country changes
-                          _selectedCity =
-                              null; // Reset city when country changes
+                          _selectedState = null;
+                          _selectedCity = null;
                         });
                       }, required: true),
                       SizedBox(height: 10),
                       _buildDropdown("State", _getStates(), _selectedState,
-                          (value) {
-                        setState(() {
-                          _selectedState = value;
-                          _selectedCity = null; // Reset city when state changes
-                        });
-                      }, required: true),
+                              (value) {
+                            setState(() {
+                              _selectedState = value;
+                              _selectedCity = null;
+                            });
+                          }, required: true),
                       SizedBox(height: 10),
-                      Row(
-                        children: [
-                          Expanded(
-                              child: _buildDropdown(
-                                  "City", widget.city.split(','), _selectedCity,
-                                  (value) {
+                      _buildDropdown("City", widget.city.split(','), _selectedCity,
+                              (value) {
                             setState(() => _selectedCity = value);
-                          }, required: true)),
-                        ],
-                      ),
+                          }, required: true),
                       Divider(thickness: 2),
                       SizedBox(height: 10),
-
-                      // Room Details
                       _buildSectionTitle("Room Details"),
                       SizedBox(height: 5),
                       Row(
@@ -452,16 +485,16 @@ class _PropertyEditState extends State<PropertyEdit> {
                                   "Room Type",
                                   ["House", "Apartment", "Townhouse"],
                                   _selectedRoomType, (value) {
-                            setState(() => _selectedRoomType = value);
-                          }, required: true)),
+                                setState(() => _selectedRoomType = value);
+                              }, required: true)),
                           SizedBox(width: 10),
                           Expanded(
                               child: _buildDropdown(
                                   "Room Size",
                                   ['Small', 'Medium', 'Large'],
                                   _selectedRoomSize, (value) {
-                            setState(() => _selectedRoomSize = value);
-                          }, required: true)),
+                                setState(() => _selectedRoomSize = value);
+                              }, required: true)),
                         ],
                       ),
                       Row(
@@ -474,7 +507,7 @@ class _PropertyEditState extends State<PropertyEdit> {
                                   (date) => setState(() => availableFrom = date),
                             ),
                           ),
-                          const SizedBox(width: 10),
+                          SizedBox(width: 10),
                           Expanded(
                             child: _buildDatePicker(
                               "Move-in Date",
@@ -485,30 +518,6 @@ class _PropertyEditState extends State<PropertyEdit> {
                           ),
                         ],
                       ),
-
-                      SizedBox(height: 10),
-                      Row(
-                        children: [
-                          Expanded(
-                            child: _buildDatePicker(
-                              "Available From",
-                              _availableFromController, // ✅ This is now a controller
-                              availableFrom,
-                                  (date) => setState(() => availableFrom = date),
-                            ),
-                          ),
-                          const SizedBox(width: 10),
-                          Expanded(
-                            child: _buildDatePicker(
-                              "Move-in Date",
-                              _moveinDateController, // ✅ Also a controller
-                              moveInDate,
-                                  (date) => setState(() => moveInDate = date),
-                            ),
-                          ),
-                        ],
-                      ),
-
                       Divider(thickness: 2),
                       SizedBox(height: 10),
                       Text("Images:",
@@ -517,14 +526,14 @@ class _PropertyEditState extends State<PropertyEdit> {
                       SizedBox(height: 20),
                       _buildImageContainer(),
                       SizedBox(height: 10),
-                      _buildTextField("Description", _areaController, (value) {
-                        if (value!.isEmpty) {
-                          return 'Please enter description';
-                        }
-                        return null;
-                      }),
+                      _buildTextField("Description", _aboutPropertyController,
+                              (value) {
+                            if (value!.isEmpty) {
+                              return 'Please enter description';
+                            }
+                            return null;
+                          }),
                       Divider(thickness: 2),
-                      // Pricing Details
                       _buildSectionTitle("Pricing Details"),
                       SizedBox(height: 5),
                       Row(
@@ -532,22 +541,22 @@ class _PropertyEditState extends State<PropertyEdit> {
                           Expanded(
                               child: _buildTextField(
                                   "Amount /Week", _amountWeekController,
-                                  (value) {
-                            if (value!.isEmpty) {
-                              return 'Please enter amount per week';
-                            }
-                            return null;
-                          })),
+                                      (value) {
+                                    if (value!.isEmpty) {
+                                      return 'Please enter amount per week';
+                                    }
+                                    return null;
+                                  })),
                           SizedBox(width: 10),
                           Expanded(
                               child: _buildTextField(
                                   "Amount /Month", _amountMonthController,
-                                  (value) {
-                            if (value!.isEmpty) {
-                              return 'Please enter amount per month';
-                            }
-                            return null;
-                          })),
+                                      (value) {
+                                    if (value!.isEmpty) {
+                                      return 'Please enter amount per month';
+                                    }
+                                    return null;
+                                  })),
                         ],
                       ),
                       SizedBox(height: 10),
@@ -556,13 +565,12 @@ class _PropertyEditState extends State<PropertyEdit> {
                           Expanded(
                               child: _buildTextField(
                                   "Token Amount", _tokenAmountController,
-                                  (value) {
-                            if (value!.isEmpty) {
-                              return 'Please enter amount per month';
-                            }
-                            return null;
-                          })),
-
+                                      (value) {
+                                    if (value!.isEmpty) {
+                                      return 'Please enter token amount';
+                                    }
+                                    return null;
+                                  })),
                           SizedBox(width: 10),
                           Expanded(
                               child: _buildDropdown(
@@ -574,8 +582,8 @@ class _PropertyEditState extends State<PropertyEdit> {
                                     'Female Only'
                                   ],
                                   _selectedSexualOrientation, (value) {
-                            setState(() => _selectedSexualOrientation = value);
-                          }, required: true)),
+                                setState(() => _selectedSexualOrientation = value);
+                              }, required: true)),
                         ],
                       ),
                       SizedBox(height: 10),
@@ -597,36 +605,32 @@ class _PropertyEditState extends State<PropertyEdit> {
                                     "10"
                                   ],
                                   _selectedMinStay, (value) {
-                            setState(() => _selectedMinStay = value);
-                          }, required: true)),
+                                setState(() => _selectedMinStay = value);
+                              }, required: true)),
                           SizedBox(width: 10),
                           Expanded(
                               child: _buildDropdown(
-                                  "Maximum Stay",
-                                  ["6", "7", "8", "9", "10"],
+                                  "Maximum Stay", ["6", "7", "8", "9", "10"],
                                   _selectedMaxStay, (value) {
-                            setState(() => _selectedMaxStay = value);
-                          }, required: true)),
+                                setState(() => _selectedMaxStay = value);
+                              }, required: true)),
                         ],
                       ),
                       Divider(thickness: 2),
                       SizedBox(height: 10),
-
-                      // Features (Radio Buttons)
                       _buildSectionTitle("Features"),
                       SizedBox(height: 5),
                       Row(
                         children: [
                           Expanded(
-                            child:// Example of the dropdown for furnishing options
-                            _buildDropdown (
-                      "Furnishing",
-                          ["Furnished", "Unfurnished", "Semi-furnished"],// Ensure these are unique
-                                _selectedFurnishing, // This should match one of the items
-                                    (value) {
-                                  setState(() => _selectedFurnishing = value);
-                                },
-                                required: true
+                            child: _buildDropdown(
+                              "Furnishing",
+                              ["Furnished", "Unfurnished", "Semi-furnished"],
+                              _selectedFurnishing,
+                                  (value) {
+                                setState(() => _selectedFurnishing = value);
+                              },
+                              required: true,
                             ),
                           ),
                           SizedBox(width: 10),
@@ -665,8 +669,8 @@ class _PropertyEditState extends State<PropertyEdit> {
                       SizedBox(height: 10),
                       Text(
                         "Additional Preferences",
-                        style: TextStyle(
-                            fontSize: 18, fontWeight: FontWeight.bold),
+                        style:
+                        TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                       ),
                       SizedBox(height: 10),
                       Row(
@@ -674,16 +678,17 @@ class _PropertyEditState extends State<PropertyEdit> {
                         children: [
                           Expanded(
                             child: _buildCheckbox("Parking Available", parking,
-                                (value) {
-                              setState(() => parking = value!);
-                            }),
+                                    (value) {
+                                  setState(() => parking = value!);
+                                }),
                           ),
                           SizedBox(width: 10),
                           Expanded(
-                            child: _buildCheckbox(
-                                "Bills Included", billsIncluded, (value) {
-                              setState(() => billsIncluded = value!);
-                            }),
+                            child:
+                            _buildCheckbox("Bills Included", billsIncluded,
+                                    (value) {
+                                  setState(() => billsIncluded = value!);
+                                }),
                           ),
                         ],
                       ),
@@ -692,8 +697,8 @@ class _PropertyEditState extends State<PropertyEdit> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Expanded(
-                            child: _buildCheckbox("Pets Allowed", petsAllowed,
-                                (value) {
+                            child:
+                            _buildCheckbox("Pets Allowed", petsAllowed, (value) {
                               setState(() => petsAllowed = value!);
                             }),
                           ),
@@ -709,8 +714,6 @@ class _PropertyEditState extends State<PropertyEdit> {
                       SizedBox(height: 15),
                       Divider(thickness: 2),
                       SizedBox(height: 10),
-
-                      // Owner Details
                       _buildSectionTitle("👤 Owner Details"),
                       SizedBox(height: 5),
                       Row(
@@ -718,42 +721,40 @@ class _PropertyEditState extends State<PropertyEdit> {
                           Expanded(
                               child: _buildTextField(
                                   "Owner Name", _ownerNameController, (value) {
-                            if (value!.isEmpty) {
-                              return 'Please enter owner name';
-                            }
-                            return null;
-                          })),
+                                if (value!.isEmpty) {
+                                  return 'Please enter owner name';
+                                }
+                                return null;
+                              })),
                           SizedBox(width: 10),
                           Expanded(
                               child: _buildTextField(
                                   "Phone Number", _phoneController, (value) {
-                            if (value!.isEmpty) {
-                              return 'Please enter phone number';
-                            }
-                            return null;
-                          })),
+                                if (value!.isEmpty) {
+                                  return 'Please enter phone number';
+                                }
+                                return null;
+                              })),
                         ],
                       ),
-
                     ],
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),
     );
   }
 
-  Widget _buildTextField(String label, TextEditingController controller,
-      String? Function(String?)? validator) {
+  Widget _buildTextField(
+      String label, TextEditingController controller, String? Function(String?)? validator) {
     return Padding(
-      padding: EdgeInsets.only(bottom: 15),
+      padding: const EdgeInsets.only(bottom: 15),
       child: TextFormField(
         controller: controller,
-        decoration:
-            InputDecoration(labelText: label, border: OutlineInputBorder()),
+        decoration: InputDecoration(labelText: label, border: OutlineInputBorder()),
         validator: validator,
       ),
     );
@@ -761,19 +762,18 @@ class _PropertyEditState extends State<PropertyEdit> {
 
   Widget _buildDropdown(String label, List<String> items, String? selectedValue,
       Function(String?) onChanged,
-      {required bool required}) {
+      {bool required = false}) {
     return Padding(
-      padding: EdgeInsets.only(bottom: 15),
+      padding: const EdgeInsets.only(bottom: 15),
       child: DropdownButtonFormField<String>(
-        decoration:
-            InputDecoration(labelText: label, border: OutlineInputBorder()),
+        decoration: InputDecoration(labelText: label, border: OutlineInputBorder()),
         value: selectedValue,
         items: items
             .map((item) => DropdownMenuItem(value: item, child: Text(item)))
             .toList(),
         onChanged: onChanged,
         validator: (value) =>
-            required && value == null ? 'Please select $label' : null,
+        required && (value == null || value.isEmpty) ? 'Please select $label' : null,
       ),
     );
   }
@@ -783,7 +783,7 @@ class _PropertyEditState extends State<PropertyEdit> {
       children: [
         for (int i = 0; i < 3; i++)
           Padding(
-            padding: EdgeInsets.only(right: 10),
+            padding: const EdgeInsets.only(right: 10),
             child: Container(
               width: 80,
               height: 80,
@@ -791,8 +791,7 @@ class _PropertyEditState extends State<PropertyEdit> {
                 borderRadius: BorderRadius.circular(10),
                 color: Colors.grey[300],
                 image: DecorationImage(
-                  image: AssetImage(
-                      "assets/Property/img.png"), // Replace with actual images
+                  image: AssetImage("assets/Property/img.png"),
                   fit: BoxFit.cover,
                 ),
               ),
@@ -808,7 +807,7 @@ class _PropertyEditState extends State<PropertyEdit> {
           child: Center(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
-              children: [
+              children: const [
                 Icon(Icons.edit, size: 24, color: Colors.black),
                 Text("Edit images",
                     textAlign: TextAlign.center,
@@ -826,15 +825,13 @@ class _PropertyEditState extends State<PropertyEdit> {
       title: Text(label),
       value: value,
       onChanged: onChanged,
+      controlAffinity: ListTileControlAffinity.leading,
+      contentPadding: EdgeInsets.zero,
     );
   }
 
-  Widget _buildDatePicker(
-      String label,
-      TextEditingController controller,
-      DateTime? initialDate,
-      Function(DateTime) onDateSelected,
-      ) {
+  Widget _buildDatePicker(String label, TextEditingController controller,
+      DateTime? initialDate, Function(DateTime) onDateSelected) {
     return Padding(
       padding: const EdgeInsets.only(bottom: 15),
       child: TextFormField(
@@ -843,7 +840,7 @@ class _PropertyEditState extends State<PropertyEdit> {
         decoration: InputDecoration(
           labelText: label,
           border: const OutlineInputBorder(),
-          suffixIcon: Icon(Icons.calendar_today),
+          suffixIcon: const Icon(Icons.calendar_today),
         ),
         onTap: () async {
           final DateTime? picked = await showDatePicker(
@@ -853,7 +850,7 @@ class _PropertyEditState extends State<PropertyEdit> {
             lastDate: DateTime(2100),
           );
           if (picked != null) {
-            controller.text = "${picked.toLocal()}".split(' ')[0]; // show only date
+            controller.text = "${picked.toLocal()}".split(' ')[0];
             onDateSelected(picked);
           }
         },
@@ -863,13 +860,12 @@ class _PropertyEditState extends State<PropertyEdit> {
     );
   }
 
-
   Widget _buildSectionTitle(String title) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8.0),
       child: Text(
         title,
-        style: TextStyle(
+        style: const TextStyle(
           fontSize: 18,
           fontWeight: FontWeight.bold,
         ),
@@ -1005,10 +1001,5 @@ class _PropertyEditState extends State<PropertyEdit> {
       default:
         return [];
     }
-  }
-
-  List<String> _getCities() {
-    // You can implement city fetching logic based on selected state if needed
-    return ["City1", "City2", "City3"]; // Placeholder
   }
 }

@@ -159,7 +159,7 @@ class _BookingFormPageState extends State<BookingFormPage> {
           landloardname: widget.landloardname.toString(),
           landloardphone: widget.landloardphone.toString(),
           username: user.name.toString(),
-          userphonenumber: user.phone.toString(),
+          userphonenumber: user.phone_number.toString(),
           useremail: user.email.toString(),
           propertyAddress: widget.propertyAddress.toString(),
           owneremail: widget.owneremail.toString(),

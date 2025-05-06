@@ -1,9 +1,11 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:course_connect/Admin/Main/Adminmain.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../Controller/Bloc/Dropdown_university/dropdown_bloc.dart';
+import '../../../../Controller/Bloc/Landloard_auth/landloard_auth_bloc.dart';
 import '../../../../Controller/Bloc/Property/Property/Property_Auth/Property_Model/PropertyModel.dart';
 import '../../../../Controller/Bloc/Property/Property/Property_auth_block.dart';
 import '../../../../Controller/Bloc/Property/Property/Property_auth_state.dart';
@@ -140,7 +142,7 @@ class _PropertyAddState extends State<PropertyAdd> {
                     SizedBox(width: 10),
                     Container(
                       padding: const EdgeInsets.symmetric(
-                          horizontal: 14, vertical: 6),
+                          horizontal: 4, vertical: 6),
                       decoration: BoxDecoration(
                         color: Colors.white,
                         borderRadius: BorderRadius.circular(20),
@@ -148,12 +150,54 @@ class _PropertyAddState extends State<PropertyAdd> {
                       ),
                       child: Row(
                         children: [
-                          CircleAvatar(
-                            radius: 20,
-                            backgroundColor: Colors.grey,
-                            backgroundImage:
-                                AssetImage('assets/Profile/img_3.png'),
+                          BlocBuilder<LandloardAuthBloc, LandloardAuthState>(
+                            builder: (context, state) {
+                              if (state is Landlordloading) {
+                                return const Center(child: CircularProgressIndicator());
+                              } else if (state is LandlordByidLoaded) {
+                                final user = state.Userdata;
+                                TextEditingController nameController = TextEditingController(text: user.name ?? '');
+                                TextEditingController emailController = TextEditingController(text: user.email ?? '');
+                                TextEditingController phoneController = TextEditingController(text: user.phone_number ?? '');
+
+                                return Column(
+                                  children: [
+                                    Stack(
+                                      alignment: Alignment.bottomRight,
+                                      children: [
+                                        CircleAvatar(
+                                          radius: 20,
+                                          backgroundColor: Colors.grey[300],
+                                          backgroundImage: user.image != null && user.image!.isNotEmpty
+                                              ? CachedNetworkImageProvider(user.image!)
+                                              : null,
+                                          child: user.image == null || user.image!.isEmpty
+                                              ? const Icon(Icons.person, size: 50, color: Colors.white)
+                                              : null,
+                                        ),
+                                        Positioned(
+                                          bottom: 0,
+                                          right: 4,
+                                          child: GestureDetector(
+                                            onTap: () {
+                                              context.read<LandloardAuthBloc>().add(
+                                                PickAndUploadImageEvent(profile: user.uid!),
+                                              );
+                                            },
+
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+
+                                  ],
+                                );
+                              } else {
+                                return const SizedBox.shrink();
+                              }
+                            },
                           ),
+
                           SizedBox(width: 10),
                           Text(
                             "Landlord",

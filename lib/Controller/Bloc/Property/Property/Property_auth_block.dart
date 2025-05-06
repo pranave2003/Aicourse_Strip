@@ -146,6 +146,7 @@ class PropertyAuthBlock extends Bloc<PropertyAuthEvent, PropertyAuthState> {
         }
       },
     );
+//edit
 
     on<Property_Edit_Event>(
       (event, emit) async {
@@ -190,11 +191,13 @@ class PropertyAuthBlock extends Bloc<PropertyAuthEvent, PropertyAuthState> {
             "smoking": event.Property.smoking,
             "location": event.Property.location,
           }); // Generate ID
-          emit(RefreshProperty());
-        } catch (e) {
-          emit(Propertyfailerror(e.toString().split("]").last));
-          print("Authenticated Error : ${e.toString().split(']').last}");
-        }
+
+            emit(PropertySuccess());
+          } catch (e) {
+            emit(Propertyfailerror(e.toString()));
+            print("Error updating property: ${e.toString()}");
+          }
+
       },
     );
 

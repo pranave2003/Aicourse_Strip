@@ -79,3 +79,35 @@ final class ProfileImageFailure extends LandloardAuthState {
   ProfileImageFailure(this.error);
 }
 
+//
+final class ProfileLoading extends LandloardAuthState {}
+
+final class ProfileSuccess extends LandloardAuthState {}
+
+final class Profilefailerror extends LandloardAuthState {
+  final String error;
+
+  Profilefailerror(this.error);
+}
+
+class Profileloaded extends LandloardAuthState {
+  final List<Landloard_Model> user;
+
+  Profileloaded(
+      this.user,
+      );
+}
+
+class ProfileImageInitial extends LandloardAuthState {}
+
+class ProfileImageLoading extends LandloardAuthState {}
+
+class ProfileImageSuccess extends LandloardAuthState {
+  final String image;
+
+  ProfileImageSuccess(this.image);
+}
+
+
+
+class RefreshProfile extends LandloardAuthState {}

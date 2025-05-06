@@ -87,16 +87,58 @@ class Bookingstate extends StatelessWidget {
                           borderRadius: BorderRadius.circular(20),
                           border: Border.all(width: 0.5, color: Colors.grey),
                         ),
-                        child: Row(
+                        child:  Row(
                           children: [
-                            const CircleAvatar(
-                              radius: 20,
-                              backgroundColor: Colors.grey,
-                              backgroundImage:
-                              AssetImage('assets/Profile/img.png'),
+                            BlocBuilder<LandloardAuthBloc, LandloardAuthState>(
+                              builder: (context, state) {
+                                if (state is Landlordloading) {
+                                  return const Center(child: CircularProgressIndicator());
+                                } else if (state is LandlordByidLoaded) {
+                                  final user = state.Userdata;
+                                  TextEditingController nameController = TextEditingController(text: user.name ?? '');
+                                  TextEditingController emailController = TextEditingController(text: user.email ?? '');
+                                  TextEditingController phoneController = TextEditingController(text: user.phone_number ?? '');
+
+                                  return Column(
+                                    children: [
+                                      Stack(
+                                        alignment: Alignment.bottomRight,
+                                        children: [
+                                          CircleAvatar(
+                                            radius: 20,
+                                            backgroundColor: Colors.grey[300],
+                                            backgroundImage: user.image != null && user.image!.isNotEmpty
+                                                ? CachedNetworkImageProvider(user.image!)
+                                                : null,
+                                            child: user.image == null || user.image!.isEmpty
+                                                ? const Icon(Icons.person, size: 50, color: Colors.white)
+                                                : null,
+                                          ),
+                                          Positioned(
+                                            bottom: 0,
+                                            right: 4,
+                                            child: GestureDetector(
+                                              onTap: () {
+                                                context.read<LandloardAuthBloc>().add(
+                                                  PickAndUploadImageEvent(profile: user.uid!),
+                                                );
+                                              },
+
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+
+                                    ],
+                                  );
+                                } else {
+                                  return const SizedBox.shrink();
+                                }
+                              },
                             ),
-                            const SizedBox(width: 10),
-                            const Text(
+
+                            SizedBox(width: 10),
+                            Text(
                               "Landlord",
                               style: TextStyle(
                                   fontSize: 16, fontWeight: FontWeight.bold),
