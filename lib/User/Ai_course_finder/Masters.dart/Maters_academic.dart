@@ -22,7 +22,7 @@ class _Maters_academicState extends State<Maters_academic> {
   ];
 
   final Map<String, String> testScoreRanges = {
-    "GRE": "130 - 170",
+    "GRE": "260 - 340",
     "GMAT": "200 - 800",
     "IIT JAM": "0 - 100",
     "CAT": "0 - 100",
@@ -186,7 +186,7 @@ class _Maters_academicState extends State<Maters_academic> {
                     return;
                   }
 
-                  if (selectedAcademic == "GRE" && (score < 130 || score > 170)) {
+                  if (selectedAcademic == "GRE" && (score < 130 || score > 340)) {
                     ScaffoldMessenger.of(context).showSnackBar(
                       const SnackBar(content: Text("GRE score must be between 130 - 170.")),
                     );

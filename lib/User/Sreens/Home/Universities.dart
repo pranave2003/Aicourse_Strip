@@ -61,7 +61,7 @@ class _UniversitiesState extends State<Universities> {
                           .add(FetchAllUniversites(searchQuery: value));
                     },
                     decoration: InputDecoration(
-                        hintText: "search university or course",
+                        hintText: "search university",
                         prefixIcon: Icon(Icons.search),
                         border: OutlineInputBorder(
                             borderSide:
@@ -72,12 +72,13 @@ class _UniversitiesState extends State<Universities> {
             ),
             SizedBox(height: 20),
             Text(
-              "Top Universities in United states",
+              "TOP UNIVERSITIES IN US,UK,CANADA,INDIA",
               style: TextStyle(
                   color: Colors.black,
-                  fontSize: 24,
+                  fontSize: 18,
                   fontWeight: FontWeight.bold),
             ),
+            SizedBox(height: 20,),
             Row(
               children: [
                 Expanded(

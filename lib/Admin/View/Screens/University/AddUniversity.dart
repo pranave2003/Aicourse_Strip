@@ -1186,6 +1186,10 @@ class _AddUniversityState extends State<AddUniversity> {
                 ),
               ],
 
+
+
+
+
               SizedBox(height: 10),
               Padding(
                 padding:

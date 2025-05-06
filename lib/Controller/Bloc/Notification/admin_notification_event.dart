@@ -9,3 +9,11 @@ class SendNotification_event extends AdminNotificationEvent {
 }
 //
 class FetchNotificationsEvent extends AdminNotificationEvent {}
+// DELETION
+
+
+class DeleteNotificationEvent extends AdminNotificationEvent {
+  final String id;
+
+  DeleteNotificationEvent({required this.id});
+}

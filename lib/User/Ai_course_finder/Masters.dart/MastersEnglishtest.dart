@@ -1,3 +1,4 @@
+import 'package:course_connect/Controller/Bloc/Applycourse/application_bloc.dart';
 import 'package:course_connect/User/Ai_course_finder/Masters.dart/Masters_work.dart';
 import 'package:course_connect/Widget/Constands/colors.dart';
 import 'package:flutter/material.dart';
@@ -149,34 +150,35 @@ class _MastersEnglishtestState extends State<MastersEnglishtest> {
                   ),
                 ),
               ),
-
-            const Text(
-              "Enter your score",
-              style: TextStyle(color: Colors.blueAccent, fontSize: 25, fontWeight: FontWeight.w600),
-            ),
-
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 10),
-              child: Container(
-                width: 200,
-                child: TextFormField(
-                  controller: percentageController,
-                  keyboardType: TextInputType.number,
-                  decoration: InputDecoration(
-                    hintText: "Score",
-                    hintStyle: TextStyle(color: Colors.black, fontSize: 18),
-                    enabledBorder: UnderlineInputBorder(
-                      borderSide: BorderSide(color: Colors.black),
+            if (selectedTest != null && selectedTest != "Test Not Taken Yet") ...[
+              const Text(
+                "Enter your score",
+                style: TextStyle(color: Colors.blueAccent, fontSize: 25, fontWeight: FontWeight.w600),
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 10),
+                child: Container(
+                  width: 200,
+                  child: TextFormField(
+                    controller: percentageController,
+                    keyboardType: TextInputType.number,
+                    decoration: InputDecoration(
+                      hintText: "Score",
+                      hintStyle: TextStyle(color: Colors.black, fontSize: 18),
+                      enabledBorder: UnderlineInputBorder(
+                        borderSide: BorderSide(color: Colors.black),
+                      ),
+                      focusedBorder: UnderlineInputBorder(
+                        borderSide: BorderSide(color: Colors.black, width: 1.5),
+                      ),
                     ),
-                    focusedBorder: UnderlineInputBorder(
-                      borderSide: BorderSide(color: Colors.black, width: 1.5),
-                    ),
+                    textAlign: TextAlign.center,
+                    style: TextStyle(color: Colors.black, fontSize: 18),
                   ),
-                  textAlign: TextAlign.center,
-                  style: TextStyle(color: Colors.black, fontSize: 18),
                 ),
               ),
-            ),
+            ],
+
 
             const SizedBox(height: 30),
 

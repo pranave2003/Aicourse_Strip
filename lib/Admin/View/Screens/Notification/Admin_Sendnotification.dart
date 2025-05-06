@@ -36,10 +36,10 @@ class _Admin_SendNotificationState extends State<Admin_SendNotification> {
 
   @override
   void initState() {
-    // TODO: implement initState
-
     super.initState();
+    context.read<AdminNotificationBloc>().add(FetchNotificationsEvent());
   }
+
 
   @override
   void dispose() {
@@ -220,49 +220,76 @@ class _Admin_SendNotificationState extends State<Admin_SendNotification> {
                         ),
                         child: Padding(
                             padding: const EdgeInsets.all(16.0),
-                            child: ListView.builder(
-                              itemBuilder: (context, index) {
-                                return Card(
-                                  child: ListTile(
-                                    title: Text("Title"),
-                                    subtitle: Column(
-                                      crossAxisAlignment:
+                            child:  Padding(
+                        padding: const EdgeInsets.all(16.0),
+                        child: BlocBuilder<AdminNotificationBloc, AdminNotificationState>(
+                            builder: (context, state) {
+                              if (state is Loadingnotification) {
+                                return const Center(
+                                    child: CircularProgressIndicator());
+                              } else if (state is AdminNotificationLoaded) {
+                                final notifications = state.notifications;
+
+                                if (notifications.isEmpty) {
+                                  return const Center(
+                                      child: Text("No notifications"));
+                                }
+                                return ListView.builder(
+                                  itemCount: notifications.length,
+                                  itemBuilder: (context, index) {
+                                    final notification = notifications[index];
+                                    return Card(
+                                      child: ListTile(
+                                        title: Text(notification['title']),
+                                        subtitle: Column(
+                                          crossAxisAlignment:
                                           CrossAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                            "Matter asdhsajdhah dsasjdgsajhdgadhasgdsjadsgd asjdhgsjdgdhgasdjgsda djsahgsdhdjahjsdghjasgd sajgdsjhdagshjdgasjdgahjsgd sajgsdjhgdasjhdghjdgdajh dsasjhdsgadgashdjsgdgahdsd asdsjdghajhgdsjdgsadajsgdjhg"),
-                                        Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.end,
                                           children: [
-                                            Column(
+                                            Text(notification['message']),
+                                            const SizedBox(height: 8),
+                                            Row(
+                                              mainAxisAlignment:
+                                              MainAxisAlignment.end,
                                               children: [
-                                                Text(
-                                                  "Date : 10/10/25",
-                                                  style: TextStyle(
-                                                      color: Colors.red),
-                                                ),
-                                                Text(
-                                                  "Time : 10.00",
-                                                  style: TextStyle(
-                                                      color: Colors.green),
+                                                Column(
+                                                  children: [
+                                                    Text(
+                                                      "Date: ${notification['date']}",
+                                                      style: const TextStyle(
+                                                          color: Colors.red),
+                                                    ),
+                                                    Text(
+                                                      "Time: ${notification['time']}",
+                                                      style: const TextStyle(
+                                                          color: Colors.green),
+                                                    ),
+                                                  ],
                                                 ),
                                               ],
                                             ),
                                           ],
                                         ),
-                                      ],
-                                    ),
-                                    trailing: IconButton(
-                                        onPressed: () {},
-                                        icon: Icon(
-                                          Icons.delete,
-                                          color: Colors.red,
-                                        )),
-                                  ),
+                                        trailing: IconButton(
+                                          onPressed: () {
+                                            final id = notification['id'];
+                                            context.read<AdminNotificationBloc>().add(DeleteNotificationEvent(id: id));
+                                          },
+                                          icon: Icon(Icons.delete, color: Colors.red),
+                                        ),
+
+                                      ),
+                                    );
+                                  },
                                 );
-                              },
-                            )),
+                              } else if (state is NotificationSend_Error) {
+                                return Center(
+                                    child: Text("Error: ${state.error}"));
+                              } else {
+                                return const Center(
+                                    child: Text("No data available"));
+                              }
+                            }                 ),
+                      ),),
                       ),
                     ),
                   ],

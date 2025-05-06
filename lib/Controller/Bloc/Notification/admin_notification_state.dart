@@ -28,3 +28,13 @@ class AdminNotificationLoaded extends AdminNotificationState {
 
   AdminNotificationLoaded(this.notifications);
 }
+//
+
+
+final class NotificationDeleteSuccess extends AdminNotificationState {}
+
+final class NotificationDeleteError extends AdminNotificationState {
+  final String error;
+
+  NotificationDeleteError({required this.error});
+}

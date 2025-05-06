@@ -38,7 +38,6 @@ class _HomepageState extends State<Homepage> {
     "assets/Homepageimages/img_5.png",
     "assets/Homepageimages/main.png",
     "assets/img_12.png",
-    "assets/img_12.png",
   ];
   int currentIndex = 0;
   final PageController _pageController = PageController();

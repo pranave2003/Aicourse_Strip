@@ -79,6 +79,7 @@ class AdminNotificationBloc
         List<Map<String, dynamic>> notifications = snapshot.docs.map((doc) {
           final data = doc.data() as Map<String, dynamic>;
           return {
+            "id": doc.id,
             "title": data["title"],
             "message": data["Content"],
             "date": data["Date"],
@@ -87,11 +88,49 @@ class AdminNotificationBloc
           };
         }).toList();
 
+
         emit(AdminNotificationLoaded(notifications));
       } catch (e) {
         emit(NotificationSend_Error(error: e.toString()));
       }
     });
+
+
+
+    //
+    on<DeleteNotificationEvent>((event, emit) async {
+      emit(Loadingnotification());
+      try {
+        await FirebaseFirestore.instance
+            .collection("Notification")
+            .doc(event.id)
+            .delete();
+
+        // Refetch notifications after deletion
+        QuerySnapshot snapshot = await FirebaseFirestore.instance
+            .collection("Notification")
+            .orderBy("Date", descending: true)
+            .get();
+
+        List<Map<String, dynamic>> notifications = snapshot.docs.map((doc) {
+          final data = doc.data() as Map<String, dynamic>;
+          return {
+            "id": doc.id, // INCLUDE ID here so UI can use it for deletion
+            "title": data["title"],
+            "message": data["Content"],
+            "date": data["Date"],
+            "time": data["Time"],
+            "isRead": false
+          };
+        }).toList();
+
+        emit(AdminNotificationLoaded(notifications)); // Enough for UI update
+
+      } catch (e) {
+        emit(NotificationDeleteError(error: e.toString()));
+      }
+    });
+
 
   }
 }
