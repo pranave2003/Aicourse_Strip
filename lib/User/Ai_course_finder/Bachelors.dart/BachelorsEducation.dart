@@ -241,19 +241,19 @@ class _BachelorsEducationState extends State<BachelorsEducation> {
                     ScaffoldMessenger.of(context).showSnackBar(
                       const SnackBar(
                         content: Text(
-                            "Percentage must be between 0-100 for Grade 12"),
+                            "Percentage must be between 33-100 for Grade 12"),
                         backgroundColor: Colors.red,
                       ),
                     );
                     return;
                   }
 
-                  if (seletedEducation == "Undergraduate diploma" &&
+                  if (seletedEducation == "Polytechnic Diploma" &&
                       (percentage < 30 || percentage > 100)) {
                     ScaffoldMessenger.of(context).showSnackBar(
                       const SnackBar(
                         content: Text(
-                            "Percentage must be between 30-100 for Undergraduate diploma"),
+                            "Percentage must be between 30-100 for Polytechnic Diploma"),
                         backgroundColor: Colors.red,
                       ),
                     );
