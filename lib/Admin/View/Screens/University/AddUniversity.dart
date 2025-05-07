@@ -86,7 +86,7 @@ class _AddUniversityState extends State<AddUniversity> {
     "PTE": [
       "50",
     ],
-    "IELTS": ["5.5"],
+    "IELTS": ["5.5","6","7"],
     "TOEFL": ["70"],
     "Not Required": ["N/A"],
   };
@@ -564,7 +564,8 @@ class _AddUniversityState extends State<AddUniversity> {
                           "BA in Linguistics",
                           "BA in Gender Studies",
                           "BA in Cultural Studies",
-
+                          "BA  in Computer Science",
+                          "BA (Hons) in English",
 
 
 

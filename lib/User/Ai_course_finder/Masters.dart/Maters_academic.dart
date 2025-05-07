@@ -26,7 +26,7 @@ class _Maters_academicState extends State<Maters_academic> {
     "GMAT": "200 - 800",
     "IIT JAM": "0 - 100",
     "CAT": "0 - 100",
-    "CMAT": "0 - 100",
+    "CMAT": "0 - 400",
     "TEST NOT TAKEN": "No Score Required",
 
   };
@@ -198,25 +198,25 @@ class _Maters_academicState extends State<Maters_academic> {
                     );
                     return;
                   }
-                  if ((selectedAcademic == "GATE" || selectedAcademic == "IIT JAM") &&
-                      (score < 0 || score > 100)) {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(content: Text("Score must be between 0 - 100.")),
-                    );
-                    return;
-                  }
-                  if (selectedAcademic == "NEET" && (score < 0 || score > 720)) {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(content: Text("NEET score must be between 0 - 720.")),
-                    );
-                    return;
-                  }
-                  if (selectedAcademic == "LSAT" && (score < 120 || score > 180)) {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(content: Text("LSAT score must be between 120 - 180.")),
-                    );
-                    return;
-                  }
+                  // if ((selectedAcademic == "GATE" || selectedAcademic == "IIT JAM") &&
+                  //     (score < 0 || score > 100)) {
+                  //   ScaffoldMessenger.of(context).showSnackBar(
+                  //     const SnackBar(content: Text("Score must be between 0 - 100.")),
+                  //   );
+                  //   return;
+                  // }
+                  // if (selectedAcademic == "NEET" && (score < 0 || score > 720)) {
+                  //   ScaffoldMessenger.of(context).showSnackBar(
+                  //     const SnackBar(content: Text("NEET score must be between 0 - 720.")),
+                  //   );
+                  //   return;
+                  // }
+                  // if (selectedAcademic == "LSAT" && (score < 120 || score > 180)) {
+                  //   ScaffoldMessenger.of(context).showSnackBar(
+                  //     const SnackBar(content: Text("LSAT score must be between 120 - 180.")),
+                  //   );
+                  //   return;
+                  // }
                 }
 
                 context.read<SelectionCubit>().updateSelection("Acadamictest", selectedAcademic.toString());

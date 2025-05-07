@@ -22,7 +22,7 @@ class _Bachelors_academictestState extends State<Bachelors_academictest> {
   final Map<String, String> testScoreRanges = {
     "ACT": "1 - 36",
     "SAT": "400 - 1600",
-    "CUET": "0 - 1500",
+    "CUET": "0 - 800",
   };
 
   bool isValidScore(String test, String score) {
@@ -36,7 +36,7 @@ class _Bachelors_academictestState extends State<Bachelors_academictest> {
       case "SAT":
         return value >= 400 && value <= 1600;
       case "CUET":
-        return value >= 0 && value <= 1500;
+        return value >= 0 && value <= 800;
       case "TEST NOT TAKEN":
         return true; // No validation required
       default:

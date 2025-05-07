@@ -16,6 +16,7 @@ class _BachelorsCourseState extends State<BachelorsCourse> {
   String? selectedCourse;
 
   final List<String> courses = [
+    "BA (Hons) in English",
     "BSc in Mathematics",
     "BSc in Physics",
     "BSc in Chemistry",
@@ -37,13 +38,13 @@ class _BachelorsCourseState extends State<BachelorsCourse> {
     "Bachelor of Marketing",
     "Bachelor of Entrepreneurship",
     "Bachelor in Hospitality & Tourism Management",
-
     "BA in Psychology",
     "BA in Anthropology",
     "BA in Philosophy",
     "BA in Linguistics",
     "BA in Gender Studies",
     "BA in Cultural Studies",
+    "BA  in Computer Science",
 
 
 

@@ -232,9 +232,9 @@ class _UniversityInfoScreenState extends State<UniversityInfoScreen> {
                         ]),
                         _infoSection('Eligibility', [
                           'English test: ${university.Englishtest}',
-                          'Minimum Required Percentage or score : ${university.Englishtestpercentage}',
+                          'Minimum Required  score : ${university.Englishtestpercentage}',
                           'Academic Test: ${university.AcadamicTest}',
-                          'Minimum Required Percentage or score: ${university.AcadamicTestPercentage}'
+                          'Minimum Required  score: ${university.AcadamicTestPercentage}'
                         ]),
                         _infoSection('Terms and Conditions',
                             [university.Terms_and_conditions.toString()]),
