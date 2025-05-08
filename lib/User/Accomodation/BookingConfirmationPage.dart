@@ -1,4 +1,3 @@
-
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_options.dart';
 import 'package:carousel_slider/carousel_slider.dart';
@@ -14,7 +13,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../Controller/Bloc/Booking/Booking_model/BookingModel.dart';
 import '../../Controller/Bloc/Property/Property/Property_auth_block.dart';
 import '../../Controller/Bloc/Property/Property/Property_auth_state.dart';
+import '../../Controller/Bloc/Strip/BlocLayer/payment_bloc.dart';
+import '../../Controller/Bloc/Strip/BlocLayer/payment_event.dart';
+import '../../Controller/Bloc/Strip/BlocLayer/payment_state.dart';
 import '../../Widget/Constands/Loading.dart';
+import 'DonePayment.dart';
+
 String _formattedCurrentDate() {
   final now = DateTime.now();
   return "${_monthName(now.month)} ${now.day}, ${now.year}";
@@ -22,8 +26,18 @@ String _formattedCurrentDate() {
 
 String _monthName(int month) {
   const months = [
-    'January', 'February', 'March', 'April', 'May', 'June',
-    'July', 'August', 'September', 'October', 'November', 'December'
+    'January',
+    'February',
+    'March',
+    'April',
+    'May',
+    'June',
+    'July',
+    'August',
+    'September',
+    'October',
+    'November',
+    'December'
   ];
   return months[month - 1];
 }
@@ -50,7 +64,9 @@ class BookingConfirmformpageScreenWrapper extends StatelessWidget {
     required this.username,
     required this.userphonenumber,
     required this.useremail,
-    required this.userid_global, required this. propertyAddress, required this.owneremail,
+    required this.userid_global,
+    required this.propertyAddress,
+    required this.owneremail,
   });
 
   final String userid_global;
@@ -76,6 +92,32 @@ class BookingConfirmformpageScreenWrapper extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final booking = Bookingmodel(
+      propertyId: propertyId,
+      propertyName: propertyName,
+      tokenamount: tokenAmount,
+      checkindate: checkindate,
+      userid: userid_global,
+      landlordId: Landloard_id,
+      landlordname: landloardname,
+      landlordphone: landloardphone,
+      useremail: useremail,
+      propertyImageURL: propertyImageURL,
+      propertyTotal: propertyTotal,
+      username: username,
+      userphonenumber: userphonenumber,
+      bookingdate: DateTime.now().toString(),
+      bookingtime: DateTime.now().toString(),
+      propertystate: this.state, // ✅ This is the actual property state string
+
+      propertycountry: country,
+      propertycity: city,
+      propertyaddress: propertyAddress,
+      // owneremail: owneremail,
+      checkoutdate: checkoutdate, // ✅ fixed from checkindate
+      status: "0",
+      ban: "0",
+    );
     return BlocProvider<PropertyAuthBlock>(
       create: (context) => PropertyAuthBlock()
         ..add(FetchPropertyDetailsById(Property_id: propertyId)),
@@ -133,13 +175,13 @@ class BookingConfirmformpageScreenWrapper extends StatelessWidget {
                                   ),
                                   errorWidget: (context, url, error) =>
                                       Container(
-                                        color: Colors.grey[300],
-                                        child: Icon(
-                                          Icons.image_not_supported,
-                                          size: 50,
-                                          color: Colors.grey[600],
-                                        ),
-                                      ),
+                                    color: Colors.grey[300],
+                                    child: Icon(
+                                      Icons.image_not_supported,
+                                      size: 50,
+                                      color: Colors.grey[600],
+                                    ),
+                                  ),
                                 ),
                               ),
                             ],
@@ -199,8 +241,9 @@ class BookingConfirmformpageScreenWrapper extends StatelessWidget {
               ),
               child: Row(
                 children: [
-                  Expanded(child: _buildDateTile("Booking From", _formattedCurrentDate())),
-
+                  Expanded(
+                      child: _buildDateTile(
+                          "Booking From", _formattedCurrentDate())),
                   SizedBox(width: 12),
                   Expanded(
                     child: _buildDateTile("Booking To", checkoutdate),
@@ -223,70 +266,45 @@ class BookingConfirmformpageScreenWrapper extends StatelessWidget {
 
             // Pay Button
 
-            BlocConsumer<BookingAuthblock, BookingState>(
-              listener: (context, state) {
-                if (state is BookingaddSuccess) {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => SuccessScreenwrapper2(booking: Bookingmodel(),
-                        ),
-                      ));
-                } else if (state is Bookingfailerror) {
+            BlocConsumer<PaymentBloc, PaymentState>(
+              listener: (context, state) async {
+                if (state is PaymentSuccess) {
+                  context.read<BookingAuthblock>().add(
+                        Booking_Add_event(Booking: booking),
+                      );
+
+                  await Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(builder: (context) => Donepayment()),
+                  );
+                } else if (state is PaymentFailed) {
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(content: Text('Booking failed: ${state.error}')),
                   );
                 }
               },
               builder: (context, state) {
-                final booking = Bookingmodel(
-                  propertyId: propertyId,
-                  propertyName: propertyName,
-                  tokenamount: tokenAmount,
-                  checkindate: checkindate,
-                  userid: userid_global,
-                  landlordId: Landloard_id,
-                  landlordname: landloardname,
-                  landlordphone:landloardphone,
-                  useremail: useremail,
-                  propertyImageURL: propertyImageURL,
-                  propertyTotal: propertyTotal,
-                  username: username,
-                  userphonenumber: userphonenumber,
-                  bookingdate: DateTime.now().toString(),
-                  bookingtime: DateTime.now().toString(),
-                  propertystate:this.state, // ✅ This is the actual property state string
-
-                  propertycountry: country,
-                  propertycity: city,
-                  propertyaddress: propertyAddress,
-                  // owneremail: owneremail,
-                  checkoutdate: checkoutdate, // ✅ fixed from checkindate
-                  status: "0",
-                  ban: "0",
-
-                );
-
                 return Center(
                   child: ElevatedButton(
                     onPressed: () {
-                      context.read<BookingAuthblock>().add(
-                        Booking_Add_event(Booking: booking),
-                      );
+                      context.read<PaymentBloc>().add(
+                            MakePaymentEvent(amount: "5000", currency: "USD"),
+                          );
                     },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Color(0xff0A71CB),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(30),
                       ),
-                      padding: EdgeInsets.symmetric(horizontal: 50, vertical: 15),
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 50, vertical: 15),
                     ),
-                    child: state is BookingLoading
+                    child: state is PaymentProcessing
                         ? Loading_Widget()
                         : Text(
-                      "Pay Token Amount (${tokenAmount})",
-                      style: TextStyle(fontSize: 18, color: Colors.white),
-                    ),
+                            "Pay Token Amount",
+                            style: TextStyle(fontSize: 18, color: Colors.white),
+                          ),
                   ),
                 );
               },
