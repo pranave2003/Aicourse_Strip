@@ -1,0 +1,2 @@
+/Users/pranave/AndroidStudioProjects/Aicourse_Strip/android/app/.cxx/Debug/53w1q4r3/x86_64/CMakeFiles/edit_cache.dir
+/Users/pranave/AndroidStudioProjects/Aicourse_Strip/android/app/.cxx/Debug/53w1q4r3/x86_64/CMakeFiles/rebuild_cache.dir
